@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { useRouter } from "next/navigation";
-// import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -19,17 +19,18 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useMutation } from "@tanstack/react-query";
 
 // ✅ Zod Schema
 const signUpFormSchema = z
   .object({
-    firstName: z.string().min(2, "First name must be at least 2 characters"),
-    lastName: z.string().min(2, "Last name must be at least 2 characters"),
-    companyName: z
+    first_name: z.string().min(2, "First name must be at least 2 characters"),
+    last_name: z.string().min(2, "Last name must be at least 2 characters"),
+    company_name: z
       .string()
       .min(2, "Company name must be at least 2 characters"),
     email: z.string().email({ message: "Invalid email address" }),
-    phoneNumber: z.string().optional(),
+    phone: z.string().optional(),
     password: z
       .string()
       .min(8, { message: "Password must be at least 8 characters" })
@@ -37,14 +38,14 @@ const signUpFormSchema = z
         message:
           "Password must contain at least one uppercase letter, one lowercase letter, and one number",
       }),
-    confirmPassword: z.string().min(1, "Please confirm your password"),
+    confirm_password: z.string().min(1, "Please confirm your password"),
     termsAndConditions: z.boolean().refine((val) => val === true, {
       message: "You must accept the terms and conditions",
     }),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.password === data.confirm_password, {
     message: "Passwords don't match",
-    path: ["confirmPassword"],
+    path: ["confirm_password"],
   });
 
 type SignUpFormValues = z.infer<typeof signUpFormSchema>;
@@ -53,44 +54,45 @@ export function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   // const [isLoading, setIsLoading] = useState(false);
-  // const router = useRouter();
+  const router = useRouter();
 
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      companyName: "",
+      first_name: "",
+      last_name: "",
+      company_name: "",
       email: "",
-      phoneNumber: "",
+      phone: "",
       password: "",
-      confirmPassword: "",
+      confirm_password: "",
       termsAndConditions: false,
+    },
+  });
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["sign-up"],
+    mutationFn: (data: SignUpFormValues) =>
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/register`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }).then((res) => res.json()),
+    onSuccess: (data) => {
+      if (!data?.success) {
+        toast.error(data?.message || "Something went wrong");
+        return;
+      }
+      toast.success(data?.message || "User registered successfully");
+      router.push("/login");
     },
   });
 
   async function onSubmit(data: SignUpFormValues) {
     console.log(data);
-    // try {
-    //   setIsLoading(true);
-    //   const response = await fetch("/api/auth/signup", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(data),
-    //   });
-
-    //   if (!response.ok) {
-    //     const error = await response.json();
-    //     throw new Error(error.message || "Sign up failed");
-    //   }
-
-    //   toast.success("Account created successfully!");
-    //   router.push("/login");
-    // } catch (error) {
-    //   toast.error((error as Error).message);
-    // } finally {
-    //   setIsLoading(false);
-    // }
+    mutate(data);
   }
 
   return (
@@ -101,7 +103,7 @@ export function SignUpForm() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormField
               control={form.control}
-              name="firstName"
+              name="first_name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
@@ -122,7 +124,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
             />
             <FormField
               control={form.control}
-              name="lastName"
+              name="last_name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
@@ -146,7 +148,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
           {/* Company Name */}
           <FormField
             control={form.control}
-            name="companyName"
+            name="company_name"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
@@ -193,11 +195,11 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
           {/* Phone Number */}
           <FormField
             control={form.control}
-            name="phoneNumber"
+            name="phone"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
-                  Phone Number (Optional)
+                  Phone Number
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -256,7 +258,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
           {/* Confirm Password */}
           <FormField
             control={form.control}
-            name="confirmPassword"
+            name="confirm_password"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
@@ -321,10 +323,9 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
             <Button
               type="submit"
               className="w-full h-[51px] bg-[#0253F7] hover:bg-[#2891d4] rounded-lg text-base font-normal font-manrope leading-[120%] tracking-[0%] text-white"
-              // disabled={isLoading}
+              disabled={isPending}
             >
-              Sign Up
-              {/* {isLoading ? "Creating Account..." : "Sign Up"} */}
+              {isPending ? "Creating Account..." : "Sign Up"}
             </Button>
           </div>
 

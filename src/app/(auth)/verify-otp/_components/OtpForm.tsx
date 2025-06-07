@@ -92,16 +92,13 @@ export default function OtpForm() {
   const { mutate: resentOtp, isPending: resentOtpPending } = useMutation({
     mutationKey: ["fotgot-password"],
     mutationFn: (email: string) =>
-      fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/password/email`,
-        {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        }
-      ).then((res) => res.json()),
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/password/email`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      }).then((res) => res.json()),
     onSuccess: (data, email) => {
       if (!data?.success) {
         toast.error(data?.message || "Something went wrong");
@@ -149,10 +146,10 @@ export default function OtpForm() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto flex flex-col items-center">
-      <div className="py-[32px] px-[24px] rounded-lg bg-white/10  backdrop-blur-md">
+    <div className="">
+      <div className="">
         {/* OTP Input Fields */}
-        <div className="flex gap-[15px] md:gap-[37px] w-full justify-center">
+        <div className="flex gap-[20px] md:gap-[24px] lg:gap-[30px] w-full justify-center">
           {otp.map((digit, index) => (
             <Input
               key={index}
@@ -166,8 +163,8 @@ export default function OtpForm() {
               ref={(el) => {
                 inputRefs.current[index] = el;
               }}
-              className={`font-poppins w-[45px] md:w-[56px] h-[56px] md:h-[69px] bg-black/10 text-[#212121] placeholder:text-[#999999] text-center tracking-[0%] !text-xl font-semibold leading-[120%] rounded-md focus:outline-none border ${
-                digit ? "border-[#212121]" : "border-[#595959]"
+              className={`font-poppins w-[56px] md:w-[60px] lg:w-[70px] h-[56px] md:h-[60px] lg:h-[70px] bg-white text-[#212121] placeholder:text-[#999999] text-center tracking-[0%] !text-xl font-semibold leading-[120%] rounded-md focus:outline-none border ${
+                digit ? "border-[#212121]" : "border-black"
               }`}
               aria-label={`OTP digit ${index + 1}`}
             />
@@ -175,14 +172,14 @@ export default function OtpForm() {
         </div>
 
         {/* Resend OTP */}
-        <div className="text-center flex items-center justify-between pt-4 pb-6">
-          <span className="font-poppins text-base font-normal leading-[120%] text-[#212121] tracking-[0%]">
-            Didn&apos;`t Receive OTP?{" "}
+        <div className="text-center flex items-center justify-between pt-4 pb-6 md:pb-7 lg:mb-8">
+          <span className="font-poppins text-base font-normal leading-[120%] text-black tracking-[0%]">
+            Didn&apos;t Receive OTP?{" "}
           </span>
           <button
             onClick={handleResendOtp}
             disabled={resentOtpPending}
-            className="font-poppins text-base font-normal leading-[120%] text-[#EBF6FD] tracking-[0%] hover:underline"
+            className="font-poppins text-base font-normal leading-[120%] text-black tracking-[0%] hover:underline"
           >
             {resentOtpPending ? "Resending..." : "RESEND OTP"}
           </button>
@@ -192,12 +189,11 @@ export default function OtpForm() {
         <button
           onClick={handleVerify}
           type="submit"
-          className="w-full h-[52px] bg-[#34A1E8] rounded-[8px] py-[15px] px-[151px] text-lg font-semibold font-poppins leading-[120%] tracking-[0%] text-[#F4F4F4]"
+          className="w-full h-[52px] bg-[#0253F7] rounded-[8px] py-[15px] px-[151px] text-lg font-semibold font-poppins leading-[120%] tracking-[0%] text-[#F4F4F4]"
           disabled={isPending}
         >
           {isPending ? "Verifying..." : "Verify"}
         </button>
-
       </div>
     </div>
   );

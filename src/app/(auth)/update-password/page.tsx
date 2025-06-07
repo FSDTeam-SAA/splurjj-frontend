@@ -4,18 +4,17 @@ import UpdatePasswordForm from "./_components/UpdatePasswordForm";
 const UpdatePassword = () => {
   return (
     <div
-      className={`h-screen w-full flex flex-col items-center justify-center bg-cover bg-center bg-no-repeat bg-[url("/assets/images/auth_bg.jpg")]`}
+      className={`h-screen w-full flex flex-col items-center justify-center `}
     >
-      <div className="pb-[30px]">
-        <h1 className="font-poppins text-[32px] font-semibold leading-[120%] text-[#212121] text-center tracking-[0%]">
-          Update Password
+      <div className="pb-[30px] w-full md:w-[570px]">
+        <h1 className="font-manrope text-[32px] md:text-[36px] ld:text-[40px] font-bold leading-[120%] text-black tracking-[0%]">
+          Reset Password
         </h1>
-        <p className="font-poppins text-base font-normal leading-[150%] text-[#212121] text-center pt-2 tracking-[0%]">
+        <p className="font-manrope text-base font-normal leading-[150%] text-[#424242] pt-[5px] tracking-[0%]">
           Create your new password
         </p>
       </div>
-      <div className="w-full md:w-auto px-[20px]">
-        {/* suspense use  */}
+      <div className="w-full md:w-[570px]">
         <Suspense fallback={<div>Loading...</div>}>
           <UpdatePasswordForm />
         </Suspense>

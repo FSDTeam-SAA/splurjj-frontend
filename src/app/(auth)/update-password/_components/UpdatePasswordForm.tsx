@@ -17,6 +17,7 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
+import PasswordChangeSuccessFullModal from "@/components/shared/modals/PasswordChangeSuccessFullModal";
 
 // Password validation schema
 const passwordSchema = z
@@ -43,6 +44,7 @@ type PasswordFormValues = z.infer<typeof passwordSchema>;
 export default function UpdatePasswordForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [successModal, setSuccessModal] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
@@ -76,8 +78,8 @@ export default function UpdatePasswordForm() {
         toast.error(data?.message || "Something went wrong");
         return;
       } else {
-        toast.success(data?.message || "Email sent successfully!");
-        router.push(`/login`);
+        // toast.success(data?.message || "Email sent successfully!");
+        setSuccessModal(true);
       }
     },
   });
@@ -100,17 +102,14 @@ export default function UpdatePasswordForm() {
     <div className="">
       {/* Form */}
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="py-[32px] px-[24px] rounded-lg bg-white/10  backdrop-blur-md"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="">
           {/* New Password Field */}
           <FormField
             control={form.control}
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#212121] font-normal text-base tracking-[0%] leading-[120%] font-poppins pb-2">
+                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
                   New Password
                 </FormLabel>
                 <FormControl>
@@ -118,10 +117,11 @@ export default function UpdatePasswordForm() {
                     <Input
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your New Password"
-                      className="w-full md:w-[522px] h-[50px] border border-[#595959] rounded-[8px] text-lg font-normal font-poppins leading-[120%] pl-10 text-black placeholder:text-[#616161] bg-black/10 backdrop-blur-sm    outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-0"
+                      className="border border-[#272727] h-[49px] bg-white text-[#131313]
+placeholder:text-[#929292] font-medium font-manrope 
+leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                       {...field}
                     />
-                    <Lock className="absolute left-3 top-3.5 w-5 h-5 text-[#212121]" />
                     <button
                       type="button"
                       className="absolute inset-y-0 right-3 flex items-center"
@@ -147,7 +147,7 @@ export default function UpdatePasswordForm() {
               name="password_confirmation"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#212121] font-normal text-base tracking-[0%] leading-[120%] font-poppins pb-2">
+                  <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
                     Confirm Password
                   </FormLabel>
                   <FormControl>
@@ -155,10 +155,11 @@ export default function UpdatePasswordForm() {
                       <Input
                         type={showConfirmPassword ? "text" : "password"}
                         placeholder="Enter your Confirm Password"
-                        className="w-full md:w-[522px] h-[50px] border border-[#595959] rounded-[8px] text-lg font-normal font-poppins leading-[120%] pl-10 text-black placeholder:text-[#616161] bg-black/10 backdrop-blur-sm    outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-0"
+                        className="border border-[#272727] h-[49px] bg-white text-[#131313]
+placeholder:text-[#929292] font-medium font-manrope 
+leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                         {...field}
                       />
-                      <Lock className="absolute left-3 top-3.5 w-5 h-5 text-[#212121]" />
                       <button
                         type="button"
                         className="absolute inset-y-0 right-3 flex items-center"
@@ -183,13 +184,21 @@ export default function UpdatePasswordForm() {
           {/* Continue Button */}
           <button
             type="submit"
-            className="w-full h-[52px] bg-[#34A1E8] rounded-[8px] py-[16px] px-[81px] text-lg font-semibold font-poppins leading-[120%] tracking-[0%] text-[#F4F4F4]"
+            className="w-full h-[51px] bg-[#0253F7] rounded-[8px] py-[16px] px-[81px] text-lg font-semibold font-poppins leading-[120%] tracking-[0%] text-[#F4F4F4]"
             disabled={isPending}
           >
             {isPending ? "Loading..." : "Continue"}
           </button>
         </form>
       </Form>
+
+      {/* success modal  */}
+      {successModal && (
+        <PasswordChangeSuccessFullModal
+          open={successModal}
+          onOpenChange={setSuccessModal}
+        />
+      )}
     </div>
   );
 }
