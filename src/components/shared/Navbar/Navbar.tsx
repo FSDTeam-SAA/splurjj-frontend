@@ -2,11 +2,21 @@
 
 import ThemeToggle from "@/app/theme-toggle";
 import { Input } from "@/components/ui/input";
-import { ChevronDown, Menu, Search, ShoppingCart, X } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { ChevronDown, Menu, Search, ShoppingCart, User, X } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { toast } from "react-toastify";
+import LogoutModal from "../modals/LogoutModal";
 
 interface Subcategory {
   id: number;
@@ -39,6 +49,7 @@ const Navbar = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const pathName = usePathname();
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
   const sesseion = useSession();
   const token = (sesseion?.data?.user as { token: string })?.token;
@@ -107,6 +118,20 @@ const Navbar = () => {
     { name: "About", href: "/about", hasDropdown: false },
   ];
 
+  const handLogout = () => {
+    try {
+      toast.success("Logout successful!");
+      setTimeout(async () => {
+        await signOut({
+          callbackUrl: "/",
+        });
+      }, 1000);
+    } catch (error) {
+      console.error("Logout failed:", error);
+      toast.error("Logout failed. Please try again.");
+    }
+  };
+
   return (
     <div className="sticky top-0 z-50">
       <div className="w-full h-[16px] bg-[#131313]" />
@@ -126,10 +151,11 @@ const Navbar = () => {
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className={`text-base md:text-lg lg:text-xl leading-[120%] uppercase font-manrope tracking-[0%] font-medium ${pathName === item.href
+                        className={`text-base md:text-lg lg:text-xl leading-[120%] uppercase font-manrope tracking-[0%] font-medium ${
+                          pathName === item.href
                             ? "text-[#0253F7] font-extrabold"
                             : "text-[#424242] hover:text-black"
-                          } transition-colors`}
+                        } transition-colors`}
                       >
                         {item.name}
                       </Link>
@@ -147,10 +173,11 @@ const Navbar = () => {
                         {category.subcategories.length > 0 && (
                           <ChevronDown
                             size={16}
-                            className={`transition-transform ${openDropdown === category.category_id
+                            className={`transition-transform ${
+                              openDropdown === category.category_id
                                 ? "rotate-180"
                                 : ""
-                              }`}
+                            }`}
                           />
                         )}
                       </button>
@@ -196,25 +223,93 @@ const Navbar = () => {
                   </button>
 
                   <div
-                    className={`absolute right-0 top-0 transition-all duration-300 ease-in-out ${isSearchOpen
+                    className={`absolute right-0 top-0 transition-all duration-300 ease-in-out ${
+                      isSearchOpen
                         ? "translate-x-[-40px] w-[240px]"
                         : "w-0 opacity-0"
-                      }`}
+                    }`}
                   >
                     <Input
                       ref={inputRef}
                       placeholder="Search..."
-                      className={`border border-gray-300 rounded-full focus-visible:ring-0 focus-visible:ring-offset-0 pl-2 w-full ${isSearchOpen ? "block" : "hidden"
-                        }`}
+                      className={`border border-gray-300 rounded-full focus-visible:ring-0 focus-visible:ring-offset-0 pl-2 w-full ${
+                        isSearchOpen ? "block" : "hidden"
+                      }`}
                     />
                   </div>
                 </div>
-                {/* theme toggle  */}
-                <ThemeToggle/>
 
                 <button className="p-1 rounded-full hover:bg-gray-100 transition-colors">
                   <ShoppingCart className="text-black w-[33px] h-[33px]" />
                 </button>
+
+                <div>
+                  {token ? (
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className="p-1 rounded-full hover:bg-gray-100 transition-colors border-none outline-none ring-0">
+                        {/* <button className="p-1 rounded-full hover:bg-gray-100 transition-colors"> */}
+                        <User className="text-black w-[33px] h-[33px]" />
+                        {/* </button> */}
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="bg-white w-[130px]">
+                        <Link href="/accounts">
+                          {" "}
+                          <DropdownMenuLabel
+                            className={`text-base md:text-[17px] lg:text-lg font-semibold leading-[120%] tracking-[0%] ${
+                              pathName === "/sign-up"
+                                ? "text-[#0253F7] bold"
+                                : "text-[#131313] hover:text-[#0253F7]"
+                            }`}
+                          >
+                            My Account
+                          </DropdownMenuLabel>{" "}
+                        </Link>
+                        <DropdownMenuItem
+                          onClick={() => setLogoutModalOpen(true)}
+                          className="text-base md:text-[17px] lg:text-lg font-semibold leading-[120%] tracking-[0%] text-[#DB0000] cursor-pointer"
+                        >
+                          Log Out
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  ) : (
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className="p-1 rounded-full hover:bg-gray-100 transition-colors border-none outline-none ring-0">
+                        {/* <button className=""> */}
+                        <User className="text-black w-[33px] h-[33px]" />
+                        {/* </button> */}
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="bg-white w-[98px]">
+                        <Link href="/sign-up">
+                          {" "}
+                          <DropdownMenuLabel
+                            className={`text-base md:text-[17px] lg:text-lg font-semibold leading-[120%] cursor-pointer tracking-[0%] ${
+                              pathName === "/sign-up"
+                                ? "text-[#0253F7] bold"
+                                : "text-[#131313] hover:text-[#0253F7]"
+                            }`}
+                          >
+                            Sign-up
+                          </DropdownMenuLabel>{" "}
+                        </Link>
+                        <Link href="/login">
+                          <DropdownMenuItem
+                            className={`text-base md:text-[17px] lg:text-lg font-semibold cursor-pointer leading-[120%] tracking-[0%] ${
+                              pathName === "/login"
+                                ? "text-[#0253F7] bold"
+                                : "text-[#131313] hover:text-[#0253F7]"
+                            }`}
+                          >
+                            Sign in
+                          </DropdownMenuItem>
+                        </Link>{" "}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  )}
+                </div>
+
+                {/* theme toggle  */}
+                <ThemeToggle />
               </div>
             </div>
           </div>
@@ -266,10 +361,11 @@ const Navbar = () => {
                   <div key={item.name}>
                     <Link
                       href={item.href}
-                      className={`block py-2 px-1 text-lg ${pathName === item.href
+                      className={`block py-2 px-1 text-lg ${
+                        pathName === item.href
                           ? "font-bold text-black"
                           : "font-medium text-gray-600 hover:text-black"
-                        } transition-colors`}
+                      } transition-colors`}
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {item.name}
@@ -288,10 +384,11 @@ const Navbar = () => {
                       {category.subcategories.length > 0 && (
                         <ChevronDown
                           size={16}
-                          className={`transition-transform ${openDropdown === category.category_id
+                          className={`transition-transform ${
+                            openDropdown === category.category_id
                               ? "rotate-180"
                               : ""
-                            }`}
+                          }`}
                         />
                       )}
                     </button>
@@ -320,6 +417,15 @@ const Navbar = () => {
               </div>
             )}
           </div>
+
+          {/* logout modal  */}
+          {logoutModalOpen && (
+            <LogoutModal
+              isOpen={logoutModalOpen}
+              onClose={() => setLogoutModalOpen(false)}
+              onConfirm={handLogout}
+            />
+          )}
         </div>
       </div>
     </div>
