@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 
-import { Eye, EyeOff, Lock, Mail } from "lucide-react";
-// import { Checkbox } from "@/components/ui/checkbox";
+import { Eye, EyeOff } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -27,7 +27,7 @@ const loginFormSchema = z.object({
   password: z
     .string()
     .min(6, { message: "Password must be at least 6 characters" }),
-  //   rememberMe: z.boolean().optional(),
+  rememberMe: z.boolean().optional(),
 });
 
 type LoginFormValues = z.infer<typeof loginFormSchema>;
@@ -43,7 +43,7 @@ export function LogingForm() {
     defaultValues: {
       email: "",
       password: "",
-      //   rememberMe: false,
+      rememberMe: false,
     },
   });
 
@@ -75,18 +75,15 @@ export function LogingForm() {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="py-[32px] px-[24px] rounded-lg bg-white/10  backdrop-blur-md"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="">
         {/* Email Field */}
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-[#212121] font-normal text-base tracking-[0%] leading-[120%] font-poppins pb-2">
-                Email
+              <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
+                Email Address
               </FormLabel>
               <FormControl>
                 <div className="relative">
@@ -94,9 +91,11 @@ export function LogingForm() {
                     {...field}
                     placeholder="Enter your email"
                     type="email"
-                    className="w-full md:w-[522px] h-[50px] border border-[#595959] rounded-[8px] text-base font-normal font-poppins leading-[120%] pl-10 text-black placeholder:text-[#616161] bg-black/10 backdrop-blur-sm    outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-0"
+                    className="border border-[#616161] h-[49px] bg-white text-[#131313]
+placeholder:text-[#929292] font-medium font-manrope 
+leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                   />
-                  <Mail className="absolute left-3 top-3.5 w-5 h-5 text-black" />
+                  {/* <Mail className="absolute left-3 top-3.5 w-5 h-5 text-black" /> */}
                 </div>
               </FormControl>
               <FormMessage />
@@ -105,13 +104,13 @@ export function LogingForm() {
         />
 
         {/* Password Field */}
-        <div className="mt-6">
+        <div className="mt-4">
           <FormField
             control={form.control}
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#212121] font-normal text-base tracking-[0%] leading-[120%] font-poppins pb-2">
+                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
                   Password
                 </FormLabel>
                 <FormControl>
@@ -121,9 +120,11 @@ export function LogingForm() {
                       placeholder="Enter your password"
                       type={showPassword ? "text" : "password"}
                       autoComplete="current-password"
-                      className="w-full md:w-[522px] h-[50px] border border-[#595959] rounded-[8px] text-base font-normal font-poppins leading-[120%] pl-10 text-black placeholder:text-[#616161] bg-black/10 backdrop-blur-sm    outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-0"
+                      className="border border-[#616161] h-[49px] bg-white text-[#131313]
+placeholder:text-[#929292] font-medium font-manrope 
+leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                     />
-                    <Lock className="absolute left-3 top-3.5 w-5 h-5 text-black" />
+                    {/* <Lock className="absolute left-3 top-3.5 w-5 h-5 text-black" /> */}
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
@@ -145,8 +146,8 @@ export function LogingForm() {
         </div>
 
         {/* Remember Me / Forgot Password */}
-        <div className="flex items-center justify-end mt-[16px] mb-6">
-          {/* <FormField
+        <div className="flex items-center justify-between mt-[16px] mb-6 md:mb-8">
+          <FormField
             control={form.control}
             name="rememberMe"
             render={({ field }) => (
@@ -158,30 +159,47 @@ export function LogingForm() {
                 />
                 <label
                   htmlFor="rememberMe"
-                  className="text-sm font-poppins font-normal leading-[120%] text-[#0E2A5C]"
+                  className="text-sm font-manrope font-normal leading-[120%] tracking-[0%] text-[#131313]"
                 >
                   Remember me
                 </label>
               </div>
             )}
-          /> */}
+          />
 
-          <Link
-            href="/forgot-password"
-            className="text-sm font-normal font-poppins leading-[120%] text-[#EBF6FD] tracking-[0%]"
-          >
-            Forgot password?
-          </Link>
+          <div>
+            <Link
+              href="/forgot-password"
+              className="text-sm font-normal font-manrope leading-[120%] text-[#131313] tracking-[0%]"
+            >
+              Forgot password?
+            </Link>
+          </div>
         </div>
 
         {/* Submit Button */}
-        <button
-          type="submit"
-          className="w-full h-[51px] bg-[#34A1E8] rounded-[8px] text-base font-bold tracking-[0%] font-poppins text-white "
-          disabled={isLoading}
-        >
-          {isLoading ? "Signing In..." : "Sign In"}
-        </button>
+        <div className="">
+          <button
+            type="submit"
+            className="w-full h-[51px] bg-[#0253F7] rounded-[8px] text-base font-bold tracking-[0%] font-poppins text-white "
+            disabled={isLoading}
+          >
+            {isLoading ? "Logging..." : "Login"}
+          </button>
+        </div>
+
+        {/* sign up link  */}
+        <div className="text-center mt-6 md:mt-8">
+          <span className="text-base text-[#272727] font-manrope font-normal leading-[150%] tracking-[0%]">
+            Don’t have an account? 
+            <Link
+              href="/sign-up"
+              className="text-[#0253F7] hover:underline font-medium pl-2"
+            >
+               Sign Up
+            </Link>
+          </span>
+        </div>
       </form>
     </Form>
   );
