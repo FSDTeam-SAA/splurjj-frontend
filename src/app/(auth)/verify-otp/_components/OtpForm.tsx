@@ -174,7 +174,7 @@ export default function OtpForm() {
         {/* Resend OTP */}
         <div className="text-center flex items-center justify-between pt-4 pb-6 md:pb-7 lg:mb-8">
           <span className="font-poppins text-base font-normal leading-[120%] text-black tracking-[0%]">
-            Didn&apos;`t Receive OTP?{" "}
+            Didn&apos;t Receive OTP?{" "}
           </span>
           <button
             onClick={handleResendOtp}
