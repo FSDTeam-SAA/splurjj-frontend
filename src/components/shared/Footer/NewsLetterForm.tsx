@@ -12,6 +12,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 const FormSchema = z.object({
   email: z.string().email({
@@ -27,8 +29,29 @@ const NewsLetterForm = () => {
     },
   });
 
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["subsribe"],
+    mutationFn: (data: z.infer<typeof FormSchema>) =>
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/subscribe`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }).then((res) => res.json()),
+    onSuccess: (data) => {
+      if (!data?.success) {
+        toast.error(data?.message || "Something went wrong");
+        return;
+      }
+      toast.success(data?.message || "Subscribed successfully");
+      form.reset();
+    },
+  });
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data);
+    mutate(data);
   }
 
   return (
@@ -46,7 +69,7 @@ const NewsLetterForm = () => {
                 <FormItem>
                   <FormControl>
                     <Input
-                      className="w-[149px] h-[40px] rounded-l-[8px] rounded-r-none bg-white text-base text-black leading-normal placeholder:text-black"
+                      className="w-full h-[40px] rounded-l-[8px] rounded-r-none bg-white text-base text-black leading-normal placeholder:text-black"
                       placeholder="Enter Your Email..."
                       {...field}
                     />
@@ -58,10 +81,11 @@ const NewsLetterForm = () => {
           </div>
           <div className="">
             <button
+              disabled={isPending}
               className="w-[127px] h-[40px] bg-[#0253F7] text-[#F2F2F2] rounded-r-[8px] text-lg font-bold font-manrope leading-normal "
               type="submit"
             >
-              Subscribe
+              {isPending ? "Subscribing..." : "Subscribe"}
             </button>
           </div>
         </form>
