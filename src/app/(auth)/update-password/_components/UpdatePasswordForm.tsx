@@ -4,7 +4,7 @@ import { useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Eye, EyeOff, Lock } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Form,
@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useRouter, useSearchParams } from "next/navigation";
+import {  useSearchParams } from "next/navigation";
 import PasswordChangeSuccessFullModal from "@/components/shared/modals/PasswordChangeSuccessFullModal";
 
 // Password validation schema
@@ -45,7 +45,6 @@ export default function UpdatePasswordForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
-  const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
   const decodedEmail = decodeURIComponent(email || "");

@@ -7,227 +7,121 @@ import * as z from "zod"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useEffect } from "react"
 import { toast } from "react-toastify"
 import { SquarePen } from "lucide-react"
+import { useSession } from "next-auth/react"
+import { useEffect } from "react"
 
 const personalInfoSchema = z.object({
-  firstName: z.string().min(2, "First name must be at least 2 characters"),
-  lastName: z.string().min(2, "Last name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email address"),
-  phone: z.string().min(10, "Phone number must be at least 10 characters"),
-  country: z.string().min(2, "Country is required"),
-  cityState: z.string().min(2, "City/State is required"),
-  address: z.string().min(10, "Address must be at least 10 characters"),
-  postalCode: z.string().min(5, "Postal code must be at least 5 characters"),
+  first_name: z.string().min(2, "First name must be at least 2 characters"),
+  last_name: z.string().min(2, "Last name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email"),
+  phone: z.string().optional(),
+  country: z.string().optional(),
+  city: z.string().optional(),
+  road: z.string().optional(),
+  postal_code: z.string().optional(),
 })
 
 type PersonalInfoFormValues = z.infer<typeof personalInfoSchema>
 
-interface UserProfile {
-  firstName: string
-  lastName: string
-  email: string
-}
+type UserSettingsResponse = {
+  success: boolean;
+  message: string;
+  data: {
+    first_name: string;
+    last_name: string;
+    phone: string;
+    email: string;
+    country: string;
+    city: string;
+    road: string;
+    postal_code: string;
+  };
+};
 
-interface PersonalInformationProps {
-  userProfile: UserProfile
-  setUserProfile: (profile: UserProfile | ((prev: UserProfile) => UserProfile)) => void
-}
 
-// Fetch user profile data
-const fetchUserProfile = async (): Promise<PersonalInfoFormValues> => {
-  try {
-    const response = await fetch("https://dynamic-splurjj.scaleupdevagency.com/api/settings/info", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        // 'Authorization': `Bearer ${token}`, // Add auth token when available
-      },
-    })
+export default function PersonalInformation() {
 
-    if (!response.ok) {
-      if (response.status === 401) {
-        throw new Error("Authentication required. Please login again.")
-      } else if (response.status === 404) {
-        throw new Error("Profile data not found.")
-      } else if (response.status >= 500) {
-        throw new Error("Server error. Please try again later.")
-      } else {
-        const errorData = await response.json().catch(() => ({}))
-        throw new Error(errorData.message || `Failed to fetch profile data`)
-      }
-    }
+  const session = useSession();
+  const token = (session?.data?.user as {token: string})?.token;
 
-    const data = await response.json()
-    return data.data || data
-  } catch (error) {
-    if (error instanceof Error) {
-      throw error
-    } else {
-      throw new Error("Network error. Please check your connection.")
-    }
-  }
-}
 
-// Update user profile
-const updateUserProfile = async (data: PersonalInfoFormValues): Promise<PersonalInfoFormValues> => {
-  try {
-    const response = await fetch("https://dynamic-splurjj.scaleupdevagency.com/api/settings/info", {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        // 'Authorization': `Bearer ${token}`, // Add auth token when available
-      },
-      body: JSON.stringify(data),
-    })
-
-    if (!response.ok) {
-      if (response.status === 401) {
-        throw new Error("Authentication required. Please login again.")
-      } else if (response.status === 422) {
-        const errorData = await response.json()
-        throw new Error(errorData.message || "Validation error. Please check your input.")
-      } else if (response.status >= 500) {
-        throw new Error("Server error. Please try again later.")
-      } else {
-        const errorData = await response.json().catch(() => ({}))
-        throw new Error(errorData.message || `Update failed with status ${response.status}`)
-      }
-    }
-
-    const responseData = await response.json()
-    return responseData.data || responseData
-  } catch (error) {
-    if (error instanceof Error) {
-      throw error
-    } else {
-      throw new Error("Network error. Please check your connection.")
-    }
-  }
-}
-
-export default function PersonalInformation({ userProfile, setUserProfile }: PersonalInformationProps) {
   const queryClient = useQueryClient()
 
-  // Fetch user profile data
-  const {
-    data: profileData,
-    // isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["userProfile"],
-    queryFn: fetchUserProfile,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
-  })
 
-  // Update user profile mutation
-  const updateProfileMutation = useMutation({
-    mutationFn: updateUserProfile,
-    onSuccess: (data) => {
-      // Update the cached data
-      queryClient.setQueryData(["userProfile"], data)
+  
+    // GET API
+    const { data } = useQuery<UserSettingsResponse>({
+      queryKey: ["personal-information"],
+      enabled: !!token,
+      queryFn: () =>
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/updateInfo`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }).then((res) => res.json()),
+    });
 
-      toast.success("Profile updated successfully!", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      })
-      console.log("Profile updated successfully:", data)
-    },
-    onError: (error: Error) => {
-      let errorMessage = "Failed to update profile. Please try again."
 
-      if (error.message.includes("Authentication")) {
-        errorMessage = "Please login again to update your profile."
-      } else if (error.message.includes("Validation")) {
-        errorMessage = "Please check your input and try again."
-      } else if (error.message.includes("Server error")) {
-        errorMessage = "Server is temporarily unavailable. Please try again in a few minutes."
-      } else if (error.message.includes("Network")) {
-        errorMessage = "Please check your internet connection and try again."
+
+
+const form = useForm<PersonalInfoFormValues>({
+  resolver: zodResolver(personalInfoSchema),
+  defaultValues: {
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone: "",
+    country: "",
+    city: "",
+    road: "",
+    postal_code: "",
+  },
+})
+
+useEffect(() => {
+  if (data?.data) {
+    form.reset({
+      first_name: data.data.first_name || "",
+      last_name: data.data.last_name || "",
+      email: data.data.email || "",
+      phone: data.data.phone || "",
+      country: data.data.country || "",
+      city: data.data.city || "",
+      road: data.data.road || "",
+      postal_code: data.data.postal_code || "",
+    })
+  }
+}, [data, form])
+
+
+  const {mutate, isPending} = useMutation({
+    mutationKey : ["updateProfile"],
+    mutationFn : (data: PersonalInfoFormValues)=>fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/updateInfo`,{
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data),
+    }).then((res)=>res.json()),
+    onSuccess: (data)=>{
+      if(!data?.success){
+        toast.error(data?.message || "Something went wrong");
+        return;
       }
-
-      toast.error(errorMessage, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      })
-      console.error("Error updating profile:", error)
-    },
+      toast.success(data?.message || "Profile info updated successfully");
+      queryClient.invalidateQueries({ queryKey: ["personal-information"] });
+    }
   })
-
-  const form = useForm<PersonalInfoFormValues>({
-    resolver: zodResolver(personalInfoSchema),
-    defaultValues: {
-      firstName: userProfile.firstName,
-      lastName: userProfile.lastName,
-      email: userProfile.email,
-      phone: "(307) 555-0133",
-      country: "USA",
-      cityState: "California",
-      address: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      postalCode: "15268959",
-    },
-  })
-
-  // Update form when profile data is fetched
-  useEffect(() => {
-    if (profileData) {
-      form.reset(profileData)
-    }
-  }, [profileData, form])
-
-  // Show error toast if profile fetch fails
-  useEffect(() => {
-    if (error) {
-      toast.error("Failed to load profile data. Please refresh the page.", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      })
-    }
-  }, [error])
-
-  // Watch for changes in firstName, lastName, and email to update parent state instantly
-  const firstName = form.watch("firstName")
-  const lastName = form.watch("lastName")
-  const email = form.watch("email")
-
-  useEffect(() => {
-    if (firstName && lastName && email) {
-      setUserProfile({
-        firstName,
-        lastName,
-        email,
-      })
-    }
-  }, [firstName, lastName, email, setUserProfile])
 
   function onSubmit(data: PersonalInfoFormValues) {
-    updateProfileMutation.mutate(data)
+    console.log(data)
+    mutate(data)
   }
 
-  // if (isLoading) {
-  //   return (
-  //     <div className="flex items-center justify-center h-64">
-  //       <div className="text-lg">Loading profile...</div>
-  //     </div>
-  //   )
-  // }
 
   return (
     <div>
@@ -236,9 +130,9 @@ export default function PersonalInformation({ userProfile, setUserProfile }: Per
         <Button
           className="w-[124px] h-[39px] rounded-[8px] bg-[#0253F7] hover:bg-blue-700 text-white text-base font-bold leading-[120%] tracking-[0%] px-[21px] py-[10px]"
           onClick={form.handleSubmit(onSubmit)}
-          disabled={updateProfileMutation.isPending}
+          disabled={isPending}
         >
-         <SquarePen /> {updateProfileMutation.isPending ? "Updating..." : "Update"}
+         <SquarePen />  {isPending ? "Updating..." : "Update"}
         </Button>
       </div>
 
@@ -247,7 +141,7 @@ export default function PersonalInformation({ userProfile, setUserProfile }: Per
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-7 lg:gap-[30px]">
             <FormField
               control={form.control}
-              name="firstName"
+              name="first_name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-base md:text-[17px] lg:text-lg font-manrope font-medium leading-[120%] tracking-[0%] text-[#131313]">First Name</FormLabel>
@@ -260,7 +154,7 @@ export default function PersonalInformation({ userProfile, setUserProfile }: Per
             />
             <FormField
               control={form.control}
-              name="lastName"
+              name="last_name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-base md:text-[17px] lg:text-lg font-manrope font-medium leading-[120%] tracking-[0%] text-[#131313]">Last Name</FormLabel>
@@ -318,7 +212,7 @@ export default function PersonalInformation({ userProfile, setUserProfile }: Per
             />
             <FormField
               control={form.control}
-              name="cityState"
+              name="city"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-base md:text-[17px] lg:text-lg font-manrope font-medium leading-[120%] tracking-[0%] text-[#131313]">City/State</FormLabel>
@@ -333,7 +227,7 @@ export default function PersonalInformation({ userProfile, setUserProfile }: Per
 
           <FormField
             control={form.control}
-            name="address"
+            name="road"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-base md:text-[17px] lg:text-lg font-manrope font-medium leading-[120%] tracking-[0%] text-[#131313]">Road/Area</FormLabel>
@@ -347,7 +241,7 @@ export default function PersonalInformation({ userProfile, setUserProfile }: Per
 
           <FormField
             control={form.control}
-            name="postalCode"
+            name="postal_code"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-base md:text-[17px] lg:text-lg font-manrope font-medium leading-[120%] tracking-[0%] text-[#131313]">Postal Code</FormLabel>

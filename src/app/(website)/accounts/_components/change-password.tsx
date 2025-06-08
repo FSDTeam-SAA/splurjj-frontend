@@ -17,123 +17,68 @@ import { Input } from "@/components/ui/input";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 const passwordSchema = z
   .object({
-    currentPassword: z.string().min(1, "Current password is required"),
-    newPassword: z
+    current_password: z.string().min(1, "Current password is required"),
+    new_password: z
       .string()
       .min(8, "New password must be at least 8 characters"),
-    confirmPassword: z.string().min(1, "Please confirm your new password"),
+    confirm_new_password: z.string().min(1, "Please confirm your new password"),
   })
-  .refine((data) => data.newPassword === data.confirmPassword, {
+  .refine((data) => data.new_password === data.confirm_new_password, {
     message: "Passwords don't match",
-    path: ["confirmPassword"],
+    path: ["confirm_new_password"],
   });
 
 type PasswordFormValues = z.infer<typeof passwordSchema>;
 
-// Change password API function
-const changePassword = async (
-  data: PasswordFormValues
-): Promise<{ success: boolean }> => {
-  try {
-    const response = await fetch(
-      "https://dynamic-splurjj.scaleupdevagency.com/api/settings/change-password",
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          // 'Authorization': `Bearer ${token}`, // Add auth token when available
-        },
-        body: JSON.stringify({
-          current_password: data.currentPassword,
-          new_password: data.newPassword,
-          new_password_confirmation: data.confirmPassword,
-        }),
-      }
-    );
 
-    if (!response.ok) {
-      if (response.status === 401) {
-        throw new Error("Authentication required. Please login again.");
-      } else if (response.status === 422) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Current password is incorrect");
-      } else if (response.status >= 500) {
-        throw new Error("Server error. Please try again later.");
-      } else {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || `Password change failed`);
-      }
-    }
-
-    const responseData = await response.json();
-    return responseData.data || { success: true };
-  } catch (error) {
-    if (error instanceof Error) {
-      throw error;
-    } else {
-      throw new Error("Network error. Please check your connection.");
-    }
-  }
-};
 
 export default function ChangePassword() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
-  // Change password mutation
-  const changePasswordMutation = useMutation({
-    mutationFn: changePassword,
-    onSuccess: () => {
-      toast.success("Password changed successfully!", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-      form.reset();
-    },
-    onError: (error: Error) => {
-      let errorMessage = "Failed to change password. Please try again.";
+  const session = useSession();
+  const token = (session?.data?.user as { token: string })?.token
 
-      if (error.message.includes("Authentication")) {
-        errorMessage = "Please login again to change your password.";
-      } else if (error.message.includes("incorrect")) {
-        errorMessage = "Current password is incorrect. Please try again.";
-      } else if (error.message.includes("Server error")) {
-        errorMessage =
-          "Server is temporarily unavailable. Please try again in a few minutes.";
-      } else if (error.message.includes("Network")) {
-        errorMessage = "Please check your internet connection and try again.";
-      }
 
-      toast.error(errorMessage, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-    },
-  });
 
   const form = useForm<PasswordFormValues>({
     resolver: zodResolver(passwordSchema),
     defaultValues: {
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
+      current_password: "",
+      new_password: "",
+      confirm_new_password: "",
     },
   });
 
+    const { mutate, isPending } = useMutation({
+      mutationKey: ["change-password"],
+      mutationFn: (values: PasswordFormValues) =>
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/update-password`, {
+          method: "PUT",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(values),
+        }).then((res) => res.json()),
+      onSuccess: (data) => {
+        if (!data?.success) {
+          toast.error(data?.message || "Something went wrong");
+          return;
+        }
+        toast.success(data?.message || "Password changed successfully");
+        form.reset();
+      },
+    });
+
   function onSubmit(data: PasswordFormValues) {
-    changePasswordMutation.mutate(data);
+    console.log(data)
+    mutate(data)
+    
   }
 
   return (
@@ -142,9 +87,9 @@ export default function ChangePassword() {
         <Button
           className="w-[160px] h-[51px] rounded-[8px] bg-[#0253F7] hover:bg-blue-700 text-white font-manrope font-bold leading-[120%] tracking-[0%] px-[61px] py-[16px]"
           onClick={form.handleSubmit(onSubmit)}
-          disabled={changePasswordMutation.isPending}
+          disabled={isPending}
         >
-          {changePasswordMutation.isPending ? "Saving..." : "Save"}
+          {isPending ? "Saving..." : "Save"}
         </Button>
       </div>
       <div className="flex justify-between items-center my-6 md:my-8">
@@ -157,7 +102,7 @@ export default function ChangePassword() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
             control={form.control}
-            name="currentPassword"
+            name="current_password"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-base md:text-[17px] lg:text-lg font-manrope font-medium leading-[120%] tracking-[0%] text-[#131313]">
@@ -190,7 +135,7 @@ export default function ChangePassword() {
           <div className="grid grid-cols-2 gap-6">
             <FormField
               control={form.control}
-              name="newPassword"
+              name="new_password"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-base md:text-[17px] lg:text-lg font-manrope font-medium leading-[120%] tracking-[0%] text-[#131313]">
@@ -219,7 +164,7 @@ export default function ChangePassword() {
             />
             <FormField
               control={form.control}
-              name="confirmPassword"
+              name="confirm_new_password"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-base md:text-[17px] lg:text-lg font-manrope font-medium leading-[120%] tracking-[0%] text-[#131313]">
