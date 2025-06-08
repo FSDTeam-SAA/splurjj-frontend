@@ -2,6 +2,10 @@
 
 import { User, Lock, LogOut } from "lucide-react";
 import ProfileAvatar from "./profile-avatar";
+import LogoutModal from "@/components/shared/modals/LogoutModal";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { signOut } from "next-auth/react";
 
 interface UserProfile {
   first_name: string;
@@ -26,13 +30,30 @@ export default function ProfileSidebar({
   setActiveTab,
   token,
 }: ProfileSidebarProps) {
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+
+  const handLogout = () => {
+    try {
+      toast.success("Logout successful!");
+      setTimeout(async () => {
+        await signOut({
+          callbackUrl: "/",
+        });
+      }, 1000);
+    } catch (error) {
+      console.error("Logout failed:", error);
+      toast.error("Logout failed. Please try again.");
+    }
+  };
   return (
     <div className="w-80 bg-white rounded-lg h-fit">
       <div className="text-center mb-8">
         <ProfileAvatar
           profileImage={profileImage}
           setProfileImage={setProfileImage}
-          userName={`${userProfile?.first_name || ""} ${userProfile?.last_name || ""}`}
+          userName={`${userProfile?.first_name || ""} ${
+            userProfile?.last_name || ""
+          }`}
           token={token}
         />
         <h2 className="text-lg md:text-xl font-semibold leading-[120%] text-[#424242] tracking-[0%] font-poppins pt-3">
@@ -68,11 +89,23 @@ export default function ProfileSidebar({
           Change Password
         </button>
 
-        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left hover:bg-red-50 transition-colors text-lg md:text-xl font-medium leading-[120%] font-poppins text-[#FF0000]">
+        <button
+          onClick={() => setLogoutModalOpen(true)}
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left hover:bg-red-50 transition-colors text-lg md:text-xl font-medium leading-[120%] font-poppins text-[#FF0000]"
+        >
           <LogOut className="w-[30px] h-[30px]" />
           Log out
         </button>
       </nav>
+
+      {/* logout modal  */}
+      {logoutModalOpen && (
+        <LogoutModal
+          isOpen={logoutModalOpen}
+          onClose={() => setLogoutModalOpen(false)}
+          onConfirm={handLogout}
+        />
+      )}
     </div>
   );
 }

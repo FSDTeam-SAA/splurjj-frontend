@@ -24,6 +24,7 @@ interface Content {
   tags: string[] | null
   created_at: string
   updated_at: string
+  image1_url: string
 }
 
 interface ApiResponse {

@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Edit2, Trash2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 
 interface Content {
@@ -27,6 +26,7 @@ interface Content {
   tags: string[] | null;
   created_at: string;
   updated_at: string;
+  image1_url: string;
 }
 
 interface ContentTableProps {
@@ -42,6 +42,9 @@ export default function ContentTable({
   onDelete,
   onEdit,
 }: ContentTableProps) {
+
+
+  console.log(contents)
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return (
@@ -57,32 +60,6 @@ export default function ContentTable({
         hour12: false,
       })
     );
-  };
-
-  const getImageUrl = (imagePath: string) => {
-    if (imagePath && imagePath.startsWith("images/")) {
-      return `${process.env.NEXT_PUBLIC_BACKEND_URL}/storage/${imagePath}`;
-    }
-    return "/placeholder.svg?height=60&width=80";
-  };
-
-  const formatTags = (tags: string[] | null) => {
-    if (!tags || tags.length === 0) return null;
-
-    // Handle different tag formats
-    const cleanTags = tags.flatMap((tag) => {
-      if (typeof tag === "string") {
-        // Remove brackets and split by comma
-        return tag
-          .replace(/[[\]]/g, "")
-          .split(",")
-          .map((t) => t.trim())
-          .filter((t) => t);
-      }
-      return tag;
-    });
-
-    return cleanTags.slice(0, 3); // Show only first 3 tags
   };
 
   if (loading) {
@@ -124,20 +101,20 @@ export default function ContentTable({
       <TableHeader className="bg-gray-50">
         <TableRow>
           <TableHead className="w-80">Blog Name</TableHead>
-          <TableHead className="w-32">Author</TableHead>
           <TableHead className="w-40">Date</TableHead>
-          <TableHead className="w-48">Tags</TableHead>
           <TableHead className="w-24 text-right">Action</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {contents.map((content) => (
+          
           <TableRow key={content.id} className="hover:bg-blue-50/30">
+            
             <TableCell>
               <div className="flex items-center space-x-4">
                 <div className="w-20 h-16 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
                   <Image
-                    src={getImageUrl(content.image1) || "/placeholder.svg"}
+                    src={content.image1_url || "/placeholder.svg"}
                     alt={content.heading}
                     className="w-full h-full object-cover"
                     width={80}
@@ -148,27 +125,13 @@ export default function ContentTable({
                   <h3 className="font-medium text-gray-900 truncate text-sm">
                     {content.heading}
                   </h3>
-                  <p className="text-xs text-gray-500 mt-1 line-clamp-2">
-                    {content.sub_heading}
-                  </p>
+                  <p dangerouslySetInnerHTML={{ __html: content.sub_heading }} className="text-xs text-gray-500 mt-1 line-clamp-2"/>
                 </div>
               </div>
             </TableCell>
             <TableCell>
-              <div className="text-sm text-gray-600">{content.author}</div>
-            </TableCell>
-            <TableCell>
               <div className="text-sm text-gray-600">
                 {formatDate(content.created_at)}
-              </div>
-            </TableCell>
-            <TableCell>
-              <div className="flex flex-wrap gap-1">
-                {formatTags(content.tags)?.map((tag, index) => (
-                  <Badge key={index} variant="secondary" className="text-xs">
-                    {tag}
-                  </Badge>
-                )) || <span className="text-xs text-gray-400">No tags</span>}
               </div>
             </TableCell>
             <TableCell className="text-right">
