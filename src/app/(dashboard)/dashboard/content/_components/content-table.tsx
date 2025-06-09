@@ -11,26 +11,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Edit2, Trash2 } from "lucide-react";
 import Image from "next/image";
-
-interface Content {
-  id: number;
-  category_id: number;
-  subcategory_id: number;
-  heading: string;
-  author: string;
-  date: string;
-  sub_heading: string;
-  body1: string;
-  image1: string;
-  advertising_image: string;
-  tags: string[] | null;
-  created_at: string;
-  updated_at: string;
-  image1_url: string;
-}
+import { Content } from "./ContentDataType";
 
 interface ContentTableProps {
-  contents: Content[];
+  contents?: Content[];
   loading: boolean;
   onDelete: (contentId: number) => void;
   onEdit: (content: Content) => void;
@@ -88,7 +72,7 @@ export default function ContentTable({
     );
   }
 
-  if (contents.length === 0) {
+  if (contents?.length === 0) {
     return (
       <div className="p-8 text-center text-gray-500">
         No content found for this subcategory.
@@ -106,7 +90,7 @@ export default function ContentTable({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {contents.map((content) => (
+        {contents?.map((content) => (
           
           <TableRow key={content.id} className="hover:bg-blue-50/30">
             
@@ -131,7 +115,7 @@ export default function ContentTable({
             </TableCell>
             <TableCell>
               <div className="text-sm text-gray-600">
-                {formatDate(content.created_at)}
+                {formatDate(content.date)}
               </div>
             </TableCell>
             <TableCell className="text-right">
