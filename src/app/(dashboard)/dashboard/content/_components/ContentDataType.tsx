@@ -19,6 +19,8 @@ export type Content = {
   tags: string[];
   category_name: string;
   sub_category_name: string;
-  image1_url: string;
-  advertising_image_url: string;
+  image1: string | null | undefined;
+  advertising_image: string | null | undefined ;
+  advertisingLink: string | null | undefined ;
+  imageLink: string | null | undefined ;
 };

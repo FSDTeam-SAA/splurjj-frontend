@@ -216,36 +216,42 @@ export default function Sidebar() {
   }
 
   return (
-    <div className="w-64 h-screen">
+    <div
+      className="w-64 h-screen bg-[linear-gradient(to_top,_#FFFFFF,_#808080,_#C0C0C0,_#A9A9A9)]
+"
+    >
       <ScrollArea className="flex-1 p-4">
         <div className="space-y-2">
           <div>
             <Link href="/dashboard">
               <Button
                 variant="ghost"
-                className="w-full justify-start text-left text-xs text-gray-500 hover:bg-blue-200/30"
+                className="w-full justify-start text-left text-lg bg-primary text-white hover:bg-blue-200/30"
               >
                 Add Category
               </Button>
             </Link>
           </div>
           {categories.map((category) => (
-            <div key={category.category_id} className="space-y-1">
+            <div
+              key={category.category_id}
+              className="space-y-1 "
+            >
               {/* Category Header */}
               <Button
                 variant="ghost"
                 className="w-full justify-start text-left p-2 h-auto hover:bg-blue-200/50"
                 onClick={() => toggleCategory(category.category_id)}
               >
-                <div className="flex items-center gap-2 w-full">
+                <div className="w-full flex items-center justify-between ">
+                  <span className="text-sm font-medium text-gray-700 truncate">
+                    {category.category_name}
+                  </span>
                   {expandedCategories.has(category.category_id) ? (
                     <ChevronDown className="h-4 w-4 flex-shrink-0" />
                   ) : (
                     <ChevronRight className="h-4 w-4 flex-shrink-0" />
                   )}
-                  <span className="text-sm font-medium text-gray-700 truncate">
-                    {category.category_name}
-                  </span>
                 </div>
               </Button>
 

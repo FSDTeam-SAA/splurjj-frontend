@@ -12,7 +12,8 @@ const DashboardLayout = ({children}: {children: React.ReactNode}) => {
                     <div className='w-64 min-w-[16rem]'>
                         <Sidebar />
                     </div>
-                    <div className='flex-1 overflow-auto p-6'>
+                    <div className='flex-1 overflow-auto p-6 bg-[linear-gradient(to_right,_#FFFFFF,_#808080,_#C0C0C0,_#A9A9A9)]
+'>
                         <main className='h-full'>
                             {children}
                         </main>

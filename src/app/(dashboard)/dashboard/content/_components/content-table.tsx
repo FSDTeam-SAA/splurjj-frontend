@@ -98,7 +98,7 @@ export default function ContentTable({
               <div className="flex items-center space-x-4">
                 <div className="w-20 h-16 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
                   <Image
-                    src={content.image1_url || "/placeholder.svg"}
+                    src={content.image1 || "/placeholder.svg"}
                     alt={content.heading}
                     className="w-full h-full object-cover"
                     width={80}
