@@ -98,7 +98,7 @@ export default function ContentTable({
               <div className="flex items-center space-x-4">
                 <div className="w-20 h-16 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
                   <Image
-                    src={content.image1 || "/placeholder.svg"}
+                    src={content.image1 || content.imageLink || ""}
                     alt={content.heading}
                     className="w-full h-full object-cover"
                     width={80}
@@ -106,10 +106,7 @@ export default function ContentTable({
                   />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-medium text-gray-900 truncate text-sm">
-                    {content.heading}
-                  </h3>
-                  <p dangerouslySetInnerHTML={{ __html: content.sub_heading }} className="text-xs text-gray-500 mt-1 line-clamp-2"/>
+                  <h3 dangerouslySetInnerHTML={{ __html: content.heading }} className="font-medium text-gray-900 truncate text-sm"/>
                 </div>
               </div>
             </TableCell>

@@ -31,8 +31,9 @@ import {
 } from "@/components/ui/popover";
 import QuillEditor from "@/components/ui/quill-editor";
 import { Content } from "./ContentDataType";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { toast } from "react-toastify";
 
 // Zod Schema
 const formSchema = z
@@ -99,6 +100,7 @@ export default function ContentModalForm({
 
   const session = useSession();
   const token = (session?.data?.user as { token: string })?.token;
+  const queryClient = useQueryClient();
 
   console.log(categoryId, subcategoryId);
   console.log({ initialContent });
@@ -159,40 +161,23 @@ export default function ContentModalForm({
   const tags = watch("tags");
 
   // Preview URLs
-  // useEffect(() => {
-  //   if (image1) {
-  //     const url = URL?.createObjectURL(image1);
-  //     setImagePreviewUrl(url);
-  //     return () => URL.revokeObjectURL(url);
-  //   }
-  //   setImagePreviewUrl(null);
-  // }, [image1]);
   useEffect(() => {
-  if (image1 instanceof File) {
-    const url = URL.createObjectURL(image1);
-    setImagePreviewUrl(url);
-    return () => URL.revokeObjectURL(url);
-  }
-  setImagePreviewUrl(null);
-}, [image1]);
-
-  // useEffect(() => {
-  //   if (advertising_image) {
-  //     const url = URL.createObjectURL(advertising_image);
-  //     setAdPreviewUrl(url);
-  //     return () => URL.revokeObjectURL(url);
-  //   }
-  //   setAdPreviewUrl(null);
-  // }, [advertising_image]);
+    if (image1 instanceof File) {
+      const url = URL.createObjectURL(image1);
+      setImagePreviewUrl(url);
+      return () => URL.revokeObjectURL(url);
+    }
+    setImagePreviewUrl(null);
+  }, [image1]);
 
   useEffect(() => {
-  if (advertising_image instanceof File) {
-    const url = URL.createObjectURL(advertising_image);
-    setAdPreviewUrl(url);
-    return () => URL.revokeObjectURL(url);
-  }
-  setAdPreviewUrl(null);
-}, [advertising_image]);
+    if (advertising_image instanceof File) {
+      const url = URL.createObjectURL(advertising_image);
+      setAdPreviewUrl(url);
+      return () => URL.revokeObjectURL(url);
+    }
+    setAdPreviewUrl(null);
+  }, [advertising_image]);
 
   const handleFileUpload = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -241,35 +226,55 @@ export default function ContentModalForm({
 
   const isEditing = !!editingContent;
   const url = isEditing
-    ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${editingContent?.id}`
+    ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${editingContent?.id}?_method=PUT`
     : `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents`;
 
   const method = isEditing ? "POST" : "POST";
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending } = useMutation<FormData, unknown, FormData>({
     mutationKey: ["add-content-and-edit-content"],
 
-    mutationFn: (data: FormData) =>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    mutationFn: (formData: any) =>
       fetch(`${url}`, {
         method: method,
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(data),
-      }),
+        body: formData,
+      }).then((res) => res.json()),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onSuccess: (data: any) => {
+      if (!data?.status) {
+        toast.error(data?.message || "Something went wrong");
+        return;
+      }
+      toast.success(data?.message || "Content added successfully");
+      form.reset();
+      onClose();
+      queryClient.invalidateQueries({ queryKey: ["all-contents"] });
+    }
   });
 
   const onSubmit = (data: FormData) => {
-    // const result = {
-    //   image: data.image1?.name || data.imageLink || null,
-    //   advertising: data.advertising_image?.name || data.advertisingLink || null,
-    //   tags: data.tags,
-    //   date: new Date().toISOString(),
-    // };
+    const formData = new FormData();
+    formData.append("category_id", categoryId.toString());
+    formData.append("subcategory_id", subcategoryId.toString());
+    formData.append("heading", data.heading);
+    formData.append("author", data.author);
+    formData.append("date", data.date.toISOString().split("T")[0]);
+
+    formData.append("sub_heading", data.sub_heading);
+    formData.append("body1", data.body1);
+    formData.append("image1", data.image1 || "");
+    formData.append("advertising_image", data.advertising_image || "");
+    formData.append("imageLink", data.imageLink || "");
+    formData.append("advertisingLink", data.advertisingLink || "");
+    formData.append("tags", JSON.stringify(data.tags));
 
     console.log("Submitted data:", data);
-    mutate(data);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    mutate(formData as any);
   };
 
   return (
@@ -282,10 +287,7 @@ export default function ContentModalForm({
             </DialogTitle>
           </DialogHeader>
           <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className=""
-            >
+            <form onSubmit={form.handleSubmit(onSubmit)} className="">
               {/* heading */}
               <div className="">
                 <FormField
@@ -743,7 +745,3 @@ export default function ContentModalForm({
     </div>
   );
 }
-
-
-
-

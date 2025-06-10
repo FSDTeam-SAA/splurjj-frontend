@@ -226,7 +226,7 @@ export default function Sidebar() {
             <Link href="/dashboard">
               <Button
                 variant="ghost"
-                className="w-full justify-start text-left text-lg bg-primary text-white hover:bg-blue-200/30"
+                className="w-full justify-start text-left text-lg bg-blue-500 hover:bg-primary text-white"
               >
                 Add Category
               </Button>
@@ -245,7 +245,7 @@ export default function Sidebar() {
               >
                 <div className="w-full flex items-center justify-between ">
                   <span className="text-sm font-medium text-gray-700 truncate">
-                    {category.category_name}
+                     {category.category_name}
                   </span>
                   {expandedCategories.has(category.category_id) ? (
                     <ChevronDown className="h-4 w-4 flex-shrink-0" />
