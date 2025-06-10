@@ -11,26 +11,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Edit2, Trash2 } from "lucide-react";
 import Image from "next/image";
-
-interface Content {
-  id: number;
-  category_id: number;
-  subcategory_id: number;
-  heading: string;
-  author: string;
-  date: string;
-  sub_heading: string;
-  body1: string;
-  image1: string;
-  advertising_image: string;
-  tags: string[] | null;
-  created_at: string;
-  updated_at: string;
-  image1_url: string;
-}
+import { Content } from "./ContentDataType";
 
 interface ContentTableProps {
-  contents: Content[];
+  contents?: Content[];
   loading: boolean;
   onDelete: (contentId: number) => void;
   onEdit: (content: Content) => void;
@@ -88,7 +72,7 @@ export default function ContentTable({
     );
   }
 
-  if (contents.length === 0) {
+  if (contents?.length === 0) {
     return (
       <div className="p-8 text-center text-gray-500">
         No content found for this subcategory.
@@ -106,7 +90,7 @@ export default function ContentTable({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {contents.map((content) => (
+        {contents?.map((content) => (
           
           <TableRow key={content.id} className="hover:bg-blue-50/30">
             
@@ -114,7 +98,7 @@ export default function ContentTable({
               <div className="flex items-center space-x-4">
                 <div className="w-20 h-16 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
                   <Image
-                    src={content.image1_url || "/placeholder.svg"}
+                    src={content.image1 || content.imageLink || ""}
                     alt={content.heading}
                     className="w-full h-full object-cover"
                     width={80}
@@ -122,16 +106,13 @@ export default function ContentTable({
                   />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-medium text-gray-900 truncate text-sm">
-                    {content.heading}
-                  </h3>
-                  <p dangerouslySetInnerHTML={{ __html: content.sub_heading }} className="text-xs text-gray-500 mt-1 line-clamp-2"/>
+                  <h3 dangerouslySetInnerHTML={{ __html: content.heading }} className="font-medium text-gray-900 truncate text-sm"/>
                 </div>
               </div>
             </TableCell>
             <TableCell>
               <div className="text-sm text-gray-600">
-                {formatDate(content.created_at)}
+                {formatDate(content.date)}
               </div>
             </TableCell>
             <TableCell className="text-right">
