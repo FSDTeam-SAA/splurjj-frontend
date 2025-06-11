@@ -9,6 +9,8 @@ import {
   Trash2,
   Check,
   X,
+  LogOut,
+  Settings,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -225,16 +227,16 @@ export default function Sidebar() {
             <Link href="/dashboard">
               <Button
                 variant="ghost"
-                className="w-full justify-start text-left text-lg bg-blue-500 hover:bg-primary text-white"
+                className="w-full justify-start items-center gap-3 text-left text-lg bg-blue-500 hover:bg-primary text-white"
               >
-                Add Category
+               <Plus className="h-5 w-5 !text-white" /> Add Category
               </Button>
             </Link>
           </div>
           {categories.map((category) => (
             <div
               key={category.category_id}
-              className="space-y-1 "
+              className={`${category?.category_id ? " bg-white  rounded-lg" : "!bg-transparent"}`}
             >
               {/* Category Header */}
               <Button
@@ -243,7 +245,7 @@ export default function Sidebar() {
                 onClick={() => toggleCategory(category.category_id)}
               >
                 <div className="w-full flex items-center justify-between ">
-                  <span className="text-sm font-medium text-gray-700 truncate">
+                  <span className="text-base font-normal leading-[120%] text-black font-poppins tracking-[0%]">
                      {category.category_name}
                   </span>
                   {expandedCategories.has(category.category_id) ? (
@@ -256,7 +258,7 @@ export default function Sidebar() {
 
               {/* Subcategories */}
               {expandedCategories.has(category.category_id) && (
-                <div className="ml-6 space-y-1">
+                <div className="ml-6 space-y-1  ">
                   {category.subcategories.map((subcategory) => (
                     <div key={subcategory.id} className="group">
                       {editingSubcategory === subcategory.id ? (
@@ -305,7 +307,7 @@ export default function Sidebar() {
                         <div className="flex items-center justify-between p-1 rounded hover:bg-blue-200/30">
                           <Link
                             href={`/dashboard/content/${category.category_id}/${subcategory.id}`}
-                            className="text-xs text-gray-600 truncate flex-1 hover:text-blue-600"
+                            className="text-sm font-poppins leading-[120%] tracking-[0%] text-[#737373] font-medium"
                           >
                             {subcategory.name}
                           </Link>
@@ -393,7 +395,7 @@ export default function Sidebar() {
         <Link href="/dashboard/role">
           <Button
             variant="ghost"
-            className="w-full justify-start text-black hover:bg-red-50"
+            className="w-full justify-start text-[#424242] hover:bg-red-50 text-lg font-medium leading-[120%] tracking-[0%] font-poppins"
           >
             Role Management
           </Button>
@@ -404,9 +406,9 @@ export default function Sidebar() {
         <Link href="/dashboard/settings">
           <Button
             variant="ghost"
-            className="w-full justify-start text-black hover:bg-red-50"
+            className="w-full justify-start items-center gap-3 text-[#424242] hover:bg-red-50 text-lg font-medium leading-[120%] tracking-[0%] font-poppins"
           >
-            Setting
+           <Settings /> Setting
           </Button>
         </Link>
       </div>
@@ -415,9 +417,9 @@ export default function Sidebar() {
         <Button
           onClick={() => setLogoutModalOpen(true)}
           variant="ghost"
-          className="w-full justify-start text-red-500 hover:text-red-700 hover:bg-red-50"
+          className="w-full flex justify-start items-center gap-3 text-base font-poppins leading-[120%] tracking-[0%] text-[#CE3837] hover:text-red-700 hover:bg-red-50"
         >
-          Log Out
+          <LogOut /> Log Out
         </Button>
       </div>
 
