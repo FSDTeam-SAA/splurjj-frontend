@@ -1,3 +1,4 @@
+import { ContentDataTypeResponse } from "@/components/types/ContentDataType";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -5,9 +6,18 @@ import { FaRegCommentDots } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
 
-function HeroSection() {
+function HeroSection({
+  subcategoryId,
+  categoryId,
+  content,
+}: {
+  subcategoryId: string;
+  categoryId: string;
+  content: ContentDataTypeResponse;
+}) {
+  console.log(content);
   return (
-    <div className="container py-[30px] md:py-[50px] lg:py-[72px]">
+    <div className="px-5 md:px-0 py-[30px] md:py-[50px] lg:py-[72px]">
       <div className="grid grid-cols-1 md:grid-cols-7 gap-[30px] md:gap-[50px] lg:gap-[72px]">
         <div className="md:col-span-5">
           <div className="flex items-center gap-4 mb-2">
@@ -32,48 +42,49 @@ function HeroSection() {
             </div>
           </div>
 
-          <h1 className="text-3xl md:text-[45px] lg:text-[60px] font-manrope font-bold leading-[120%] tracking-[0%] text-[#131313]">
-            Headline Title Shown <br /> Here in Big Bold Font
-          </h1>
-          <p className="text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#424242] my-4 md:my-5 lg:my-6">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-            ut{" "}
-          </p>
+          <Link href={`/content/${categoryId}/${subcategoryId}/${content?.id}`}>
+            <h1
+              dangerouslySetInnerHTML={{ __html: content?.heading }}
+              className="text-3xl md:text-[45px] lg:text-[60px] font-manrope font-extrabold leading-[120%] tracking-[0%] text-[#131313] cursor-pointer"
+            />
+          </Link>
+          <p
+            dangerouslySetInnerHTML={{ __html: content?.sub_heading }}
+            className="text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#424242] my-4 md:my-5 lg:my-6"
+          />
+
           <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242]">
-            Credits - 24/08/2025
+            Credits - {content?.date}
           </p>
           <div className="mt-[30px] md:mt-[50px] lg:mt-[72px]">
             <Image
-              src="/assets/videos/blog1.jpg"
+              src={content?.image1 || content?.imageLink || ""}
               alt="blog1"
               width={888}
               height={552}
               className="w-full h-[529px] object-cover rounded-[8px]"
             />
           </div>
+          <p
+            dangerouslySetInnerHTML={{ __html: content?.body1 }}
+            className="text-base font-normal font-manrope leading-normal tracking-[0%] text-[#424242] my-4 md:my-5 lg:my-6"
+          />
         </div>
-        <div className="md:col-span-2 flex flex-col gap-[30px] md:gap-[50px] lg:gap-[72px]">
-          <div>
-            <Image
-              src="/assets/videos/blogSide1.jpg"
-              alt="blogSide1"
-              width={336}
-              height={529}
-              className="w-full h-[500px] object-cover rounded-[8px]"
-            />
-          </div>
-          <div>
-            <Image
-              src="/assets/videos/blogSide2.jpg"
-              alt="blogSide1"
-              width={336}
-              height={353}
-              className="w-full h-[353px] object-cover rounded-[8px]"
-            />
-          </div>
+        <div className="md:col-span-2">
+          <aside className="sticky top-0 h-[700px]">
+            <div>
+              <Image
+                // src="/assets/videos/blogSide1.jpg"
+                src={
+                  content?.advertising_image || content?.advertisingLink || ""
+                }
+                alt="blogSide1"
+                width={336}
+                height={700}
+                className="w-full h-[700px] object-cover rounded-[8px]"
+              />
+            </div>
+          </aside>
         </div>
       </div>
     </div>

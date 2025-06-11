@@ -209,7 +209,7 @@ export default function Sidebar() {
 
   if (loading) {
     return (
-      <div className="w-64 h-screen bg-gradient-to-b from-blue-100 to-blue-300 p-4">
+      <div className="w-64 h-screen p-4">
         <div className="text-center">Loading...</div>
       </div>
     );
@@ -217,8 +217,7 @@ export default function Sidebar() {
 
   return (
     <div
-      className="w-64 h-screen bg-[linear-gradient(to_top,_#FFFFFF,_#808080,_#C0C0C0,_#A9A9A9)]
-"
+      className="w-64 h-screen "
     >
       <ScrollArea className="flex-1 p-4">
         <div className="space-y-2">
