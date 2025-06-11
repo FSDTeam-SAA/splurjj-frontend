@@ -9,10 +9,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Edit2, Trash2 } from "lucide-react";
+import { SquarePen, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { Content } from "./ContentDataType";
-import moment from 'moment';
+import moment from "moment";
 
 interface ContentTableProps {
   contents?: Content[];
@@ -27,9 +27,7 @@ export default function ContentTable({
   onDelete,
   onEdit,
 }: ContentTableProps) {
-
-
-  console.log(contents)
+  console.log(contents);
 
   if (loading) {
     return (
@@ -66,58 +64,59 @@ export default function ContentTable({
   }
 
   return (
-    <Table>
-      <TableHeader className="bg-gray-50">
-        <TableRow>
-          <TableHead className="w-80">Blog Name</TableHead>
-          <TableHead className="w-40">Date</TableHead>
-          <TableHead className="w-24 text-right">Action</TableHead>
+    <Table className="bg-transparent">
+      <TableHeader className="">
+        <TableRow className="border border-[#616161] !h-[39px] w-full py-[10px]">
+          <TableHead className="text-base font-bold text-[#131313] tracking-[0%] leading-[120%] font-manrope border-r border-[#616161] pl-10">Blog Name</TableHead>
+          <TableHead className="border-r border-[#616161] text-center text-base font-bold text-[#131313] tracking-[0%] leading-[120%] font-manrope">Date</TableHead>
+          <TableHead className="text-center text-base font-bold text-[#131313] tracking-[0%] leading-[120%] font-manrope">Action</TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody>
+      <TableBody className="border border-[#616161]">
         {contents?.map((content) => (
-          
-          <TableRow key={content.id} className="hover:bg-blue-50/30">
-            
-            <TableCell>
-              <div className="flex items-center space-x-4">
-                <div className="w-20 h-16 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+          <TableRow key={content.id} className="hover:bg-blue-50/30 border border-[#616161] ">
+            <TableCell className="border-r border-[#616161]">
+              <div className="flex items-center gap-[10px] pl-8">
+                <div className="rounded-[8px] overflow-hidden bg-gray-100 flex-shrink-0">
                   <Image
                     src={content.image1 || content.imageLink || ""}
                     alt={content.heading}
-                    className="w-full h-full object-cover"
-                    width={80}
-                    height={60}
+                    width={130}
+                    height={68}
+                    className="w-[130px] h-[68px] object-cover rounded-[8px]"
                   />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 dangerouslySetInnerHTML={{ __html: content.heading }} className="font-medium text-gray-900 truncate text-sm"/>
+                  <h3
+                    dangerouslySetInnerHTML={{ __html: content.heading }}
+                    className="text-base font-semibold text-[#131313] tracking-[0%] leading-[120%] font-manrope"
+                  />
                 </div>
               </div>
-            </TableCell>
-            <TableCell>
-              <div className="text-sm text-gray-600">
+            </TableCell >
+            <TableCell className="border-r border-[#616161]">
+              <div className="text-base font-medium font-manrope leading-[120%] tracking-[0%] text-[#424242] text-center">
                 {/* {moment(content.date).format('MM/DD/YYYY hh:mmA')} */}
-                 {moment(content.date).format('MM/DD/YYYY')}
+                {moment(content.date).format("MM/DD/YYYY")}
               </div>
             </TableCell>
             <TableCell className="text-right">
-              <div className="flex justify-end gap-1">
+              <div className="flex justify-center items-center gap-4">
                 <Button
-                  size="sm"
+                  size="lg"
                   variant="ghost"
                   className="h-8 w-8 p-0"
                   onClick={() => onEdit(content)}
                 >
-                  <Edit2 className="h-4 w-4 text-blue-600" />
+                  <SquarePen className="h-8 w-8 text-[#424242]" />
                 </Button>
                 <Button
-                  size="sm"
+                  size="lg"
                   variant="ghost"
                   className="h-8 w-8 p-0"
                   onClick={() => onDelete(content.id)}
                 >
-                  <Trash2 className="h-4 w-4 text-red-600" />
+                  <Trash2 className="h-8 w-8 text-red-500" />
                 </Button>
               </div>
             </TableCell>

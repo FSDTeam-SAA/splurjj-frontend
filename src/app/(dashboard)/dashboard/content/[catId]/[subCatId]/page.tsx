@@ -1,16 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { ChevronRight, Plus } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import ContentTable from "../../_components/content-table";
 import { useSession } from "next-auth/react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AllContentResponse, Content } from "../../_components/ContentDataType";
 import ContentModalForm from "../../_components/ContentModalForm";
+import { toast } from "react-toastify";
 
 export default function SubcategoryContentPage() {
   const params = useParams();
@@ -21,6 +21,7 @@ export default function SubcategoryContentPage() {
 
   const session = useSession();
   const token = (session?.data?.user as { token: string })?.token;
+  const queryClient = useQueryClient();
 
   // get all content
 
@@ -44,26 +45,32 @@ export default function SubcategoryContentPage() {
     console.log(error);
   }
 
-  const handleDeleteContent = async (contentId: number) => {
-    if (!confirm("Are you sure you want to delete this content?")) return;
-
-    try {
-      const response = await fetch(
+  // content delete api
+  const { mutate: deleteContent } = useMutation({
+    mutationKey: ["delete-content"],
+    mutationFn: (contentId: number) =>
+      fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${contentId}`,
         {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,
+            "content-type": "application/json",
           },
         }
-      );
-
-      if (!response.ok) {
-        throw new Error(`API responded with status: ${response.status}`);
+      ).then((res) => res.json()),
+    onSuccess: (data) => {
+      if (!data?.status) {
+        toast.error(data?.message || "Something went wrong");
+        return;
       }
-    } catch (error) {
-      console.error("Error deleting content:", error);
-    }
+      toast.success(data?.message || "Content deleted successfully");
+      queryClient.invalidateQueries({ queryKey: ["all-contents"] });
+    },
+  });
+
+  const handleDeleteContent = (contentId: number) => {
+    deleteContent(contentId);
   };
 
   const handleEditContent = (content: Content) => {
@@ -85,37 +92,33 @@ export default function SubcategoryContentPage() {
             <h1 className="text-3xl font-bold text-gray-800 mb-2">
               {data?.data[0]?.category_name} Lists
             </h1>
-            <div className="text-sm text-gray-600">
-              <Link href="/dashboard" className="hover:underline">
+            <div className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%] flex items-center gap-2">
+              <Link href="/dashboard" className="hover:underline text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">
                 Dashboard
               </Link>
-              <span className="mx-2">{">"}</span>
-              <span>{data?.data[0]?.category_name}</span>
-              <span className="mx-2">{">"}</span>
-              <span>{data?.data[0]?.sub_category_name}</span>
+              <span className="text-[#929292]"><ChevronRight className="w-5 h-5"/></span>
+              <span className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">{data?.data[0]?.category_name}</span>
+              <span className=" text-[#929292]"><ChevronRight className="w-5 h-5"/></span>
+              <span className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">{data?.data[0]?.sub_category_name}</span>
             </div>
           </div>
 
           <Button
-            className="bg-blue-500 hover:bg-blue-600 text-white"
+            className="bg-[#34A1E8] hover:bg-primary text-white w-[156px] h-[48px] rounded-[8px] flex items-center gap-2"
             onClick={handleAddContent}
           >
-            <Plus className="h-4 w-4 mr-2" />
+            <Plus className="h-8 w-8 text-white" />
             Add Blog
           </Button>
         </div>
 
         {/* Content Table */}
-        <Card className="bg-white/90 backdrop-blur-sm border-0 shadow-lg">
-          <CardContent className="p-0">
-            <ContentTable
-              contents={data?.data || []}
-              loading={isLoading}
-              onDelete={handleDeleteContent}
-              onEdit={handleEditContent}
-            />
-          </CardContent>
-        </Card>
+        <ContentTable
+          contents={data?.data || []}
+          loading={isLoading}
+          onDelete={handleDeleteContent}
+          onEdit={handleEditContent}
+        />
       </div>
 
       {/* content modal form  */}
