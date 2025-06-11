@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Edit2, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { Content } from "./ContentDataType";
+import moment from 'moment';
 
 interface ContentTableProps {
   contents?: Content[];
@@ -29,22 +30,6 @@ export default function ContentTable({
 
 
   console.log(contents)
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return (
-      date.toLocaleDateString("en-US", {
-        month: "2-digit",
-        day: "2-digit",
-        year: "numeric",
-      }) +
-      " " +
-      date.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-      })
-    );
-  };
 
   if (loading) {
     return (
@@ -112,7 +97,8 @@ export default function ContentTable({
             </TableCell>
             <TableCell>
               <div className="text-sm text-gray-600">
-                {formatDate(content.date)}
+                {/* {moment(content.date).format('MM/DD/YYYY hh:mmA')} */}
+                 {moment(content.date).format('MM/DD/YYYY')}
               </div>
             </TableCell>
             <TableCell className="text-right">

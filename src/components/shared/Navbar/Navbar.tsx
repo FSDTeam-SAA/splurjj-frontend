@@ -51,6 +51,8 @@ const Navbar = () => {
   const pathName = usePathname();
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
+  console.log(pathName)
+
   const sesseion = useSession();
   const token = (sesseion?.data?.user as { token: string })?.token;
 
@@ -113,10 +115,10 @@ const Navbar = () => {
   }, [isSearchOpen]);
 
   // Static menu items (you can keep these or remove them)
-  const staticMenuItems = [
-    { name: "Home", href: "/", hasDropdown: false },
-    { name: "About", href: "/about", hasDropdown: false },
-  ];
+  // const staticMenuItems = [
+  //   { name: "Home", href: "/", hasDropdown: false },
+  //   { name: "About", href: "/about", hasDropdown: false },
+  // ];
 
   const handLogout = () => {
     try {
@@ -147,7 +149,7 @@ const Navbar = () => {
 
                 <ul className="flex items-center gap-4 lg:gap-6">
                   {/* Static Menu Items */}
-                  {staticMenuItems.map((item) => (
+                  {/* {staticMenuItems.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
@@ -160,14 +162,14 @@ const Navbar = () => {
                         {item.name}
                       </Link>
                     </li>
-                  ))}
+                  ))} */}
 
                   {/* Dynamic Categories */}
                   {categories.map((category) => (
                     <li key={category.category_id} className="group relative">
                       <button
                         onClick={() => toggleDropdown(category.category_id)}
-                        className={`flex items-center gap-[10px] text-base md:text-lg lg:text-xl leading-[120%] uppercase font-manrope tracking-[0%] font-medium text-[#424242] hover:text-black transition-colors`}
+                        className={`flex items-center gap-[10px] text-base md:text-lg lg:text-xl leading-[120%] uppercase font-manrope tracking-[0%]  hover:text-black transition-colors ${openDropdown === category.category_id ? "text-primary font-extrabold" : "text-black font-medium"}`}
                       >
                         {category.category_name}
                         {category.subcategories.length > 0 && (
@@ -175,7 +177,7 @@ const Navbar = () => {
                             size={16}
                             className={`transition-transform ${
                               openDropdown === category.category_id
-                                ? "rotate-180"
+                                ? "rotate-180 "
                                 : ""
                             }`}
                           />
@@ -191,7 +193,11 @@ const Navbar = () => {
                                 <Link
                                   key={subcategory.id}
                                   href={`/content/${category.category_id}/${subcategory.id}`}
-                                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+                                  className={`block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 transition-colors ${
+                                    pathName ===
+                                    `/content/${category.category_id}/${subcategory.id}`
+                                      ? " text-primary font-bold"
+                                      : "text-black"}`}
                                   onClick={() => setOpenDropdown(null)}
                                 >
                                   {subcategory.name}
@@ -357,7 +363,7 @@ const Navbar = () => {
             {isMobileMenuOpen && (
               <div className="mt-4 space-y-3">
                 {/* Static Menu Items */}
-                {staticMenuItems.map((item) => (
+                {/* {staticMenuItems.map((item) => (
                   <div key={item.name}>
                     <Link
                       href={item.href}
@@ -371,7 +377,7 @@ const Navbar = () => {
                       {item.name}
                     </Link>
                   </div>
-                ))}
+                ))} */}
 
                 {/* Dynamic Categories */}
                 {categories.map((category) => (
