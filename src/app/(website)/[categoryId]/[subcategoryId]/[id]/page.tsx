@@ -24,6 +24,8 @@ const ContentBlogDetails = ({
   const categoryId = params?.categoryId;
   const subcategoryId = params?.subcategoryId;
 
+  console.log(categoryId, subcategoryId);
+
   const { data, isLoading, error, isError } =
     useQuery<ContentAllDataTypeResponse>({
       queryKey: ["all-content"],

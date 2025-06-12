@@ -39,7 +39,6 @@ export default function RootLayout({
           <AuthProvider>
             <AppProvider>
               {children}
-
               <Toaster position="top-right" />
               <ToastContainer />
             </AppProvider>

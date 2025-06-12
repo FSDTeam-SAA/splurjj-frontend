@@ -1,11 +1,15 @@
-import React from 'react';
-import VideosPage from './videos/page';
+import React from "react";
+
+
+// import VideosPage from './videos/page';
 
 const HomePage = () => {
   return (
-    <div className=''>
-       <VideosPage/>
-    </div> 
+    <div className="">
+      <section>
+      </section>
+      {/* <VideosPage/> */}
+    </div>
   );
 };
 
