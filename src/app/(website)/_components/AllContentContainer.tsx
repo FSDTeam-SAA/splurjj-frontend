@@ -33,8 +33,8 @@ const AllContentContainer = ({
   }
 
   return (
-    <div>
-      {data?.data?.slice(0, 1).map((content: ContentDataTypeResponse) => {
+    <div className="container">
+      {data?.data?.data?.slice(0, 1).map((content: ContentDataTypeResponse) => {
         return <HeroSection key={content.id} content={content} categoryId={categoryId} subcategoryId={subcategoryId} />;
       })}
     </div>

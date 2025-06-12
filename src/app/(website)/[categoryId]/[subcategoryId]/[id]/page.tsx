@@ -45,7 +45,7 @@ const ContentBlogDetails = ({
     return <div>{error instanceof Error ? error.message : String(error)}</div>;
   }
 
-  const blog = data?.data?.find(
+  const blog = data?.data?.data?.find(
     (item: ContentDataTypeResponse) => item?.id === Number(params.id)
   );
   console.log(blog);

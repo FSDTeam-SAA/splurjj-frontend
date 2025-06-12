@@ -40,7 +40,7 @@ export default function SubcategoryContentPage() {
       ).then((res) => res.json()),
   });
 
-  console.log("all contents", data);
+  console.log("all contents", data?.data);
   if (isError) {
     console.log(error);
   }
@@ -90,16 +90,16 @@ export default function SubcategoryContentPage() {
         <div className="flex justify-between items-start mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-800 mb-2">
-              {data?.data[0]?.category_name} Lists
+              {data?.data?.data[0]?.category_name} Lists
             </h1>
             <div className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%] flex items-center gap-2">
               <Link href="/dashboard" className="hover:underline text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">
                 Dashboard
               </Link>
               <span className="text-[#929292]"><ChevronRight className="w-5 h-5"/></span>
-              <span className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">{data?.data[0]?.category_name}</span>
+              <span className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">{data?.data?.data[0]?.category_name}</span>
               <span className=" text-[#929292]"><ChevronRight className="w-5 h-5"/></span>
-              <span className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">{data?.data[0]?.sub_category_name}</span>
+              <span className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">{data?.data?.data[0]?.sub_category_name}</span>
             </div>
           </div>
 
@@ -114,7 +114,7 @@ export default function SubcategoryContentPage() {
 
         {/* Content Table */}
         <ContentTable
-          contents={data?.data || []}
+          contents={data?.data?.data || []}
           loading={isLoading}
           onDelete={handleDeleteContent}
           onEdit={handleEditContent}
