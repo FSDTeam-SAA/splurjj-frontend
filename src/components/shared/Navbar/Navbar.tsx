@@ -192,10 +192,10 @@ const Navbar = () => {
                               {category.subcategories.map((subcategory) => (
                                 <Link
                                   key={subcategory.id}
-                                  href={`/content/${category.category_id}/${subcategory.id}`}
+                                  href={`/${category.category_id}/${subcategory.id}`}
                                   className={`block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 transition-colors ${
                                     pathName ===
-                                    `/content/${category.category_id}/${subcategory.id}`
+                                    `/${category.category_id}/${subcategory.id}`
                                       ? " text-primary font-bold"
                                       : "text-black"}`}
                                   onClick={() => setOpenDropdown(null)}

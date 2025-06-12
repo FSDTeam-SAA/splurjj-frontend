@@ -42,7 +42,7 @@ function HeroSection({
             </div>
           </div>
 
-          <Link href={`/content/${categoryId}/${subcategoryId}/${content?.id}`}>
+          <Link href={`/${categoryId}/${subcategoryId}/${content?.id}`}>
             <h1
               dangerouslySetInnerHTML={{ __html: content?.heading }}
               className="text-3xl md:text-[45px] lg:text-[60px] font-manrope font-extrabold leading-[120%] tracking-[0%] text-[#131313] cursor-pointer"
