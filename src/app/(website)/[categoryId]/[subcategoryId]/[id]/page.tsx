@@ -71,7 +71,7 @@ const ContentBlogDetails = ({
                 </p>
                 <div className="mt-3 md:mt-4">
                   <button className="w-full bg-primary py-[12px] px-[24px] rounded-[4px] text-xl font-bold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-                    Leave A comment
+                    Leave A commentttt
                   </button>
                 </div>
               </div>
