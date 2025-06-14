@@ -1,5 +1,5 @@
-import Image from "next/image";
 import React from "react";
+import Image from "next/image";
 import { FaRegCommentDots } from "react-icons/fa6";
 import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";

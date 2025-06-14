@@ -1,8 +1,5 @@
 "use client";
-import {
-  ContentAllDataTypeResponse,
-  ContentDataTypeResponse,
-} from "@/components/types/ContentDataType";
+import { ContentAllDataTypeResponse } from "@/components/types/ContentDataType";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import HeroSection from "./Hero/HeroSection";
@@ -10,6 +7,7 @@ import TableSkeletonWrapper from "@/components/shared/TableSkeletonWrapper/Table
 import ErrorContainer from "@/components/shared/ErrorContainer/ErrorContainer";
 import NotFound from "@/components/shared/NotFound/NotFound";
 import FirstContent from "./FirstContent/FirstContent";
+import Advertising from "../videos/_components/Advertising";
 
 const AllContentContainer = ({
   categoryId,
@@ -31,14 +29,6 @@ const AllContentContainer = ({
     });
 
   console.log("all content data", data?.data);
-
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (isError) {
-  //   return <div>{error instanceof Error ? error.message : String(error)}</div>;
-  // }
 
   let contentData:
     | string
@@ -87,20 +77,11 @@ const AllContentContainer = ({
   ) {
     contentData = (
       <div>
-        {/* <TableContainer data={data?.data} columns={NewsLetterColumn} /> */}
-        {data?.data?.data
-          ?.slice(0, 1)
-          .map((content: ContentDataTypeResponse) => {
-            return (
-              <div key={content?.id}>
-                <HeroSection
-                  content={content}
-                  categoryId={categoryId}
-                  subcategoryId={subcategoryId}
-                />
-              </div>
-            );
-          })}
+        <HeroSection
+          content={data?.data?.data?.slice(0, 1)}
+          categoryId={categoryId}
+          subcategoryId={subcategoryId}
+        />
       </div>
     );
   }
@@ -111,10 +92,24 @@ const AllContentContainer = ({
       <section>
         <div>{contentData}</div>
       </section>
+
+      <section>
+        <Advertising/>
+      </section>
+
       {/* first content  */}
       <section>
-        <FirstContent />
+        <FirstContent
+          content={data?.data?.data?.slice(1, 5)}
+          subcategoryId={subcategoryId}
+          categoryId={categoryId}
+        />
       </section>
+
+      <section>
+        <Advertising/>
+      </section>
+      
     </div>
   );
 };
