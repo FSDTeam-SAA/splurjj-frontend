@@ -11,6 +11,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AllContentResponse, Content } from "../../_components/ContentDataType";
 import ContentModalForm from "../../_components/ContentModalForm";
 import { toast } from "react-toastify";
+import SplurjjPagination from "@/components/ui/SplurjjPagination";
 
 export default function SubcategoryContentPage() {
   const params = useParams();
@@ -18,6 +19,7 @@ export default function SubcategoryContentPage() {
   const subcategoryId = params?.subCatId;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingContent, setEditingContent] = useState<Content | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const session = useSession();
   const token = (session?.data?.user as { token: string })?.token;
@@ -26,10 +28,10 @@ export default function SubcategoryContentPage() {
   // get all content
 
   const { data, isLoading, error, isError } = useQuery<AllContentResponse>({
-    queryKey: ["all-contents"],
+    queryKey: ["all-contents", currentPage],
     queryFn: () =>
       fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${categoryId}/${subcategoryId}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${categoryId}/${subcategoryId}?paginate_count=7&page=${currentPage}`,
         {
           method: "GET",
           headers: {
@@ -119,6 +121,24 @@ export default function SubcategoryContentPage() {
           onDelete={handleDeleteContent}
           onEdit={handleEditContent}
         />
+
+        {/* pagination  */}
+        <div className="pb-[108px]">
+        {data && data?.total_pages > 1 && (
+          <div className="mt-[30px] w-full flex justify-between">
+            <p className="font-normal text-base leading-[120%] text-secondary-100">
+              Showing {data?.data?.current_page} from {data?.total_pages}
+            </p>
+            <div>
+              <SplurjjPagination
+                currentPage={currentPage}
+                totalPages={data?.total_pages}
+                onPageChange={(page) => setCurrentPage(page)}
+              />
+            </div>
+          </div>
+        )}
+      </div>
       </div>
 
       {/* content modal form  */}
