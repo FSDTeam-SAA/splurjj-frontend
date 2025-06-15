@@ -18,6 +18,9 @@ type StatusDropdownProps = {
 const RoleStatusDropDown = ({ roleId, initialRole }: StatusDropdownProps) => {
   const [role, setRole] = useState<"user" | "admin" | "author" | "editor">(initialRole);
   const token = useAuthToken();
+  const roleToken = token.token
+
+
 
   const handleStatusChange = async (newRole: "user" | "admin" | "author" | "editor") => {
     setRole(newRole); // Optimistic update
@@ -29,7 +32,7 @@ const RoleStatusDropDown = ({ roleId, initialRole }: StatusDropdownProps) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${roleToken}`,
           },
           body: JSON.stringify({ role: newRole }),
         }

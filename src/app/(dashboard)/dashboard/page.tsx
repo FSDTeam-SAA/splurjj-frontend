@@ -8,6 +8,14 @@ import CategoryTable from "./_components/category-table";
 import EditCategoryDialog from "./_components/edit-category-dialog";
 import { useSession } from "next-auth/react";
 
+// Extend the User type to include 'token'
+declare module "next-auth" {
+  interface User {
+    token?: string;
+    role?: string;
+  }
+}
+
 interface Category {
   category_id: number;
   category_name: string;
@@ -34,8 +42,11 @@ export default function CategoryPage() {
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
-const session = useSession();
-const token = (session?.data?.user as {token : string})?.token;
+  const { data: session } = useSession();
+  const userRole = session?.user?.role;
+  const token = session?.user?.token;
+
+  const isAuthor = userRole === "author";
 
   useEffect(() => {
     fetchCategories();
@@ -155,8 +166,7 @@ const token = (session?.data?.user as {token : string})?.token;
               <span>Categories</span>
             </div>
           </div>
-
-          <AddCategoryDialog onAdd={handleAddCategory} />
+          {!isAuthor && <AddCategoryDialog onAdd={handleAddCategory} />}
         </div>
 
         {/* Categories Table */}

@@ -1,6 +1,5 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { JWT } from "next-auth/jwt";
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -35,17 +34,16 @@ export const authOptions: NextAuthOptions = {
           );
 
           const data = await res.json();
-          console.log("Auth API Response:", data);
-
+          
           if (!res.ok || !data?.token) {
             throw new Error(data.message || "Invalid credentials");
           }
 
           return {
-            id: data?.id,
-            name: data?.name,
-            email: data?.email,
-            token: data?.token,
+            id: data.user.id.toString(),
+            email: data.user.email,
+            role: data.user.role,
+            token: data.token,
           };
         } catch (error) {
           console.error("Authentication error:", error);
@@ -55,23 +53,21 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    //eslint-disable-next-line
-    async jwt({ token, user }: { token: JWT; user?: any }) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.name = user.name;
-        token.email = user.email;
+        token.email = user.email ?? "";
+        token.role = user.role;
         token.accessToken = user.token;
       }
       return token;
     },
-    //eslint-disable-next-line
-    async session({ session, token }: { session: any; token: JWT }) {
+    async session({ session, token }) {
       session.user = {
-        id: token.id,
-        name: token.name,
-        email: token.email,
-        token: token.accessToken,
+        id: token.id as string,
+        email: token.email as string,
+        role: token.role as string,
+        token: token.accessToken as string,
       };
       return session;
     },

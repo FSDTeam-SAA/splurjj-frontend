@@ -1,14 +1,22 @@
-"use client"
+"use client";
 import { useSession } from "next-auth/react";
 
-const useAuthToken = (): string | null => {
-    const session = useSession();
+interface AuthData {
+  token: string | null;
+  role: string | null;
+  id: string | null;
+  email: string | null;
+}
 
-  if (typeof window !== "undefined") {
-    return (session?.data?.user as { token?: string })?.token || null;
-  }
+const useAuthToken = (): AuthData => {
+  const { data: session } = useSession();
 
-  return null;
+  return {
+    token: session?.user?.token || null,
+    role: session?.user?.role || null,
+    id: session?.user?.id || null,
+    email: session?.user?.email || null,
+  };
 };
 
 export default useAuthToken;
