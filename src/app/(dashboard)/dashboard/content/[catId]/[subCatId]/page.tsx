@@ -11,6 +11,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AllContentResponse, Content } from "../../_components/ContentDataType";
 import ContentModalForm from "../../_components/ContentModalForm";
 import { toast } from "react-toastify";
+import SplurjjPagination from "@/components/ui/SplurjjPagination";
 
 export default function SubcategoryContentPage() {
   const params = useParams();
@@ -18,6 +19,7 @@ export default function SubcategoryContentPage() {
   const subcategoryId = params?.subCatId;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingContent, setEditingContent] = useState<Content | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const session = useSession();
   const token = (session?.data?.user as { token: string })?.token;
@@ -26,10 +28,10 @@ export default function SubcategoryContentPage() {
   // get all content
 
   const { data, isLoading, error, isError } = useQuery<AllContentResponse>({
-    queryKey: ["all-contents"],
+    queryKey: ["all-contents", currentPage],
     queryFn: () =>
       fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${categoryId}/${subcategoryId}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${categoryId}/${subcategoryId}?paginate_count=7&page=${currentPage}`,
         {
           method: "GET",
           headers: {
@@ -40,7 +42,7 @@ export default function SubcategoryContentPage() {
       ).then((res) => res.json()),
   });
 
-  console.log("all contents", data);
+  console.log("all contents", data?.data);
   if (isError) {
     console.log(error);
   }
@@ -90,16 +92,16 @@ export default function SubcategoryContentPage() {
         <div className="flex justify-between items-start mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-800 mb-2">
-              {data?.data[0]?.category_name} Lists
+              {data?.data?.data[0]?.category_name} Lists
             </h1>
             <div className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%] flex items-center gap-2">
               <Link href="/dashboard" className="hover:underline text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">
                 Dashboard
               </Link>
               <span className="text-[#929292]"><ChevronRight className="w-5 h-5"/></span>
-              <span className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">{data?.data[0]?.category_name}</span>
+              <span className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">{data?.data?.data[0]?.category_name}</span>
               <span className=" text-[#929292]"><ChevronRight className="w-5 h-5"/></span>
-              <span className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">{data?.data[0]?.sub_category_name}</span>
+              <span className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">{data?.data?.data[0]?.sub_category_name}</span>
             </div>
           </div>
 
@@ -114,11 +116,29 @@ export default function SubcategoryContentPage() {
 
         {/* Content Table */}
         <ContentTable
-          contents={data?.data || []}
+          contents={data?.data?.data || []}
           loading={isLoading}
           onDelete={handleDeleteContent}
           onEdit={handleEditContent}
         />
+
+        {/* pagination  */}
+        <div className="pb-[108px]">
+        {data && data?.total_pages > 1 && (
+          <div className="mt-[30px] w-full flex justify-between">
+            <p className="font-normal text-base leading-[120%] text-secondary-100">
+              Showing {data?.data?.current_page} from {data?.total_pages}
+            </p>
+            <div>
+              <SplurjjPagination
+                currentPage={currentPage}
+                totalPages={data?.total_pages}
+                onPageChange={(page) => setCurrentPage(page)}
+              />
+            </div>
+          </div>
+        )}
+      </div>
       </div>
 
       {/* content modal form  */}

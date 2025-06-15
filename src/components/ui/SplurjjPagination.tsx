@@ -71,7 +71,7 @@ const SplurjjPagination: React.FC<PaginationProps> = ({
               } else handlePageClick(currentPage - 1);
             }}
             className={cn(
-              "border border-[#152764] hover:bg-gradient-to-r hover:from-[#4857BD] hover:via-[#6B87DF] hover:to-[#BCC9FA] hover:text-[#4857BD]",
+              "border border-[#0253F7] hover:bg-blue-800  hover:text-white",
               currentPage === 1 &&
                 "cursor-not-allowed bg-[#E3E3E3] border-0  pointer-events-none"
             )}
@@ -87,10 +87,10 @@ const SplurjjPagination: React.FC<PaginationProps> = ({
             <PaginationLink
               onClick={() => handlePageClick(page)}
               className={cn(
-                "border cursor-pointer border-[#4857BD] hover:bg-gradient-to-r hover:from-[#4857BD] hover:via-[#6B87DF] hover:to-[#BCC9FA] hover:text-[#4857BD]",
+                "border cursor-pointer border-[#4857BD] hover:bg-blue-800 hover:text-white",
                 page === currentPage
-                  ? "bg-gradient-to-r from-[#121D42] via-[#152764] to-[#4857BD] text-white"
-                  : "hover:bg-gradient-to-r hover:from-[#4857BD] hover:via-[#6B87DF] hover:to-[#BCC9FA] text-gradient hover:text-[#4857BD]"
+                  ? "bg-[#0253F7] text-white"
+                  : "hover:bg-blue-800 hover:text-white"
               )}
             >
               {page === "..." ? "..." : page}
@@ -108,7 +108,7 @@ const SplurjjPagination: React.FC<PaginationProps> = ({
               }
             }}
             className={cn(
-              "border border-[#152764] hover:bg-gradient-to-r hover:from-[#4857BD] hover:via-[#6B87DF] hover:to-[#BCC9FA]  hover:text-[#4857BD]",
+              "border border-[#0253F7] hover:bg-blue-800  hover:text-white",
               currentPage === totalPages &&
                 "cursor-not-allowed bg-[#E3E3E3] border-0  pointer-events-none"
             )}

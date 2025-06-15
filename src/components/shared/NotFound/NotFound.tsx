@@ -11,7 +11,7 @@ const NotFound = ({ message }: Props) => {
     <div className="w-full h-[400px] flex flex-col items-center justify-center bg-white rounded-lg">
       {/* Image */}
       <Image
-        src="/assets/img/404.png"
+        src="/assets/images/404.png"
         alt="404 Not Found Illustration"
         width={300}
         height={300}
