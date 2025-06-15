@@ -6,7 +6,7 @@ const RoleManagementContainer = () => {
 //   const [currentPage, setCurrentPage] = useState(1);
   const session = useSession();
   const token = (session?.data?.user as { token: string })?.token;
-  console.log({ token });
+  // console.log("TTTTTTTTTTTT",token);
 
   const { data, isLoading, isError, error } = useQuery<RoleAllResponse>({
     queryKey: ["role"],

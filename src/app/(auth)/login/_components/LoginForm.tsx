@@ -49,7 +49,6 @@ export function LogingForm() {
 
   // ✅ Handle submit
   async function onSubmit(data: LoginFormValues) {
-    console.log(data);
     try {
       setIsLoading(true);
 
