@@ -11,9 +11,6 @@ export async function middleware(req: NextRequest) {
 
   // Get the role from the token
   const role = token.role as string;
-
-
-  console.log("RRRRRRRRRRRRRRRRRR", role)
   const { pathname } = req.nextUrl;
 
   // Role-based redirection logic
@@ -36,5 +33,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/"],
+  matcher: ["/dashboard", "/dashboard/:path*"],
 };
