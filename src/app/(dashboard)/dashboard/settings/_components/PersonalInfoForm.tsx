@@ -19,6 +19,7 @@ import Image from "next/image";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   first_name: z.string().min(1, "First name is required"),
@@ -30,6 +31,11 @@ const formSchema = z.object({
     .regex(/^\+?[0-9\s\-()]{7,20}$/, "Invalid phone number"),
   country: z.string().min(1, "Country is required"),
   city: z.string().min(1, "City/State is required"),
+  description: z.string().optional(),
+  facebook_link: z.string().url("Invalid URL").optional(),
+  instagram_link: z.string().url("Invalid URL").optional(),
+  youtube_link: z.string().url("Invalid URL").optional(),
+  twitter_link: z.string().url("Invalid URL").optional(),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -45,6 +51,11 @@ type UserSettingsResponse = {
     country: string;
     city: string;
     profile_pic: string;
+    description?: string;
+    facebook_link?: string;
+    instagram_link?: string;
+    youtube_link?: string;
+    twitter_link?: string;
   };
 };
 
@@ -83,6 +94,11 @@ export default function PersonalInfoForm() {
         phone: data.data.phone,
         country: data.data.country,
         city: data.data.city,
+        description: data.data.description || "",
+        facebook_link: data.data.facebook_link || "",
+        instagram_link: data.data.instagram_link || "",
+        youtube_link: data.data.youtube_link || "",
+        twitter_link: data.data.twitter_link || "",
       });
       setPreviewUrl(data.data.profile_pic || "");
     }
@@ -202,6 +218,7 @@ export default function PersonalInfoForm() {
                             {...field}
                             type={type || "text"}
                             className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                            placeholder={`Enter your ${label.toLowerCase()}`}
                           />
                         </FormControl>
                         <FormMessage />
@@ -209,6 +226,123 @@ export default function PersonalInfoForm() {
                     )}
                   />
                 ))}
+              </div>
+              {/* description  */}
+              <div className=" w-full">
+                <FormField
+                  control={form.control}
+                  name="description"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                        Description
+                      </FormLabel>
+                      <FormControl>
+                        <Textarea
+                          {...field}
+                          className="w-full h-[100px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                          placeholder="Tell us about yourself"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              {/* social url input field  */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-[30px]">
+                <div className="md:col-span-1">
+                  <div className="mb-6">
+                    <FormField
+                      control={form.control}
+                      name="facebook_link"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                            Facebook Url Link
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                              placeholder="https://www.facebook.com/your-profile"
+                              type="url"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="">
+                    <FormField
+                      control={form.control}
+                      name="instagram_link"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                            Instagram Url Link
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                              placeholder="https://www.instagram.com/your-profile"
+                              type="url"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+                <div className="md:col-span-1">
+                  <div className="mb-6">
+                    <FormField
+                      control={form.control}
+                      name="youtube_link"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                            YouTube Url Link
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                              placeholder="https://www.youtube.com/your-channel"
+                              type="url"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div>
+                    <FormField
+                      control={form.control}
+                      name="twitter_link"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                            Twitter Url Link
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                              placeholder="https://www.twitter.com/your-profile"
+                              type="url"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
               </div>
             </form>
           </Form>
@@ -260,8 +394,3 @@ export default function PersonalInfoForm() {
     </div>
   );
 }
-
-
-
-
-

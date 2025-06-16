@@ -95,13 +95,24 @@ export default function SubcategoryContentPage() {
               {data?.data?.data[0]?.category_name} Lists
             </h1>
             <div className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%] flex items-center gap-2">
-              <Link href="/dashboard" className="hover:underline text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">
+              <Link
+                href="/dashboard"
+                className="hover:underline text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]"
+              >
                 Dashboard
               </Link>
-              <span className="text-[#929292]"><ChevronRight className="w-5 h-5"/></span>
-              <span className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">{data?.data?.data[0]?.category_name}</span>
-              <span className=" text-[#929292]"><ChevronRight className="w-5 h-5"/></span>
-              <span className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">{data?.data?.data[0]?.sub_category_name}</span>
+              <span className="text-[#929292]">
+                <ChevronRight className="w-5 h-5" />
+              </span>
+              <span className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">
+                {data?.data?.data[0]?.category_name}
+              </span>
+              <span className=" text-[#929292]">
+                <ChevronRight className="w-5 h-5" />
+              </span>
+              <span className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">
+                {data?.data?.data[0]?.sub_category_name}
+              </span>
             </div>
           </div>
 
@@ -124,21 +135,21 @@ export default function SubcategoryContentPage() {
 
         {/* pagination  */}
         <div className="pb-[108px]">
-        {data && data?.total_pages > 1 && (
-          <div className="mt-[30px] w-full flex justify-between">
-            <p className="font-normal text-base leading-[120%] text-secondary-100">
-              Showing {data?.data?.current_page} from {data?.total_pages}
-            </p>
-            <div>
-              <SplurjjPagination
-                currentPage={currentPage}
-                totalPages={data?.total_pages}
-                onPageChange={(page) => setCurrentPage(page)}
-              />
+          {data && data?.total_pages > 1 && (
+            <div className="mt-[30px] w-full flex justify-between">
+              <p className="font-normal text-base leading-[120%] text-secondary-100">
+                Showing {data?.data?.current_page} from {data?.total_pages}
+              </p>
+              <div>
+                <SplurjjPagination
+                  currentPage={currentPage}
+                  totalPages={data?.total_pages}
+                  onPageChange={(page) => setCurrentPage(page)}
+                />
+              </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
       </div>
 
       {/* content modal form  */}

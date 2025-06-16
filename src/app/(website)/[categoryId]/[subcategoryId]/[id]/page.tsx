@@ -45,10 +45,16 @@ const ContentBlogDetails = ({
     return <div>{error instanceof Error ? error.message : String(error)}</div>;
   }
 
+  // blog details 
   const blog = data?.data?.data?.find(
-    (item: ContentDataTypeResponse) => item?.id === Number(params.id)
+    (item: ContentDataTypeResponse) => item?.id === Number(params?.id)
   );
   console.log(blog);
+
+  const relatedBlog = data?.data?.data?.filter(
+    (item: ContentDataTypeResponse) => item?.id !== Number(params?.id)
+  );
+  console.log("relative blog", relatedBlog);
 
   return (
     <div>
@@ -62,6 +68,7 @@ const ContentBlogDetails = ({
                   dangerouslySetInnerHTML={{ __html: blog?.heading ?? "" }}
                   className="text-[24px] md:text-[32px] lg:text-[40px] font-semibold leading-[120%] text-[#131313] font-manrope tracking-[0%]"
                 />
+
                 <p
                   dangerouslySetInnerHTML={{ __html: blog?.sub_heading ?? "" }}
                   className="text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#424242] py-4 md:py-5 lg:py-6"
@@ -70,8 +77,15 @@ const ContentBlogDetails = ({
                   Credits - {blog?.date}
                 </p>
                 <div className="mt-3 md:mt-4">
-                  <button className="w-full bg-primary py-[12px] px-[24px] rounded-[4px] text-xl font-bold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-                    Leave A commentttt
+                  <button
+                    onClick={() => {
+                      document
+                        ?.getElementById("comment")
+                        ?.scrollIntoView({ behavior: "smooth" });
+                    }}
+                    className="w-full bg-primary py-[12px] px-[24px] rounded-[4px] text-xl font-bold font-manrope leading-[120%] tracking-[0%] uppercase text-white"
+                  >
+                    Leave A comment
                   </button>
                 </div>
               </div>
@@ -189,13 +203,13 @@ const ContentBlogDetails = ({
         <Advertising />
 
         {/* leave a comment  */}
-        <section className="py-10">
+        <section id="comment" className="py-10">
           <LeaveAComment />
         </section>
 
         {/* related blogs  */}
         <section>
-          <RalatedBlog />
+          <RalatedBlog relatedBlogs={relatedBlog?.slice(0, 2)} />
         </section>
       </div>
     </div>
