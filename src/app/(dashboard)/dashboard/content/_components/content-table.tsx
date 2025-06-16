@@ -69,6 +69,7 @@ export default function ContentTable({
         <TableRow className="border border-[#616161] !h-[39px] w-full py-[10px]">
           <TableHead className="text-base font-bold text-[#131313] tracking-[0%] leading-[120%] font-manrope border-r border-[#616161] pl-10">Blog Name</TableHead>
           <TableHead className="border-r border-[#616161] text-center text-base font-bold text-[#131313] tracking-[0%] leading-[120%] font-manrope">Date</TableHead>
+          <TableHead className="border-r border-[#616161] text-center text-base font-bold text-[#131313] tracking-[0%] leading-[120%] font-manrope">Status</TableHead>
           <TableHead className="text-center text-base font-bold text-[#131313] tracking-[0%] leading-[120%] font-manrope">Action</TableHead>
         </TableRow>
       </TableHeader>
@@ -98,6 +99,11 @@ export default function ContentTable({
               <div className="text-base font-medium font-manrope leading-[120%] tracking-[0%] text-[#424242] text-center">
                 {/* {moment(content.date).format('MM/DD/YYYY hh:mmA')} */}
                 {moment(content.date).format("MM/DD/YYYY")}
+              </div>
+            </TableCell>
+            <TableCell className="border-r border-[#616161]">
+              <div className="text-base font-medium font-manrope leading-[120%] tracking-[0%] text-[#424242] text-center">
+                Status
               </div>
             </TableCell>
             <TableCell className="text-right">
