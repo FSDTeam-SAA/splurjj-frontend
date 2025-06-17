@@ -76,7 +76,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
     setIsLoading(true);
     try {
       const response = await fetch(
-        `https://dynamic-splurjj.scaleupdevagency.com/api/show-tags/${tag}?page=${currentPage}&limit=${limit}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/show-tags/${tag}?page=${currentPage}&limit=${limit}`,
         { cache: "no-store" } // Prevent caching for fresh data
       );
       if (!response.ok) {
