@@ -16,7 +16,7 @@ import {
 import { useState, useRef, useEffect } from "react";
 import { Upload, X, Camera } from "lucide-react";
 import Image from "next/image";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 import { Textarea } from "@/components/ui/textarea";
@@ -62,6 +62,7 @@ type UserSettingsResponse = {
 export default function PersonalInfoForm() {
   const session = useSession();
   const token = (session?.data?.user as { token: string })?.token;
+  const queryClient = useQueryClient();
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -164,6 +165,7 @@ export default function PersonalInfoForm() {
         return;
       }
       toast.success(data?.message || "Profile info updated successfully");
+      queryClient.invalidateQueries({ queryKey: ["personal-information", "user-info"] });
     },
     onError: () => {
       toast.error("Failed to update profile info");
@@ -221,7 +223,8 @@ export default function PersonalInfoForm() {
                             placeholder={`Enter your ${label.toLowerCase()}`}
                           />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="text-red-500 text-sm font-medium" />
+
                       </FormItem>
                     )}
                   />
@@ -244,7 +247,8 @@ export default function PersonalInfoForm() {
                           placeholder="Tell us about yourself"
                         />
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-red-500 text-sm font-medium" />
+
                     </FormItem>
                   )}
                 />
@@ -269,7 +273,7 @@ export default function PersonalInfoForm() {
                               type="url"
                             />
                           </FormControl>
-                          <FormMessage />
+                       <FormMessage className="text-red-500 text-sm font-medium" />
                         </FormItem>
                       )}
                     />
@@ -291,7 +295,8 @@ export default function PersonalInfoForm() {
                               type="url"
                             />
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage className="text-red-500 text-sm font-medium" />
+
                         </FormItem>
                       )}
                     />
@@ -315,7 +320,8 @@ export default function PersonalInfoForm() {
                               type="url"
                             />
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage className="text-red-500 text-sm font-medium" />
+
                         </FormItem>
                       )}
                     />
@@ -337,7 +343,8 @@ export default function PersonalInfoForm() {
                               type="url"
                             />
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage className="text-red-500 text-sm font-medium" />
+
                         </FormItem>
                       )}
                     />

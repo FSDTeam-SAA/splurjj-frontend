@@ -28,20 +28,20 @@ const ContentStatusDropDown = ({
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/update-status/${contentId}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/status/${contentId}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${roleToken}`,
           },
-          body: JSON.stringify({ role: newStatus }),
+          body: JSON.stringify({ status: newStatus }),
         }
       );
 
       const data = await res.json();
 
-      if (!res.ok || !data.success) {
+      if (!res.ok || !data.status) {
         toast.error(data.message || "Failed to update role");
         return;
       }
