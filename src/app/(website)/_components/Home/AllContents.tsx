@@ -13,6 +13,7 @@ interface ContentItem {
   id: number;
   category_id: number;
   subcategory_id: number;
+  category_name?: string; // Added property to fix the error
   heading: string;
   author: string;
   date: string;
@@ -77,6 +78,7 @@ const AllContents: React.FC = () => {
   // Get the first content item for display
   const content = contents[0];
 
+
   // Helper function to remove HTML tags
 
   // Function to get complete image URL
@@ -97,7 +99,7 @@ const AllContents: React.FC = () => {
                   Read
                 </button>
                 <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-                  Video
+                  {content.category_name || ""}
                 </button>
               </div>
               <div className="flex items-center gap-2">

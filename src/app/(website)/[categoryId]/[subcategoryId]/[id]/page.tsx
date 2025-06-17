@@ -13,6 +13,7 @@ import { FiTwitter } from "react-icons/fi";
 import { LuFacebook } from "react-icons/lu";
 import { PiYoutubeLogoLight } from "react-icons/pi";
 import RalatedBlog from "../../../_components/RalatedBlog/RalatedBlog";
+import Link from "next/link";
 
 const ContentBlogDetails = ({
   params,
@@ -143,12 +144,14 @@ const ContentBlogDetails = ({
               <div className="md:col-span-5 flex flex-col items-start gap-3 md:gap-4">
                 <div className="flex items-center gap-3 md:gap-4">
                   {blog?.tags?.map((tag, index) => (
-                    <button
+                    <Link href={`/${categoryId}/${subcategoryId}/${params.id}/${tag}`} key={index}>
+                      <button
                       key={index}
                       className="bg-secondary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white"
                     >
                       {tag}
                     </button>
+                    </Link>
                   ))}
                 </div>
               </div>
