@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
+import Link from "next/link";
 
 const FormSchema = z.object({
   comment: z.string().min(10, {
@@ -50,8 +51,8 @@ export function LeaveAComment() {
                   <h4 className="text-lg md:text-xl font-semibold font-manrope leading-[120%] tracking-[0%] text-black uppercase text-left pb-3 md:pb-4 ">
                     Leave A comment
                   </h4>
-                  <FormLabel className="text-lg md:text-xl font-semibold font-manrope leading-[120%] tracking-[0%] text-secondary capitalize">
-                    You must be loggede in to the post
+                  <FormLabel className="text-lg md:text-xl font-semibold font-manrope leading-[120%] tracking-[0%] text-secondary">
+                    you must be <Link href="/login" className="underline">logged in</Link> to the post
                   </FormLabel>
                   <FormControl>
                     <Textarea

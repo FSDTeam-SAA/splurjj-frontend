@@ -43,6 +43,7 @@ export type Content = {
   advertising_image: string;
   advertisingLink: string | null;
   imageLink: string | null;
+  status: 'pending' | 'active';
 };
 
 export type PaginationLink = {
