@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import { FooterForm } from "./_container/FooterForm";
 
-function page() {
+function FooterPage() {
   return (
-    <div>Footer</div>
-  )
+    <div>
+      <FooterForm />
+    </div>
+  );
 }
 
-export default page
+export default FooterPage;

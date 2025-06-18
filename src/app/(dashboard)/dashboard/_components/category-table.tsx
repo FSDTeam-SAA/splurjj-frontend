@@ -60,7 +60,7 @@ export default function CategoryTable({
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-16">ID</TableHead>
+          {/* <TableHead className="w-16">ID</TableHead> */}
           <TableHead>Category Name</TableHead>
           <TableHead className="w-32">Subcategories</TableHead>
           {!isAuthor && (
@@ -71,9 +71,9 @@ export default function CategoryTable({
       <TableBody>
         {categories.map((category) => (
           <TableRow key={category.category_id}>
-            <TableCell className="font-medium">
+            {/* <TableCell className="font-medium">
               {category.category_id}
-            </TableCell>
+            </TableCell> */}
             <TableCell>{category.category_name}</TableCell>
             <TableCell>
               <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
