@@ -54,10 +54,10 @@ export default function DashboardHeader() {
           <div className="flex items-center gap-3">
             <div>
               <Avatar>
-                <AvatarImage src={data?.data?.profile_pic} />
+                <AvatarImage src={data?.data?.profile_pic || "https://github.com/shadcn.png"} />
                 <AvatarFallback className="text-base font-bold leading-normal text-black">
-                  {data?.data?.first_name.charAt(0)}{" "}
-                  {data?.data?.last_name.charAt(0)}
+                  {data?.data?.first_name?.charAt(0) || ""}
+                  {data?.data?.last_name?.charAt(0) || ""}
                 </AvatarFallback>
               </Avatar>
             </div>
