@@ -474,16 +474,18 @@ export default function Sidebar() {
 
           {/* Advertising  */}
 
-          <div className="p-2">
-            <Link href="/dashboard/advertising">
-              <Button
-                variant="ghost"
-                className="w-full justify-start text-[#424242] hover:bg-red-50 text-lg font-medium leading-[120%] tracking-[0%] font-poppins"
-              >
-                Advertising
-              </Button>
-            </Link>
-          </div>
+          {!isAuthor && (
+            <div className="p-2">
+              <Link href="/dashboard/advertising">
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start text-[#424242] hover:bg-red-50 text-lg font-medium leading-[120%] tracking-[0%] font-poppins"
+                >
+                  Advertising
+                </Button>
+              </Link>
+            </div>
+          )}
 
           {!isAuthor && (
             <div className="p-2">
