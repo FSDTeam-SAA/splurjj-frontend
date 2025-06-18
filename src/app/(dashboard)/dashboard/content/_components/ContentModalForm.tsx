@@ -101,15 +101,16 @@ export default function ContentModalForm({
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
+
     defaultValues: {
-      image1: editingContent?.image1 ?? "",
-      imageLink: editingContent?.imageLink ?? "",
-      tags: editingContent?.tags ?? [],
-      author: editingContent?.author ?? "",
-      date: editingContent?.date ? new Date(editingContent.date) : new Date(),
-      heading: editingContent?.heading ?? "",
-      sub_heading: editingContent?.sub_heading ?? "",
-      body1: editingContent?.body1 ?? "",
+      image1: "",
+      imageLink: "",
+      tags: [],
+      author: "",
+      date: new Date(),
+      heading: "",
+      sub_heading: "",
+      body1: "",
     },
   });
 
@@ -132,16 +133,6 @@ export default function ContentModalForm({
   const image1 = watch("image1");
   const imageLink = watch("imageLink");
   const tags = watch("tags");
-
-  // Preview URLs
-  // useEffect(() => {
-  //   if (image1 instanceof File) {
-  //     const url = URL.createObjectURL(image1);
-  //     setImagePreviewUrl(url);
-  //     return () => URL.revokeObjectURL(url);
-  //   }
-  //   setImagePreviewUrl(null);
-  // }, [image1]);
 
   // Preview URLs
   useEffect(() => {
@@ -221,9 +212,10 @@ export default function ContentModalForm({
         toast.error(data?.message || "Something went wrong");
         return;
       }
-      toast.success(data?.message || "Content added successfully");
       form.reset();
       onClose();
+      toast.success(data?.message || "Content added successfully");
+
       queryClient.invalidateQueries({ queryKey: ["all-contents"] });
     },
   });

@@ -15,6 +15,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { ColorPicker } from "@/components/ui/color-picker";
+import { useSession } from "next-auth/react";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   facebook_link: z
@@ -31,7 +35,7 @@ const formSchema = z.object({
     .refine((val) => !val || z.string().url().safeParse(val).success, {
       message: "Please enter a valid Instagram URL.",
     }),
-  youtube_link: z
+  linkedin_link: z
     .string()
     .trim()
     .optional()
@@ -45,14 +49,14 @@ const formSchema = z.object({
     .refine((val) => !val || z.string().url().safeParse(val).success, {
       message: "Please enter a valid Twitter URL.",
     }),
-  google_play: z
+  google_play_link: z
     .string()
     .trim()
     .optional()
     .refine((val) => !val || z.string().url().safeParse(val).success, {
       message: "Please enter a valid Google Play URL.",
     }),
-  app_store: z
+  app_store_link: z
     .string()
     .trim()
     .optional()
@@ -60,28 +64,101 @@ const formSchema = z.object({
       message: "Please enter a valid App Store URL.",
     }),
   copyright: z.string().min(10, "Copyright is required"),
-  color: z.string().min(6, {
+  bg_color: z.string().min(6, {
     message: "Please pick a background color.",
   }),
 });
 
+export type FooterLink = {
+  name: string;
+  named_url: string;
+};
+
+export type FooterApiResponse = {
+  success: boolean;
+  message: string;
+  data: {
+    footer_links: FooterLink[];
+    facebook_link: string;
+    instagram_link: string;
+    linkedin_link: string;
+    twitter_link: string;
+    app_store_link: string;
+    google_play_link: string;
+    bg_color: string;
+    copyright: string;
+  };
+};
+
 export function FooterForm() {
+  const session = useSession();
+  const token = (session?.data?.user as { token?: string })?.token;
+
+  const { data } = useQuery<FooterApiResponse>({
+    queryKey: ["footer-content-data"],
+    queryFn: () =>
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/footer`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.json()),
+  });
+
+  console.log(data?.data?.app_store_link)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       facebook_link: "",
       instagram_link: "",
-      youtube_link: "",
+      linkedin_link: "",
       twitter_link: "",
-      google_play: "",
-      app_store: "",
+      google_play_link: "",
+      app_store_link: "",
       copyright: "",
-      color: "#000000",
+      bg_color: "#000000",
+    },
+  });
+
+   useEffect(() => {
+    if (data?.data) {
+      form.reset({
+        facebook_link: data?.data?.facebook_link || "",
+        instagram_link: data?.data?.instagram_link || "",
+        linkedin_link: data?.data?.linkedin_link || "",
+        twitter_link: data?.data?.twitter_link || "",
+        google_play_link: data?.data?.google_play_link || "",
+        app_store_link: data?.data?.app_store_link || "",
+        copyright: data?.data?.copyright || "",
+        bg_color: data?.data?.bg_color || "#000000",
+      });
+    }
+  }, [data, form]);
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["footer-content"],
+    mutationFn: (values: z.infer<typeof formSchema>) =>
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/footer/update`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(values),
+      }).then((res) => res.json()),
+    onSuccess: (data) => {
+      if (!data?.success) {
+        toast.error(data?.message || "Something went wrong");
+        return;
+      }
+      toast.success(data?.message || "Footer updated successfully");
     },
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log("Submitted Values:", values);
+    mutate(values);
   };
 
   return (
@@ -92,7 +169,7 @@ export function FooterForm() {
             {/* Color Picker */}
             <FormField
               control={form.control}
-              name="color"
+              name="bg_color"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-base font-bold text-black">
@@ -159,11 +236,11 @@ export function FooterForm() {
             <div className="">
               <FormField
                 control={form.control}
-                name="youtube_link"
+                name="linkedin_link"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
-                      YouTube Url Link
+                      Linkedin Url Link
                     </FormLabel>
                     <FormControl>
                       <Input
@@ -203,7 +280,7 @@ export function FooterForm() {
             <div className="">
               <FormField
                 control={form.control}
-                name="app_store"
+                name="app_store_link"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
@@ -225,7 +302,7 @@ export function FooterForm() {
             <div>
               <FormField
                 control={form.control}
-                name="google_play"
+                name="google_play_link"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
@@ -270,10 +347,11 @@ export function FooterForm() {
           <div className="flex justify-center items-center pt-5">
             <Button
               size={"lg"}
+              disabled={isPending}
               type="submit"
               className="py-3 px-10 rounded-lg bg-primary text-white font-semibold leading-normal text-lg"
             >
-              Submit
+              {isPending ? "Sending..." : "Submit"}
             </Button>
           </div>
         </form>
