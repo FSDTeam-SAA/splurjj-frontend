@@ -1,5 +1,5 @@
 import React from "react";
-import FooterForm from "./_container/FooterForm";
+import { FooterForm } from "./_container/FooterForm";
 
 function FooterPage() {
   return (

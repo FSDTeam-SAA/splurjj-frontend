@@ -38,12 +38,9 @@ import { toast } from "react-toastify";
 // Zod Schema
 const formSchema = z
   .object({
-    // image1: z.instanceof(File).optional(),
-    // image1: z.union([z.instanceof(File), z.string()]).optional(),
     image1: z.union([z.instanceof(File), z.string()]).optional(),
     imageLink: z.string().url().optional().or(z.literal("")),
     advertising_image: z.union([z.instanceof(File), z.string()]).optional(),
-    // advertising_image: z.instanceof(File).optional(),
     advertisingLink: z.string().url().optional().or(z.literal("")),
     tags: z.array(z.string()).max(10, "Max 10 tags"),
     author: z.string().min(2, {
@@ -66,10 +63,6 @@ const formSchema = z
   .refine((data) => data.image1 || data.imageLink, {
     message: "Please provide an image file or link",
     path: ["image1"],
-  })
-  .refine((data) => data.advertising_image || data.advertisingLink, {
-    message: "Please provide an advertising file or link",
-    path: ["advertising_image"],
   });
 
 type FormData = z.infer<typeof formSchema>;
@@ -93,7 +86,6 @@ export default function ContentModalForm({
   editingContent,
 }: ContentFormModalProps) {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
-  const [adPreviewUrl, setAdPreviewUrl] = useState<string | null>(null);
   const [tagInput, setTagInput] = useState("");
   const [open, setOpen] = useState(false);
   const [month, setMonth] = useState<Date | undefined>(undefined);
@@ -109,24 +101,9 @@ export default function ContentModalForm({
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
-    // defaultValues: {
-    //   image1: undefined,
-    //   imageLink: "",
-    //   advertising_image: undefined,
-    //   advertisingLink: "",
-    //   tags: [],
-    //   author: "",
-    //   date: new Date(),
-    //   heading: editingContent?.heading ?? "",
-    //   sub_heading: "",
-    //   body1: "",
-    // },
-
     defaultValues: {
       image1: editingContent?.image1 ?? "",
       imageLink: editingContent?.imageLink ?? "",
-      advertising_image: editingContent?.advertising_image ?? "",
-      advertisingLink: editingContent?.advertisingLink ?? "",
       tags: editingContent?.tags ?? [],
       author: editingContent?.author ?? "",
       date: editingContent?.date ? new Date(editingContent.date) : new Date(),
@@ -141,8 +118,6 @@ export default function ContentModalForm({
       form.reset({
         image1: editingContent.image1 ?? "",
         imageLink: editingContent.imageLink ?? "",
-        advertising_image: editingContent.advertising_image ?? "",
-        advertisingLink: editingContent.advertisingLink ?? "",
         tags: editingContent.tags ?? [],
         author: editingContent.author ?? "",
         date: editingContent.date ? new Date(editingContent.date) : new Date(),
@@ -151,14 +126,22 @@ export default function ContentModalForm({
         body1: editingContent.body1 ?? "",
       });
     }
-  }, [editingContent]);
+  }, [editingContent, form]);
 
   const { watch, setValue } = form;
   const image1 = watch("image1");
   const imageLink = watch("imageLink");
-  const advertising_image = watch("advertising_image");
-  const advertisingLink = watch("advertisingLink");
   const tags = watch("tags");
+
+  // Preview URLs
+  // useEffect(() => {
+  //   if (image1 instanceof File) {
+  //     const url = URL.createObjectURL(image1);
+  //     setImagePreviewUrl(url);
+  //     return () => URL.revokeObjectURL(url);
+  //   }
+  //   setImagePreviewUrl(null);
+  // }, [image1]);
 
   // Preview URLs
   useEffect(() => {
@@ -166,42 +149,31 @@ export default function ContentModalForm({
       const url = URL.createObjectURL(image1);
       setImagePreviewUrl(url);
       return () => URL.revokeObjectURL(url);
+    } else if (typeof image1 === "string" && image1) {
+      // If it's a string (existing image URL), use it directly
+      setImagePreviewUrl(image1);
+    } else {
+      setImagePreviewUrl(null);
     }
-    setImagePreviewUrl(null);
   }, [image1]);
-
-  useEffect(() => {
-    if (advertising_image instanceof File) {
-      const url = URL.createObjectURL(advertising_image);
-      setAdPreviewUrl(url);
-      return () => URL.revokeObjectURL(url);
-    }
-    setAdPreviewUrl(null);
-  }, [advertising_image]);
 
   const handleFileUpload = (
     event: React.ChangeEvent<HTMLInputElement>,
-    type: "image" | "advertising"
+    type: "image"
   ) => {
     const file = event.target.files?.[0];
     if (file) {
       if (type === "image") {
         setValue("image1", file);
         setValue("imageLink", "");
-      } else {
-        setValue("advertising_image", file);
-        setValue("advertisingLink", "");
       }
     }
   };
 
-  const removeFile = (type: "image" | "advertising") => {
+  const removeFile = (type: "image") => {
     if (type === "image") {
       setValue("image1", undefined);
       setImagePreviewUrl(null);
-    } else {
-      setValue("advertising_image", undefined);
-      setAdPreviewUrl(null);
     }
   };
 
@@ -243,7 +215,7 @@ export default function ContentModalForm({
         },
         body: formData,
       }).then((res) => res.json()),
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onSuccess: (data: any) => {
       if (!data?.status) {
         toast.error(data?.message || "Something went wrong");
@@ -253,7 +225,7 @@ export default function ContentModalForm({
       form.reset();
       onClose();
       queryClient.invalidateQueries({ queryKey: ["all-contents"] });
-    }
+    },
   });
 
   const onSubmit = (data: FormData) => {
@@ -267,9 +239,8 @@ export default function ContentModalForm({
     formData.append("sub_heading", data.sub_heading);
     formData.append("body1", data.body1);
     formData.append("image1", data.image1 || "");
-    formData.append("advertising_image", data.advertising_image || "");
     formData.append("imageLink", data.imageLink || "");
-    formData.append("advertisingLink", data.advertisingLink || "");
+
     formData.append("tags", JSON.stringify(data.tags));
 
     console.log("Submitted data:", data);
@@ -507,10 +478,11 @@ export default function ContentModalForm({
                     name="image1"
                     render={() => (
                       <FormItem>
-                        {imagePreviewUrl ? (
+                        {imagePreviewUrl ||
+                        (typeof image1 === "string" && image1) ? (
                           <div className="relative">
                             <Image
-                              src={imagePreviewUrl}
+                              src={imagePreviewUrl || (image1 as string)}
                               alt="Preview"
                               width={400}
                               height={400}
@@ -523,10 +495,6 @@ export default function ContentModalForm({
                             >
                               <X className="w-4 h-4 text-white" />
                             </button>
-                            {/* <p className="text-black text-xs mt-1">
-                              {image1?.name} (
-                              {Math.round((image1?.size || 0) / 1024)} KB)
-                            </p> */}
                           </div>
                         ) : (
                           <>
@@ -536,18 +504,18 @@ export default function ContentModalForm({
                               </FormLabel>
                             </div>
                             <FormControl>
-                              <div className="relative  flex items-center justify-center border rounded-[8px]">
+                              <div className="relative flex items-center justify-center border rounded-[8px]">
                                 <input
                                   type="file"
                                   accept="image/*"
                                   onChange={(e) => handleFileUpload(e, "image")}
                                   disabled={!!imageLink}
-                                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer border  text-black"
+                                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer border text-black"
                                   id="image-upload"
                                 />
                                 <button
                                   type="button"
-                                  className=" text-black px-6 py-2 bg-white w-[115px] h-[89px]"
+                                  className="text-black px-6 py-2 bg-white w-[115px] h-[89px]"
                                 >
                                   <label
                                     htmlFor="image-upload"
@@ -570,6 +538,7 @@ export default function ContentModalForm({
                     )}
                   />
 
+                  {/* Rest of your code remains the same */}
                   <div className="flex items-center gap-4">
                     <div className="flex-1 h-px bg-white/30" />
                     <span className="text-black text-lg leading-normal font-semibold font-poppins pt-4 pb-2">
@@ -592,124 +561,6 @@ export default function ContentModalForm({
                             placeholder="https://example.com/image.jpg"
                             {...field}
                             disabled={!!image1}
-                            className="border border-[#e2e8f0]"
-                          />
-                        </FormControl>
-                        {field.value && (
-                          <p className="text-xs text-white/70 bg-white/10 p-2 rounded mt-1">
-                            Link added: {field.value}
-                          </p>
-                        )}
-                        <FormMessage className="text-white/90" />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
-
-              {/* Advertising Upload */}
-              <div className="pt-4">
-                <h2 className="text-lg font-medium font-poppins text-black leading-[120%] tracking-[0%] ">
-                  Advertising
-                </h2>
-                <div className="border border-[#e2e8f0] rounded-lg p-5 mt-2">
-                  <FormField
-                    control={form.control}
-                    name="advertising_image"
-                    render={() => (
-                      <FormItem>
-                        {adPreviewUrl ? (
-                          <div className="relative">
-                            <Image
-                              src={adPreviewUrl}
-                              alt="Preview"
-                              width={400}
-                              height={400}
-                              className="w-full h-48 object-contain bg-white/10 rounded-lg p-2"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => removeFile("advertising")}
-                              className="absolute top-2 right-2 bg-black/50 text-black p-1 rounded-full hover:bg-black/70"
-                            >
-                              <X className="w-4 h-4 text-white" />
-                            </button>
-                            {/* <p className="text-black text-xs mt-1">
-                              {advertising_image?.name} (
-                              {Math.round(
-                                (advertising_image?.size || 0) / 1024
-                              )}{" "}
-                              KB)
-                            </p> */}
-                          </div>
-                        ) : (
-                          <>
-                            <div className="flex items-center justify-center">
-                              <FormLabel className="w-full text-base text-center font-medium font-poppins text-black leading-[120%] tracking-[0%] pb-2">
-                                Upload your advertising file
-                              </FormLabel>
-                            </div>
-                            <FormControl>
-                              <div className="relative flex items-center justify-center border rounded-[8px]">
-                                <input
-                                  type="file"
-                                  accept="image/*"
-                                  onChange={(e) =>
-                                    handleFileUpload(e, "advertising")
-                                  }
-                                  disabled={!!advertisingLink}
-                                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                                  id="ad-upload"
-                                />
-                                <Button
-                                  type="button"
-                                  variant="secondary"
-                                  className=" text-gray-700 px-6 py-2  bg-white w-[115px] h-[89px]"
-                                  asChild
-                                >
-                                  <label
-                                    htmlFor="ad-upload"
-                                    className={`flex flex-col items-center gap-2 ${
-                                      advertisingLink
-                                        ? "opacity-50 pointer-events-none"
-                                        : ""
-                                    }`}
-                                  >
-                                    <Upload className="!w-8 !h-8" />
-                                    Upload
-                                  </label>
-                                </Button>
-                              </div>
-                            </FormControl>
-                          </>
-                        )}
-                        <FormMessage className="text-white/90" />
-                      </FormItem>
-                    )}
-                  />
-
-                  <div className="flex items-center gap-4">
-                    <div className="flex-1 h-px bg-white/30" />
-                    <span className="text-black text-lg leading-normal font-semibold font-poppins pt-4 pb-2">
-                      Or
-                    </span>
-                    <div className="flex-1 h-px bg-white/30" />
-                  </div>
-
-                  <FormField
-                    control={form.control}
-                    name="advertisingLink"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-black text-sm">
-                          Embed advertising link
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            type="url"
-                            placeholder="https://example.com/ad.jpg"
-                            {...field}
-                            disabled={!!advertising_image}
                             className="border border-[#e2e8f0]"
                           />
                         </FormControl>
