@@ -5,8 +5,6 @@ import React, { useEffect, useState } from "react";
 import { FaRegCommentDots } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
-import AllContentsCarousel from "./AllContentsCarousel";
-import Link from "next/link";
 
 // Interface for ContentItem
 interface ContentItem {
@@ -14,6 +12,7 @@ interface ContentItem {
   category_id: number;
   subcategory_id: number;
   category_name?: string; // Added property to fix the error
+  sub_category_name?: string; // Added property to fix the error
   heading: string;
   author: string;
   date: string;
@@ -96,10 +95,10 @@ const AllContents: React.FC = () => {
             <div className="flex items-center gap-4 mb-2">
               <div className="flex items-center gap-[1.5px]">
                 <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-                  Read
+                  {content.category_name || ""}
                 </button>
                 <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-                  {content.category_name || ""}
+                  {content.sub_category_name || ""}
                 </button>
               </div>
               <div className="flex items-center gap-2">
@@ -126,16 +125,6 @@ const AllContents: React.FC = () => {
             <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242]">
               {content.author} - {content.date}
             </p>
-            <div className="mt-[30px] md:mt-[50px] lg:mt-[72px]">
-              <Image
-                src={getImageUrl(content.image1)}
-                alt={(content.heading) || "blog image"}
-                width={888}
-                height={552}
-                className="w-full h-[529px] object-cover rounded-[8px]"
-                priority
-              />
-            </div>
           </div>
           <div className="md:col-span-2 flex flex-col gap-[30px] md:gap-[50px] lg:gap-[72px]">
             <div>
@@ -151,11 +140,7 @@ const AllContents: React.FC = () => {
         </div>
       </div>
       <div>
-        {/* Pass all contents or specific content to the carousel */}
-        <AllContentsCarousel contents={contents} selectedIndex={1} />
-      </div>
-      <div>
-        <Link href="/">More</Link>
+       
       </div>
     </div>
   );

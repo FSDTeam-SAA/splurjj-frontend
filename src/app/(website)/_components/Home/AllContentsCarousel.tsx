@@ -2,13 +2,21 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { MessageCircle, Share, Target, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  MessageCircle,
+  Share,
+  Target,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 
 // Interface for ContentItem
 interface ContentItem {
   id: number;
   category_id: number;
   subcategory_id: number;
+  category_name?: string;
+  sub_category_name?: string;
   heading: string;
   author: string;
   date: string;
@@ -30,7 +38,10 @@ interface AllContentsCarouselProps {
   selectedIndex?: number;
 }
 
-function AllContentsCarousel({ contents = [], selectedIndex = 0 }: AllContentsCarouselProps) {
+function AllContentsCarousel({
+  contents = [],
+  selectedIndex = 0,
+}: AllContentsCarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
@@ -66,30 +77,30 @@ function AllContentsCarousel({ contents = [], selectedIndex = 0 }: AllContentsCa
   };
 
   // Helper functions
-  const parseTags = (tags: string[] | string): string[] => {
-    if (Array.isArray(tags)) return tags;
-    try {
-      return JSON.parse(tags) || [];
-    } catch {
-      return [];
-    }
-  };
+  // const parseTags = (tags: string[] | string): string[] => {
+  //   if (Array.isArray(tags)) return tags;
+  //   try {
+  //     return JSON.parse(tags) || [];
+  //   } catch {
+  //     return [];
+  //   }
+  // };
 
   const stripHtmlTags = (html: string): string => {
     if (!html) return "";
     return html.replace(/<[^>]*>/g, "");
   };
 
-  const getTagColors = (tag: string): string => {
-    const colors: Record<string, string> = {
-      news: "bg-blue-600",
-      sports: "bg-green-600",
-      entertainment: "bg-purple-600",
-      technology: "bg-indigo-600",
-      default: "bg-primary",
-    };
-    return colors[tag.toLowerCase()] || colors.default;
-  };
+  // const getTagColors = (tag: string): string => {
+  //   const colors: Record<string, string> = {
+  //     news: "bg-blue-600",
+  //     sports: "bg-green-600",
+  //     entertainment: "bg-purple-600",
+  //     technology: "bg-indigo-600",
+  //     default: "bg-primary",
+  //   };
+  //   return colors[tag.toLowerCase()] || colors.default;
+  // };
 
   const getImageUrl = (path: string | null): string => {
     if (!path) return "/assets/videos/blog1.jpg";
@@ -100,7 +111,9 @@ function AllContentsCarousel({ contents = [], selectedIndex = 0 }: AllContentsCa
   if (contents.length === 0) {
     return (
       <div className="container py-[30px] md:py-[50px] lg:py-[72px]">
-        <div className="text-center text-gray-600">No active contents available.</div>
+        <div className="text-center text-gray-600">
+          No active contents available.
+        </div>
       </div>
     );
   }
@@ -145,11 +158,17 @@ function AllContentsCarousel({ contents = [], selectedIndex = 0 }: AllContentsCa
               <div key={slideIndex} className="w-full flex-shrink-0">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {contents
-                    .slice(slideIndex * itemsPerSlide, (slideIndex + 1) * itemsPerSlide)
+                    .slice(
+                      slideIndex * itemsPerSlide,
+                      (slideIndex + 1) * itemsPerSlide
+                    )
                     .map((item) => {
-                      const tags = parseTags(item.tags);
                       const heading = stripHtmlTags(item.heading);
                       const subHeading = stripHtmlTags(item.sub_heading);
+                      const category_name = stripHtmlTags(item.category_name ?? "");
+                      const sub_category_name = stripHtmlTags(
+                        item.sub_category_name ?? ""
+                      );
                       const body = stripHtmlTags(item.body1);
 
                       return (
@@ -157,25 +176,21 @@ function AllContentsCarousel({ contents = [], selectedIndex = 0 }: AllContentsCa
                           key={item.id}
                           className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
                         >
-                          {/* Tags */}
-                          <div className="absolute top-4 left-4 z-10 flex gap-1">
-                            {tags.slice(0, 2).map((tag, index) => (
-                              <span
-                                key={index}
-                                className={`${getTagColors(tag)} text-white text-xs font-bold px-2 py-1 rounded uppercase`}
-                              >
-                                {tag}
-                              </span>
-                            ))}
+                          <div className="flex items-center gap-[1.5px] pb-2">
+                            <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                              {category_name || ""}
+                            </button>
+                            <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                              {sub_category_name || ""}
+                            </button>
                           </div>
-
                           {/* Image */}
                           <div className="relative h-48 md:h-56">
                             <Image
                               src={getImageUrl(item.image1)}
                               alt={heading || "Content image"}
                               fill
-                              className="object-cover"
+                              className="object-cover rounded-t-[4px]"
                               sizes="(max-width: 768px) 100vw, 33vw"
                             />
                           </div>
@@ -190,7 +205,10 @@ function AllContentsCarousel({ contents = [], selectedIndex = 0 }: AllContentsCa
                             </p>
                             <div className="flex justify-between items-center">
                               <p className="text-xs font-semibold font-manrope uppercase text-[#424242]">
-                                {item.author} - {new Date(item.date).toLocaleDateString("en-GB")}
+                                {item.author} -{" "}
+                                {new Date(item.date).toLocaleDateString(
+                                  "en-GB"
+                                )}
                               </p>
                               <div className="flex items-center gap-2">
                                 <button
