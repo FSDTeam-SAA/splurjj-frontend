@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import { HeaderForm } from "./_container/HeaderForm";
 
 function page() {
   return (
-    <div>Header</div>
-  )
+    <div>
+      <HeaderForm />
+    </div>
+  );
 }
 
-export default page
+export default page;
