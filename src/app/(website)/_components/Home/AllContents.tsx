@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FaRegCommentDots } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
@@ -75,8 +76,12 @@ const AllContents: React.FC = () => {
   if (!contents.length) return <div>No content found</div>;
 
   // Get the first content item for display
-  const content = contents[0];
+  
 
+  const firstPost = contents[0]; // Get the first post
+  const secondPost = contents[1]; // Get the first post
+  const thardPost = contents[2]; // Get the first post
+  const forthPost = contents[3]; // Get the first post
 
   // Helper function to remove HTML tags
 
@@ -89,58 +94,194 @@ const AllContents: React.FC = () => {
 
   return (
     <div>
-      <div className="container py-[30px] md:py-[50px] lg:py-[72px]">
-        <div className="grid grid-cols-1 md:grid-cols-7 gap-[30px] md:gap-[50px] lg:gap-[72px]">
-          <div className="md:col-span-5">
-            <div className="flex items-center gap-4 mb-2">
-              <div className="flex items-center gap-[1.5px]">
-                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-                  {content.category_name || ""}
-                </button>
-                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-                  {content.sub_category_name || ""}
-                </button>
-              </div>
-              <div className="flex items-center gap-2">
-                <span>
-                  <RiShareForwardLine className="w-6 h-6 icon" />
-                </span>
-                <span>
-                  <TbTargetArrow className="w-6 h-6 icon" />
-                </span>
-                <span>
-                  <FaRegCommentDots className="w-6 h-6 icon" />
-                </span>
-              </div>
+      <div>
+        <div>
+          <div className="flex items-center gap-4 mb-2">
+            <div className="flex items-center gap-[1.5px]">
+              <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                {firstPost.category_name || ""}
+              </button>
+              <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                {firstPost.sub_category_name || ""}
+              </button>
             </div>
+            <div className="flex items-center gap-2">
+              <span>
+                <RiShareForwardLine className="w-6 h-6 icon" />
+              </span>
+              <span>
+                <TbTargetArrow className="w-6 h-6 icon" />
+              </span>
+              <span>
+                <FaRegCommentDots className="w-6 h-6 icon" />
+              </span>
+            </div>
+          </div>
+          <div className="space-y-4">
             <p
-              dangerouslySetInnerHTML={{ __html: content.heading ?? "" }}
-              className="text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#424242] py-4 md:py-5 lg:py-6"
+              dangerouslySetInnerHTML={{ __html: firstPost.heading ?? "" }}
+              className="text-[60px] font-bold font-manrope leading-[120%] tracking-[0%] text-[#131313]"
             />
             <p
-              dangerouslySetInnerHTML={{ __html: content.body1 ?? "" }}
-              className="text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#424242] py-4 md:py-5 lg:py-6"
+              dangerouslySetInnerHTML={{ __html: firstPost.body1 ?? "" }}
+              className="text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#424242]"
             />
 
             <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242]">
-              {content.author} - {content.date}
+              {firstPost.author} - {firstPost.date}
             </p>
           </div>
-          <div className="md:col-span-2 flex flex-col gap-[30px] md:gap-[50px] lg:gap-[72px]">
-            <div>
-              <Image
-                src={getImageUrl(content.advertising_image)}
-                alt="advertising image"
-                width={336}
-                height={529}
-                className="w-full h-[500px] object-cover rounded-[8px]"
-              />
-            </div>
+        </div>
+        <div className="mt-16">
+          <div>
+            <Image
+              src={getImageUrl(firstPost.advertising_image)}
+              alt="advertising image"
+              width={336}
+              height={529}
+              className="w-full h-[500px] object-cover rounded-[8px]"
+            />
           </div>
         </div>
       </div>
-      <div>
-       
+      <div className="grid grid-cols-3 gap-4 pt-24 pb-8">
+        <div>
+          <div className="flex items-center gap-[1.5px] pb-2">
+            <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+              {secondPost.category_name || ""}
+            </button>
+            <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+              {secondPost.sub_category_name || ""}
+            </button>
+          </div>
+          <div className="">
+            <Image
+              src={getImageUrl(secondPost.image1)}
+              alt={secondPost.heading || "blog image"}
+              width={888}
+              height={552}
+              className="w-full h-[455px] object-cover rounded-t-md"
+              priority
+            />
+          </div>
+          <p
+            dangerouslySetInnerHTML={{ __html: secondPost.heading ?? "" }}
+            className="text-[24px] font-medium"
+          />
+          <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242]">
+            {secondPost.author} - {secondPost.date}
+          </p>
+
+          <div className="flex items-center gap-2">
+            <span>
+              <RiShareForwardLine className="w-6 h-6 icon" />
+            </span>
+            <span>
+              <TbTargetArrow className="w-6 h-6 icon" />
+            </span>
+            <span>
+              <FaRegCommentDots className="w-6 h-6 icon" />
+            </span>
+          </div>
+          <p
+            dangerouslySetInnerHTML={{ __html: secondPost.body1 ?? "" }}
+            className="text-sm font-normal font-manrope leading-[120%] tracking-[0%] text-[#424242] line-clamp-3 overflow-hidden"
+          />
+        </div>
+        <div>
+          <div className="flex items-center gap-[1.5px] pb-2">
+            <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+              {thardPost.category_name || ""}
+            </button>
+            <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+              {thardPost.sub_category_name || ""}
+            </button>
+          </div>
+          <div className="">
+            <Image
+              src={getImageUrl(thardPost.image1)}
+              alt={thardPost.heading || "blog image"}
+              width={888}
+              height={552}
+              className="w-full h-[455px] object-cover rounded-t-md"
+              priority
+            />
+          </div>
+          <p
+            dangerouslySetInnerHTML={{ __html: thardPost.heading ?? "" }}
+            className="text-[24px] font-medium"
+          />
+          <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242]">
+            {thardPost.author} - {thardPost.date}
+          </p>
+
+          <div className="flex items-center gap-2">
+            <span>
+              <RiShareForwardLine className="w-6 h-6 icon" />
+            </span>
+            <span>
+              <TbTargetArrow className="w-6 h-6 icon" />
+            </span>
+            <span>
+              <FaRegCommentDots className="w-6 h-6 icon" />
+            </span>
+          </div>
+          <p
+            dangerouslySetInnerHTML={{ __html: thardPost.body1 ?? "" }}
+            className="text-sm font-normal font-manrope leading-[120%] tracking-[0%] text-[#424242] line-clamp-3 overflow-hidden"
+          />
+        </div>
+        <div>
+          <div className="flex items-center gap-[1.5px] pb-2">
+            <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+              {forthPost.category_name || ""}
+            </button>
+            <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+              {forthPost.sub_category_name || ""}
+            </button>
+          </div>
+          <div className="">
+            <Image
+              src={getImageUrl(forthPost.image1)}
+              alt={forthPost.heading || "blog image"}
+              width={888}
+              height={552}
+              className="w-full h-[455px] object-cover rounded-t-md"
+              priority
+            />
+          </div>
+          <p
+            dangerouslySetInnerHTML={{ __html: forthPost.heading ?? "" }}
+            className="text-[24px] font-medium"
+          />
+          <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242]">
+            {forthPost.author} - {forthPost.date}
+          </p>
+
+          <div className="flex items-center gap-2">
+            <span>
+              <RiShareForwardLine className="w-6 h-6 icon" />
+            </span>
+            <span>
+              <TbTargetArrow className="w-6 h-6 icon" />
+            </span>
+            <span>
+              <FaRegCommentDots className="w-6 h-6 icon" />
+            </span>
+          </div>
+          <p
+            dangerouslySetInnerHTML={{ __html: forthPost.body1 ?? "" }}
+            className="text-sm font-normal font-manrope leading-[120%] tracking-[0%] text-[#424242] line-clamp-3 overflow-hidden"
+          />
+        </div>
+      </div>
+      <div className="flex justify-end">
+        <Link
+          href="/all-contents"
+          className="bg-primary py-[10px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white"
+        >
+          EXPLORE MORE
+        </Link>
       </div>
     </div>
   );

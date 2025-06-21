@@ -48,15 +48,13 @@ const Navbar = () => {
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLLIElement>(null); // Ref for dropdown
   const pathName = usePathname();
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
-  console.log(pathName)
-
-  const sesseion = useSession();
-  const token = (sesseion?.data?.user as { token: string })?.token;
-
-  console.log(token);
+  const session = useSession();
+  const token = (session?.data?.user as { token: string })?.token;
+  const role = session?.data?.user?.role;
 
   // Fetch categories on component mount
   useEffect(() => {
@@ -94,6 +92,27 @@ const Navbar = () => {
     setOpenDropdown(openDropdown === categoryId ? null : categoryId);
   };
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        !(event.target as Element).closest("button")
+      ) {
+        setOpenDropdown(null);
+      }
+    };
+
+    if (openDropdown !== null) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openDropdown]);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -113,12 +132,6 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isSearchOpen]);
-
-  // Static menu items (you can keep these or remove them)
-  // const staticMenuItems = [
-  //   { name: "Home", href: "/", hasDropdown: false },
-  //   { name: "About", href: "/about", hasDropdown: false },
-  // ];
 
   const handLogout = () => {
     try {
@@ -148,28 +161,33 @@ const Navbar = () => {
                 </Link>
 
                 <ul className="flex items-center gap-4 lg:gap-6">
-                  {/* Static Menu Items */}
-                  {/* {staticMenuItems.map((item) => (
-                    <li key={item.name}>
-                      <Link
-                        href={item.href}
-                        className={`text-base md:text-lg lg:text-xl leading-[120%] uppercase font-manrope tracking-[0%] font-medium ${
-                          pathName === item.href
-                            ? "text-[#0253F7] font-extrabold"
-                            : "text-[#424242] hover:text-black"
-                        } transition-colors`}
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))} */}
+                  <li>
+                    <Link
+                      href="/"
+                      className={`text-base md:text-lg lg:text-xl leading-[120%] uppercase font-manrope tracking-[0%] hover:text-black transition-colors ${
+                        pathName === "/"
+                          ? "text-primary font-extrabold"
+                          : "text-black font-medium"
+                      }`}
+                    >
+                      LATEST
+                    </Link>
+                  </li>
 
                   {/* Dynamic Categories */}
                   {categories.map((category) => (
-                    <li key={category.category_id} className="group relative">
+                    <li
+                      key={category.category_id}
+                      className="group relative"
+                      ref={dropdownRef} // Attach ref to the li
+                    >
                       <button
                         onClick={() => toggleDropdown(category.category_id)}
-                        className={`flex items-center gap-[10px] text-base md:text-lg lg:text-xl leading-[120%] uppercase font-manrope tracking-[0%]  hover:text-black transition-colors ${openDropdown === category.category_id ? "text-primary font-extrabold" : "text-black font-medium"}`}
+                        className={`flex items-center gap-[10px] text-base md:text-lg lg:text-xl leading-[120%] uppercase font-manrope tracking-[0%] hover:text-black transition-colors ${
+                          openDropdown === category.category_id
+                            ? "text-primary font-extrabold"
+                            : "text-black font-medium"
+                        }`}
                       >
                         {category.category_name}
                         {category.subcategories.length > 0 && (
@@ -177,7 +195,7 @@ const Navbar = () => {
                             size={16}
                             className={`transition-transform ${
                               openDropdown === category.category_id
-                                ? "rotate-180 "
+                                ? "rotate-180"
                                 : ""
                             }`}
                           />
@@ -196,8 +214,9 @@ const Navbar = () => {
                                   className={`block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 transition-colors ${
                                     pathName ===
                                     `/${category.category_id}/${subcategory.id}`
-                                      ? " text-primary font-bold"
-                                      : "text-black"}`}
+                                      ? "text-primary font-bold"
+                                      : "text-black"
+                                  }`}
                                   onClick={() => setOpenDropdown(null)}
                                 >
                                   {subcategory.name}
@@ -245,31 +264,48 @@ const Navbar = () => {
                   </div>
                 </div>
 
-                <button className="p-1 rounded-full hover:bg-gray-100 transition-colors">
-                  <ShoppingCart className="text-black w-[33px] h-[33px]" />
-                </button>
+                {/* ShoppingCart Button */}
+                {token && role !== "admin" && (
+                  <div>
+                    <button className="p-1 rounded-full hover:bg-gray-100 transition-colors">
+                      <ShoppingCart className="text-black w-[33px] h-[33px]" />
+                    </button>
+                  </div>
+                )}
 
                 <div>
                   {token ? (
                     <DropdownMenu>
                       <DropdownMenuTrigger className="p-1 rounded-full hover:bg-gray-100 transition-colors border-none outline-none ring-0">
-                        {/* <button className="p-1 rounded-full hover:bg-gray-100 transition-colors"> */}
                         <User className="text-black w-[33px] h-[33px]" />
-                        {/* </button> */}
                       </DropdownMenuTrigger>
                       <DropdownMenuContent className="bg-white w-[130px]">
-                        <Link href="/accounts">
-                          {" "}
-                          <DropdownMenuLabel
-                            className={`text-base md:text-[17px] lg:text-lg font-semibold leading-[120%] tracking-[0%] ${
-                              pathName === "/sign-up"
-                                ? "text-[#0253F7] bold"
-                                : "text-[#131313] hover:text-[#0253F7]"
-                            }`}
-                          >
-                            My Account
-                          </DropdownMenuLabel>{" "}
-                        </Link>
+                        {["admin", "editor", "author"].includes(role ?? "") ? (
+                          <Link href="/dashboard">
+                            <DropdownMenuLabel
+                              className={`text-base md:text-[17px] lg:text-lg font-semibold leading-[120%] tracking-[0%] ${
+                                pathName === "/dashboard"
+                                  ? "text-[#0253F7] bold"
+                                  : "text-[#131313] hover:text-[#0253F7]"
+                              }`}
+                            >
+                              Dashboard
+                            </DropdownMenuLabel>
+                          </Link>
+                        ) : (role ?? "") === "user" ? (
+                          <Link href="/accounts">
+                            <DropdownMenuLabel
+                              className={`text-base md:text-[17px] lg:text-lg font-semibold leading-[120%] tracking-[0%] ${
+                                pathName === "/accounts"
+                                  ? "text-[#0253F7] bold"
+                                  : "text-[#131313] hover:text-[#0253F7]"
+                              }`}
+                            >
+                              My Account
+                            </DropdownMenuLabel>
+                          </Link>
+                        ) : null}
+
                         <DropdownMenuItem
                           onClick={() => setLogoutModalOpen(true)}
                           className="text-base md:text-[17px] lg:text-lg font-semibold leading-[120%] tracking-[0%] text-[#DB0000] cursor-pointer"
@@ -279,42 +315,16 @@ const Navbar = () => {
                       </DropdownMenuContent>
                     </DropdownMenu>
                   ) : (
-                    <DropdownMenu>
-                      <DropdownMenuTrigger className="p-1 rounded-full hover:bg-gray-100 transition-colors border-none outline-none ring-0">
-                        {/* <button className=""> */}
-                        <User className="text-black w-[33px] h-[33px]" />
-                        {/* </button> */}
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="bg-white w-[98px]">
-                        <Link href="/sign-up">
-                          {" "}
-                          <DropdownMenuLabel
-                            className={`text-base md:text-[17px] lg:text-lg font-semibold leading-[120%] cursor-pointer tracking-[0%] ${
-                              pathName === "/sign-up"
-                                ? "text-[#0253F7] bold"
-                                : "text-[#131313] hover:text-[#0253F7]"
-                            }`}
-                          >
-                            Sign-up
-                          </DropdownMenuLabel>{" "}
-                        </Link>
-                        <Link href="/login">
-                          <DropdownMenuItem
-                            className={`text-base md:text-[17px] lg:text-lg font-semibold cursor-pointer leading-[120%] tracking-[0%] ${
-                              pathName === "/login"
-                                ? "text-[#0253F7] bold"
-                                : "text-[#131313] hover:text-[#0253F7]"
-                            }`}
-                          >
-                            Sign in
-                          </DropdownMenuItem>
-                        </Link>{" "}
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <Link
+                      href="/sign-up"
+                      className="p-1 rounded text-white px-4 bg-[#0253F7] hover:bg-[#0253F7] transition-colors"
+                    >
+                      Sign In
+                    </Link>
                   )}
                 </div>
 
-                {/* theme toggle  */}
+                {/* theme toggle */}
                 <ThemeToggle />
               </div>
             </div>
@@ -362,22 +372,12 @@ const Navbar = () => {
             {/* Mobile Menu */}
             {isMobileMenuOpen && (
               <div className="mt-4 space-y-3">
-                {/* Static Menu Items */}
-                {/* {staticMenuItems.map((item) => (
-                  <div key={item.name}>
-                    <Link
-                      href={item.href}
-                      className={`block py-2 px-1 text-lg ${
-                        pathName === item.href
-                          ? "font-bold text-black"
-                          : "font-medium text-gray-600 hover:text-black"
-                      } transition-colors`}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  </div>
-                ))} */}
+                <Link
+                  href="/"
+                  className="block py-2 px-1 text-lg font-medium text-gray-600 hover:text-black transition-colors"
+                >
+                  LATEST
+                </Link>
 
                 {/* Dynamic Categories */}
                 {categories.map((category) => (
@@ -420,11 +420,71 @@ const Navbar = () => {
                       )}
                   </div>
                 ))}
+
+                {/* ShoppingCart Button */}
+                {token && role !== "admin" && (
+                  <div>
+                    <button className="p-1 rounded-full hover:bg-gray-100 transition-colors">
+                      <ShoppingCart className="text-black w-[33px] h-[33px]" />
+                    </button>
+                  </div>
+                )}
+
+                <div>
+                  {token ? (
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className="p-1 rounded-full hover:bg-gray-100 transition-colors border-none outline-none ring-0">
+                        <User className="text-black w-[33px] h-[33px]" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="bg-white w-[130px]">
+                        {["admin", "editor", "author"].includes(role ?? "") ? (
+                          <Link href="/dashboard">
+                            <DropdownMenuLabel
+                              className={`text-base md:text-[17px] lg:text-lg font-semibold leading-[120%] tracking-[0%] ${
+                                pathName === "/dashboard"
+                                  ? "text-[#0253F7] bold"
+                                  : "text-[#131313] hover:text-[#0253F7]"
+                              }`}
+                            >
+                              Dashboard
+                            </DropdownMenuLabel>
+                          </Link>
+                        ) : role === "user" ? (
+                          <Link href="/accounts">
+                            <DropdownMenuLabel
+                              className={`text-base md:text-[17px] lg:text-lg font-semibold leading-[120%] tracking-[0%] ${
+                                pathName === "/accounts"
+                                  ? "text-[#0253F7] bold"
+                                  : "text-[#131313] hover:text-[#0253F7]"
+                              }`}
+                            >
+                              My Account
+                            </DropdownMenuLabel>
+                          </Link>
+                        ) : null}
+
+                        <DropdownMenuItem
+                          onClick={() => setLogoutModalOpen(true)}
+                          className="text-base md:text-[17px] lg:text-lg font-semibold leading-[120%] tracking-[0%] text-[#DB0000] cursor-pointer"
+                        >
+                          Log Out
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  ) : (
+                    <Link
+                      href="/sign-up"
+                      className="p-1 rounded text-white px-4 bg-[#0253F7] hover:bg-[#0253F7] transition-colors"
+                    >
+                      Sign In
+                    </Link>
+                  )}
+                </div>
               </div>
             )}
           </div>
 
-          {/* logout modal  */}
+          {/* logout modal */}
           {logoutModalOpen && (
             <LogoutModal
               isOpen={logoutModalOpen}

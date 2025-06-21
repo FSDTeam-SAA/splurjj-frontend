@@ -30,7 +30,7 @@ interface BlogPost {
   status: string;
 }
 
-function ArtCulture() {
+function Video() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -43,7 +43,7 @@ function ArtCulture() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home/Art%20&%20Culture`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home/Video`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch data");
@@ -64,14 +64,22 @@ function ArtCulture() {
   }, []);
 
   // Function to generate full shareable URL
-  const getShareUrl = (categoryId: number, subcategoryId: number, postId: number): string => {
+  const getShareUrl = (
+    categoryId: number,
+    subcategoryId: number,
+    postId: number
+  ): string => {
     const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
     return `${baseUrl}/${categoryId}/${subcategoryId}/${postId}`;
   };
 
   // Handle share button click
   const handleShare = async (post: BlogPost) => {
-    const shareUrl = getShareUrl(post.category_id, post.subcategory_id, post.id);
+    const shareUrl = getShareUrl(
+      post.category_id,
+      post.subcategory_id,
+      post.id
+    );
     const shareData = {
       title: post.heading,
       text: post.sub_heading || "Check out this blog post!",
@@ -94,7 +102,9 @@ function ArtCulture() {
   // Social media share links
   const shareToTwitter = (url: string, text: string) => {
     window.open(
-      `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`,
+      `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+        url
+      )}&text=${encodeURIComponent(text)}`,
       "_blank"
     );
   };
@@ -108,7 +118,9 @@ function ArtCulture() {
 
   const shareToLinkedIn = (url: string, title: string) => {
     window.open(
-      `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`,
+      `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
+        url
+      )}&title=${encodeURIComponent(title)}`,
       "_blank"
     );
   };
@@ -124,7 +136,7 @@ function ArtCulture() {
   if (posts.length === 0) return <div className="error">No posts found</div>;
 
   const firstPost = posts[0];
-  // const secondPost = posts[1];
+//   const secondPost = posts[1];
   const thardPost = posts[2];
   const thardPostCategoryId = thardPost?.category_id;
   const thardPostSubcategoryId = thardPost?.subcategory_id;
@@ -136,7 +148,25 @@ function ArtCulture() {
   return (
     <div className="container">
       <div className="py-8">
-        <div className="flex items-center gap-4 mb-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 rounded py-4">
+          <div className="bg-[#DDD618] max-h-[455px] flex items-center justify-center rounded-l-md">
+            <p
+              dangerouslySetInnerHTML={{ __html: firstPost.heading ?? "" }}
+              className="text-[40px] font-bold"
+            />
+          </div>
+          <div>
+            <Image
+              src={getImageUrl(firstPost.image1)}
+              alt={firstPost.heading || "blog image"}
+              width={888}
+              height={552}
+              className="w-full h-[455px] object-cover rounded-r-md"
+              priority
+            />
+          </div>
+        </div>
+        <div className="">
           <div className="flex items-center gap-[1.5px]">
             <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
               {firstPost.category_name || ""}
@@ -158,7 +188,11 @@ function ArtCulture() {
                   className="w-6 h-6 cursor-pointer text-blue-500"
                   onClick={() =>
                     shareToTwitter(
-                      getShareUrl(firstPost.category_id, firstPost.subcategory_id, firstPost.id),
+                      getShareUrl(
+                        firstPost.category_id,
+                        firstPost.subcategory_id,
+                        firstPost.id
+                      ),
                       firstPost.heading
                     )
                   }
@@ -167,7 +201,11 @@ function ArtCulture() {
                   className="w-6 h-6 cursor-pointer text-blue-700"
                   onClick={() =>
                     shareToFacebook(
-                      getShareUrl(firstPost.category_id, firstPost.subcategory_id, firstPost.id)
+                      getShareUrl(
+                        firstPost.category_id,
+                        firstPost.subcategory_id,
+                        firstPost.id
+                      )
                     )
                   }
                 />
@@ -175,7 +213,11 @@ function ArtCulture() {
                   className="w-6 h-6 cursor-pointer text-blue-600"
                   onClick={() =>
                     shareToLinkedIn(
-                      getShareUrl(firstPost.category_id, firstPost.subcategory_id, firstPost.id),
+                      getShareUrl(
+                        firstPost.category_id,
+                        firstPost.subcategory_id,
+                        firstPost.id
+                      ),
                       firstPost.heading
                     )
                   }
@@ -189,33 +231,18 @@ function ArtCulture() {
               <FaRegCommentDots className="w-6 h-6 icon" />
             </span>
           </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 rounded py-4">
-          <div className="bg-[#DDD618] max-h-[455px] flex items-center justify-center rounded-l-md">
-            <p
-              dangerouslySetInnerHTML={{ __html: firstPost.heading ?? "" }}
-              className="text-[40px] font-bold"
-            />
-          </div>
-          <div>
-            <Image
-              src={getImageUrl(firstPost.image1)}
-              alt={firstPost.heading || "blog image"}
-              width={888}
-              height={552}
-              className="w-full h-[455px] object-cover rounded-r-md"
-              priority
-            />
-            <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242] pt-4 text-end">
-              {firstPost.author} - {firstPost.date}
-            </p>
-          </div>
+          <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242] pt-4">
+            {firstPost.author} - {firstPost.date}
+          </p>
+          <p
+            dangerouslySetInnerHTML={{ __html: firstPost.body1 ?? "" }}
+            className="text-sm font-normal font-manrope leading-[120%] tracking-[0%] text-[#424242] line-clamp-3 overflow-hidden"
+          />
         </div>
       </div>
 
       <div className="py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
           {/* Third Post */}
           <div className="max-h-[600px]">
             <div className="flex items-center gap-[1.5px] pb-2">
@@ -234,7 +261,9 @@ function ArtCulture() {
               className="w-full h-[455px] object-cover rounded-t-md"
               priority
             />
-            <Link href={`/${thardPostCategoryId}/${thardPostSubcategoryId}/${thardPost?.id}`}>
+            <Link
+              href={`/${thardPostCategoryId}/${thardPostSubcategoryId}/${thardPost?.id}`}
+            >
               <p
                 dangerouslySetInnerHTML={{ __html: thardPost.heading ?? "" }}
                 className="text-[24px] font-medium"
@@ -256,7 +285,11 @@ function ArtCulture() {
                     className="w-6 h-6 cursor-pointer text-blue-500"
                     onClick={() =>
                       shareToTwitter(
-                        getShareUrl(thardPost.category_id, thardPost.subcategory_id, thardPost.id),
+                        getShareUrl(
+                          thardPost.category_id,
+                          thardPost.subcategory_id,
+                          thardPost.id
+                        ),
                         thardPost.heading
                       )
                     }
@@ -265,7 +298,11 @@ function ArtCulture() {
                     className="w-6 h-6 cursor-pointer text-blue-700"
                     onClick={() =>
                       shareToFacebook(
-                        getShareUrl(thardPost.category_id, thardPost.subcategory_id, thardPost.id)
+                        getShareUrl(
+                          thardPost.category_id,
+                          thardPost.subcategory_id,
+                          thardPost.id
+                        )
                       )
                     }
                   />
@@ -273,7 +310,11 @@ function ArtCulture() {
                     className="w-6 h-6 cursor-pointer text-blue-600"
                     onClick={() =>
                       shareToLinkedIn(
-                        getShareUrl(thardPost.category_id, thardPost.subcategory_id, thardPost.id),
+                        getShareUrl(
+                          thardPost.category_id,
+                          thardPost.subcategory_id,
+                          thardPost.id
+                        ),
                         thardPost.heading
                       )
                     }
@@ -307,7 +348,9 @@ function ArtCulture() {
               className="w-full h-[455px] object-cover rounded-t-md"
               priority
             />
-            <Link href={`/${thardPostCategoryId}/${thardPostSubcategoryId}/${forthPost?.id}`}>
+            <Link
+              href={`/${thardPostCategoryId}/${thardPostSubcategoryId}/${forthPost?.id}`}
+            >
               <p
                 dangerouslySetInnerHTML={{ __html: forthPost.heading ?? "" }}
                 className="text-[24px] font-medium"
@@ -329,7 +372,11 @@ function ArtCulture() {
                     className="w-6 h-6 cursor-pointer text-blue-500"
                     onClick={() =>
                       shareToTwitter(
-                        getShareUrl(forthPost.category_id, forthPost.subcategory_id, forthPost.id),
+                        getShareUrl(
+                          forthPost.category_id,
+                          forthPost.subcategory_id,
+                          forthPost.id
+                        ),
                         forthPost.heading
                       )
                     }
@@ -338,7 +385,11 @@ function ArtCulture() {
                     className="w-6 h-6 cursor-pointer text-blue-700"
                     onClick={() =>
                       shareToFacebook(
-                        getShareUrl(forthPost.category_id, forthPost.subcategory_id, forthPost.id)
+                        getShareUrl(
+                          forthPost.category_id,
+                          forthPost.subcategory_id,
+                          forthPost.id
+                        )
                       )
                     }
                   />
@@ -346,7 +397,11 @@ function ArtCulture() {
                     className="w-6 h-6 cursor-pointer text-blue-600"
                     onClick={() =>
                       shareToLinkedIn(
-                        getShareUrl(forthPost.category_id, forthPost.subcategory_id, forthPost.id),
+                        getShareUrl(
+                          forthPost.category_id,
+                          forthPost.subcategory_id,
+                          forthPost.id
+                        ),
                         forthPost.heading
                       )
                     }
@@ -402,7 +457,11 @@ function ArtCulture() {
                     className="w-6 h-6 cursor-pointer text-blue-500"
                     onClick={() =>
                       shareToTwitter(
-                        getShareUrl(fivePost.category_id, fivePost.subcategory_id, fivePost.id),
+                        getShareUrl(
+                          fivePost.category_id,
+                          fivePost.subcategory_id,
+                          fivePost.id
+                        ),
                         fivePost.heading
                       )
                     }
@@ -411,7 +470,11 @@ function ArtCulture() {
                     className="w-6 h-6 cursor-pointer text-blue-700"
                     onClick={() =>
                       shareToFacebook(
-                        getShareUrl(fivePost.category_id, fivePost.subcategory_id, fivePost.id)
+                        getShareUrl(
+                          fivePost.category_id,
+                          fivePost.subcategory_id,
+                          fivePost.id
+                        )
                       )
                     }
                   />
@@ -419,7 +482,11 @@ function ArtCulture() {
                     className="w-6 h-6 cursor-pointer text-blue-600"
                     onClick={() =>
                       shareToLinkedIn(
-                        getShareUrl(fivePost.category_id, fivePost.subcategory_id, fivePost.id),
+                        getShareUrl(
+                          fivePost.category_id,
+                          fivePost.subcategory_id,
+                          fivePost.id
+                        ),
                         fivePost.heading
                       )
                     }
@@ -454,7 +521,11 @@ function ArtCulture() {
                   className="w-6 h-6 cursor-pointer text-blue-500"
                   onClick={() =>
                     shareToTwitter(
-                      getShareUrl(fivePost.category_id, fivePost.subcategory_id, fivePost.id),
+                      getShareUrl(
+                        fivePost.category_id,
+                        fivePost.subcategory_id,
+                        fivePost.id
+                      ),
                       fivePost.heading
                     )
                   }
@@ -463,7 +534,11 @@ function ArtCulture() {
                   className="w-6 h-6 cursor-pointer text-blue-700"
                   onClick={() =>
                     shareToFacebook(
-                      getShareUrl(fivePost.category_id, fivePost.subcategory_id, fivePost.id)
+                      getShareUrl(
+                        fivePost.category_id,
+                        fivePost.subcategory_id,
+                        fivePost.id
+                      )
                     )
                   }
                 />
@@ -471,7 +546,11 @@ function ArtCulture() {
                   className="w-6 h-6 cursor-pointer text-blue-600"
                   onClick={() =>
                     shareToLinkedIn(
-                      getShareUrl(fivePost.category_id, fivePost.subcategory_id, fivePost.id),
+                      getShareUrl(
+                        fivePost.category_id,
+                        fivePost.subcategory_id,
+                        fivePost.id
+                      ),
                       fivePost.heading
                     )
                   }
@@ -499,4 +578,4 @@ function ArtCulture() {
   );
 }
 
-export default ArtCulture;
+export default Video;

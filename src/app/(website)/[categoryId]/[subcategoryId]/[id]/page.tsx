@@ -50,7 +50,7 @@ const ContentBlogDetails = ({
   const blog = data?.data?.data?.find(
     (item: ContentDataTypeResponse) => item?.id === Number(params?.id)
   );
-  console.log(blog);
+  console.log("ssssssssssssssssssssss",blog);
 
   const relatedBlog = data?.data?.data?.filter(
     (item: ContentDataTypeResponse) => item?.id !== Number(params?.id)
@@ -90,7 +90,7 @@ const ContentBlogDetails = ({
                   </button>
                 </div>
               </div>
-              <div>
+              {/* <div>
                 <Image
                   // src="/assets/videos/blogSide1.jpg"
                   src={blog?.advertising_image || blog?.advertisingLink || ""}
@@ -99,7 +99,7 @@ const ContentBlogDetails = ({
                   height={700}
                   className="w-full h-[505px] object-cover rounded-[8px]"
                 />
-              </div>
+              </div> */}
             </div>
             <div className="md:col-span-5">
               <div className="pb-[25px] md:pb-[32px] lg:pb-[40px]">
