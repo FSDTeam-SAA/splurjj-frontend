@@ -5,7 +5,7 @@ import Sidebar from './_components/sideber';
 
 const DashboardLayout = ({children}: {children: React.ReactNode}) => {
     return (
-        <div className='h-screen w-full bg-[linear-gradient(to_bottom,_#FFFFFF,_#B5B5B5,_#B0B0B0,_#747474)] overflow-hidden'>
+        <div className='h-screen w-full bg-[#F9FAFB] dark:bg-black overflow-hidden'>
             <div className='h-full flex flex-col'>
                 <DashboardHeader />
                 <div className='flex flex-1 overflow-hidden'>
