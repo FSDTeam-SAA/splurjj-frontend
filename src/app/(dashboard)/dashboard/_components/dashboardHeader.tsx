@@ -37,7 +37,7 @@ export default function DashboardHeader() {
   });
   console.log(data?.data?.first_name);
   return (
-    <header className=" px-6 py-4">
+    <header className=" px-6 py-5 bg-white border-b border-[#B6B6B6]/50">
       <div className="flex items-center justify-between w-full">
         {/* Logo Section */}
         <div className="flex items-center">
