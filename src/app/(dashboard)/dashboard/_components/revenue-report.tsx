@@ -86,7 +86,7 @@ export function RevenueReport() {
             onClick={() => setSelectedPeriod("Month")}
             className={
               selectedPeriod === "Month"
-                ? "bg-blue-600 hover:bg-blue-700"
+                ? "bg-blue-600 hover:bg-blue-700 text-white"
                 : "bg-white text-gray-600 hover:bg-gray-50"
             }
           >
@@ -98,7 +98,7 @@ export function RevenueReport() {
             onClick={() => setSelectedPeriod("Year")}
             className={
               selectedPeriod === "Year"
-                ? "bg-blue-600 hover:bg-blue-700"
+                ? "bg-blue-600 hover:bg-blue-700 text-white"
                 : "bg-white text-gray-600 hover:bg-gray-50"
             }
           >

@@ -17,7 +17,7 @@ export function ProductsReport({
     <div className="bg-white rounded-lg p-6 shadow-sm">
       <h2 className="text-lg font-semibold text-gray-900 mb-6">{title}</h2>
 
-      <div className="flex items-start justify-between border-2 border-red-500">
+      <div className="flex items-start justify-between ">
         {/* Circular Chart */}
         <div className="w-full flex items-center justify-center">
           <div className="relative w-[430px] h-[430px]">
@@ -82,7 +82,7 @@ export function ProductsReport({
         </div>
 
         {/* Legend */}
-        <div className=" flex flex-col space-y-3 border-2 border-red-500">
+        <div className=" flex flex-col space-y-3">
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 rounded-full bg-blue-500"></div>
             <span className="text-sm text-gray-600">This day</span>
