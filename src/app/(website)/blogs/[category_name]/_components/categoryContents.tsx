@@ -215,7 +215,7 @@ function CategoryContents({
         ))}
       </div>
 
-      {totalPages > 3 && (
+      {totalPages > 10 && (
         <div className="flex justify-between items-center mt-4 px-4 py-2">
           <div className="text-sm text-muted-foreground">
             Showing {posts.length} of {totalItems} items
