@@ -1,6 +1,4 @@
 "use client";
-import Advertising from "@/app/(website)/videos/_components/Advertising";
-import { LeaveAComment } from "@/app/(website)/videos/_components/LeaveAComment";
 import {
   ContentAllDataTypeResponse,
   ContentDataTypeResponse,
@@ -50,7 +48,6 @@ const ContentBlogDetails = ({
   const blog = data?.data?.data?.find(
     (item: ContentDataTypeResponse) => item?.id === Number(params?.id)
   );
-  console.log("ssssssssssssssssssssss",blog);
 
   const relatedBlog = data?.data?.data?.filter(
     (item: ContentDataTypeResponse) => item?.id !== Number(params?.id)
@@ -203,12 +200,12 @@ const ContentBlogDetails = ({
         </div>
 
         {/* advertising  */}
-        <Advertising />
+        {/* <Advertising /> */}
 
         {/* leave a comment  */}
-        <section id="comment" className="py-10">
+        {/* <section id="comment" className="py-10">
           <LeaveAComment />
-        </section>
+        </section> */}
 
         {/* related blogs  */}
         <section>

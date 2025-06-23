@@ -42,7 +42,7 @@ interface PageProps {
   params: { category_name: string };
 }
 
-function AllContentsPage({ params }: PageProps) {
+function Page({ params }: PageProps) {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -124,4 +124,4 @@ function AllContentsPage({ params }: PageProps) {
   );
 }
 
-export default AllContentsPage;
+export default Page;
