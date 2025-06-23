@@ -3,45 +3,44 @@ import Image from "next/image";
 import React from "react";
 
 const DashboardOverviewContainer = () => {
-
-    const overviewData = [
-        {
-            id: 1,
-            name : "Total Revenue",
-            value : "132,570",
-            icon : "/assets/images/business.png"
-        },
-        {
-            id: 2,
-            name : "Total Articles",
-            value : "132,570",
-            icon : "/assets/images/business.png"
-        },
-        {
-            id: 3,
-            name : "Pending Approvals",
-            value : "132,570",
-            icon : "/assets/images/business.png"
-        },
-        {
-            id: 4,
-            name : "Total Author",
-            value : "132,570",
-            icon : "/assets/images/business.png"
-        },
-        {
-            id: 5,
-            name : "Total User",
-            value : "132,570",
-            icon : "/assets/images/business.png"
-        },
-        {
-            id: 6,
-            name : "Subscribers",
-            value : "132,570",
-            icon : "/assets/images/business.png"
-        },
-    ]
+  const overviewData = [
+    {
+      id: 1,
+      name: "Total Revenue",
+      value: "132,570",
+      icon: "/assets/images/business.png",
+    },
+    {
+      id: 2,
+      name: "Total Articles",
+      value: "132,570",
+      icon: "/assets/images/articles.png",
+    },
+    {
+      id: 3,
+      name: "Pending Approvals",
+      value: "132,570",
+      icon: "/assets/images/pendingApprovals.png",
+    },
+    {
+      id: 4,
+      name: "Total Author",
+      value: "132,570",
+      icon: "/assets/images/total_author.png",
+    },
+    {
+      id: 5,
+      name: "Total User",
+      value: "132,570",
+      icon: "/assets/images/total_user.png",
+    },
+    {
+      id: 6,
+      name: "Subscribers",
+      value: "132,570",
+      icon: "/assets/images/total_user.png",
+    },
+  ];
   return (
     <div>
       <div>
@@ -52,20 +51,32 @@ const DashboardOverviewContainer = () => {
           Dashboard
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {
-            overviewData?.map((overview)=>{
-                return <div key={overview.id} className="flex items-center justify-between bg-white rounded-[6px] shadow-md p-8">
-                    <div>
-                        <h3 className="text-xl font-bold text-[#131313] leading-[120%] tracking-[0%] font-manrope">{overview.name}</h3>
-                        <p className="flex items-center gap-1 text-lg font-medium text-[#424242] leading-[120%] tracking-[0%] font-manrope pt-2"><Dot className="text-red-500 w-5 h-5" /> {overview?.value}</p>
-                    </div>
-                    <div>
-                        <Image src={overview.icon} alt="overview icon" width={54} height={54}/>
-                    </div>
-                </div>
-            })
-        }
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-8">
+        {overviewData?.map((overview) => {
+          return (
+            <div
+              key={overview.id}
+              className="flex items-center justify-between bg-white rounded-[6px] shadow-md p-8"
+            >
+              <div>
+                <h3 className="text-xl font-bold text-[#131313] leading-[120%] tracking-[0%] font-manrope">
+                  {overview.name}
+                </h3>
+                <p className="flex items-center gap-1 text-lg font-medium text-[#424242] leading-[120%] tracking-[0%] font-manrope pt-2">
+                  <Dot className="text-red-500 w-5 h-5" /> {overview?.value}
+                </p>
+              </div>
+              <div>
+                <Image
+                  src={overview.icon}
+                  alt="overview icon"
+                  width={54}
+                  height={54}
+                />
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
