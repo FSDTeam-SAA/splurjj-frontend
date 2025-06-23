@@ -4,45 +4,51 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import {
-  FaFacebook,
-  FaLinkedin,
-  FaRegCommentDots,
-  FaTwitter,
-} from "react-icons/fa";
+import { FaFacebook, FaLinkedin, FaRegCommentDots, FaTwitter } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
 
+// Interface for BlogPost
 interface BlogPost {
   id: number;
   category_id: number;
   subcategory_id: number;
-  category_name: string;
-  sub_category_name: string;
+  category_name?: string;
+  sub_category_name?: string;
   heading: string;
   author: string;
   date: string;
   sub_heading: string;
   body1: string;
-  image1: string;
-  advertising_image: string;
+  image1: string | null;
+  advertising_image: string | null;
   tags: string[];
   created_at: string;
   updated_at: string;
-  imageLink: string;
-  advertisingLink: string;
+  imageLink: string | null;
+  advertisingLink: string | null;
   user_id: number;
   status: string;
 }
 
-function Ride() {
-  const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [category, setCategory] = useState<BlogPost[]>([]);
-  const [showShareMenu, setShowShareMenu] = useState<number | null>(null); // Track which post's share menu is open
+// Interface for API Response
+interface ApiResponse {
+  success: boolean;
+  message: string;
+  data: BlogPost[];
+  meta?: {
+    current_page: number;
+    per_page: number;
+    total: number;
+    last_page: number;
+  };
+}
 
-  console.log(category)
+const Ride: React.FC = () => {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [showShareMenu, setShowShareMenu] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,11 +57,10 @@ function Ride() {
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home/Ride`
         );
         if (!response.ok) {
-          throw new Error("Failed to fetch data");
+          throw new Error(`Failed to fetch data: ${response.statusText}`);
         }
-        const data = await response.json();
-        setCategory(data);
-        setPosts(data.data);
+        const data: ApiResponse = await response.json();
+        setPosts(data.data || []); // Set posts from data.data, default to empty array
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "An unknown error occurred"
@@ -68,30 +73,29 @@ function Ride() {
     fetchData();
   }, []);
 
-  // Function to generate full shareable URL
+  const getImageUrl = (path: string | null): string => {
+    if (!path) return "/assets/images/fallback.jpg"; // Fallback image
+    if (path.startsWith("http")) return path;
+    return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${path.replace(/^\/+/, "")}`;
+  };
+
   const getShareUrl = (
     categoryId: number,
     subcategoryId: number,
     postId: number
   ): string => {
     const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
-    return `${baseUrl}/${categoryId}/${subcategoryId}/${postId}`;
+    return `${baseUrl}/blogs/${categoryId}/${subcategoryId}/${postId}`;
   };
 
-  // Handle share button click
   const handleShare = async (post: BlogPost) => {
-    const shareUrl = getShareUrl(
-      post.category_id,
-      post.subcategory_id,
-      post.id
-    );
+    const shareUrl = getShareUrl(post.category_id, post.subcategory_id, post.id);
     const shareData = {
       title: post.heading,
       text: post.sub_heading || "Check out this blog post!",
       url: shareUrl,
     };
 
-    // Try Web Share API (mobile devices, modern browsers)
     if (navigator.share) {
       try {
         await navigator.share(shareData);
@@ -99,12 +103,10 @@ function Ride() {
         console.error("Error sharing:", err);
       }
     } else {
-      // Toggle custom share menu for this post
       setShowShareMenu(showShareMenu === post.id ? null : post.id);
     }
   };
 
-  // Social media share links
   const shareToTwitter = (url: string, text: string) => {
     window.open(
       `https://twitter.com/intent/tweet?url=${encodeURIComponent(
@@ -130,58 +132,51 @@ function Ride() {
     );
   };
 
-  const getImageUrl = (path: string | null): string => {
-    if (!path) return "/assets/videos/blog1.jpg";
-    if (path.startsWith("http")) return path;
-    return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${path.replace(/^\/+/, "")}`;
-  };
-
-  if (loading) return <div className="loading">Loading...</div>;
-  if (error) return <div className="error">Error: {error}</div>;
-  if (posts.length === 0) return <div className="error">No posts found</div>;
+  if (loading) return <div className="loading text-center py-8">Loading...</div>;
+  if (error) return <div className="error text-center py-8 text-red-500">Error: {error}</div>;
+  if (posts.length === 0) return <div className="error text-center py-8">No posts found</div>;
 
   const firstPost = posts[0];
-  const firstPostCategoryId = firstPost?.category_id;
-  const firstPostSubcategoryId = firstPost?.subcategory_id;
-  console.log("LLLLLLLLLLLL", firstPost);
   const secondPost = posts[1];
-  const secondPostCategoryId = secondPost?.category_id;
-  const secondPostSubcategoryId = secondPost?.subcategory_id;
+
   return (
-    <div>
-      <div>
-        <div>
-          <div className="grid grid-cols-5 gap-4">
+    <div className="container mx-auto px-4 py-8">
+      {firstPost && (
+        <div className="mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div className="col-span-3 space-y-4">
               <Link
-                href={`/${firstPostCategoryId}/${firstPostSubcategoryId}/${firstPost?.id}`}
+                href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
               >
                 <p
-                  dangerouslySetInnerHTML={{
-                    __html: firstPost.heading ?? "",
-                  }}
-                  className="text-[18px] font-medium"
+                  dangerouslySetInnerHTML={{ __html: firstPost.heading }}
+                  className="text-lg font-medium font-manrope text-[#131313] hover:underline"
                 />
               </Link>
-              <div className="flex items-center">
-                <div className="flex items-center gap-[1.5px] pb-2">
-                  <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-                    {firstPost.category_name || ""}
-                  </button>
-                  <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-                    {firstPost.sub_category_name || ""}
-                  </button>
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2">
+                  <Link
+                    href={`/blogs/${firstPost.category_name}`}
+                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                  >
+                    {firstPost.category_name || "Category"}
+                  </Link>
+                  <Link
+                    href={`/${firstPost.category_id}/${firstPost.subcategory_id}`}
+                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                  >
+                    {firstPost.sub_category_name || "Subcategory"}
+                  </Link>
                 </div>
-
-                <div className="flex items-center gap-2 relative">
+                <div className="flex items-center gap-3 relative">
                   <span
                     onClick={() => handleShare(firstPost)}
                     className="cursor-pointer"
                   >
-                    <RiShareForwardLine className="w-6 h-6 icon" />
+                    <RiShareForwardLine className="w-6 h-6" />
                   </span>
                   {showShareMenu === firstPost.id && (
-                    <div className="absolute top-8 left-0 bg-white shadow-md p-2 rounded-md flex gap-2 z-10">
+                    <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
                       <FaTwitter
                         className="w-6 h-6 cursor-pointer text-blue-500"
                         onClick={() =>
@@ -222,74 +217,76 @@ function Ride() {
                       />
                     </div>
                   )}
-                  <span>
-                    <TbTargetArrow className="w-6 h-6 icon" />
-                  </span>
-                  <span>
-                    <FaRegCommentDots className="w-6 h-6 icon" />
-                  </span>
+                  <TbTargetArrow className="w-6 h-6" />
+                  <FaRegCommentDots className="w-6 h-6" />
                 </div>
               </div>
               <p
-                dangerouslySetInnerHTML={{ __html: firstPost.body1 ?? "" }}
-                className="text-sm font-normal font-manrope leading-[120%] tracking-[0%] text-[#424242] line-clamp-3 overflow-hidden"
+                dangerouslySetInnerHTML={{ __html: firstPost.body1 }}
+                className="text-sm font-normal font-manrope text-[#424242] line-clamp-3"
               />
+              <p className="text-sm font-semibold font-manrope uppercase text-[#424242]">
+                {firstPost.author} - {firstPost.date}
+              </p>
             </div>
             <div className="col-span-2">
               <Image
                 src={getImageUrl(firstPost.image1)}
-                alt={firstPost.heading || "blog image"}
-                width={888}
-                height={552}
+                alt={firstPost.heading || "Blog Image"}
+                width={300}
+                height={200}
                 className="w-full h-[213px] object-cover rounded-md"
               />
             </div>
           </div>
-          <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242]">
-            {firstPost.author} - {firstPost.date}
-          </p>
         </div>
-        <div>
-          <div className="grid grid-cols-5 gap-4">
+      )}
+
+      {secondPost && (
+        <div className="mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div className="col-span-2">
               <Image
                 src={getImageUrl(secondPost.image1)}
-                alt={secondPost.heading || "blog image"}
-                width={888}
-                height={552}
+                alt={secondPost.heading || "Blog Image"}
+                width={300}
+                height={200}
                 className="w-full h-[213px] object-cover rounded-md"
               />
             </div>
             <div className="col-span-3 space-y-4">
               <Link
-                href={`/${secondPostCategoryId}/${secondPostSubcategoryId}/${secondPost?.id}`}
+                href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
               >
                 <p
-                  dangerouslySetInnerHTML={{
-                    __html: secondPost.heading ?? "",
-                  }}
-                  className="text-[18px] font-medium"
+                  dangerouslySetInnerHTML={{ __html: secondPost.heading }}
+                  className="text-lg font-medium font-manrope text-[#131313] hover:underline"
                 />
               </Link>
-              <div className="flex items-center">
-                <div className="flex items-center gap-[1.5px] pb-2">
-                  <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-                    {secondPost.category_name || ""}
-                  </button>
-                  <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-                    {secondPost.sub_category_name || ""}
-                  </button>
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2">
+                  <Link
+                    href={`/blogs/${secondPost.category_name}`}
+                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                  >
+                    {secondPost.category_name || "Category"}
+                  </Link>
+                  <Link
+                    href={`/${secondPost.category_id}/${secondPost.subcategory_id}`}
+                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                  >
+                    {secondPost.sub_category_name || "Subcategory"}
+                  </Link>
                 </div>
-
-                <div className="flex items-center gap-2 relative">
+                <div className="flex items-center gap-3 relative">
                   <span
                     onClick={() => handleShare(secondPost)}
                     className="cursor-pointer"
                   >
-                    <RiShareForwardLine className="w-6 h-6 icon" />
+                    <RiShareForwardLine className="w-6 h-6" />
                   </span>
                   {showShareMenu === secondPost.id && (
-                    <div className="absolute top-8 left-0 bg-white shadow-md p-2 rounded-md flex gap-2 z-10">
+                    <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
                       <FaTwitter
                         className="w-6 h-6 cursor-pointer text-blue-500"
                         onClick={() =>
@@ -330,35 +327,32 @@ function Ride() {
                       />
                     </div>
                   )}
-                  <span>
-                    <TbTargetArrow className="w-6 h-6 icon" />
-                  </span>
-                  <span>
-                    <FaRegCommentDots className="w-6 h-6 icon" />
-                  </span>
+                  <TbTargetArrow className="w-6 h-6" />
+                  <FaRegCommentDots className="w-6 h-6" />
                 </div>
               </div>
               <p
-                dangerouslySetInnerHTML={{ __html: secondPost.body1 ?? "" }}
-                className="text-sm font-normal font-manrope leading-[120%] tracking-[0%] text-[#424242] line-clamp-3 overflow-hidden"
+                dangerouslySetInnerHTML={{ __html: secondPost.body1 }}
+                className="text-sm font-normal font-manrope text-[#424242] line-clamp-3"
               />
+              <p className="text-sm font-semibold font-manrope uppercase text-[#424242]">
+                {secondPost.author} - {secondPost.date}
+              </p>
             </div>
           </div>
-          <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242]">
-            {secondPost.author} - {secondPost.date}
-          </p>
         </div>
-        <div className="flex justify-end">
-          <Link
-            href={`/blogs/${firstPost.category_name}`}
-            className="bg-primary py-[10px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white flex items-center gap-2"
-          >
-            EXPLORE MORE <ArrowRight />
-          </Link>
-        </div>
+      )}
+
+      <div className="flex justify-end py-4">
+        <Link
+          href={`/blogs/${firstPost?.category_id}`}
+          className="bg-primary py-2 px-4 rounded text-sm font-extrabold font-manrope uppercase text-white flex items-center gap-2"
+        >
+          EXPLORE MORE <ArrowRight size={16} />
+        </Link>
       </div>
     </div>
   );
-}
+};
 
 export default Ride;
