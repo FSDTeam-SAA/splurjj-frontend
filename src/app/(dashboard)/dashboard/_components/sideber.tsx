@@ -1169,11 +1169,11 @@ export default function Sidebar() {
           {!isAuthor && (
             <div>
               <div className="p-2">
-                <Link href="/dashboard/advertising">
+                <Link href="/dashboard/horizontal-advertising">
                   <Button
                     variant="ghost"
                     className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
-                      isRouteActive("/dashboard/advertising")
+                      isRouteActive("/dashboard/horizontal-advertising")
                         ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
                         : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
                     }`}
