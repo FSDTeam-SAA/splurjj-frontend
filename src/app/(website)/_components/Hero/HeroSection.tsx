@@ -70,22 +70,6 @@ function HeroSection({
             className="text-base font-normal font-manrope leading-normal tracking-[0%] text-[#424242] my-4 md:my-5 lg:my-6"
           />
         </div>
-        <div className="md:col-span-2">
-          <aside className="sticky top-0 h-[700px]">
-            <div>
-              <Image
-                // src="/assets/videos/blogSide1.jpg"
-                src={
-                  content?.[0]?.advertising_image || content?.[0]?.advertisingLink || ""
-                }
-                alt="blogSide1"
-                width={336}
-                height={700}
-                className="w-full h-[700px] object-cover rounded-[8px]"
-              />
-            </div>
-          </aside>
-        </div>
       </div>
     </div>
   );
