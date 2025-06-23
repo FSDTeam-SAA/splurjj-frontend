@@ -140,7 +140,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
             <div className="flex items-center gap-4 mb-2">
               <div className="flex items-center gap-[1.5px]">
                 <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-                  Read
+                  Read 
                 </button>
                 {/* Add Video button if body1 contains video content */}
 
