@@ -133,7 +133,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                   {firstPost.category_name || "Category"}
                 </Link>
                 <Link
-                  href={`/blogs/${firstPost.category_name
+                  href={`/${firstPost.category_name
                     .toLowerCase()
                     .replace(/\s+/g, "-")}/${firstPost.sub_category_name
                     .toLowerCase()
