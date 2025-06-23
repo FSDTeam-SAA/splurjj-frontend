@@ -12,6 +12,7 @@ import { LuFacebook } from "react-icons/lu";
 import { PiYoutubeLogoLight } from "react-icons/pi";
 import RalatedBlog from "../../../_components/RalatedBlog/RalatedBlog";
 import Link from "next/link";
+import { LeaveAComment } from "@/app/(website)/_components/LeaveAComment/LeaveAComment";
 
 const ContentBlogDetails = ({
   params,
@@ -44,7 +45,7 @@ const ContentBlogDetails = ({
     return <div>{error instanceof Error ? error.message : String(error)}</div>;
   }
 
-  // blog details 
+  // blog details
   const blog = data?.data?.data?.find(
     (item: ContentDataTypeResponse) => item?.id === Number(params?.id)
   );
@@ -141,13 +142,16 @@ const ContentBlogDetails = ({
               <div className="md:col-span-5 flex flex-col items-start gap-3 md:gap-4">
                 <div className="flex items-center gap-3 md:gap-4">
                   {blog?.tags?.map((tag, index) => (
-                    <Link href={`/${categoryId}/${subcategoryId}/${params.id}/${tag}`} key={index}>
-                      <button
+                    <Link
+                      href={`/${categoryId}/${subcategoryId}/${params.id}/${tag}`}
                       key={index}
-                      className="bg-secondary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white"
                     >
-                      {tag}
-                    </button>
+                      <button
+                        key={index}
+                        className="bg-secondary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white"
+                      >
+                        {tag}
+                      </button>
                     </Link>
                   ))}
                 </div>
@@ -203,9 +207,9 @@ const ContentBlogDetails = ({
         {/* <Advertising /> */}
 
         {/* leave a comment  */}
-        {/* <section id="comment" className="py-10">
+        <section id="comment" className="py-10">
           <LeaveAComment />
-        </section> */}
+        </section>
 
         {/* related blogs  */}
         <section>
