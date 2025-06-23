@@ -75,6 +75,9 @@ const Navbar = () => {
     }
   };
 
+
+
+
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
     if (!isSearchOpen) {

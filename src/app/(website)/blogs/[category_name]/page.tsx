@@ -1,14 +1,8 @@
 "use client";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import {
-  FaFacebook,
-  FaLinkedin,
-  FaRegCommentDots,
-  FaTwitter,
-} from "react-icons/fa";
-import { RiShareForwardLine } from "react-icons/ri";
-import { TbTargetArrow } from "react-icons/tb";
+
+import { useEffect, useState } from "react";
+import CategoryContents from "./_components/categoryContents";
+import Adds from "../../_components/Home/adds";
 
 interface BlogPost {
   id: number;
@@ -32,26 +26,46 @@ interface BlogPost {
   status: string;
 }
 
-function Page({ params }: { params: { category_name: string } }) {
-  console.log("Category Name:", params.category_name);
+interface ApiResponse {
+  success: boolean;
+  message: string;
+  data: BlogPost[];
+  meta: {
+    current_page: number;
+    per_page: number;
+    total: number;
+    last_page: number;
+  };
+}
 
+interface PageProps {
+  params: { category_name: string };
+}
+
+function AllContentsPage({ params }: PageProps) {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [showShareMenu, setShowShareMenu] = useState<number | null>(null); // Track which post's share menu is open
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [totalItems, setTotalItems] = useState<number>(0);
+
+
+  const limit = 10;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Use params.category_name in the API URL
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home/${params.category_name}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home/${params.category_name}?page=${currentPage}&limit=${limit}`
         );
         if (!response.ok) {
-          throw new Error("Failed to fetch data");
+          throw new Error(`Failed to fetch data: ${response.statusText}`);
         }
-        const data = await response.json();
-        setPosts(data.data || []); // Assuming data.data contains the posts array
+        const data: ApiResponse = await response.json();
+        setPosts(data.data || []);
+        setTotalPages(data.meta.last_page);
+        setTotalItems(data.meta.total);
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "An unknown error occurred"
@@ -62,156 +76,52 @@ function Page({ params }: { params: { category_name: string } }) {
     };
 
     fetchData();
-  }, [params.category_name]); // Add params.category_name as a dependency
+  }, [params.category_name, currentPage]);
 
-  console.log("PPPPPPPPPPPPPPPP", posts);
 
-  // Function to generate full shareable URL
-  const getShareUrl = (
-    categoryId: number,
-    subcategoryId: number,
-    postId: number
-  ): string => {
-    const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
-    return `${baseUrl}/${categoryId}/${subcategoryId}/${postId}`;
-  };
+  console.log(posts, "posts");
 
-  // Handle share button click
-  const handleShare = async (post: BlogPost) => {
-    const shareUrl = getShareUrl(
-      post.category_id,
-      post.subcategory_id,
-      post.id
-    );
-    const shareData = {
-      title: post.heading,
-      text: post.sub_heading || "Check out this blog post!",
-      url: shareUrl,
-    };
-
-    // Try Web Share API (mobile devices, modern browsers)
-    if (navigator.share) {
-      try {
-        await navigator.share(shareData);
-      } catch (err) {
-        console.error("Error sharing:", err);
-      }
-    } else {
-      // Toggle custom share menu for this post
-      setShowShareMenu(showShareMenu === post.id ? null : post.id);
-    }
-  };
-
-  // Social media share links
-  const shareToTwitter = (url: string, text: string) => {
-    window.open(
-      `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-        url
-      )}&text=${encodeURIComponent(text)}`,
-      "_blank"
-    );
-  };
-
-  const shareToFacebook = (url: string) => {
-    window.open(
-      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
-      "_blank"
-    );
-  };
-
-  const shareToLinkedIn = (url: string, title: string) => {
-    window.open(
-      `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
-        url
-      )}&title=${encodeURIComponent(title)}`,
-      "_blank"
-    );
-  };
-
-  // const getImageUrl = (path: string | null): string => {
-  //   if (!path) return "/assets/videos/blog1.jpg";
-  //   if (path.startsWith("http")) return path;
-  //   return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${path.replace(/^\/+/, "")}`;
-  // };
-
-  if (loading) return <div className="loading">Loading...</div>;
-  if (error) return <div className="error">Error: {error}</div>;
-  if (posts.length === 0) return <div className="error">No posts found</div>;
+  // Capitalize category name for display
+  const capitalize = (str: string) =>
+    str
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
 
   return (
-    <div>
-      {posts.map((post) => (
-        <div key={post.id} className="flex items-center justify-between py-4">
-          <div className="flex items-center gap-2 relative">
-            <span
-              onClick={() => handleShare(post)} // Use handleShare with the current post
-              className="cursor-pointer"
-            >
-              <RiShareForwardLine className="w-6 h-6 icon" />
-            </span>
-            {showShareMenu === post.id && (
-              <div className="absolute top-8 left-0 bg-white shadow-md p-2 rounded-md flex gap-2 z-10">
-                <FaTwitter
-                  className="w-6 h-6 cursor-pointer text-blue-500"
-                  onClick={() =>
-                    shareToTwitter(
-                      getShareUrl(
-                        post.category_id,
-                        post.subcategory_id,
-                        post.id
-                      ),
-                      post.heading // Use post.heading instead of fivePost
-                    )
-                  }
-                />
-                <FaFacebook
-                  className="w-6 h-6 cursor-pointer text-blue-700"
-                  onClick={() =>
-                    shareToFacebook(
-                      getShareUrl(
-                        post.category_id,
-                        post.subcategory_id,
-                        post.id
-                      )
-                    )
-                  }
-                />
-                <FaLinkedin
-                  className="w-6 h-6 cursor-pointer text-blue-600"
-                  onClick={() =>
-                    shareToLinkedIn(
-                      getShareUrl(
-                        post.category_id,
-                        post.subcategory_id,
-                        post.id
-                      ),
-                      post.heading
-                    )
-                  }
-                />
-              </div>
-            )}
-            <span>
-              <TbTargetArrow className="w-6 h-6 icon" />
-            </span>
-            <span>
-              <FaRegCommentDots className="w-6 h-6 icon" />
-            </span>
-          </div>
-          <div>
-            <Link
-              href=""
-            >
-              <p
-                dangerouslySetInnerHTML={{ __html: post.heading ?? "" }}
-                className="text-[24px] font-medium"
-              />
-            </Link>
+    <div className="container mx-auto px-4">
+      <div className="text-center pt-16">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">
+          {capitalize(params.category_name)} Contents
+        </h1>
+        <p className="max-w-2xl mx-auto mt-4 text-gray-600">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+          veniam, quis nostrud exercitation.
+        </p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-8 gap-4 pt-16">
+        {/* Main content */}
+        <div className="col-span-1 md:col-span-6 pb-16">
+          <CategoryContents
+            posts={posts}
+            loading={loading}
+            error={error}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={totalItems}
+            setCurrentPage={setCurrentPage}
+          />
+        </div>
+
+        {/* Sticky sidebar */}
+        <div className="col-span-1 md:col-span-2">
+          <div className="sticky top-[120px] mb-2">
+            <Adds />
           </div>
         </div>
-      ))}
+      </div>
     </div>
   );
 }
 
-export default Page;
+export default AllContentsPage;
