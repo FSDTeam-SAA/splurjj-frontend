@@ -4,45 +4,51 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import {
-  FaFacebook,
-  FaLinkedin,
-  FaRegCommentDots,
-  FaTwitter,
-} from "react-icons/fa";
+import { FaFacebook, FaLinkedin, FaRegCommentDots, FaTwitter } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
 
+// Interface for BlogPost
 interface BlogPost {
   id: number;
   category_id: number;
   subcategory_id: number;
-  category_name: string;
-  sub_category_name: string;
+  category_name?: string;
+  sub_category_name?: string;
   heading: string;
   author: string;
   date: string;
   sub_heading: string;
   body1: string;
-  image1: string;
-  advertising_image: string;
+  image1: string | null;
+  advertising_image: string | null;
   tags: string[];
   created_at: string;
   updated_at: string;
-  imageLink: string;
-  advertisingLink: string;
+  imageLink: string | null;
+  advertisingLink: string | null;
   user_id: number;
   status: string;
 }
 
-function Gear() {
-  const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [category, setCategory] = useState<BlogPost[]>([]);
-  const [showShareMenu, setShowShareMenu] = useState<number | null>(null); // Track which post's share menu is open
+// Interface for API Response
+interface ApiResponse {
+  success: boolean;
+  message: string;
+  data: BlogPost[];
+  meta?: {
+    current_page: number;
+    per_page: number;
+    total: number;
+    last_page: number;
+  };
+}
 
-  console.log(category)
+const Gear: React.FC = () => {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [showShareMenu, setShowShareMenu] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,11 +57,10 @@ function Gear() {
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home/Gear`
         );
         if (!response.ok) {
-          throw new Error("Failed to fetch data");
+          throw new Error(`Failed to fetch data: ${response.statusText}`);
         }
-        const data = await response.json();
-        setCategory(data);
-        setPosts(data.data);
+        const data: ApiResponse = await response.json();
+        setPosts(data.data || []); // Set posts from data.data, default to empty array
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "An unknown error occurred"
@@ -68,30 +73,29 @@ function Gear() {
     fetchData();
   }, []);
 
-  // Function to generate full shareable URL
+  const getImageUrl = (path: string | null): string => {
+    if (!path) return "/assets/images/fallback.jpg"; // Fallback image
+    if (path.startsWith("http")) return path;
+    return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${path.replace(/^\/+/, "")}`;
+  };
+
   const getShareUrl = (
     categoryId: number,
     subcategoryId: number,
     postId: number
   ): string => {
     const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
-    return `${baseUrl}/${categoryId}/${subcategoryId}/${postId}`;
+    return `${baseUrl}/blogs/${categoryId}/${subcategoryId}/${postId}`;
   };
 
-  // Handle share button click
   const handleShare = async (post: BlogPost) => {
-    const shareUrl = getShareUrl(
-      post.category_id,
-      post.subcategory_id,
-      post.id
-    );
+    const shareUrl = getShareUrl(post.category_id, post.subcategory_id, post.id);
     const shareData = {
       title: post.heading,
       text: post.sub_heading || "Check out this blog post!",
       url: shareUrl,
     };
 
-    // Try Web Share API (mobile devices, modern browsers)
     if (navigator.share) {
       try {
         await navigator.share(shareData);
@@ -99,12 +103,10 @@ function Gear() {
         console.error("Error sharing:", err);
       }
     } else {
-      // Toggle custom share menu for this post
       setShowShareMenu(showShareMenu === post.id ? null : post.id);
     }
   };
 
-  // Social media share links
   const shareToTwitter = (url: string, text: string) => {
     window.open(
       `https://twitter.com/intent/tweet?url=${encodeURIComponent(
@@ -130,164 +132,159 @@ function Gear() {
     );
   };
 
-  const getImageUrl = (path: string | null): string => {
-    if (!path) return "/assets/videos/blog1.jpg";
-    if (path.startsWith("http")) return path;
-    return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${path.replace(/^\/+/, "")}`;
-  };
-
-  if (loading) return <div className="loading">Loading...</div>;
-  if (error) return <div className="error">Error: {error}</div>;
-  if (posts.length === 0) return <div className="error">No posts found</div>;
+  if (loading) return <div className="loading text-center py-8">Loading...</div>;
+  if (error) return <div className="error text-center py-8 text-red-500">Error: {error}</div>;
+  if (posts.length === 0) return <div className="error text-center py-8">No posts found</div>;
 
   const firstPost = posts[0];
-  console.log(firstPost);
   const secondPost = posts[1];
-  const secondPostCategoryId = secondPost?.category_id;
-  const secondPostSubcategoryId = secondPost?.subcategory_id;
-  const thardPost = posts[2];
-  const thardPostCategoryId = thardPost?.category_id;
-  const thardPostSubcategoryId = thardPost?.subcategory_id;
+  const thirdPost = posts[2];
+
   return (
-    <div>
-      <div>
-        <div className="flex items-center gap-4 mb-2">
-          <div className="flex items-center gap-[1.5px]">
-            <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-              {firstPost.category_name || ""}
-            </button>
-            <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-              {firstPost.sub_category_name || ""}
-            </button>
-          </div>
-          <div className="flex items-center gap-2 relative">
-            <span
-              onClick={() => handleShare(firstPost)}
-              className="cursor-pointer"
-            >
-              <RiShareForwardLine className="w-6 h-6 icon" />
-            </span>
-            {showShareMenu === firstPost.id && (
-              <div className="absolute top-8 left-0 bg-white shadow-md p-2 rounded-md flex gap-2 z-10">
-                <FaTwitter
-                  className="w-6 h-6 cursor-pointer text-blue-500"
-                  onClick={() =>
-                    shareToTwitter(
-                      getShareUrl(
-                        firstPost.category_id,
-                        firstPost.subcategory_id,
-                        firstPost.id
-                      ),
-                      firstPost.heading
-                    )
-                  }
-                />
-                <FaFacebook
-                  className="w-6 h-6 cursor-pointer text-blue-700"
-                  onClick={() =>
-                    shareToFacebook(
-                      getShareUrl(
-                        firstPost.category_id,
-                        firstPost.subcategory_id,
-                        firstPost.id
+    <div className="container mx-auto px-4">
+      {firstPost && (
+        <div className="py-8">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2">
+              <Link
+                href={`/blogs/${firstPost.category_name}`}
+                className="bg-primary py-2 px-4 rounded text-sm font-extrabold font-manrope uppercase text-white"
+              >
+                {firstPost.category_name || "Category"}
+              </Link>
+              <Link
+                href={`/${firstPost.category_id}/${firstPost.subcategory_id}`}
+                className="bg-primary py-2 px-4 rounded text-sm font-extrabold font-manrope uppercase text-white"
+              >
+                {firstPost.sub_category_name || "Subcategory"}
+              </Link>
+            </div>
+            <div className="flex items-center gap-3 relative">
+              <span
+                onClick={() => handleShare(firstPost)}
+                className="cursor-pointer"
+              >
+                <RiShareForwardLine className="w-6 h-6" />
+              </span>
+              {showShareMenu === firstPost.id && (
+                <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
+                  <FaTwitter
+                    className="w-6 h-6 cursor-pointer text-blue-500"
+                    onClick={() =>
+                      shareToTwitter(
+                        getShareUrl(
+                          firstPost.category_id,
+                          firstPost.subcategory_id,
+                          firstPost.id
+                        ),
+                        firstPost.heading
                       )
-                    )
-                  }
-                />
-                <FaLinkedin
-                  className="w-6 h-6 cursor-pointer text-blue-600"
-                  onClick={() =>
-                    shareToLinkedIn(
-                      getShareUrl(
-                        firstPost.category_id,
-                        firstPost.subcategory_id,
-                        firstPost.id
-                      ),
-                      firstPost.heading
-                    )
-                  }
-                />
-              </div>
-            )}
-            <span>
-              <TbTargetArrow className="w-6 h-6 icon" />
-            </span>
-            <span>
-              <FaRegCommentDots className="w-6 h-6 icon" />
-            </span>
+                    }
+                  />
+                  <FaFacebook
+                    className="w-6 h-6 cursor-pointer text-blue-700"
+                    onClick={() =>
+                      shareToFacebook(
+                        getShareUrl(
+                          firstPost.category_id,
+                          firstPost.subcategory_id,
+                          firstPost.id
+                        )
+                      )
+                    }
+                  />
+                  <FaLinkedin
+                    className="w-6 h-6 cursor-pointer text-blue-600"
+                    onClick={() =>
+                      shareToLinkedIn(
+                        getShareUrl(
+                          firstPost.category_id,
+                          firstPost.subcategory_id,
+                          firstPost.id
+                        ),
+                        firstPost.heading
+                      )
+                    }
+                  />
+                </div>
+              )}
+              <TbTargetArrow className="w-6 h-6" />
+              <FaRegCommentDots className="w-6 h-6" />
+            </div>
           </div>
-        </div>
-        <div
-          style={{
-            backgroundImage: `url(${getImageUrl(firstPost.image1)})`,
-            height: "433px",
-            backgroundPosition: "center",
-            backgroundSize: "cover", // Ensures the background image covers the div
-          }}
-          className="flex items-center justify-center"
-        >
-          <div className="text-center">
-            <Link
-              href={`/${thardPostCategoryId}/${thardPostSubcategoryId}/${firstPost?.id}`}
-              className="important-white"
-            >
+          <div
+            style={{
+              backgroundImage: `url(${getImageUrl(firstPost.image1)})`,
+              height: "433px",
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+            }}
+            className="flex items-center justify-center rounded-lg"
+          >
+            <div className="text-center bg-black bg-opacity-50 p-6 rounded">
+              <Link
+                href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
+              >
+                <p
+                  dangerouslySetInnerHTML={{ __html: firstPost.heading }}
+                  className="text-2xl font-medium font-manrope text-white hover:underline"
+                />
+              </Link>
               <p
-                dangerouslySetInnerHTML={{ __html: firstPost.heading ?? "" }}
-                className="text-[24px] font-medium text-center !text-white font-manrope leading-[120%] tracking-[0%]"
+                dangerouslySetInnerHTML={{ __html: firstPost.body1 }}
+                className="text-sm font-normal font-manrope text-white line-clamp-3 mt-2"
               />
-            </Link>
-
-            <p
-              dangerouslySetInnerHTML={{ __html: firstPost.body1 ?? "" }}
-              className="text-sm font-normal font-manrope leading-[120%] tracking-[0%] line-clamp-3 overflow-hidden"
-            />
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
-      <div>
-        <div className="grid grid-cols-1 md:grid-cols-2 py-8">
-          <div>
+      <div className="py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {secondPost && (
             <div className="grid grid-cols-5 gap-4">
               <div className="col-span-2">
                 <Image
                   src={getImageUrl(secondPost.image1)}
-                  alt={secondPost.heading || "blog image"}
-                  width={888}
-                  height={552}
+                  alt={secondPost.heading || "Blog Image"}
+                  width={300}
+                  height={200}
                   className="w-full h-[213px] object-cover rounded-md"
                 />
               </div>
               <div className="col-span-3 space-y-4">
                 <Link
-                  href={`/${secondPostCategoryId}/${secondPostSubcategoryId}/${secondPost?.id}`}
+                  href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
                 >
                   <p
-                    dangerouslySetInnerHTML={{
-                      __html: secondPost.heading ?? "",
-                    }}
-                    className="text-[18px] font-medium"
+                    dangerouslySetInnerHTML={{ __html: secondPost.heading }}
+                    className="text-lg font-medium font-manrope text-[#131313] hover:underline"
                   />
                 </Link>
-                <div className="flex items-center">
-                  <div className="flex items-center gap-[1.5px] pb-2">
-                    <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-                      {secondPost.category_name || ""}
-                    </button>
-                    <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-                      {secondPost.sub_category_name || ""}
-                    </button>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={`/blogs/${secondPost.category_name}`}
+                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                    >
+                      {secondPost.category_name || "Category"}
+                    </Link>
+                    <Link
+                      href={`/${secondPost.category_id}/${secondPost.subcategory_id}`}
+                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                    >
+                      {secondPost.sub_category_name || "Subcategory"}
+                    </Link>
                   </div>
-
-                  <div className="flex items-center gap-2 relative">
+                  <div className="flex items-center gap-3 relative">
                     <span
                       onClick={() => handleShare(secondPost)}
                       className="cursor-pointer"
                     >
-                      <RiShareForwardLine className="w-6 h-6 icon" />
+                      <RiShareForwardLine className="w-6 h-6" />
                     </span>
                     {showShareMenu === secondPost.id && (
-                      <div className="absolute top-8 left-0 bg-white shadow-md p-2 rounded-md flex gap-2 z-10">
+                      <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
                         <FaTwitter
                           className="w-6 h-6 cursor-pointer text-blue-500"
                           onClick={() =>
@@ -328,75 +325,75 @@ function Gear() {
                         />
                       </div>
                     )}
-                    <span>
-                      <TbTargetArrow className="w-6 h-6 icon" />
-                    </span>
-                    <span>
-                      <FaRegCommentDots className="w-6 h-6 icon" />
-                    </span>
+                    <TbTargetArrow className="w-6 h-6" />
+                    <FaRegCommentDots className="w-6 h-6" />
                   </div>
                 </div>
                 <p
-                  dangerouslySetInnerHTML={{ __html: secondPost.body1 ?? "" }}
-                  className="text-sm font-normal font-manrope leading-[120%] tracking-[0%] text-[#424242] line-clamp-3 overflow-hidden"
+                  dangerouslySetInnerHTML={{ __html: secondPost.body1 }}
+                  className="text-sm font-normal font-manrope text-[#424242] line-clamp-3"
                 />
+                <p className="text-sm font-semibold font-manrope uppercase text-[#424242]">
+                  {secondPost.author} - {secondPost.date}
+                </p>
               </div>
             </div>
-            <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242]">
-              {secondPost.author} - {secondPost.date}
-            </p>
-          </div>
-          <div>
+          )}
+
+          {thirdPost && (
             <div className="grid grid-cols-5 gap-4">
               <div className="col-span-2">
                 <Image
-                  src={getImageUrl(thardPost.image1)}
-                  alt={thardPost.heading || "blog image"}
-                  width={888}
-                  height={552}
+                  src={getImageUrl(thirdPost.image1)}
+                  alt={thirdPost.heading || "Blog Image"}
+                  width={300}
+                  height={200}
                   className="w-full h-[213px] object-cover rounded-md"
                 />
               </div>
               <div className="col-span-3 space-y-4">
                 <Link
-                  href={`/${thardPostCategoryId}/${thardPostSubcategoryId}/${thardPost?.id}`}
+                  href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
                 >
                   <p
-                    dangerouslySetInnerHTML={{
-                      __html: thardPost.heading ?? "",
-                    }}
-                    className="text-[18px] font-medium"
+                    dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
+                    className="text-lg font-medium font-manrope text-[#131313] hover:underline"
                   />
                 </Link>
-                <div className="flex items-center">
-                  <div className="flex items-center gap-[1.5px] pb-2">
-                    <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-                      {thardPost.category_name || ""}
-                    </button>
-                    <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-                      {thardPost.sub_category_name || ""}
-                    </button>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={`/blogs/${thirdPost.category_id}`}
+                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                    >
+                      {thirdPost.category_name || "Category"}
+                    </Link>
+                    <Link
+                      href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}`}
+                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                    >
+                      {thirdPost.sub_category_name || "Subcategory"}
+                    </Link>
                   </div>
-
-                  <div className="flex items-center gap-2 relative">
+                  <div className="flex items-center gap-3 relative">
                     <span
-                      onClick={() => handleShare(thardPost)}
+                      onClick={() => handleShare(thirdPost)}
                       className="cursor-pointer"
                     >
-                      <RiShareForwardLine className="w-6 h-6 icon" />
+                      <RiShareForwardLine className="w-6 h-6" />
                     </span>
-                    {showShareMenu === thardPost.id && (
-                      <div className="absolute top-8 left-0 bg-white shadow-md p-2 rounded-md flex gap-2 z-10">
+                    {showShareMenu === thirdPost.id && (
+                      <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
                         <FaTwitter
                           className="w-6 h-6 cursor-pointer text-blue-500"
                           onClick={() =>
                             shareToTwitter(
                               getShareUrl(
-                                thardPost.category_id,
-                                thardPost.subcategory_id,
-                                thardPost.id
+                                thirdPost.category_id,
+                                thirdPost.subcategory_id,
+                                thirdPost.id
                               ),
-                              thardPost.heading
+                              thirdPost.heading
                             )
                           }
                         />
@@ -405,9 +402,9 @@ function Gear() {
                           onClick={() =>
                             shareToFacebook(
                               getShareUrl(
-                                thardPost.category_id,
-                                thardPost.subcategory_id,
-                                thardPost.id
+                                thirdPost.category_id,
+                                thirdPost.subcategory_id,
+                                thirdPost.id
                               )
                             )
                           }
@@ -417,46 +414,42 @@ function Gear() {
                           onClick={() =>
                             shareToLinkedIn(
                               getShareUrl(
-                                thardPost.category_id,
-                                thardPost.subcategory_id,
-                                thardPost.id
+                                thirdPost.category_id,
+                                thirdPost.subcategory_id,
+                                thirdPost.id
                               ),
-                              thardPost.heading
+                              thirdPost.heading
                             )
                           }
                         />
                       </div>
                     )}
-                    <span>
-                      <TbTargetArrow className="w-6 h-6 icon" />
-                    </span>
-                    <span>
-                      <FaRegCommentDots className="w-6 h-6 icon" />
-                    </span>
+                    <TbTargetArrow className="w-6 h-6" />
+                    <FaRegCommentDots className="w-6 h-6" />
                   </div>
                 </div>
                 <p
-                  dangerouslySetInnerHTML={{ __html: thardPost.body1 ?? "" }}
-                  className="text-sm font-normal font-manrope leading-[120%] tracking-[0%] text-[#424242] line-clamp-3 overflow-hidden"
+                  dangerouslySetInnerHTML={{ __html: thirdPost.body1 }}
+                  className="text-sm font-normal font-manrope text-[#424242] line-clamp-3"
                 />
+                <p className="text-sm font-semibold font-manrope uppercase text-[#424242]">
+                  {thirdPost.author} - {thirdPost.date}
+                </p>
               </div>
             </div>
-            <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242]">
-              {thardPost.author} - {thardPost.date}
-            </p>
-          </div>
+          )}
         </div>
-        <div className="flex justify-end">
+        <div className="flex justify-end py-4">
           <Link
-            href={`/blogs/${firstPost.category_name}`}
-            className="bg-primary py-[10px] px-[12px] rounded-[4px] text-sm font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white flex items-center gap-2"
+            href={`/blogs/${firstPost?.category_name}`}
+            className="bg-primary py-2 px-4 rounded text-sm font-extrabold font-manrope uppercase text-white flex items-center gap-2"
           >
-            EXPLORE MORE <ArrowRight />
+            EXPLORE MORE <ArrowRight size={16} />
           </Link>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Gear;
