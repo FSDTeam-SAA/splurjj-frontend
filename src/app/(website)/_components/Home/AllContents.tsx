@@ -93,6 +93,8 @@ const AllContents: React.FC = () => {
     return `${baseUrl}/blogs/${categoryId}/${subcategoryId}/${postId}`;
   };
 
+  
+
   const handleShare = async (post: ContentItem) => {
     const shareUrl = getShareUrl(
       post.category_id,
@@ -140,6 +142,8 @@ const AllContents: React.FC = () => {
       "_blank"
     );
   };
+
+
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -218,7 +222,12 @@ const AllContents: React.FC = () => {
                   </div>
                 )}
                 <TbTargetArrow className="w-6 h-6" />
-                <FaRegCommentDots className="w-6 h-6" />
+                <Link
+                  href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}#comment`}
+                  className="cursor-pointer"
+                >
+                  <FaRegCommentDots className="w-6 h-6" />
+                </Link>
               </div>
             </div>
             <div className="space-y-4">
@@ -231,8 +240,8 @@ const AllContents: React.FC = () => {
                 />
               </Link>
               <p
-                dangerouslySetInnerHTML={{ __html: firstPost.body1 }}
-                className="text-base font-normal font-manrope text-[#424242]"
+                dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
+                className="text-base font-normal font-manrope text-[#424242] line-clamp-3"
               />
               <p className="text-base font-semibold font-manrope uppercase text-[#424242]">
                 {firstPost.author} - {firstPost.date}
@@ -251,7 +260,7 @@ const AllContents: React.FC = () => {
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-12">
         {secondPost && (
           <div className="relative">
             <div className="flex items-center gap-2 mb-2">
@@ -336,7 +345,12 @@ const AllContents: React.FC = () => {
                   </div>
                 )}
                 <TbTargetArrow className="w-6 h-6" />
-                <FaRegCommentDots className="w-6 h-6" />
+                <Link
+                  href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}#comment`}
+                  className="cursor-pointer"
+                >
+                  <FaRegCommentDots className="w-6 h-6" />
+                </Link>
               </div>
               <p
                 dangerouslySetInnerHTML={{ __html: secondPost.body1 }}
@@ -431,7 +445,12 @@ const AllContents: React.FC = () => {
                   </div>
                 )}
                 <TbTargetArrow className="w-6 h-6" />
-                <FaRegCommentDots className="w-6 h-6" />
+                <Link
+                  href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}#comment`}
+                  className="cursor-pointer"
+                >
+                  <FaRegCommentDots className="w-6 h-6" />
+                </Link>
               </div>
               <p
                 dangerouslySetInnerHTML={{ __html: thirdPost.body1 }}
@@ -525,7 +544,12 @@ const AllContents: React.FC = () => {
                   </div>
                 )}
                 <TbTargetArrow className="w-6 h-6" />
-                <FaRegCommentDots className="w-6 h-6" />
+                <Link
+                  href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}#comment`}
+                  className="cursor-pointer"
+                >
+                  <FaRegCommentDots className="w-6 h-6" />
+                </Link>
               </div>
               <p
                 dangerouslySetInnerHTML={{ __html: fourthPost.body1 }}
