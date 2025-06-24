@@ -1,14 +1,14 @@
 import React from "react";
 import { FooterForm } from "./_container/FooterForm";
-import { FooterMenu } from "./_container/FooterMenu";
+// import { FooterMenu } from "./_container/FooterMenu";
 
 function FooterPage() {
   return (
     <div className="">
       <FooterForm />
-      <section className="">
+      {/* <section className="">
         <FooterMenu />
-      </section>
+      </section> */}
     </div>
   );
 }
