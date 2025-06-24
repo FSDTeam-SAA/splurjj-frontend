@@ -52,7 +52,7 @@ const formSchema = z
     }
   );
 
-export default function VerticalAdvertising() {
+export default function HorizontalAdvertising() {
   const [image, setImage] = useState<File | null>(null);
   const [leftSideActive, setLeftSideActive] = useState(false);
   const [rightSideActive, setRightSideActive] = useState(false);
@@ -70,13 +70,16 @@ export default function VerticalAdvertising() {
   });
 
   const { data } = useQuery<AdvertisingSetting>({
-    queryKey: ["vertical-ads"],
+    queryKey: ["horizontal-ads"],
     queryFn: () =>
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/advertising/vertical`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }).then((res) => res.json()),
+      fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/advertising/horizontal`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ).then((res) => res.json()),
     enabled: !!token,
   });
 
@@ -132,23 +135,26 @@ export default function VerticalAdvertising() {
   const { mutate, isPending } = useMutation({
     mutationKey: ["vertical-ads"],
     mutationFn: (formData: FormData) =>
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/advertising/vertical`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          // "content-type": "application/json",
-        },
-        body: formData,
-      }).then((res) => res.json()),
+      fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/advertising/horizontal`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "content-type": "application/json",
+          },
+          body: formData,
+        }
+      ).then((res) => res.json()),
     onSuccess: (data) => {
       if (!data.success) {
         toast.error(data.message || "Failed to update ad");
         return;
       }
+      toast.success(data.message || "Ad updated successfully");
+      queryClient.invalidateQueries({ queryKey: ["horizontal-ads"] });
       form.reset();
       setImage(null);
-      toast.success(data.message || "Ad updated successfully");
-      queryClient.invalidateQueries({ queryKey: ["vertical-ads"] });
     },
   });
 
