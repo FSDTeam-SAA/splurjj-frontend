@@ -233,7 +233,12 @@ const Video: React.FC = () => {
                 </div>
               )}
               <TbTargetArrow className="w-6 h-6" />
+              <Link
+                href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}#comment`}
+                className="cursor-pointer"
+              >
               <FaRegCommentDots className="w-6 h-6" />
+              </Link>
             </div>
             </div>
             <p className="text-sm font-semibold font-manrope uppercase text-[#424242] pt-4">
@@ -334,7 +339,12 @@ const Video: React.FC = () => {
                   </div>
                 )}
                 <TbTargetArrow className="w-6 h-6" />
+                <Link
+                  href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}#comment`}
+                  className="cursor-pointer"
+                >
                 <FaRegCommentDots className="w-6 h-6" />
+                </Link>
               </div>
               <p
                 dangerouslySetInnerHTML={{ __html: thirdPost.body1 }}
@@ -428,7 +438,12 @@ const Video: React.FC = () => {
                   </div>
                 )}
                 <TbTargetArrow className="w-6 h-6" />
+                <Link
+                  href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}#comment`}
+                  className="cursor-pointer"
+                >
                 <FaRegCommentDots className="w-6 h-6" />
+                </Link>
               </div>
               <p
                 dangerouslySetInnerHTML={{ __html: fourthPost.body1 }}
@@ -522,7 +537,12 @@ const Video: React.FC = () => {
                   </div>
                 )}
                 <TbTargetArrow className="w-6 h-6" />
+                <Link
+                  href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}#comment`}
+                  className="cursor-pointer"
+                >
                 <FaRegCommentDots className="w-6 h-6" />
+                </Link>
               </div>
               <p
                 dangerouslySetInnerHTML={{ __html: fifthPost.body1 }}
@@ -532,7 +552,7 @@ const Video: React.FC = () => {
           )}
         </div>
 
-        <div className="flex justify-end py-4">
+        <div className="flex justify-end py-4 mt-[70px] lg:mt-0">
           <Link
             href={`/blogs/${firstPost?.category_id}`}
             className="bg-primary py-2 px-4 rounded text-sm font-extrabold font-manrope uppercase text-white flex items-center gap-2"

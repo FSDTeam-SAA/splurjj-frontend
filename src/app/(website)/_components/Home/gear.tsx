@@ -209,7 +209,12 @@ const Gear: React.FC = () => {
                 </div>
               )}
               <TbTargetArrow className="w-6 h-6" />
+              <Link
+                href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}#comment`}
+                className="cursor-pointer"
+              >
               <FaRegCommentDots className="w-6 h-6" />
+              </Link>
             </div>
           </div>
           <div
@@ -243,7 +248,7 @@ const Gear: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {secondPost && (
             <div className="grid grid-cols-5 gap-4">
-              <div className="col-span-2">
+              <div className="col-span-5 lg:col-span-2">
                 <Image
                   src={getImageUrl(secondPost.image1)}
                   alt={secondPost.heading || "Blog Image"}
@@ -252,7 +257,7 @@ const Gear: React.FC = () => {
                   className="w-full h-[213px] object-cover rounded-md"
                 />
               </div>
-              <div className="col-span-3 space-y-4">
+              <div className="col-span-5 lg:col-span-3 space-y-4">
                 <Link
                   href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
                 >
@@ -326,7 +331,12 @@ const Gear: React.FC = () => {
                       </div>
                     )}
                     <TbTargetArrow className="w-6 h-6" />
-                    <FaRegCommentDots className="w-6 h-6" />
+                    <Link
+                      href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}#comment`}
+                      className="cursor-pointer"
+                    >
+                    <FaRegCommentDots className="w-6 h-6" /> 
+                    </Link>
                   </div>
                 </div>
                 <p
@@ -342,7 +352,7 @@ const Gear: React.FC = () => {
 
           {thirdPost && (
             <div className="grid grid-cols-5 gap-4">
-              <div className="col-span-2">
+              <div className="col-span-5 lg:col-span-2">
                 <Image
                   src={getImageUrl(thirdPost.image1)}
                   alt={thirdPost.heading || "Blog Image"}
@@ -351,7 +361,7 @@ const Gear: React.FC = () => {
                   className="w-full h-[213px] object-cover rounded-md"
                 />
               </div>
-              <div className="col-span-3 space-y-4">
+              <div className="col-span-5 lg:col-span-3 space-y-4">
                 <Link
                   href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
                 >
@@ -425,7 +435,12 @@ const Gear: React.FC = () => {
                       </div>
                     )}
                     <TbTargetArrow className="w-6 h-6" />
+                    <Link
+                      href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}#comment`}
+                      className="cursor-pointer"  
+                    >
                     <FaRegCommentDots className="w-6 h-6" />
+                    </Link>
                   </div>
                 </div>
                 <p

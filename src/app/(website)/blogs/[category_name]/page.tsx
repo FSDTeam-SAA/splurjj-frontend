@@ -99,9 +99,9 @@ function Page({ params }: PageProps) {
           veniam, quis nostrud exercitation.
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-8 gap-4 pt-16">
+      <div className="grid grid-cols-1 md:grid-cols-8 gap-4 py-16">
         {/* Main content */}
-        <div className="col-span-1 md:col-span-6 pb-16">
+        <div className="col-span-1 md:col-span-6">
           <CategoryContents
             posts={posts}
             loading={loading}
@@ -115,7 +115,7 @@ function Page({ params }: PageProps) {
 
         {/* Sticky sidebar */}
         <div className="col-span-1 md:col-span-2">
-          <div className="sticky top-[120px] mb-2">
+          <div className="sticky top-[120px]">
             <Adds />
           </div>
         </div>

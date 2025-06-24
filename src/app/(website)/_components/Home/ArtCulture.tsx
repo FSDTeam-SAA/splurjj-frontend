@@ -4,7 +4,12 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { FaRegCommentDots, FaTwitter, FaFacebook, FaLinkedin } from "react-icons/fa";
+import {
+  FaRegCommentDots,
+  FaTwitter,
+  FaFacebook,
+  FaLinkedin,
+} from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
 
@@ -89,7 +94,11 @@ const ArtCulture: React.FC = () => {
   };
 
   const handleShare = async (post: BlogPost) => {
-    const shareUrl = getShareUrl(post.category_id, post.subcategory_id, post.id);
+    const shareUrl = getShareUrl(
+      post.category_id,
+      post.subcategory_id,
+      post.id
+    );
     const shareData = {
       title: post.heading,
       text: post.sub_heading || "Check out this blog post!",
@@ -132,9 +141,14 @@ const ArtCulture: React.FC = () => {
     );
   };
 
-  if (loading) return <div className="loading text-center py-8">Loading...</div>;
-  if (error) return <div className="error text-center py-8 text-red-500">Error: {error}</div>;
-  if (posts.length === 0) return <div className="error text-center py-8">No posts found</div>;
+  if (loading)
+    return <div className="loading text-center py-8">Loading...</div>;
+  if (error)
+    return (
+      <div className="error text-center py-8 text-red-500">Error: {error}</div>
+    );
+  if (posts.length === 0)
+    return <div className="error text-center py-8">No posts found</div>;
 
   const firstPost = posts[0];
   const thirdPost = posts[1];
@@ -210,7 +224,12 @@ const ArtCulture: React.FC = () => {
                 </div>
               )}
               <TbTargetArrow className="w-6 h-6" />
-              <FaRegCommentDots className="w-6 h-6" />
+              <Link
+                href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}#comment`}
+                className="cursor-pointer"
+              >
+                <FaRegCommentDots className="w-6 h-6" />
+              </Link>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 rounded">
@@ -219,10 +238,10 @@ const ArtCulture: React.FC = () => {
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
                 className="text-2xl font-medium font-manrope text-[#131313] hover:underline"
               >
-              <p
-                dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                className="text-4xl font-bold font-manrope text-[#131313]"
-              />
+                <p
+                  dangerouslySetInnerHTML={{ __html: firstPost.heading }}
+                  className="text-4xl font-bold font-manrope text-[#131313]"
+                />
               </Link>
             </div>
             <div>
@@ -330,7 +349,12 @@ const ArtCulture: React.FC = () => {
                     </div>
                   )}
                   <TbTargetArrow className="w-6 h-6" />
+                  <Link
+                    href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}#comment`}
+                    className="cursor-pointer"
+                  >
                   <FaRegCommentDots className="w-6 h-6" />
+                  </Link>
                 </div>
                 <p
                   dangerouslySetInnerHTML={{ __html: thirdPost.body1 }}
@@ -426,7 +450,12 @@ const ArtCulture: React.FC = () => {
                     </div>
                   )}
                   <TbTargetArrow className="w-6 h-6" />
-                  <FaRegCommentDots className="w-6 h-6" />
+                  <Link
+                    href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}#comment`}
+                    className="cursor-pointer"
+                  >
+                  <FaRegCommentDots className="w-6 h-6" /> 
+                  </Link>
                 </div>
                 <p
                   dangerouslySetInnerHTML={{ __html: fourthPost.body1 }}
@@ -522,7 +551,12 @@ const ArtCulture: React.FC = () => {
                     </div>
                   )}
                   <TbTargetArrow className="w-6 h-6" />
+                  <Link
+                    href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}#comment`}
+                    className="cursor-pointer"
+                  >
                   <FaRegCommentDots className="w-6 h-6" />
+                  </Link>
                 </div>
                 <p
                   dangerouslySetInnerHTML={{ __html: fifthPost.body1 }}
@@ -539,7 +573,7 @@ const ArtCulture: React.FC = () => {
           href={`/blogs/${firstPost?.category_name}`}
           className="bg-primary py-2 px-4 rounded text-sm font-extrabold font-manrope uppercase text-white flex items-center gap-2"
         >
-          EXPLORE MORE <ArrowRight size={16}/>
+          EXPLORE MORE <ArrowRight size={16} />
         </Link>
       </div>
     </div>

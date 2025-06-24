@@ -240,7 +240,13 @@ function Contents() {
                   </div>
                 )}
                 <TbTargetArrow className="w-6 h-6" />
-                <FaRegCommentDots className="w-6 h-6" />
+                <Link
+                  href={`/${post.category_id}/${post.subcategory_id}/${post.id}#comment`}
+                  className="cursor-pointer"
+                >
+                  <FaRegCommentDots className="w-6 h-6" />
+                </Link>
+                
               </div>
               <p
                 dangerouslySetInnerHTML={{ __html: post.body1 }}

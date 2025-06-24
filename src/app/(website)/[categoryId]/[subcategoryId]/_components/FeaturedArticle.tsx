@@ -112,6 +112,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
   console.log("Posts received in FirstContents:", posts);
 
   const firstPost = posts[0];
+  console.log(firstPost);
   const secondPost = posts[1];
   const thirdPost = posts[2];
   const fourthPost = posts[3];
@@ -125,19 +126,13 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
             <div className="flex items-center gap-4 mb-4">
               <div className="flex items-center gap-2">
                 <Link
-                  href={`/blogs/${firstPost.category_name
-                    .toLowerCase()
-                    .replace(/\s+/g, "-")}`}
+                  href={`/blogs/${firstPost.category_name}`}
                   className="bg-primary py-2 px-4 rounded text-base font-extrabold font-manrope uppercase text-white"
                 >
                   {firstPost.category_name || "Category"}
                 </Link>
                 <Link
-                  href={`/${firstPost.category_name
-                    .toLowerCase()
-                    .replace(/\s+/g, "-")}/${firstPost.sub_category_name
-                    .toLowerCase()
-                    .replace(/\s+/g, "-")}`}
+                  href={`/${firstPost.category_id}/${firstPost.subcategory_id}`}
                   className="bg-primary py-2 px-4 rounded text-base font-extrabold font-manrope uppercase text-white"
                 >
                   {firstPost.sub_category_name || "Subcategory"}
@@ -191,7 +186,12 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                   </div>
                 )}
                 <TbTargetArrow className="w-6 h-6" />
-                <FaRegCommentDots className="w-6 h-6" />
+                <Link
+                  href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}#comment`}
+                  className="cursor-pointer"
+                >
+                  <FaRegCommentDots className="w-6 h-6" />
+                </Link>
               </div>
             </div>
             <div className="space-y-4">
@@ -209,7 +209,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
               </Link>
               <p
                 dangerouslySetInnerHTML={{ __html: firstPost.body1 }}
-                className="text-base font-normal font-manrope text-[#424242]"
+                className="text-base font-normal font-manrope text-[#424242] line-clamp-3"
               />
               <p className="text-base font-semibold font-manrope uppercase text-[#424242]">
                 {firstPost.author} - {firstPost.date}
@@ -311,7 +311,12 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                       </div>
                     )}
                     <TbTargetArrow className="w-6 h-6" />
-                    <FaRegCommentDots className="w-6 h-6" />
+                    <Link
+                      href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}#comment`}
+                      className="cursor-pointer"
+                    >
+                      <FaRegCommentDots className="w-6 h-6" />
+                    </Link>
                   </div>
                   <p
                     dangerouslySetInnerHTML={{ __html: secondPost.body1 }}
@@ -423,7 +428,12 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                     </div>
                   )}
                   <TbTargetArrow className="w-6 h-6" />
-                  <FaRegCommentDots className="w-6 h-6" />
+                  <Link
+                    href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}#comment`}
+                    className="cursor-pointer"
+                  >
+                    <FaRegCommentDots className="w-6 h-6" />
+                  </Link>
                 </div>
                 <p
                   dangerouslySetInnerHTML={{ __html: thirdPost.body1 }}
@@ -501,7 +511,12 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                       </div>
                     )}
                     <TbTargetArrow className="w-6 h-6" />
-                    <FaRegCommentDots className="w-6 h-6" />
+                    <Link
+                      href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}#comment`}
+                      className="cursor-pointer"
+                    >
+                      <FaRegCommentDots className="w-6 h-6" />
+                    </Link>
                   </div>
                 </div>
 
@@ -595,7 +610,12 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                       </div>
                     )}
                     <TbTargetArrow className="w-6 h-6" />
-                    <FaRegCommentDots className="w-6 h-6" />
+                    <Link
+                      href={`/${fivethPost.category_id}/${fivethPost.subcategory_id}/${fivethPost.id}#comment`}
+                      className="cursor-pointer"
+                    >
+                      <FaRegCommentDots className="w-6 h-6" />
+                    </Link>
                   </div>
                 </div>
 

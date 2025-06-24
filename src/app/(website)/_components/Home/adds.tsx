@@ -9,7 +9,7 @@ function Adds() {
           alt="blog1"
           width={2600}
           height={300}
-          className="w-full h-[300px] object-cover rounded-[8px]"
+          className="w-full h-[300px] object-cover"
         />
     </div>
   );
