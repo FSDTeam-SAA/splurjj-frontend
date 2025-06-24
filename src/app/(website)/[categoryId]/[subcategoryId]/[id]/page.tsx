@@ -1,4 +1,5 @@
 "use client";
+
 import {
   ContentAllDataTypeResponse,
   ContentDataTypeResponse,
@@ -13,14 +14,13 @@ import { PiYoutubeLogoLight } from "react-icons/pi";
 import RalatedBlog from "../../../_components/RalatedBlog/RalatedBlog";
 import Link from "next/link";
 import { LeaveAComment } from "@/app/(website)/_components/LeaveAComment/LeaveAComment";
+import Adds from "@/app/(website)/_components/Home/adds";
 
 const ContentBlogDetails = ({
   params,
 }: {
   params: { id: number; categoryId: string; subcategoryId: string };
 }) => {
-  console.log("params", params);
-
   const categoryId = params?.categoryId;
   const subcategoryId = params?.subcategoryId;
 
@@ -70,7 +70,7 @@ const ContentBlogDetails = ({
 
                 <p
                   dangerouslySetInnerHTML={{ __html: blog?.sub_heading ?? "" }}
-                  className="text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#424242] py-4 md:py-5 lg:py-6"
+                  className="text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#424242] py-4 md:py-5 lg:py-6 line-clamp-3 mb-2"
                 />
                 <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] text-[#424242]">
                   Credits - {blog?.date}
@@ -88,129 +88,130 @@ const ContentBlogDetails = ({
                   </button>
                 </div>
               </div>
-              {/* <div>
-                <Image
-                  // src="/assets/videos/blogSide1.jpg"
-                  src={blog?.advertising_image || blog?.advertisingLink || ""}
-                  alt="blogSide1"
-                  width={336}
-                  height={700}
-                  className="w-full h-[505px] object-cover rounded-[8px]"
-                />
-              </div> */}
+
+              <div className="sticky top-[120px] mb-2">
+                <Adds />
+              </div>
             </div>
             <div className="md:col-span-5">
-              <div className="pb-[25px] md:pb-[32px] lg:pb-[40px]">
-                <Image
-                  src={blog?.image1 || blog?.imageLink || ""}
-                  alt="blog1"
-                  width={888}
-                  height={552}
-                  className="w-full h-[443px] object-cover rounded-[8px]"
+              <div>
+                <p
+                  dangerouslySetInnerHTML={{ __html: blog?.sub_heading ?? "" }}
+                  className="text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8"
                 />
-              </div>
-              <p
-                dangerouslySetInnerHTML={{ __html: blog?.body1 ?? "" }}
-                className="text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8"
-              />
-              <div className="w-full flex items-center justify-center">
-                <span className="w-2/3 h-[2px] bg-secondary" />
-              </div>
-            </div>
-          </div>
-          {/* second part  */}
-          <div className="mt-[25px] md:mt-[37px] lg:mt-[51px] w-full flex flex-col items-center ">
-            {/* first  */}
-            <div className="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-7 gap-2">
-              <h4 className="md:col-span-2 text-lg md:text-xl text-secondary font-bold font-manrope leading-[120%] tracking-[0%] upercase">
-                Posted in
-              </h4>
-              <div className="md:col-span-5 flex items-center gap-[1.5px]">
-                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-                  Read
-                </button>
-                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
-                  Video
-                </button>
-              </div>
-            </div>
-            {/* second  */}
-            <div className="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-7 gap-2 mt-4 md:mt-5 lg:mt-6">
-              <h4 className="md:col-span-2 text-lg md:text-xl text-secondary font-bold font-manrope leading-[120%] tracking-[0%] uppercase">
-                Tags
-              </h4>
-              <div className="md:col-span-5 flex flex-col items-start gap-3 md:gap-4">
-                <div className="flex items-center gap-3 md:gap-4">
-                  {blog?.tags?.map((tag, index) => (
-                    <Link
-                      href={`/${categoryId}/${subcategoryId}/${params.id}/${tag}`}
-                      key={index}
-                    >
-                      <button
-                        key={index}
-                        className="bg-secondary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white"
-                      >
-                        {tag}
-                      </button>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* third  */}
-            <div className="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-7 mt-[25px] md:mt-[37px] lg:mt-[51px]">
-              <div className="md:col-span-2">
-                <div className="">
+                <div className="pb-[25px] md:pb-[32px] lg:pb-[40px]">
                   <Image
-                    src="/assets/videos/author.png"
-                    alt="author"
-                    width={180}
-                    height={180}
-                    className="w-[180px] h-[180px] object-cover rounded-full"
+                    src={blog?.image1 || blog?.imageLink || ""}
+                    alt="blog1"
+                    width={888}
+                    height={552}
+                    className="w-full h-[443px] object-cover rounded-[8px]"
                   />
                 </div>
-              </div>
-              <div className="md:col-span-5 h-full flex flex-col justify-center mt-2 md:mt-0">
-                <h4 className="text-lg font-semibold leading-[120%] tracking-[0%] uppercase font-manrope text-secondary">
-                  {blog?.author}
-                </h4>
-                <p className="mt-4 text-base font-manrope font-normal leading-[150%] tracking-[0%] text-secondary">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
-                </p>
-                <div className="flex items-center justify-between">
-                  <div className="mt-4 flex items-center gap-2">
-                    <span>
-                      <FaInstagram className="w-[48px] h-[48px] text-[#B6B6B6] hover:text-primary cursor-pointer" />
-                    </span>
-                    <span>
-                      <LuFacebook className="w-[48px] h-[48px] text-[#B6B6B6] hover:text-primary cursor-pointer" />
-                    </span>
-                    <span>
-                      <PiYoutubeLogoLight className="w-[48px] h-[48px] text-[#B6B6B6] hover:text-primary cursor-pointer" />
-                    </span>
-                    <span>
-                      <FiTwitter className="w-[48px] h-[48px] text-[#B6B6B6] hover:text-primary cursor-pointer" />
-                    </span>
-                  </div>
-                  <p className="text-lg font-extrabold font-manrope leadig-[120%] tracking-[0%] text-secondary">
-                    view posts
-                  </p>
+                <p
+                  dangerouslySetInnerHTML={{ __html: blog?.body1 ?? "" }}
+                  className="text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8"
+                />
+                <div className="w-full flex items-center justify-center">
+                  <span className="w-2/3 h-[2px] bg-secondary" />
                 </div>
               </div>
+              {/* second part  */}
+              <div className="mt-[25px] md:mt-[37px] lg:mt-[51px]">
+                {/* first  */}
+                <div className="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-7 gap-2">
+                  <h4 className="md:col-span-2 text-lg md:text-xl text-secondary font-bold font-manrope leading-[120%] tracking-[0%] upercase">
+                    Posted in
+                  </h4>
+                  <div className="md:col-span-5 flex items-center gap-[1.5px]">
+                    <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                      Read
+                    </button>
+                    <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                      Video
+                    </button>
+                  </div>
+                </div>
+                {/* second  */}
+                <div className="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-7 gap-2 mt-4 md:mt-5 lg:mt-6">
+                  <h4 className="md:col-span-2 text-lg md:text-xl text-secondary font-bold font-manrope leading-[120%] tracking-[0%] uppercase">
+                    Tags
+                  </h4>
+                  <div className="md:col-span-5 flex flex-col items-start gap-3 md:gap-4">
+                    <div className="flex items-center gap-3 md:gap-4">
+                      {blog?.tags?.map((tag, index) => (
+                        <Link
+                          href={`/${categoryId}/${subcategoryId}/${params.id}/${tag}`}
+                          key={index}
+                        >
+                          <button
+                            key={index}
+                            className="bg-secondary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white"
+                          >
+                            {tag}
+                          </button>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* third  */}
+                <div className="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-7 mt-[25px] md:mt-[37px] lg:mt-[51px]">
+                  <div className="md:col-span-2">
+                    <div className="">
+                      <Image
+                        src="/assets/videos/author.png"
+                        alt="author"
+                        width={180}
+                        height={180}
+                        className="w-[180px] h-[180px] object-cover rounded-full"
+                      />
+                    </div>
+                  </div>
+                  <div className="md:col-span-5 h-full flex flex-col justify-center mt-2 md:mt-0">
+                    <h4 className="text-lg font-semibold leading-[120%] tracking-[0%] uppercase font-manrope text-secondary">
+                      {blog?.author}
+                    </h4>
+                    <p className="mt-4 text-base font-manrope font-normal leading-[150%] tracking-[0%] text-secondary">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua.{" "}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <div className="mt-4 flex items-center gap-2">
+                        <span>
+                          <FaInstagram className="w-[48px] h-[48px] text-[#B6B6B6] hover:text-primary cursor-pointer" />
+                        </span>
+                        <span>
+                          <LuFacebook className="w-[48px] h-[48px] text-[#B6B6B6] hover:text-primary cursor-pointer" />
+                        </span>
+                        <span>
+                          <PiYoutubeLogoLight className="w-[48px] h-[48px] text-[#B6B6B6] hover:text-primary cursor-pointer" />
+                        </span>
+                        <span>
+                          <FiTwitter className="w-[48px] h-[48px] text-[#B6B6B6] hover:text-primary cursor-pointer" />
+                        </span>
+                      </div>
+                      <p className="text-lg font-extrabold font-manrope leadig-[120%] tracking-[0%] text-secondary">
+                        view posts
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* leave a comment  */}
+              <section id="comment" className="py-10">
+                <LeaveAComment />
+              </section>
             </div>
           </div>
         </div>
 
-        {/* advertising  */}
-        {/* <Advertising /> */}
-
-        {/* leave a comment  */}
-        <section id="comment" className="py-10">
-          <LeaveAComment />
-        </section>
-
+        <div className="sticky mb-2">
+          <Adds />
+        </div>
         {/* related blogs  */}
         <section>
           <RalatedBlog relatedBlogs={relatedBlog?.slice(0, 2)} />

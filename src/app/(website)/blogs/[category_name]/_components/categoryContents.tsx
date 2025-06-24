@@ -118,7 +118,7 @@ function CategoryContents({
   };
 
   return (
-    <div className="py-12">
+    <div className="">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {posts.map((post) => (
           <div key={post.id} className="relative">
@@ -204,7 +204,11 @@ function CategoryContents({
                   </div>
                 )}
                 <TbTargetArrow className="w-6 h-6" />
+                <Link
+                  href={`/${post.category_id}/${post.subcategory_id}/${post.id}#comment`}
+                >
                 <FaRegCommentDots className="w-6 h-6" />
+                </Link>
               </div>
               <p
                 dangerouslySetInnerHTML={{ __html: post.body1 }}

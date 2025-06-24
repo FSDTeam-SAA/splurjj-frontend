@@ -4,7 +4,12 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { FaFacebook, FaLinkedin, FaRegCommentDots, FaTwitter } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaLinkedin,
+  FaRegCommentDots,
+  FaTwitter,
+} from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
 
@@ -89,7 +94,11 @@ const Ride: React.FC = () => {
   };
 
   const handleShare = async (post: BlogPost) => {
-    const shareUrl = getShareUrl(post.category_id, post.subcategory_id, post.id);
+    const shareUrl = getShareUrl(
+      post.category_id,
+      post.subcategory_id,
+      post.id
+    );
     const shareData = {
       title: post.heading,
       text: post.sub_heading || "Check out this blog post!",
@@ -132,9 +141,14 @@ const Ride: React.FC = () => {
     );
   };
 
-  if (loading) return <div className="loading text-center py-8">Loading...</div>;
-  if (error) return <div className="error text-center py-8 text-red-500">Error: {error}</div>;
-  if (posts.length === 0) return <div className="error text-center py-8">No posts found</div>;
+  if (loading)
+    return <div className="loading text-center py-8">Loading...</div>;
+  if (error)
+    return (
+      <div className="error text-center py-8 text-red-500">Error: {error}</div>
+    );
+  if (posts.length === 0)
+    return <div className="error text-center py-8">No posts found</div>;
 
   const firstPost = posts[0];
   const secondPost = posts[1];
@@ -144,7 +158,7 @@ const Ride: React.FC = () => {
       {firstPost && (
         <div className="mb-8">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-            <div className="col-span-3 space-y-4">
+            <div className="col-span-2 space-y-4">
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
               >
@@ -218,7 +232,12 @@ const Ride: React.FC = () => {
                     </div>
                   )}
                   <TbTargetArrow className="w-6 h-6" />
-                  <FaRegCommentDots className="w-6 h-6" />
+                  <Link
+                    href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}#comment`}
+                    className="cursor-pointer"
+                  >
+                    <FaRegCommentDots className="w-6 h-6" />
+                  </Link>
                 </div>
               </div>
               <p
@@ -229,7 +248,7 @@ const Ride: React.FC = () => {
                 {firstPost.author} - {firstPost.date}
               </p>
             </div>
-            <div className="col-span-2">
+            <div className="col-span-3">
               <Image
                 src={getImageUrl(firstPost.image1)}
                 alt={firstPost.heading || "Blog Image"}
@@ -244,8 +263,8 @@ const Ride: React.FC = () => {
 
       {secondPost && (
         <div className="mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-            <div className="col-span-2">
+          <div className="grid grid-cols-5 gap-4">
+            <div className="col-span-5 lg:col-span-3">
               <Image
                 src={getImageUrl(secondPost.image1)}
                 alt={secondPost.heading || "Blog Image"}
@@ -254,7 +273,7 @@ const Ride: React.FC = () => {
                 className="w-full h-[213px] object-cover rounded-md"
               />
             </div>
-            <div className="col-span-3 space-y-4">
+            <div className="col-span-5 lg:col-span-2 space-y-4">
               <Link
                 href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
               >
@@ -328,7 +347,12 @@ const Ride: React.FC = () => {
                     </div>
                   )}
                   <TbTargetArrow className="w-6 h-6" />
-                  <FaRegCommentDots className="w-6 h-6" />
+                  <Link
+                    href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}#comment`}
+                    className="cursor-pointer"
+                  >
+                    <FaRegCommentDots className="w-6 h-6" />
+                  </Link>
                 </div>
               </div>
               <p
