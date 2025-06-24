@@ -587,7 +587,7 @@ import {
   Check,
   X,
   LogOut,
-  Settings,
+  LayoutDashboard,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -920,7 +920,24 @@ export default function Sidebar() {
     <div className="border-r border-[#B6B6B6]/50 bg-white dark:bg-black">
       <ScrollArea className="flex-1 p-4 h-screen w-full">
         <div className="">
+          <div className="p-2 ">
+              <Link href="/dashboard">
+                <Button
+                  variant="ghost"
+                  className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
+                    isRouteActive("/dashboard")
+                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                      : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                  }`}
+                >
+                <LayoutDashboard />  Dashboard
+                </Button>
+              </Link>
+            </div>
           <div className="space-y-2">
+            <h5 className="text-lg font-semibold text-[#131313] leading-[120%] uppercase tracking-[0%] font-poppins">
+              Content Management
+            </h5>
             {(isAdmin || isEditor || isAuthor) && (
               <div>
                 <Link href="/dashboard/add-category">
@@ -1163,7 +1180,7 @@ export default function Sidebar() {
           </div>
 
           {/* Navigation Links */}
-          <h5 className="text-xl font-medium text-black leading-normal font-poppins">
+          <h5 className="text-lg font-semibold text-[#131313] leading-[120%] uppercase tracking-[0%] font-poppins">
             Advertising
           </h5>
           {!isAuthor && (
@@ -1199,6 +1216,40 @@ export default function Sidebar() {
             </div>
           )}
 
+          <h5 className="text-lg font-semibold text-[#131313] leading-[120%] uppercase tracking-[0%] font-poppins">
+            Settings
+          </h5>
+          {isAdmin && (
+            <div className="p-2 ">
+              <Link href="/dashboard/role">
+                <Button
+                  variant="ghost"
+                  className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
+                    isRouteActive("/dashboard/role")
+                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                      : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                  }`}
+                >
+                  Role Management
+                </Button>
+              </Link>
+            </div>
+          )}
+          <div className="p-2 ">
+            <Link href="/dashboard/subscriber">
+              <Button
+                variant="ghost"
+                className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
+                  isRouteActive("/dashboard/subscriber")
+                    ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                    : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                }`}
+              >
+                Subscriber
+              </Button>
+            </Link>
+          </div>
+
           {!isAuthor && (
             <div className="p-2">
               <Link href="/dashboard/header">
@@ -1217,7 +1268,7 @@ export default function Sidebar() {
           )}
 
           {!isAuthor && (
-            <div className="p-2 border-t border-blue-200 dark:border-blue-800">
+            <div className="p-2 ">
               <Link href="/dashboard/footer">
                 <Button
                   variant="ghost"
@@ -1233,39 +1284,7 @@ export default function Sidebar() {
             </div>
           )}
 
-          <div className="p-2 border-t border-blue-200 dark:border-blue-800">
-            <Link href="/dashboard/subscriber">
-              <Button
-                variant="ghost"
-                className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
-                  isRouteActive("/dashboard/subscriber")
-                    ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
-                    : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
-                }`}
-              >
-                Subscriber
-              </Button>
-            </Link>
-          </div>
-
-          {isAdmin && (
-            <div className="p-2 border-t border-blue-200 dark:border-blue-800">
-              <Link href="/dashboard/role">
-                <Button
-                  variant="ghost"
-                  className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
-                    isRouteActive("/dashboard/role")
-                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
-                      : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
-                  }`}
-                >
-                  Role Management
-                </Button>
-              </Link>
-            </div>
-          )}
-
-          <div className="p-2 border-t border-blue-200 dark:border-blue-800">
+          <div className="p-2 ">
             <Link href="/dashboard/settings">
               <Button
                 variant="ghost"
@@ -1275,12 +1294,12 @@ export default function Sidebar() {
                     : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
                 }`}
               >
-                <Settings /> Setting
+                Account
               </Button>
             </Link>
           </div>
 
-          <div className="p-4 border-t border-blue-200 dark:border-blue-800 mb-[120px]">
+          <div className="p-4  mb-[120px]">
             <Button
               onClick={() => setLogoutModalOpen(true)}
               variant="ghost"

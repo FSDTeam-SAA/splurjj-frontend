@@ -159,8 +159,7 @@ export default function SubcategoryContentPage() {
         categoryId={categoryId}
         subcategoryId={subcategoryId}
         initialContent={editingContent}
-        isEditing={!!editingContent}
-        editingContent={editingContent}
+        
       />
     </div>
   );

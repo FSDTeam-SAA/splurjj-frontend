@@ -1,3 +1,4 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -72,18 +73,13 @@ export default function HorizontalAdvertising() {
   const { data } = useQuery<AdvertisingSetting>({
     queryKey: ["horizontal-ads"],
     queryFn: () =>
-      fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/advertising/horizontal`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      ).then((res) => res.json()),
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/advertising/horizontal`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((res) => res.json()),
     enabled: !!token,
   });
-
-  console.log(data);
 
   useEffect(() => {
     if (data?.data) {
@@ -133,36 +129,42 @@ export default function HorizontalAdvertising() {
   };
 
   const { mutate, isPending } = useMutation({
-    mutationKey: ["vertical-ads"],
+    mutationKey: ["horizontal-ads"],
     mutationFn: (formData: FormData) =>
-      fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/advertising/horizontal`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "content-type": "application/json",
-          },
-          body: formData,
-        }
-      ).then((res) => res.json()),
-    onSuccess: (data) => {
-      if (!data.success) {
-        toast.error(data.message || "Failed to update ad");
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/advertising/horizontal`, {
+        method: "POST", // Change to PUT or PATCH if needed
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      }).then((res) => res.json()),
+    onSuccess: (res) => {
+      if (!res.success) {
+        toast.error(res.message || "Failed to update ad");
         return;
       }
-      toast.success(data.message || "Ad updated successfully");
-      queryClient.invalidateQueries({ queryKey: ["horizontal-ads"] });
       form.reset();
       setImage(null);
+      toast.success(res.message || "Ad updated successfully");
+      queryClient.invalidateQueries({ queryKey: ["horizontal-ads"] });
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const formData = new FormData();
+
+    // ✅ Include ID for update
+    if (data?.data?.id) formData.append("id", String(data.data.id));
+
     if (values.link) formData.append("link", values.link);
     if (values.code) formData.append("code", values.code);
-    if (image) formData.append("image", image);
+
+    if (image) {
+      formData.append("image", image);
+    } else if (data?.data?.image) {
+      formData.append("existingImage", data.data.image); // Optional: Only if backend expects existing image path
+    }
+
     mutate(formData);
   }
 
@@ -174,9 +176,7 @@ export default function HorizontalAdvertising() {
             {/* Left: Link + Image */}
             <div
               className={`w-2/5 border rounded-[10px] px-4 py-8 bg-white shadow-xl transition-opacity duration-200 ${
-                rightSideActive
-                  ? "opacity-50 pointer-events-none"
-                  : "opacity-100"
+                rightSideActive ? "opacity-50 pointer-events-none" : "opacity-100"
               }`}
             >
               <FormField
@@ -202,7 +202,6 @@ export default function HorizontalAdvertising() {
                   </FormItem>
                 )}
               />
-
               <div className="mt-5">
                 <FileUpload
                   type="image"
@@ -226,9 +225,7 @@ export default function HorizontalAdvertising() {
             {/* Right: Embed Code */}
             <div
               className={`w-2/5 border rounded-[10px] p-4 bg-white shadow-xl transition-opacity duration-200 ${
-                leftSideActive
-                  ? "opacity-50 pointer-events-none"
-                  : "opacity-100"
+                leftSideActive ? "opacity-50 pointer-events-none" : "opacity-100"
               }`}
             >
               <FormField
