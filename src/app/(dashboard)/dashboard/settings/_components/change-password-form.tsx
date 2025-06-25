@@ -1,14 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import ChangePasswordFormComponent from "./ChangePasswordFormComponent";
 
-interface ChangePasswordFormProps {
-  onBack: () => void;
-}
 
-export default function ChangePasswordForm({
-  onBack,
-}: ChangePasswordFormProps) {
+
+export default function ChangePasswordForm() {
   return (
     <div className="p-6">
       <div>
@@ -28,12 +25,14 @@ export default function ChangePasswordForm({
               <span>
                 <ChevronRight className="text-[#595959] w-6 h-6" />
               </span>
-              <button
-                onClick={onBack}
-                className="hover:underline text-xl font-normal font-poppins leading-[120%] tracking-[0%] text-[#595959]"
-              >
-                Settings
-              </button>
+              <Link href="/dashboard/settings">
+                <button
+                 
+                  className="hover:underline text-xl font-normal font-poppins leading-[120%] tracking-[0%] text-[#595959]"
+                >
+                  Settings
+                </button>
+              </Link>
               <span>
                 <ChevronRight className="text-[#595959] w-6 h-6" />
               </span>
