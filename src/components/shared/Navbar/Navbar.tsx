@@ -510,9 +510,10 @@ import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useSession } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import { useQuery } from "@tanstack/react-query"
 import { Search, ShoppingCart, User, ChevronDown, Menu, X } from "lucide-react"
+import { toast } from "react-toastify";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -582,6 +583,21 @@ export default function Header() {
       setSearchQuery("")
     }
   }
+
+
+    const handLogout = () => {
+    try {
+      toast.success("Logout successful!");
+      setTimeout(async () => {
+        await signOut({
+          callbackUrl: "/",
+        });
+      }, 1000);
+    } catch (error) {
+      console.error("Logout failed:", error);
+      toast.error("Logout failed. Please try again.");
+    }
+  };
 
   return (
     <>
@@ -820,6 +836,7 @@ export default function Header() {
                 onClick={() => {
                   // Handle logout logic here
                   setLogoutModalOpen(false)
+                  handLogout()
                 }}
                 className="flex-1"
               >

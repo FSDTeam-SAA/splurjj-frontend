@@ -23,7 +23,9 @@ interface BlogPost {
   date: string;
   body1: string;
   tags: string[];
+  category_id: number;
   category_name: string;
+  sub_category_id: number;
   sub_category_name: string;
   image1: string | null; // Allow null for consistency
   advertising_image: string | null;
@@ -244,11 +246,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
 
               <div className="flex items-center gap-2">
                 <Link
-                  href={`/blogs/${post.category_name
-                    .toLowerCase()
-                    .replace(/\s+/g, "-")}/${post.sub_category_name
-                    .toLowerCase()
-                    .replace(/\s+/g, "-")}/${post.id}`}
+                  href={`/blogs//${post.category_name}`}
                   className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white"
                   aria-label={`Watch video: ${post.heading.replace(
                     /<[^>]+>/g,
@@ -335,35 +333,10 @@ const TagContainer: React.FC<TagContainerProps> = ({
                     />
                   </div>
                 )}
-                <button
-                  aria-label={`Save post: ${post.heading.replace(
-                    /<[^>]+>/g,
-                    ""
-                  )}`}
-                  onClick={() => {
-                    const savedPosts = JSON.parse(
-                      localStorage.getItem("savedPosts") || "[]"
-                    );
-                    if (!savedPosts.includes(post.id)) {
-                      savedPosts.push(post.id);
-                      localStorage.setItem(
-                        "savedPosts",
-                        JSON.stringify(savedPosts)
-                      );
-                      alert("Post saved!"); // Simple feedback
-                    } else {
-                      alert("Post already saved!");
-                    }
-                  }}
-                >
+                
                   <TbTargetArrow className="w-6 h-6 text-black" />
-                </button>
                 <Link
-                  href={`/blogs/${post.category_name
-                    .toLowerCase()
-                    .replace(/\s+/g, "-")}/${post.sub_category_name
-                    .toLowerCase()
-                    .replace(/\s+/g, "-")}/${post.id}#comment`}
+                   href={`/${post.category_id}/${post.sub_category_id}/${post.id}#comment`}
                   aria-label={`Comment on post: ${post.heading.replace(
                     /<[^>]+>/g,
                     ""

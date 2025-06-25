@@ -235,7 +235,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
         <div>
           {secondPost && (
             <div className="grid grid-cols-5 gap-4">
-              <div className="col-span-2">
+              <div className="col-span-5 lg:col-span-2">
                 <div className="flex items-center gap-2 mb-2">
                   <Link
                     href={`/blogs/${secondPost.category_name}`}
@@ -324,7 +324,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                   />
                 </div>
               </div>
-              <div className="col-span-3">
+              <div className="col-span-5 lg:col-span-3">
                 <Image
                   src={getImageUrl(secondPost.image1)}
                   alt={secondPost.heading}
@@ -350,7 +350,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                 priority
               />
               <div className="py-4">
-                <div className="flex items-center justify-between gap-4 mb-2">
+                <div className="md:flex items-center justify-between gap-4 mb-2">
                   <div className="flex items-center gap-2">
                     <Link
                       href={`/blogs/${thirdPost.category_name}`}
