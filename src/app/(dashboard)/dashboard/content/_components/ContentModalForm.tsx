@@ -73,8 +73,7 @@ interface ContentFormModalProps {
   initialContent?: Content | null | undefined;
   categoryId: string | string[];
   subcategoryId: string | string[];
-  isEditing?: boolean;
-  editingContent?: Content | null;
+ 
 }
 
 export default function ContentModalForm({
@@ -83,7 +82,6 @@ export default function ContentModalForm({
   initialContent,
   categoryId,
   subcategoryId,
-  editingContent,
 }: ContentFormModalProps) {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [tagInput, setTagInput] = useState("");
@@ -97,7 +95,7 @@ export default function ContentModalForm({
   console.log(categoryId, subcategoryId);
   console.log({ initialContent });
 
-  console.log("editingContent", editingContent);
+  console.log("initialContent", initialContent);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -114,20 +112,36 @@ export default function ContentModalForm({
     },
   });
 
+
   useEffect(() => {
-    if (editingContent) {
-      form.reset({
-        image1: editingContent.image1 ?? "",
-        imageLink: editingContent.imageLink ?? "",
-        tags: editingContent.tags ?? [],
-        author: editingContent.author ?? "",
-        date: editingContent.date ? new Date(editingContent.date) : new Date(),
-        heading: editingContent.heading ?? "",
-        sub_heading: editingContent.sub_heading ?? "",
-        body1: editingContent.body1 ?? "",
-      });
-    }
-  }, [editingContent, form]);
+  if (initialContent) {
+    form.reset({
+      image1: initialContent.image1 || undefined,
+      imageLink: initialContent.imageLink || "",
+      advertising_image: initialContent.advertising_image || undefined,
+      advertisingLink: initialContent.advertisingLink || "",
+      tags: initialContent.tags || [],
+      author: initialContent.author || "",
+      heading: initialContent.heading || "",
+      sub_heading: initialContent.sub_heading || "",
+      body1: initialContent.body1 || "",
+      date: initialContent.date ? new Date(initialContent.date) : new Date(),
+    });
+  } else {
+    form.reset({
+      image1: undefined,
+      imageLink: "",
+      advertising_image: undefined,
+      advertisingLink: "",
+      tags: [],
+      author: "",
+      heading: "",
+      sub_heading: "",
+      body1: "",
+      date: new Date(),
+    });
+  }
+}, [initialContent, form]);
 
   const { watch, setValue } = form;
   const image1 = watch("image1");
@@ -187,14 +201,14 @@ export default function ContentModalForm({
     setValue("tags", updatedTags);
   };
 
-  const isEditing = !!editingContent;
-  const url = isEditing
-    ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${editingContent?.id}?_method=PUT`
+
+  const url = initialContent
+    ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${initialContent?.id}?_method=PUT`
     : `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents`;
 
-  const method = isEditing ? "POST" : "POST";
+  const method = initialContent ? "POST" : "POST";
 
-  const { mutate, isPending } = useMutation<FormData, unknown, FormData>({
+  const { mutate, isPending } = useMutation<FormData>({
     mutationKey: ["add-content-and-edit-content"],
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -210,7 +224,9 @@ export default function ContentModalForm({
     onSuccess: (data: any) => {
       if (!data?.status) {
         toast.error(data?.message || "Something went wrong");
+         form.reset();
         return;
+        
       }
       form.reset();
       onClose();
@@ -246,7 +262,7 @@ export default function ContentModalForm({
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-white">
           <DialogHeader className=" -mt-4">
             <DialogTitle className="text-2xl font-semibold text-black leading-normal">
-              {isEditing ? "Edit Content" : "Add New Content"}
+              {initialContent ? "Edit Content" : "Add New Content"}
             </DialogTitle>
           </DialogHeader>
           <Form {...form}>

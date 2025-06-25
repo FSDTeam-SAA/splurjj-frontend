@@ -1,6 +1,5 @@
 import React from "react";
 import ViewAuthorPost from "./_components/viewAuthorPost";
-import Adds from "../../_components/Home/adds";
 import Horizontal from "@/components/adds/horizontal";
 
 function page(params: { params: { id: string } }) {

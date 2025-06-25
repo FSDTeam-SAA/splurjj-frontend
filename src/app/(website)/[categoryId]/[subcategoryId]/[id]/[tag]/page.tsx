@@ -1,6 +1,5 @@
 import React from "react";
 import TagContainer from "./_components/TagContainer";
-import Adds from "@/app/(website)/_components/Home/adds";
 import Horizontal from "@/components/adds/horizontal";
 
 interface PageParams {

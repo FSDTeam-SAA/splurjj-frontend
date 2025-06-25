@@ -68,8 +68,8 @@ const fetchHeader = async (): Promise<ThemeHeader> => {
   if (!response.ok) {
     throw new Error("Failed to fetch header");
   }
-  const result: ThemeHeader = await response.json();
-  return result.data; // Adjusted to return ThemeHeader directly
+  const result = await response.json();
+  return result.data; // Adjust if the API returns { success: boolean, data: ThemeHeader }
 };
 
 export default function Header() {
@@ -93,7 +93,7 @@ export default function Header() {
   });
 
 
-  console.log("HHHHHHHHHHHHHHHH",header)
+
 
   const staticMenuItems = [{ name: "LATEST", href: "/" }];
 
@@ -137,6 +137,7 @@ export default function Header() {
         )
     );
   };
+
 
   return (
     <>
@@ -206,9 +207,11 @@ export default function Header() {
                       <span>{category.category_name.toUpperCase()}</span>
                       <ChevronDown className="h-4 w-4" />
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-48">
+                    <DropdownMenuContent className="w-48 bg-white text-[18px] font-semibold border-0 mt-[20px]"
+                      style={{ backgroundColor: header?.bg_color || "#ffffff" }}
+                    >
                       {category.subcategories.map((subcategory) => (
-                        <DropdownMenuItem key={subcategory.id} asChild>
+                        <DropdownMenuItem key={subcategory.id} asChild >
                           <Link
                             href={`/${category.category_id}/${subcategory.id}`}
                             className="cursor-pointer"

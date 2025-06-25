@@ -1,5 +1,5 @@
 import React from "react";
-import HorizontalAdvertising from "./HorizontalAdvertising";
+import HorizontalAdvertising from "./_components/HorizontalAdvertising";
 
 const HorizontalAdvertisingPage = () => {
   return (

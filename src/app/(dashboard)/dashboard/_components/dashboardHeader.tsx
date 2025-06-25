@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type React from "react";
+import Image from "next/image";
 
 interface UserProfileData {
   first_name: string;
@@ -18,12 +19,25 @@ interface UserSettingsResponse {
   data: UserProfileData;
 }
 
+export type HeaderResponse = {
+  success: boolean;
+  message: string;
+  data: {
+    logo: string | null;
+    border_color: string | null;
+    bg_color: string | null;
+    menu_item_color: string | null;
+    menu_item_active_color: string | null;
+  };
+};
+
 export default function DashboardHeader() {
   const session = useSession();
   const role = session?.data?.user?.role || "Admin";
 
   const token = (session?.data?.user as { token?: string })?.token;
 
+  // user info data
   const { data } = useQuery<UserSettingsResponse>({
     queryKey: ["user-info"],
     queryFn: () =>
@@ -35,14 +49,39 @@ export default function DashboardHeader() {
         },
       }).then((res) => res.json()),
   });
-  console.log(data?.data?.first_name);
+
+  // header api integration
+
+  const { data: headerData } = useQuery<HeaderResponse>({
+    queryKey: ["header"],
+    queryFn: () =>
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/header`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((res) => res.json()),
+  });
+
+  console.log(headerData?.data);
+
   return (
     <header className=" px-6 py-5 bg-white border-b border-[#B6B6B6]/50">
       <div className="flex items-center justify-between w-full">
         {/* Logo Section */}
         <div className="flex items-center">
-          <div className="bg-gray-300 px-4 py-2 rounded-md text-gray-700 font-medium">
-            LOGO
+          <div className="">
+            {headerData?.data?.logo ? (
+              <Image
+                src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${headerData.data.logo}`}
+                alt="logo"
+                width={150}
+                height={50}
+              />
+            ) : (
+              <h2 className="text-2xl text-black font-bold leading-normal">
+                LOGO
+              </h2>
+            )}
           </div>
         </div>
 
@@ -54,7 +93,11 @@ export default function DashboardHeader() {
           <div className="flex items-center gap-3">
             <div>
               <Avatar>
-                <AvatarImage src={data?.data?.profile_pic || "https://github.com/shadcn.png"} />
+                <AvatarImage
+                  src={
+                    data?.data?.profile_pic || "https://github.com/shadcn.png"
+                  }
+                />
                 <AvatarFallback className="text-base font-bold leading-normal text-black">
                   {data?.data?.first_name?.charAt(0) || ""}
                   {data?.data?.last_name?.charAt(0) || ""}
