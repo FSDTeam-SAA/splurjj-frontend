@@ -159,7 +159,6 @@ export default function SubcategoryContentPage() {
         categoryId={categoryId}
         subcategoryId={subcategoryId}
         initialContent={editingContent}
-        
       />
     </div>
   );

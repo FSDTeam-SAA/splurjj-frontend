@@ -19,7 +19,7 @@ const TableSkeletonWrapper: React.FC<TableSkeletonWrapperProps> = ({
       {[...Array(count)].map((_, index) => (
         <Skeleton 
           key={index} 
-          className={`rounded-lg ${className}`} 
+          className={`rounded-[8px] ${className}`} 
           style={{ width, height }} 
         />
       ))}
