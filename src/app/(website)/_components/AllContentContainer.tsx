@@ -94,7 +94,7 @@ const AllContentContainer = ({
       {/* Main Content Area */}
       <div className="">
         <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-8 gap-4 pt-16">
+          <div className="grid grid-cols-1 md:grid-cols-8 gap-4 pt-16 pb-2">
             {/* Main content */}
             <div className="col-span-1 md:col-span-6 pb-16">
               <FirstContents posts={firstContents} />
@@ -111,7 +111,7 @@ const AllContentContainer = ({
         <div className="">
            <Vertical />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-8 gap-4 pt-16">
+        <div className="container grid grid-cols-1 md:grid-cols-8 gap-4 pt-16 pb-2">
           {/* Sticky sidebar */}
           <div className="col-span-1 md:col-span-2">
             <div className="sticky top-[120px] mb-2">
