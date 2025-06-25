@@ -3,7 +3,7 @@
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
 const RoleManagementContainer = () => {
-//   const [currentPage, setCurrentPage] = useState(1);
+  //   const [currentPage, setCurrentPage] = useState(1);
   const session = useSession();
   const token = (session?.data?.user as { token: string })?.token;
   // console.log("TTTTTTTTTTTT",token);
@@ -11,16 +11,13 @@ const RoleManagementContainer = () => {
   const { data, isLoading, isError, error } = useQuery<RoleAllResponse>({
     queryKey: ["role"],
     queryFn: () =>
-      fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/roles`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      ).then((res) => res.json()),
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/roles`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((res) => res.json()),
   });
 
   console.log({ data });
@@ -28,12 +25,12 @@ const RoleManagementContainer = () => {
   let content;
   if (isLoading) {
     content = (
-      <div className="w-full p-5">
+      <div className="w-full p-5 rounded-[8px]">
         <TableSkeletonWrapper
           count={8}
           width="100%"
-          height="70px"
-          className="bg-[#E6EEF6]"
+          height="70px" 
+          className="bg-[#E6EEF6] rounded-[8px]"
         />
       </div>
     );
@@ -115,4 +112,3 @@ const TableContainer = ({
     </>
   );
 };
-

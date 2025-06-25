@@ -74,8 +74,9 @@ export default function DashboardHeader() {
               <Image
                 src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${headerData.data.logo}`}
                 alt="logo"
-                width={150}
-                height={50}
+                width={90}
+                height={55}
+                className="w-[90px] h-[55px] object-contain"
               />
             ) : (
               <h2 className="text-2xl text-black font-bold leading-normal">
