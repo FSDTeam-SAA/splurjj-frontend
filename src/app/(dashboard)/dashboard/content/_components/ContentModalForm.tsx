@@ -29,11 +29,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import QuillEditor from "@/components/ui/quill-editor";
+// import QuillEditor from "@/components/ui/quill-editor";
 import { Content } from "./ContentDataType";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
+import TinyMCEEditor from "@/components/ui/tinymce-editor";
 
 // Zod Schema
 const formSchema = z
@@ -73,7 +74,6 @@ interface ContentFormModalProps {
   initialContent?: Content | null | undefined;
   categoryId: string | string[];
   subcategoryId: string | string[];
- 
 }
 
 export default function ContentModalForm({
@@ -112,36 +112,35 @@ export default function ContentModalForm({
     },
   });
 
-
   useEffect(() => {
-  if (initialContent) {
-    form.reset({
-      image1: initialContent.image1 || undefined,
-      imageLink: initialContent.imageLink || "",
-      advertising_image: initialContent.advertising_image || undefined,
-      advertisingLink: initialContent.advertisingLink || "",
-      tags: initialContent.tags || [],
-      author: initialContent.author || "",
-      heading: initialContent.heading || "",
-      sub_heading: initialContent.sub_heading || "",
-      body1: initialContent.body1 || "",
-      date: initialContent.date ? new Date(initialContent.date) : new Date(),
-    });
-  } else {
-    form.reset({
-      image1: undefined,
-      imageLink: "",
-      advertising_image: undefined,
-      advertisingLink: "",
-      tags: [],
-      author: "",
-      heading: "",
-      sub_heading: "",
-      body1: "",
-      date: new Date(),
-    });
-  }
-}, [initialContent, form]);
+    if (initialContent) {
+      form.reset({
+        image1: initialContent.image1 || undefined,
+        imageLink: initialContent.imageLink || "",
+        advertising_image: initialContent.advertising_image || undefined,
+        advertisingLink: initialContent.advertisingLink || "",
+        tags: initialContent.tags || [],
+        author: initialContent.author || "",
+        heading: initialContent.heading || "",
+        sub_heading: initialContent.sub_heading || "",
+        body1: initialContent.body1 || "",
+        date: initialContent.date ? new Date(initialContent.date) : new Date(),
+      });
+    } else {
+      form.reset({
+        image1: undefined,
+        imageLink: "",
+        advertising_image: undefined,
+        advertisingLink: "",
+        tags: [],
+        author: "",
+        heading: "",
+        sub_heading: "",
+        body1: "",
+        date: new Date(),
+      });
+    }
+  }, [initialContent, form]);
 
   const { watch, setValue } = form;
   const image1 = watch("image1");
@@ -201,7 +200,6 @@ export default function ContentModalForm({
     setValue("tags", updatedTags);
   };
 
-
   const url = initialContent
     ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${initialContent?.id}?_method=PUT`
     : `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents`;
@@ -224,9 +222,8 @@ export default function ContentModalForm({
     onSuccess: (data: any) => {
       if (!data?.status) {
         toast.error(data?.message || "Something went wrong");
-         form.reset();
+        form.reset();
         return;
-        
       }
       form.reset();
       onClose();
@@ -278,10 +275,16 @@ export default function ContentModalForm({
                         Heading
                       </FormLabel>
                       <FormControl className="">
-                        <QuillEditor
+                        {/* <QuillEditor
                           id="heading"
                           value={field.value}
                           onChange={field.onChange}
+                        /> */}
+                        <TinyMCEEditor
+                          value={field.value}
+                          onEditorChange={field.onChange}
+                          height={500}
+                          placeholder="Write your blog post content here..."
                         />
                       </FormControl>
                       <FormMessage />
@@ -300,10 +303,24 @@ export default function ContentModalForm({
                         Write Sub Heading
                       </FormLabel>
                       <FormControl>
-                        <QuillEditor
+                        {/* <QuillEditor
                           id="sub_heading"
                           value={field.value}
                           onChange={field.onChange}
+                        /> */}
+                        {/* <TinyMCEEditor
+                          value={field.value}
+                          onEditorChange={field.onChange}
+                          height={900}
+                          placeholder="Write your blog post content here..."
+                          
+                        /> */}
+                        <TinyMCEEditor
+                          value={field.value}
+                          onEditorChange={field.onChange}
+                          height={500}
+                          placeholder="Write your blog post content here..."
+                          disabled={isPending}
                         />
                       </FormControl>
                       <FormMessage />
@@ -463,10 +480,17 @@ export default function ContentModalForm({
                         Write Body Text
                       </FormLabel>
                       <FormControl>
-                        <QuillEditor
+                        {/* <QuillEditor
                           id="body1"
                           value={field.value}
                           onChange={field.onChange}
+                        /> */}
+
+                        <TinyMCEEditor
+                          value={field.value}
+                          onEditorChange={field.onChange}
+                          height={500}
+                          placeholder="Write your blog post content here..."
                         />
                       </FormControl>
                       <FormMessage />
