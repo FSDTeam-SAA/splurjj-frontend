@@ -1,6 +1,7 @@
 import React from "react";
 import ViewAuthorPost from "./_components/viewAuthorPost";
 import Adds from "../../_components/Home/adds";
+import Horizontal from "@/components/adds/horizontal";
 
 function page(params: { params: { id: string } }) {
   return (
@@ -15,7 +16,7 @@ function page(params: { params: { id: string } }) {
       {/* Sticky sidebar */}
       <div className="col-span-1 md:col-span-2">
         <div className="sticky top-[120px]">
-          <Adds />
+          <Horizontal />
         </div>
       </div>
     </div>

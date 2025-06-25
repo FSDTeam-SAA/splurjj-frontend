@@ -1,6 +1,7 @@
 import React from "react";
 import TagContainer from "./_components/TagContainer";
 import Adds from "@/app/(website)/_components/Home/adds";
+import Horizontal from "@/components/adds/horizontal";
 
 interface PageParams {
   params: {
@@ -51,7 +52,7 @@ function Page({ params }: PageParams) {
         {/* Sticky sidebar */}
         <div className="col-span-1 md:col-span-2">
           <div className="sticky top-[120px] mb-2">
-            <Adds />
+            <Horizontal />
           </div>
         </div>
       </div>
