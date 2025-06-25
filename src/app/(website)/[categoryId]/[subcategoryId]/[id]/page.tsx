@@ -9,9 +9,11 @@ import { LuFacebook } from "react-icons/lu";
 import { PiYoutubeLogoLight } from "react-icons/pi";
 import Link from "next/link";
 import { LeaveAComment } from "@/app/(website)/_components/LeaveAComment/LeaveAComment";
-import Adds from "@/app/(website)/_components/Home/adds";
 import { useSession } from "next-auth/react";
 import ContentComments from "./_components/upvoteDownvoteAllComments";
+import Vertical from "@/components/adds/vertical";
+import Horizontal from "@/components/adds/horizontal";
+import RelatedContent from "@/app/(website)/_components/RalatedBlog/RalatedBlog";
 
 interface User {
   id: number;
@@ -47,6 +49,7 @@ interface ContentDataType {
   advertising_image: string | null;
   advertising_image_url: string | null;
   imageLink: string | null;
+  relatedBlogs?: ContentDataType[]; // Added this line to fix the error
 }
 
 interface ContentAllDataTypeResponse {
@@ -64,6 +67,8 @@ const ContentBlogDetails = ({
   const { id, categoryId, subcategoryId } = params;
 
   const session = useSession();
+  const userId = session?.data?.user?.id;
+  console.log("UUUUUUUUUUUUUUUU",userId)
   const userEmail = session?.data?.user?.email;
 
   // Improved cleanTags function to handle malformed JSON strings
@@ -171,7 +176,7 @@ const ContentBlogDetails = ({
               </div>
             </div>
             <div className="sticky top-[120px] mb-2">
-              <Adds />
+              <Horizontal />
             </div>
           </div>
           <div className="md:col-span-5">
@@ -304,9 +309,9 @@ const ContentBlogDetails = ({
                         </a>
                       )}
                     </div>
-                    <p className="text-lg font-extrabold font-manrope leading-[120%] tracking-[0%] text-secondary">
+                    <Link href={`/viewpost/${blogData.user?.id}`} className="text-lg font-extrabold font-manrope leading-[120%] tracking-[0%] text-secondary">
                       View posts
-                    </p>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -322,12 +327,12 @@ const ContentBlogDetails = ({
         </div>
       </div>
       <div className="sticky mb-2">
-        <Adds />
+         <Vertical />
       </div>
       {/* Related blogs (uncomment when ready) */}
-      {/* <section>
-        <RalatedBlog relatedBlogs={blogData?.relatedBlogs?.slice(0, 2)} />
-      </section> */}
+      <section>
+        <RelatedContent  categoryId={categoryId} subcategoryId={subcategoryId} />
+      </section>
     </div>
   );
 };
