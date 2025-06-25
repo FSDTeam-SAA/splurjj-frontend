@@ -1,11 +1,12 @@
 import React from "react";
 import AllContents from "./AllContents";
-import Adds from "./adds";
 import ArtCulture from "./ArtCulture";
 import Gear from "./gear";
 import Music from "./music";
 import Ride from "./ride";
 import Video from "./video";
+import Horizontal from "@/components/adds/horizontal";
+import Vertical from "@/components/adds/vertical";
 
 function MainHome() {
   return (
@@ -20,13 +21,13 @@ function MainHome() {
           {/* Sticky sidebar */}
           <div className="col-span-8 md:col-span-2">
             <div className="sticky top-[120px] mb-2">
-              <Adds />
+              <Horizontal />
             </div>
           </div>
         </div>
       </div>
 
-      <Adds />
+      <Vertical />
       <div className="container">
         <div className="grid grid-cols-8 gap-4 pt-16">
           {/* Main content */}
@@ -38,12 +39,12 @@ function MainHome() {
           {/* Sticky sidebar */}
           <div className="col-span-8 md:col-span-2">
             <div className="sticky top-[120px] mb-2">
-              <Adds />
+              <Horizontal />
             </div>
           </div>
         </div>
       </div>
-      <Adds />
+       <Vertical />
       <div className="container">
         <div className="grid grid-cols-8 gap-4 pt-16">
           {/* Main content */}
@@ -55,12 +56,12 @@ function MainHome() {
           {/* Sticky sidebar */}
           <div className="col-span-8 md:col-span-2">
             <div className="sticky top-[120px] mb-2">
-              <Adds />
+              <Horizontal />
             </div>
           </div>
         </div>
       </div>
-      <Adds />
+       <Vertical />
       <div className="container">
         <div className="grid grid-cols-8 gap-4 pt-16">
           {/* Main content */}
@@ -71,12 +72,12 @@ function MainHome() {
           {/* Sticky sidebar */}
           <div className="col-span-8 md:col-span-2">
             <div className="sticky top-[120px] mb-2">
-              <Adds />
+              <Horizontal />
             </div>
           </div>
         </div>
       </div>
-      <Adds />
+       <Vertical />
     </div>
   );
 }

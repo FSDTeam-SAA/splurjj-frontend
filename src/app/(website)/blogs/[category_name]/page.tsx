@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import CategoryContents from "./_components/categoryContents";
-import Adds from "../../_components/Home/adds";
+import Horizontal from "@/components/adds/horizontal";
 
 interface BlogPost {
   id: number;
@@ -116,7 +116,7 @@ function Page({ params }: PageProps) {
         {/* Sticky sidebar */}
         <div className="col-span-1 md:col-span-2">
           <div className="sticky top-[120px]">
-            <Adds />
+            <Horizontal />
           </div>
         </div>
       </div>

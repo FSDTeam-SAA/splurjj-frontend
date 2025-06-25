@@ -3,7 +3,7 @@
 import SplurjjPagination from "@/components/ui/SplurjjPagination";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   FaFacebook,
   FaLinkedin,
@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
+import DOMPurify from "dompurify";
 
 interface BlogPost {
   id: number;
@@ -25,34 +26,88 @@ interface BlogPost {
   sub_heading: string;
   body1: string;
   image1: string;
-  advertising_image: string;
-  tags: string[];
+  advertising_image: string | null;
+  tags: string | string[];
   created_at: string;
   updated_at: string;
-  imageLink: string;
-  advertisingLink: string;
+  imageLink: string | null;
+  advertisingLink: string | null;
   user_id: number;
   status: string;
+  image1_url: string;
+  advertising_image_url: string | null;
 }
 
-interface CategoryContentsProps {
-  posts: BlogPost[];
-  loading: boolean;
-  error: string | null;
-  currentPage: number;
-  totalPages: number;
-  totalItems: number;
-  setCurrentPage: (page: number) => void;
+interface ViewAuthorPostProps {
+  userId: number;
 }
 
-function CategoryContents({
-  posts,
-  currentPage,
-  totalPages,
-  totalItems,
-  setCurrentPage,
-}: CategoryContentsProps) {
+function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
   const [showShareMenu, setShowShareMenu] = useState<number | null>(null);
+  const shareMenuRef = useRef<HTMLDivElement>(null);
+
+  console.log(loading, error);
+
+  // Fetch posts by user ID
+  useEffect(() => {
+    const fetchPostsByUser = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/view-posts/${userId}?page=${currentPage}`
+        );
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+
+        console.log("Fetched posts:", data.data);
+        
+        if (data.success) {
+          setPosts(data.data);
+          setTotalPages(data.meta.last_page);
+          setTotalItems(data.meta.total);
+        } else {
+          throw new Error(data.message || "Failed to fetch posts");
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An unknown error occurred");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPostsByUser();
+  }, [userId, currentPage]);
+
+
+
+  // Sanitize HTML content
+  const sanitizeHTML = (html: string) => {
+    return DOMPurify.sanitize(html, { USE_PROFILES: { html: true } });
+  };
+
+  // Close share menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        shareMenuRef.current &&
+        !shareMenuRef.current.contains(event.target as Node)
+      ) {
+        setShowShareMenu(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const getImageUrl = (path: string | null): string => {
     if (!path) return "/assets/videos/blog1.jpg";
@@ -70,14 +125,10 @@ function CategoryContents({
   };
 
   const handleShare = async (post: BlogPost) => {
-    const shareUrl = getShareUrl(
-      post.category_id,
-      post.subcategory_id,
-      post.id
-    );
+    const shareUrl = getShareUrl(post.category_id, post.subcategory_id, post.id);
     const shareData = {
-      title: post.heading,
-      text: post.sub_heading || "Check out this blog post!",
+      title: sanitizeHTML(post.heading),
+      text: sanitizeHTML(post.sub_heading || "Check out this blog post!"),
       url: shareUrl,
     };
 
@@ -96,7 +147,7 @@ function CategoryContents({
     window.open(
       `https://twitter.com/intent/tweet?url=${encodeURIComponent(
         url
-      )}&text=${encodeURIComponent(text)}`,
+      )}&text=${encodeURIComponent(sanitizeHTML(text))}`,
       "_blank"
     );
   };
@@ -112,11 +163,12 @@ function CategoryContents({
     window.open(
       `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
         url
-      )}&title=${encodeURIComponent(title)}`,
+      )}&title=${encodeURIComponent(sanitizeHTML(title))}`,
       "_blank"
     );
   };
 
+ 
   return (
     <div className="">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -124,7 +176,7 @@ function CategoryContents({
           <div key={post.id} className="relative">
             <Image
               src={getImageUrl(post.image1)}
-              alt={post.heading}
+              alt={sanitizeHTML(post.heading)}
               width={400}
               height={300}
               className="w-full h-[300px] object-cover rounded-t-lg"
@@ -133,7 +185,7 @@ function CategoryContents({
             <div className="p-4">
               <div className="flex items-center gap-2">
                 <Link
-                  href={`/blogs/${post.category_name}`}
+                  href={`/blogs/${encodeURIComponent(post.category_name)}`}
                   className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
                 >
                   {post.category_name || "Category"}
@@ -149,7 +201,7 @@ function CategoryContents({
                 href={`/${post.category_id}/${post.subcategory_id}/${post.id}`}
               >
                 <p
-                  dangerouslySetInnerHTML={{ __html: post.heading ?? "" }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeHTML(post.heading) }}
                   className="text-2xl font-medium hover:text-primary"
                 />
               </Link>
@@ -162,7 +214,10 @@ function CategoryContents({
                   onClick={() => handleShare(post)}
                 />
                 {showShareMenu === post.id && (
-                  <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded-md flex gap-2 z-10">
+                  <div
+                    ref={shareMenuRef}
+                    className="absolute top-8 right-0 bg-white shadow-md p-2 rounded-md flex gap-2 z-10"
+                  >
                     <FaTwitter
                       className="w-6 h-6 cursor-pointer text-blue-500"
                       onClick={() =>
@@ -207,11 +262,11 @@ function CategoryContents({
                 <Link
                   href={`/${post.category_id}/${post.subcategory_id}/${post.id}#comment`}
                 >
-                <FaRegCommentDots className="w-6 h-6" />
+                  <FaRegCommentDots className="w-6 h-6" />
                 </Link>
               </div>
               <p
-                dangerouslySetInnerHTML={{ __html: post.body1 }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHTML(post.body1) }}
                 className="text-sm font-normal font-manrope text-[#424242] line-clamp-3 mt-2"
               />
             </div>
@@ -235,4 +290,4 @@ function CategoryContents({
   );
 }
 
-export default CategoryContents;
+export default ViewAuthorPost;
