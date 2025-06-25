@@ -598,6 +598,7 @@ import { signOut, useSession } from "next-auth/react";
 import LogoutModal from "@/components/shared/modals/LogoutModal";
 import { toast } from "sonner";
 import { motion, AnimatePresence, easeInOut } from "framer-motion";
+import { TfiMenuAlt } from "react-icons/tfi";
 
 interface Subcategory {
   id: number;
@@ -921,21 +922,21 @@ export default function Sidebar() {
       <ScrollArea className="flex-1 p-4 h-screen w-full">
         <div className="">
           <div className="p-2 ">
-              <Link href="/dashboard">
-                <Button
-                  variant="ghost"
-                  className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
-                    isRouteActive("/dashboard")
-                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
-                      : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
-                  }`}
-                >
-                <LayoutDashboard />  Dashboard
-                </Button>
-              </Link>
-            </div>
+            <Link href="/dashboard">
+              <Button
+                variant="ghost"
+                className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
+                  isRouteActive("/dashboard")
+                    ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                    : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                }`}
+              >
+                <LayoutDashboard className="w-5 h-5"/> Dashboard
+              </Button>
+            </Link>
+          </div>
           <div className="space-y-2">
-            <h5 className="text-lg font-semibold text-[#131313] leading-[120%] uppercase tracking-[0%] font-poppins">
+            <h5 className="text-lg font-semibold text-[#131313] leading-[120%] uppercase tracking-[0%] font-manrope">
               Content Management
             </h5>
             {(isAdmin || isEditor || isAuthor) && (
@@ -949,13 +950,18 @@ export default function Sidebar() {
                         : "bg-transparent  text-black"
                     }`}
                   >
-                    <Plus
+                    <TfiMenuAlt className={
+                        isRouteActive("/dashboard/add-category")
+                          ? "text-white w-4 h-4"
+                          : "text-black w-4 h-4"
+                      }/>
+                    {/* <Plus
                       className={
                         isRouteActive("/dashboard/add-category")
                           ? "text-white"
                           : "text-black"
                       }
-                    />{" "}
+                    />{" "} */}
                     Add Category
                   </Button>
                 </Link>
@@ -966,7 +972,7 @@ export default function Sidebar() {
               return (
                 <div
                   key={category.category_id}
-                  className={`rounded-lg transition-colors ${
+                  className={`rounded-lg transition-colors pl-3 ${
                     categoryActive
                       ? "bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800"
                       : "bg-white dark:bg-transparent"
@@ -1180,47 +1186,50 @@ export default function Sidebar() {
           </div>
 
           {/* Navigation Links */}
-          <h5 className="text-lg font-semibold text-[#131313] leading-[120%] uppercase tracking-[0%] font-poppins">
-            Advertising
-          </h5>
+
           {!isAuthor && (
-            <div>
-              <div className="p-2">
-                <Link href="/dashboard/horizontal-advertising">
-                  <Button
-                    variant="ghost"
-                    className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
-                      isRouteActive("/dashboard/horizontal-advertising")
-                        ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
-                        : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
-                    }`}
-                  >
-                    Horizontal
-                  </Button>
-                </Link>
+            <>
+              <h5 className="text-lg font-semibold text-[#131313] leading-[120%] uppercase tracking-[0%] font-marnrope pt-2">
+                Advertising
+              </h5>
+              <div>
+                <div className="p-2">
+                  <Link href="/dashboard/horizontal-advertising">
+                    <Button
+                      variant="ghost"
+                      className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
+                        isRouteActive("/dashboard/horizontal-advertising")
+                          ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                          : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                      }`}
+                    >
+                      Horizontal
+                    </Button>
+                  </Link>
+                </div>
+                <div className="p-2">
+                  <Link href="/dashboard/vertical-advertising">
+                    <Button
+                      variant="ghost"
+                      className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
+                        isRouteActive("/dashboard/vertical-advertising")
+                          ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                          : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                      }`}
+                    >
+                      Vertical
+                    </Button>
+                  </Link>
+                </div>
               </div>
-              <div className="p-2">
-                <Link href="/dashboard/vertical-advertising">
-                  <Button
-                    variant="ghost"
-                    className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
-                      isRouteActive("/dashboard/vertical-advertising")
-                        ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
-                        : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
-                    }`}
-                  >
-                    Vertical
-                  </Button>
-                </Link>
-              </div>
-            </div>
+            </>
           )}
 
-          <h5 className="text-lg font-semibold text-[#131313] leading-[120%] uppercase tracking-[0%] font-poppins">
+          <h5 className="text-lg font-semibold text-[#131313] leading-[120%] uppercase tracking-[0%] font-marnrope pt-2">
             Settings
           </h5>
           {isAdmin && (
-            <div className="p-2 ">
+            <div className="p-2">
               <Link href="/dashboard/role">
                 <Button
                   variant="ghost"
@@ -1235,20 +1244,22 @@ export default function Sidebar() {
               </Link>
             </div>
           )}
-          <div className="p-2 ">
-            <Link href="/dashboard/subscriber">
-              <Button
-                variant="ghost"
-                className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
-                  isRouteActive("/dashboard/subscriber")
-                    ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
-                    : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
-                }`}
-              >
-                Subscriber
-              </Button>
-            </Link>
-          </div>
+          {!isAuthor && (
+            <div className="p-2 ">
+              <Link href="/dashboard/subscriber">
+                <Button
+                  variant="ghost"
+                  className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
+                    isRouteActive("/dashboard/subscriber")
+                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                      : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                  }`}
+                >
+                  Subscriber
+                </Button>
+              </Link>
+            </div>
+          )}
 
           {!isAuthor && (
             <div className="p-2">

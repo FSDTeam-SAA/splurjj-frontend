@@ -28,9 +28,11 @@ export default function SettingsMenu({ onSectionSelect }: SettingsMenuProps) {
             <span>
               <ChevronRight className="text-[#595959] w-6 h-6" />
             </span>
+            <Link href="/dashboard/settings">
             <span className="text-xl font-normal font-poppins leading-[120%] tracking-[0%] text-[#595959]">
               Settings
             </span>
+            </Link>
           </div>
         </div>
 
@@ -38,31 +40,35 @@ export default function SettingsMenu({ onSectionSelect }: SettingsMenuProps) {
         <div className="space-y-5">
           <Card className="bg-white border border-[#BABABA]">
             <CardContent className="p-0">
-              <Button
-                variant="ghost"
-                className="w-full h-[61px] justify-between p-4"
-                onClick={() => onSectionSelect("personal")}
-              >
-                <span className="text-2xl font-semibold font-poppins leading-[120%] tracking-[0%] text-[#212121]">
-                  Personal Information
-                </span>
-                <ChevronRight className="!h-6 !w-6 text-[#212121]" />
-              </Button>
+              <Link href="/dashboard/settings/personal-info">
+                <Button
+                  variant="ghost"
+                  className="w-full h-[61px] justify-between p-4"
+                  onClick={() => onSectionSelect("personal")}
+                >
+                  <span className="text-2xl font-semibold font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                    Personal Information
+                  </span>
+                  <ChevronRight className="!h-6 !w-6 text-[#212121]" />
+                </Button>
+              </Link>
             </CardContent>
           </Card>
 
           <Card className="bg-white border border-[#BABABA]">
             <CardContent className="p-0">
-              <Button
-                variant="ghost"
-                className="w-full h-[61px] justify-between p-4"
-                onClick={() => onSectionSelect("password")}
-              >
-                <span className="text-2xl font-semibold font-poppins leading-[120%] tracking-[0%] text-[#212121]">
-                  Change Password
-                </span>
-                <ChevronRight className="!h-6 !w-6 text-[#212121]" />
-              </Button>
+              <Link href="/dashboard/settings/change-password">
+                <Button
+                  variant="ghost"
+                  className="w-full h-[61px] justify-between p-4"
+                  onClick={() => onSectionSelect("password")}
+                >
+                  <span className="text-2xl font-semibold font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                    Change Password
+                  </span>
+                  <ChevronRight className="!h-6 !w-6 text-[#212121]" />
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         </div>

@@ -2,13 +2,9 @@ import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import PersonalInfoForm from "./PersonalInfoForm";
 
-interface PersonalInformationFormProps {
-  onBack: () => void;
-}
 
-export default function PersonalInformationForm({
-  onBack,
-}: PersonalInformationFormProps) {
+
+export default function PersonalInformationForm() {
   return (
     <div className="p-6">
       <div>
@@ -28,12 +24,14 @@ export default function PersonalInformationForm({
               <span>
                 <ChevronRight className="text-[#595959] w-6 h-6" />
               </span>
+             <Link href="/dashboard/settings">
               <button
-                onClick={onBack}
+                
                 className="hover:underline text-xl font-normal font-poppins leading-[120%] tracking-[0%] text-[#595959]"
               >
                 Settings
               </button>
+             </Link>
               <span>
                 <ChevronRight className="text-[#595959] w-6 h-6" />
               </span>

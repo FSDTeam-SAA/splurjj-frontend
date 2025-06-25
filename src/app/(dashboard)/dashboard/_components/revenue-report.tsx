@@ -15,7 +15,7 @@ const monthlyData = [
   { month: "FEB", thisYear: 400000, lastYear: 50000 },
   { month: "MAR", thisYear: 1200000, lastYear: 800000 },
   { month: "APR", thisYear: 800000, lastYear: 4800000 },
-  { month: "MAY", thisYear: 200000, lastYear: 5000000 },
+  { month: "MAY", thisYear: 20000, lastYear: 500000 },
   { month: "JUN", thisYear: 180000, lastYear: 200000 },
   { month: "JUL", thisYear: 50000, lastYear: 150000 },
   { month: "AUG", thisYear: 10000, lastYear: 50000 },
