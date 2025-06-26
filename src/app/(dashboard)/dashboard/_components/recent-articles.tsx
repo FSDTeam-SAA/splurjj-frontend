@@ -27,10 +27,12 @@ const RecentArticles = () => {
   if (isLoading) {
     return (
       <div>
-        <TableSkeletonWrapper count={6}
+        <TableSkeletonWrapper
+          count={6}
           width="100%"
-          height="70px" 
-          className="bg-white border rounded-[8px]"/>
+          height="70px"
+          className="bg-white border rounded-[8px]"
+        />
       </div>
     );
   }
@@ -53,9 +55,14 @@ const RecentArticles = () => {
                   className="w-full flex items-center justify-between pb-4"
                 >
                   <div className="flex items-center gap-4">
-                    <td>
+                    <td className="w-[200px] h-full">
                       <Image
-                        src={`${process?.env?.NEXT_PUBLIC_BACKEND_URL}/${content?.image1}`}
+                        // src="/assets/images/no-images.jpg"
+                        src={
+                          !content?.image1
+                            ?  "/assets/images/no-images.jpg"
+                            : `${process.env.NEXT_PUBLIC_BACKEND_URL}/${content.image1}`
+                        }
                         alt={content?.heading}
                         width={60}
                         height={60}

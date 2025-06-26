@@ -59,7 +59,7 @@ const AllContents: React.FC = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/shows`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home`
         );
         if (!response.ok) {
           throw new Error(`Failed to fetch data: ${response.statusText}`);

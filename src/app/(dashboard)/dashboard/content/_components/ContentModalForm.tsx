@@ -28,7 +28,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 import TinyMCEEditor from "@/components/ui/tinymce-editor";
-  import { FaArrowLeft } from "react-icons/fa6";
+import { FaArrowLeft } from "react-icons/fa6";
+import QuillEditor from "@/components/ui/quill-editor";
 
 // Zod Schema
 const formSchema = z
@@ -70,7 +71,6 @@ interface ContentFormModalProps {
   onCancel?: () => void;
   setEditingContent?: React.Dispatch<React.SetStateAction<Content | null>>;
   setShowForm?: React.Dispatch<React.SetStateAction<boolean>>;
-
 }
 
 export default function ContentAddEditForm({
@@ -80,7 +80,7 @@ export default function ContentAddEditForm({
   onSuccess,
   onCancel,
   setEditingContent,
-  setShowForm
+  setShowForm,
 }: ContentFormModalProps) {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [tagInput, setTagInput] = useState("");
@@ -267,7 +267,7 @@ export default function ContentAddEditForm({
           onClick={handleCloseForm}
           className="bg-white text-[#0253F7] text-lg font-bold leading-normal border-2 border-[#0253F7]"
         >
-        <FaArrowLeft/>  Back to List
+          <FaArrowLeft /> Back to List
         </Button>
       </div>
       <Form {...form}>
@@ -283,11 +283,16 @@ export default function ContentAddEditForm({
                     Heading
                   </FormLabel>
                   <FormControl className="">
-                    <TinyMCEEditor
+                    {/* <TinyMCEEditor
                       value={field.value}
                       onEditorChange={field.onChange}
                       height={500}
                       placeholder="Write your blog post content here..."
+                    /> */}
+                    <QuillEditor
+                      id="heading"
+                      value={field.value}
+                      onChange={field.onChange}
                     />
                   </FormControl>
                   <FormMessage />
@@ -306,13 +311,18 @@ export default function ContentAddEditForm({
                     Write Sub Heading
                   </FormLabel>
                   <FormControl>
-                    <TinyMCEEditor
+                    <QuillEditor
+                      id="sub_heading"
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                    {/* <TinyMCEEditor
                       value={field.value}
                       onEditorChange={field.onChange}
                       height={500}
                       placeholder="Write your blog post content here..."
                       disabled={isPending}
-                    />
+                    /> */}
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -330,7 +340,11 @@ export default function ContentAddEditForm({
                     Author
                   </FormLabel>
                   <FormControl>
-                    <Input className="text-black" placeholder="Write Name" {...field} />
+                    <Input
+                      className="text-black"
+                      placeholder="Write Name"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -350,7 +364,6 @@ export default function ContentAddEditForm({
                   <div className="relative flex gap-2 ">
                     <FormControl>
                       <Input
-                      
                         value={field.value.toLocaleDateString("en-US", {
                           day: "2-digit",
                           month: "long",
@@ -421,7 +434,7 @@ export default function ContentAddEditForm({
             </FormLabel>
             <div className="flex items-center gap-2 mb-3 mt-2 relative">
               <Input
-              className="text-black"
+                className="text-black"
                 placeholder="Add a tag"
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}

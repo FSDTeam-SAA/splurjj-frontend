@@ -228,18 +228,19 @@ const Music: React.FC = () => {
             }}
             className="flex items-center justify-end rounded-lg"
           >
-            <div className="text-center bg-black bg-opacity-50 p-6 rounded lg:w-1/2">
+            <div className="text-center bg-black text-white bg-opacity-50 p-6 rounded lg:w-1/2 border-2 border-red-500">
               <Link
+              className="dark:text-white"
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-2xl font-medium  text-white hover:underline"
+                  className="text-2xl font-medium  dark:text-white hover:underline"
                 />
               </Link>
               <p
                 dangerouslySetInnerHTML={{ __html: firstPost.body1 }}
-                className="text-sm font-normal  text-white line-clamp-3 mt-2"
+                className="text-sm font-normal  dark:text-white line-clamp-3 mt-2"
               />
             </div>
           </div>

@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 
 
 type AdData = {
@@ -27,7 +26,8 @@ function Horizontal() {
           setError('Failed to fetch advertising data');
         }
       } catch (error) {
-        toast.error(error instanceof Error ? error.message : 'Error fetching data');
+        // toast.error(error instanceof Error ? error.message : 'Error fetching data');
+        console.error('Error fetching ad data:', error);
       } finally {
         setLoading(false);
       }
