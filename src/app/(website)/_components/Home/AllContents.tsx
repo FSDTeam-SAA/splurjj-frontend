@@ -150,6 +150,7 @@ const AllContents: React.FC = () => {
   if (!contents.length) return <div>No content found</div>;
 
   const firstPost = contents[0];
+  console.log(firstPost);
   const secondPost = contents[1];
   const thirdPost = contents[2];
   const fourthPost = contents[3];
@@ -236,7 +237,7 @@ const AllContents: React.FC = () => {
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-5xl font-bold  text-[#131313]"
+                  className="text-[60px] font-[800]  text-[#131313]"
                 />
               </Link>
               <p
@@ -254,7 +255,7 @@ const AllContents: React.FC = () => {
               alt={firstPost.heading}
               width={1200}
               height={600}
-              className="w-full h-[500px] object-cover rounded-lg"
+              className="w-full h-[680px] object-cover rounded-lg"
             />
           </div>
         </div>
