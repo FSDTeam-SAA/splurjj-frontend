@@ -178,7 +178,7 @@ export default function PersonalInfoForm() {
 
   return (
     <div className="min-h-screen">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-[106px]">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-[106px] dark:bg-white p-6 rounded-lg">
         <div className="md:col-span-3">
           <div className="flex items-center justify-between pb-8">
             <h1 className="text-2xl text-[#212121]  font-semibold leading-[120%] tracking-[0%]">
@@ -196,7 +196,7 @@ export default function PersonalInfoForm() {
           </div>
 
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 ">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-[30px]">
                 {[
                   { name: "first_name", label: "First Name" },

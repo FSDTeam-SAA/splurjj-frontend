@@ -122,12 +122,12 @@ export default function TinyMCEEditor({
               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
               font-size: 14px; 
               line-height: 1.6; 
-              color: #333;
+              color: #000000;
             }
             h1, h2, h3, h4, h5, h6 { 
               margin-top: 1em; 
               margin-bottom: 0.5em; 
-              font-weight: 600; 
+              font-weight: 700; 
             }
             p { margin-bottom: 1em; }
             img { max-width: 100%; height: auto; }

@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface UserProfileData {
   first_name: string;
@@ -70,6 +71,7 @@ export default function DashboardHeader() {
         {/* Logo Section */}
         <div className="flex items-center">
           <div className="">
+            <Link href="/">
             {headerData?.data?.logo ? (
               <Image
                 src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${headerData.data.logo}`}
@@ -83,6 +85,7 @@ export default function DashboardHeader() {
                 LOGO
               </h2>
             )}
+            </Link>
           </div>
         </div>
 

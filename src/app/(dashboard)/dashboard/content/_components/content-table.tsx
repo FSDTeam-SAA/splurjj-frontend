@@ -58,7 +58,7 @@ export default function ContentTable({
 
   if (contents?.length === 0) {
     return (
-      <div className="p-8 text-center text-gray-500">
+      <div className="p-8 text-center text-black dark:text-white">
         No content found for this subcategory.
       </div>
     );

@@ -1,4 +1,5 @@
 "use client";
+import TableSkeletonWrapper from "@/components/shared/TableSkeletonWrapper/TableSkeletonWrapper";
 import { DashboardOverviewDataTypeResponse } from "@/components/types/DashboardOverviewDataType";
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
@@ -24,7 +25,14 @@ const RecentArticles = () => {
 
   console.log(data?.data?.recent_content);
   if (isLoading) {
-    return <div>Loading ....</div>;
+    return (
+      <div>
+        <TableSkeletonWrapper count={6}
+          width="100%"
+          height="70px" 
+          className="bg-white border rounded-[8px]"/>
+      </div>
+    );
   }
 
   if (isError) {

@@ -931,11 +931,11 @@ export default function Sidebar() {
                     : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
                 }`}
               >
-                <LayoutDashboard className="w-5 h-5"/> Dashboard
+                <LayoutDashboard className="w-5 h-5" /> Dashboard
               </Button>
             </Link>
           </div>
-          <div className="space-y-2">
+          <div className="space-y-[0.5px]">
             <h5 className="text-lg font-semibold text-[#131313] leading-[120%] uppercase tracking-[0%] ">
               Content Management
             </h5>
@@ -944,17 +944,19 @@ export default function Sidebar() {
                 <Link href="/dashboard/add-category">
                   <Button
                     variant="ghost"
-                    className={`w-full justify-start items-center gap-3 text-left text-lg transition-colors ${
+                    className={`w-full flex justify-start items-center gap-3 text-left text-lg transition-colors ${
                       isRouteActive("/dashboard/add-category")
                         ? "bg-blue-500 hover:bg-blue-600 text-white"
-                        : "bg-transparent  text-black"
+                        : "bg-transparent  text-black/70 dark:text-white"
                     }`}
                   >
-                    <TfiMenuAlt className={
+                    <TfiMenuAlt
+                      className={
                         isRouteActive("/dashboard/add-category")
-                          ? "text-white w-4 h-4"
-                          : "text-black w-4 h-4"
-                      }/>
+                          ? "text-white w-4 h-4 text-base font-normal leading-[120%] tracking-[0%] transition-colors"
+                          : "text-black/70 dark:text-white w-4 h-4 text-base font-normal leading-[120%] tracking-[0%] transition-colors"
+                      }
+                    />
                     {/* <Plus
                       className={
                         isRouteActive("/dashboard/add-category")
@@ -987,10 +989,10 @@ export default function Sidebar() {
                   >
                     <div className="w-full flex items-center justify-between">
                       <span
-                        className={`text-base font-normal leading-[120%]  tracking-[0%] transition-colors ${
+                        className={`text-base font-normal leading-[120%] tracking-[0%] transition-colors ${
                           categoryActive
-                            ? "text-white dark:text-blue-300 font-medium "
-                            : "text-black dark:text-white"
+                            ? "text-white font-medium "
+                            : "text-black/70 dark:text-white"
                         }`}
                       >
                         {category.category_name}
@@ -998,9 +1000,7 @@ export default function Sidebar() {
                       {expandedCategories.has(category.category_id) ? (
                         <ChevronDown
                           className={`h-4 w-4 flex-shrink-0 transition-colors ${
-                            categoryActive
-                              ? "text-white dark:text-blue-300"
-                              : ""
+                            categoryActive ? "text-white " : ""
                           }`}
                         />
                       ) : (
@@ -1021,7 +1021,7 @@ export default function Sidebar() {
                         animate="visible"
                         exit="exit"
                         variants={subcategoryVariants}
-                        className="space-y-1 overflow-hidden bg-[#E6EEFE] dark:bg-gray-900/50 rounded-b-lg border-t border-gray-200 dark:border-gray-700"
+                        className="space-y-1 overflow-hidden bg-[#E6EEFE] dark:bg-white rounded-b-lg border-t border-gray-200 dark:border-gray-700"
                       >
                         {category.subcategories.map((subcategory) => {
                           const subcategoryActive = isSubcategoryActive(
@@ -1073,50 +1073,59 @@ export default function Sidebar() {
                                   </Button>
                                 </div>
                               ) : (
-                                <div
-                                  className={`flex items-center justify-between p-2 mx-2 rounded transition-colors ${
+                                <Link
+                                  href={`/dashboard/content/${category.category_id}/${subcategory.id}`}
+                                  className={`text-sm  leading-[120%] tracking-[0%] transition-colors ${
                                     subcategoryActive
-                                      ? "bg-blue-100 dark:bg-blue-800/50 border-l-4 border-blue-500"
-                                      : "hover:bg-blue-100/50 dark:hover:bg-blue-900/30"
+                                      ? "text-white dark:text-blue-700 font-medium"
+                                      : "text-black dark:text-black font-medium"
                                   }`}
                                 >
-                                  <Link
+                                  <div
+                                    className={`flex items-center justify-between p-2 mx-2 rounded transition-colors ${
+                                      subcategoryActive
+                                        ? "bg-blue-400 dark:bg-blue-200 border-l-4 border-blue-500"
+                                        : "hover:bg-blue-100/50 dark:hover:bg-blue-900/30"
+                                    }`}
+                                  >
+                                    {/* <Link
                                     href={`/dashboard/content/${category.category_id}/${subcategory.id}`}
                                     className={`text-sm  leading-[120%] tracking-[0%] transition-colors ${
                                       subcategoryActive
-                                        ? "text-blue-700 dark:text-blue-300 font-medium"
-                                        : "text-black dark:text-gray-300 font-medium"
+                                        ? "text-blue-700 dark:text-blue-700 font-medium"
+                                        : "text-black dark:text-black font-medium"
                                     }`}
-                                  >
+                                  > */}
                                     {subcategory.name}
-                                  </Link>
-                                  {(isAdmin || isEditor) && (
-                                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                      <Button
-                                        size="sm"
-                                        variant="ghost"
-                                        className="h-6 w-6 p-0"
-                                        onClick={() =>
-                                          startEditing(subcategory)
-                                        }
-                                      >
-                                        <Edit2 className="h-3 w-3" />
-                                      </Button>
-                                      <Button
-                                        size="sm"
-                                        variant="ghost"
-                                        className="h-6 w-6 p-0 text-red-500 hover:text-red-700"
-                                        onClick={() =>
-                                          handleDeleteSubcategory(
-                                            subcategory.id
-                                          )
-                                        }
-                                      >
-                                        <Trash2 className="h-3 w-3" />
-                                      </Button>
-                                    </div>
-                                  )}
-                                </div>
+                                    {/* </Link> */}
+                                    {(isAdmin || isEditor) && (
+                                      <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <Button
+                                          size="sm"
+                                          variant="ghost"
+                                          className="h-6 w-6 p-0"
+                                          onClick={() =>
+                                            startEditing(subcategory)
+                                          }
+                                        >
+                                          <Edit2 className="h-3 w-3" />
+                                        </Button>
+                                        <Button
+                                          size="sm"
+                                          variant="ghost"
+                                          className="h-6 w-6 p-0 text-red-500 hover:text-red-700"
+                                          onClick={() =>
+                                            handleDeleteSubcategory(
+                                              subcategory.id
+                                            )
+                                          }
+                                        >
+                                          <Trash2 className="h-3 w-3" />
+                                        </Button>
+                                      </div>
+                                    )}
+                                  </div>
+                                </Link>
                               )}
                             </div>
                           );
@@ -1189,32 +1198,32 @@ export default function Sidebar() {
 
           {!isAuthor && (
             <>
-              <h5 className="text-lg font-semibold text-[#131313] leading-[120%] uppercase tracking-[0%] font-marnrope pt-2">
+              <h5 className="text-lg font-semibold text-[#131313] leading-[120%] uppercase tracking-[0%] font-marnrope pt-2 pb-3">
                 Advertising
               </h5>
               <div>
-                <div className="p-2">
+                <div className="px-2">
                   <Link href="/dashboard/horizontal-advertising">
                     <Button
                       variant="ghost"
-                      className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
+                      className={`w-full justify-start transition-colors text-lg font-normal leading-[120%] tracking-[0%]  ${
                         isRouteActive("/dashboard/horizontal-advertising")
                           ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
-                          : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                          : "text-black/70 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
                       }`}
                     >
                       Horizontal
                     </Button>
                   </Link>
                 </div>
-                <div className="p-2">
+                <div className="px-2">
                   <Link href="/dashboard/vertical-advertising">
                     <Button
                       variant="ghost"
-                      className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
+                      className={`w-full justify-start transition-colors text-lg font-normal leading-[120%] tracking-[0%]  ${
                         isRouteActive("/dashboard/vertical-advertising")
                           ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
-                          : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                          : "text-black/70 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
                       }`}
                     >
                       Vertical
@@ -1225,18 +1234,18 @@ export default function Sidebar() {
             </>
           )}
 
-          <h5 className="text-lg font-semibold text-[#131313] leading-[120%] uppercase tracking-[0%] font-marnrope pt-2">
+          <h5 className="text-lg font-semibold text-[#131313] leading-[120%] uppercase tracking-[0%] font-marnrope pt-2 pb-3">
             Settings
           </h5>
           {isAdmin && (
-            <div className="p-2">
+            <div className="px-2">
               <Link href="/dashboard/role">
                 <Button
                   variant="ghost"
                   className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
                     isRouteActive("/dashboard/role")
                       ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
-                      : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                      : "text-black/70 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
                   }`}
                 >
                   Role Management
@@ -1245,14 +1254,14 @@ export default function Sidebar() {
             </div>
           )}
           {!isAuthor && (
-            <div className="p-2 ">
+            <div className="px-2 ">
               <Link href="/dashboard/subscriber">
                 <Button
                   variant="ghost"
                   className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
                     isRouteActive("/dashboard/subscriber")
                       ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
-                      : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                      : "text-black/70 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
                   }`}
                 >
                   Subscriber
@@ -1262,14 +1271,14 @@ export default function Sidebar() {
           )}
 
           {!isAuthor && (
-            <div className="p-2">
+            <div className="px-2">
               <Link href="/dashboard/header">
                 <Button
                   variant="ghost"
                   className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
                     isRouteActive("/dashboard/header")
                       ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
-                      : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                      : "text-black/70 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
                   }`}
                 >
                   Header
@@ -1279,14 +1288,14 @@ export default function Sidebar() {
           )}
 
           {!isAuthor && (
-            <div className="p-2 ">
+            <div className="px-2 ">
               <Link href="/dashboard/footer">
                 <Button
                   variant="ghost"
                   className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
                     isRouteActive("/dashboard/footer")
                       ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
-                      : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                      : "text-black/70 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
                   }`}
                 >
                   Footer
@@ -1295,14 +1304,14 @@ export default function Sidebar() {
             </div>
           )}
 
-          <div className="p-2 ">
+          <div className="px-2 ">
             <Link href="/dashboard/settings">
               <Button
                 variant="ghost"
                 className={`w-full justify-start items-center gap-3 transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
                   isRouteActive("/dashboard/settings")
                     ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
-                    : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                    : "text-black/70 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
                 }`}
               >
                 Account

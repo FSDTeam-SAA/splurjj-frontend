@@ -32,7 +32,7 @@ export const SubscriberColumn: ColumnDef<Subscriber>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex justify-center gap-[2px]">
-          <span className="text-base font-normal leading-[19px] text-[#444444] text-center">
+          <span className="text-base font-normal leading-[19px] text-[#444444] dark:text-black text-center">
             {row.original.email}
           </span>
         </div>
