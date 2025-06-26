@@ -217,9 +217,9 @@ li{
 Link{
   @apply text-[#131313] dark:text-white
 }
-span{
+/* span{
   @apply text-[#131313] dark:text-white
-}
+} */
 
 
 .icon{

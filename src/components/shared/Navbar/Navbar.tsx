@@ -92,9 +92,6 @@ export default function Header() {
     queryFn: fetchHeader,
   });
 
-
-
-
   const staticMenuItems = [{ name: "LATEST", href: "/" }];
 
   const handleSearch = (e: React.FormEvent) => {
@@ -132,17 +129,20 @@ export default function Header() {
       pathName === `/${categoryId}` ||
       categories
         .find((cat) => cat.category_id === categoryId)
-        ?.subcategories.some((sub) =>
-          pathName === `/${categoryId}/${sub.id}`
-        )
+        ?.subcategories.some((sub) => pathName === `/${categoryId}/${sub.id}`)
     );
   };
 
-
   return (
     <>
-      <div className="h-[16px] sticky top-0 z-50" style={{ backgroundColor: header?.border_color || "#ffffff" }} />
-      <header className="sticky top-0 z-50 w-full border-b bg-white backdrop-blur supports-[backdrop-filter]:bg-background/60" style={{ backgroundColor: header?.bg_color || "#ffffff" }}>
+      <div
+        className="h-[16px] sticky top-0 z-50"
+        style={{ backgroundColor: header?.border_color || "#ffffff" }}
+      />
+      <header
+        className="sticky top-0 z-50 w-full border-b bg-white backdrop-blur supports-[backdrop-filter]:bg-background/60"
+        style={{ backgroundColor: header?.bg_color || "#ffffff" }}
+      >
         <div className="container mx-auto px-4">
           <div className="flex h-[80px] items-center justify-between">
             {/* Logo */}
@@ -197,7 +197,7 @@ export default function Header() {
                 return (
                   <DropdownMenu key={category.category_id}>
                     <DropdownMenuTrigger
-                      className="flex items-center space-x-1 text-sm font-medium transition-colors hover:text-primary"
+                      className="flex items-center space-x-1 text-sm font-medium transition-colors hover:text-primary border-0 outline-none ring-0"
                       style={{
                         color: isActive
                           ? header?.menu_item_active_color || "#0253F7"
@@ -207,11 +207,12 @@ export default function Header() {
                       <span>{category.category_name.toUpperCase()}</span>
                       <ChevronDown className="h-4 w-4" />
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-48 bg-white text-[18px] font-semibold border-0 mt-[20px]"
+                    <DropdownMenuContent
+                      className="w-48 bg-white text-[18px] font-semibold border-0 mt-[20px]"
                       style={{ backgroundColor: header?.bg_color || "#ffffff" }}
                     >
                       {category.subcategories.map((subcategory) => (
-                        <DropdownMenuItem key={subcategory.id} asChild >
+                        <DropdownMenuItem key={subcategory.id} asChild>
                           <Link
                             href={`/${category.category_id}/${subcategory.id}`}
                             className="cursor-pointer"
@@ -220,7 +221,8 @@ export default function Header() {
                                 pathName ===
                                 `/${category.category_id}/${subcategory.id}`
                                   ? header?.menu_item_active_color || "#0253F7"
-                                  : header?.menu_item_color || "text-muted-foreground",
+                                  : header?.menu_item_color ||
+                                    "text-muted-foreground",
                             }}
                           >
                             {subcategory.name}
@@ -270,13 +272,7 @@ export default function Header() {
 
               {/* Shopping Cart Button */}
               {token && role !== "admin" && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="p-1 rounded-full hover:bg-gray-100 transition-colors"
-                >
-                  <ShoppingCart className="text-black w-[33px] h-[33px]" />
-                </Button>
+                <ShoppingCart className="text-black" size={30}/>
               )}
 
               {/* User Menu */}
@@ -387,7 +383,8 @@ export default function Header() {
                         style={{
                           color: isActive
                             ? header?.menu_item_active_color || "#0253F7"
-                            : header?.menu_item_color || "text-muted-foreground",
+                            : header?.menu_item_color ||
+                              "text-muted-foreground",
                         }}
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
@@ -403,7 +400,8 @@ export default function Header() {
                         style={{
                           color: isActive
                             ? header?.menu_item_active_color || "#0253F7"
-                            : header?.menu_item_color || "text-muted-foreground",
+                            : header?.menu_item_color ||
+                              "text-muted-foreground",
                         }}
                       >
                         {category.category_name.toUpperCase()}
@@ -418,7 +416,8 @@ export default function Header() {
                               pathName ===
                               `/${category.category_id}/${subcategory.id}`
                                 ? header?.menu_item_active_color || "#0253F7"
-                                : header?.menu_item_color || "text-muted-foreground",
+                                : header?.menu_item_color ||
+                                  "text-muted-foreground",
                           }}
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
