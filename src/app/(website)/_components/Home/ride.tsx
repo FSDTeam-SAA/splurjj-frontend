@@ -140,9 +140,9 @@ const Ride: React.FC = () => {
       "_blank"
     );
   };
-
-  if (loading)
-    return <div className="loading text-center py-8">Loading...</div>;
+console.log(loading)
+  // if (loading)
+  //   return <div className="loading text-center py-8">Loading...</div>;
   if (error)
     return (
       <div className="error text-center py-8 text-red-500">Error: {error}</div>
@@ -154,7 +154,7 @@ const Ride: React.FC = () => {
   const secondPost = posts[1];
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className=" py-8">
       {firstPost && (
         <div className="mb-8">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">

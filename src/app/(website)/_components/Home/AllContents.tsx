@@ -78,6 +78,8 @@ const AllContents: React.FC = () => {
     fetchData();
   }, []);
 
+  console.log(loading);
+
   const getImageUrl = (path: string | null): string => {
     if (!path) return "/fallback-image.jpg"; // Fallback image
     if (path.startsWith("http")) return path;
@@ -92,8 +94,6 @@ const AllContents: React.FC = () => {
     const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
     return `${baseUrl}/blogs/${categoryId}/${subcategoryId}/${postId}`;
   };
-
-  
 
   const handleShare = async (post: ContentItem) => {
     const shareUrl = getShareUrl(
@@ -143,9 +143,7 @@ const AllContents: React.FC = () => {
     );
   };
 
-
-
-  if (loading) return <div>Loading...</div>;
+  // if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!contents.length) return <div>No content found</div>;
 
@@ -156,7 +154,7 @@ const AllContents: React.FC = () => {
   const fourthPost = contents[3];
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="">
       {firstPost && (
         <div className="mb-16">
           <div>
@@ -489,10 +487,10 @@ const AllContents: React.FC = () => {
               <Link
                 href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
               >
-              <p
-                dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
-                className="text-2xl font-medium"
-              />
+                <p
+                  dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
+                  className="text-2xl font-medium"
+                />
               </Link>
               <p className="text-sm font-semibold  uppercase text-[#424242] mt-2">
                 {fourthPost.author} - {fourthPost.date}
