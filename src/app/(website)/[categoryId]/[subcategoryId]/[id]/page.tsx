@@ -141,7 +141,7 @@ const ContentBlogDetails = ({
   const cleanedTags = cleanTags(blogData.tags || []);
 
   return (
-    <div className="bg-secondary-50">
+    <div className="">
       <div className="container py-[30px] md:py-[50px] lg:py-[72px]">
         {/* First part */}
         <div className="grid grid-cols-1 md:grid-cols-7 gap-[30px] md:gap-[50px] lg:gap-[72px]">

@@ -82,10 +82,11 @@ function Page({ params }: PageProps) {
   console.log(posts, "posts");
 
   // Capitalize category name for display
-  const capitalize = (str: string) =>
-    str
-      .replace(/-/g, " ")
-      .replace(/\b\w/g, (char) => char.toUpperCase());
+const capitalize = (str: string) =>
+  decodeURIComponent(str) // decode URL-encoded characters
+    .replace(/-/g, " ")    // replace hyphens with spaces
+    .replace(/\b\w/g, (char) => char.toUpperCase()); // capitalize first letters
+
 
   return (
     <div className="container mx-auto px-4">
