@@ -4,7 +4,12 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { FaFacebook, FaLinkedin, FaRegCommentDots, FaTwitter } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaLinkedin,
+  FaRegCommentDots,
+  FaTwitter,
+} from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
 
@@ -89,7 +94,11 @@ const Music: React.FC = () => {
   };
 
   const handleShare = async (post: BlogPost) => {
-    const shareUrl = getShareUrl(post.category_id, post.subcategory_id, post.id);
+    const shareUrl = getShareUrl(
+      post.category_id,
+      post.subcategory_id,
+      post.id
+    );
     const shareData = {
       title: post.heading,
       text: post.sub_heading || "Check out this blog post!",
@@ -132,11 +141,15 @@ const Music: React.FC = () => {
     );
   };
 
-  console.log(loading)
+  console.log(loading);
 
   // if (loading) return <div className="loading text-center py-8">Loading...</div>;
-  if (error) return <div className="error text-center py-8 text-red-500">Error: {error}</div>;
-  if (posts.length === 0) return <div className="error text-center py-8">No posts found</div>;
+  if (error)
+    return (
+      <div className="error text-center py-8 text-red-500">Error: {error}</div>
+    );
+  if (posts.length === 0)
+    return <div className="error text-center py-8">No posts found</div>;
 
   const firstPost = posts[0];
   const secondPost = posts[1];
@@ -215,20 +228,23 @@ const Music: React.FC = () => {
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}#comment`}
                 className="cursor-pointer"
               >
-              <FaRegCommentDots className="w-6 h-6" />
+                <FaRegCommentDots className="w-6 h-6" />
               </Link>
             </div>
           </div>
-          <div
-            style={{
-              backgroundImage: `url(${getImageUrl(firstPost.image1)})`,
-              height: "433px",
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-            }}
-            className="flex items-center justify-end rounded-lg"
+          <Link
+            href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
           >
-            <div className="text-center bg-black text-white bg-opacity-50 p-6 rounded lg:w-1/2 border-2 border-red-500">
+            <div
+              style={{
+                backgroundImage: `url(${getImageUrl(firstPost.image1)})`,
+                height: "433px",
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+              }}
+              className="flex items-center justify-end rounded-lg"
+            >
+              {/* <div className="text-center bg-black text-white bg-opacity-50 p-6 rounded lg:w-1/2 border-2 border-red-500">
               <Link
               className="dark:text-white"
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
@@ -242,8 +258,9 @@ const Music: React.FC = () => {
                 dangerouslySetInnerHTML={{ __html: firstPost.body1 }}
                 className="text-sm font-normal  dark:text-white line-clamp-3 mt-2"
               />
+            </div> */}
             </div>
-          </div>
+          </Link>
         </div>
       )}
 
@@ -338,7 +355,7 @@ const Music: React.FC = () => {
                       href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}#comment`}
                       className="cursor-pointer"
                     >
-                    <FaRegCommentDots className="w-6 h-6" />
+                      <FaRegCommentDots className="w-6 h-6" />
                     </Link>
                   </div>
                 </div>
@@ -442,7 +459,7 @@ const Music: React.FC = () => {
                       href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}#comment`}
                       className="cursor-pointer"
                     >
-                    <FaRegCommentDots className="w-6 h-6" />
+                      <FaRegCommentDots className="w-6 h-6" />
                     </Link>
                   </div>
                 </div>
