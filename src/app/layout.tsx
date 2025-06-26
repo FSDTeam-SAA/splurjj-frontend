@@ -8,10 +8,11 @@ import AppProvider from "@/components/provider/AppProvider";
 import { ThemeProvider } from "next-themes";
 import localFont from "next/font/local";
 
-export const helvetica = localFont({
+// ✅ DO NOT export this font
+const helvetica = localFont({
   src: "./fonts/HelveticaNeueBold.otf",
   variable: "--font-helvetica",
-  weight: "100, 200, 300, 400, 500, 600, 700, 800, 900",
+  weight: "100 200 300 400 500 600 700 800 900", // fixed spacing (use space or single value)
   display: "swap",
 });
 
@@ -26,8 +27,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${helvetica.className} antialiased`}>
+    <html
+      lang="en"
+      className={`${helvetica.variable} antialiased`}
+      suppressHydrationWarning
+    >
+      <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthProvider>
             <AppProvider>
