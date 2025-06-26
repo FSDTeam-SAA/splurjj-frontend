@@ -129,7 +129,7 @@ function ContentComments({ blogId }: ContentCommentsProps) {
   }
 
   if (!data?.success || !data?.data?.length) {
-    return <div className="text-center">No comments available.</div>;
+    return <div className="text-center"></div>;
   }
 
   const comment = data.data[currentIndex];

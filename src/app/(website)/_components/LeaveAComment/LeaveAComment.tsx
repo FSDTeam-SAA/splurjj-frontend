@@ -39,7 +39,6 @@ interface CommentPayload {
 }
 
 export function LeaveAComment({ UserEmail, blogId }: LeaveACommentProps) {
-
   const queryClient = new QueryClient();
   const { data: session } = useSession();
   const token = (session?.user as { token?: string })?.token;
@@ -73,7 +72,6 @@ export function LeaveAComment({ UserEmail, blogId }: LeaveACommentProps) {
       });
       form.reset(); // Reset the form after successful submission
     },
-    
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -107,7 +105,13 @@ export function LeaveAComment({ UserEmail, blogId }: LeaveACommentProps) {
                     Leave A Comment
                   </h4>
                   <FormLabel className="text-lg md:text-xl font-semibold  leading-[120%] tracking-[0%] text-secondary">
-                    You must be <Link href="/login" className="underline">logged in</Link> to post
+                    <p>
+                      You must be{" "}
+                      <Link href="/login" className="underline">
+                        logged in
+                      </Link>{" "}
+                      to post
+                    </p>
                   </FormLabel>
                   <FormControl>
                     <Textarea

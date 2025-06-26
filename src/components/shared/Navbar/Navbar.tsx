@@ -143,7 +143,7 @@ export default function Header() {
         className="sticky top-0 z-50 w-full border-b bg-white backdrop-blur supports-[backdrop-filter]:bg-background/60"
         style={{ backgroundColor: header?.bg_color || "#ffffff" }}
       >
-        <div className="container mx-auto px-4">
+        <div className="container">
           <div className="flex h-[80px] items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-2">
