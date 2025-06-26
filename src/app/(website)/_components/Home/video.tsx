@@ -132,7 +132,9 @@ const Video: React.FC = () => {
     );
   };
 
-  if (loading) return <div className="loading text-center py-8">Loading...</div>;
+  console.log(loading)
+
+  // if (loading) return <div className="loading text-center py-8">Loading...</div>;
   if (error) return <div className="error text-center py-8 text-red-600">Error: {error}</div>;
   if (posts.length === 0) return <div className="error text-center py-8">No posts found</div>;
 
@@ -142,7 +144,7 @@ const Video: React.FC = () => {
   const fifthPost = posts[4];
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="">
       {firstPost && (
         <div className="py-8">
           <div className="grid grid-cols-1 md:grid-cols-2 rounded">

@@ -36,7 +36,8 @@ function Horizontal() {
     fetchAdData();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  console.log(loading)
+  // if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
   return (
