@@ -1,6 +1,7 @@
 "use client";
 import ErrorContainer from "@/components/shared/ErrorContainer/ErrorContainer";
 import { DashboardOverviewDataTypeResponse } from "@/components/types/DashboardOverviewDataType";
+import { DashboardCardSkeleton } from "@/components/ui/DashboardCardSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -23,15 +24,22 @@ const DashboardOverviewContainer = () => {
         }).then((res) => res.json()),
     });
 
-    if(isLoading){
-        return <div>Loading...</div>
-    }
+  if (isLoading) {
+    return (
+      <div>
+        <DashboardCardSkeleton />
+      </div>
+    );
+  }
 
-    if(isError){
-        return <div>
-          <ErrorContainer message={error?.message || "Something went Wrong"} />
-        </div>
-    }
+  if (isError) {
+    return (
+      <div>
+        <ErrorContainer message={error?.message || "Something went Wrong"} />
+      </div>
+    );
+  }
+  
   return (
     <div>
       <div>
@@ -42,6 +50,7 @@ const DashboardOverviewContainer = () => {
           Dashboard
         </p>
       </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-8">
         {/* first div  */}
         <div className="flex items-center justify-between bg-white rounded-[6px] shadow-md p-8">

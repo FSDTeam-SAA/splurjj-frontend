@@ -200,9 +200,9 @@
 
 import React from "react";
 import DashboardOverviewContainer from "./_components/DashboardOverviewContainer";
-import { RecentArticles } from "./_components/recent-articles";
 import { ProductsReport } from "./_components/products-report";
 import { RevenueReport } from "./_components/revenue-report";
+import RecentArticles from "./_components/recent-articles";
 
 const DashboarOverview = () => {
   return (

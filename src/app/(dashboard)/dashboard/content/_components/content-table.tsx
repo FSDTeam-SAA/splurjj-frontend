@@ -68,16 +68,16 @@ export default function ContentTable({
     <Table className="bg-transparent">
       <TableHeader className="">
         <TableRow className="border border-[#616161] !h-[39px] w-full py-[10px]">
-          <TableHead className="text-base font-bold text-[#131313] tracking-[0%] leading-[120%] font-manrope border-r border-[#616161] pl-10">
+          <TableHead className="text-base font-bold text-[#131313] dark:text-white tracking-[0%] leading-[120%] font-manrope border-r border-[#616161] pl-10">
             Blog Name
           </TableHead>
-          <TableHead className="border-r border-[#616161] text-center text-base font-bold text-[#131313] tracking-[0%] leading-[120%] font-manrope">
+          <TableHead className="border-r border-[#616161] text-center text-base font-bold text-[#131313] dark:text-white tracking-[0%] leading-[120%] font-manrope">
             Date
           </TableHead>
-          <TableHead className="border-r border-[#616161] text-center text-base font-bold text-[#131313] tracking-[0%] leading-[120%] font-manrope">
+          <TableHead className="border-r border-[#616161] text-center text-base font-bold text-[#131313] dark:text-white tracking-[0%] leading-[120%] font-manrope">
             Status
           </TableHead>
-          <TableHead className="text-center text-base font-bold text-[#131313] tracking-[0%] leading-[120%] font-manrope">
+          <TableHead className="text-center text-base font-bold text-[#131313] dark:text-white tracking-[0%] leading-[120%] font-manrope">
             Action
           </TableHead>
         </TableRow>
@@ -108,7 +108,7 @@ export default function ContentTable({
               </div>
             </TableCell>
             <TableCell className="border-r border-[#616161]">
-              <div className="text-base font-medium font-manrope leading-[120%] tracking-[0%] text-[#424242] text-center">
+              <div className="text-base font-medium font-manrope leading-[120%] tracking-[0%] text-[#424242] dark:text-white text-center">
                 {/* {moment(content.date).format('MM/DD/YYYY hh:mmA')} */}
                 {moment(content.date).format("MM/DD/YYYY")}
               </div>
@@ -129,7 +129,7 @@ export default function ContentTable({
                   className="h-8 w-8 p-0"
                   onClick={() => onEdit(content)}
                 >
-                  <SquarePen className="h-8 w-8 text-[#424242]" />
+                  <SquarePen className="h-8 w-8 text-[#424242] dark:text-white" />
                 </Button>
                 <Button
                   size="lg"

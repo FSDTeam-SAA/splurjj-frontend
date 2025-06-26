@@ -102,7 +102,7 @@ export default function SubcategoryContentPage() {
             <div className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%] flex items-center gap-2">
               <Link
                 href="/dashboard"
-                className="hover:underline text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]"
+                className="hover:underline text-base text-[#929292] dark:text-white font-manrope font-medium leading-[120%] tracking-[0%]"
               >
                 Dashboard
               </Link>
@@ -122,7 +122,7 @@ export default function SubcategoryContentPage() {
           </div>
 
           <Button
-            className="bg-[#34A1E8] hover:bg-primary text-white w-[156px] h-[48px] rounded-[8px] flex items-center gap-2"
+            className="bg-[#0253F7] hover:bg-primary text-white w-[156px] h-[48px] rounded-[8px] flex items-center gap-2"
             onClick={handleAddContent}
           >
             <Plus className="h-8 w-8 text-white" />
@@ -133,18 +133,15 @@ export default function SubcategoryContentPage() {
         {/* Conditional rendering: Show either the table or the form */}
         {showForm ? (
           <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold">{editingContent ? "Edit Content" : "Add New Content"}</h2>
-              <Button variant="outline" onClick={handleCloseForm} className="bg-white text-gray-600 border-gray-300">
-                Back to List
-              </Button>
-            </div>
+            
             <ContentAddEditForm
               initialContent={editingContent}
               categoryId={categoryId!}
               subcategoryId={subcategoryId!}
               onSuccess={handleFormSuccess}
               onCancel={handleCloseForm}
+              setEditingContent={setEditingContent}
+              setShowForm={setShowForm}
             />
           </div>
         ) : (

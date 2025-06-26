@@ -12,7 +12,7 @@ import localFont from "next/font/local";
 const helvetica = localFont({
   src: "./fonts/HelveticaNeueBold.otf",
   variable: "--font-helvetica",
-  weight: "100 200 300 400 500 600 700 800 900", // fixed spacing (use space or single value)
+  weight: "100 200 300 400 500 600 700 800 900", 
   display: "swap",
 });
 

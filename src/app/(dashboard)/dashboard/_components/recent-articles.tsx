@@ -1,61 +1,78 @@
-import { Badge } from "@/components/ui/badge"
+"use client";
+import { DashboardOverviewDataTypeResponse } from "@/components/types/DashboardOverviewDataType";
+import { Badge } from "@/components/ui/badge";
+import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import React from "react";
 
-interface Article {
-  id: string
-  title: string
-  author: string
-  timeAgo: string
-  status: "Published" | "Review" | "Cancel"
-}
+const RecentArticles = () => {
+  const session = useSession();
+  const token = (session?.data?.user as { token: string })?.token;
 
-interface RecentArticlesProps {
-  articles?: Article[]
-}
+  const { data, isLoading, isError, error } =
+    useQuery<DashboardOverviewDataTypeResponse>({
+      queryKey: ["dashboard-recent-articles"],
+      queryFn: () =>
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/dashboard-overview`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }).then((res) => res.json()),
+    });
 
-const defaultArticles: Article[] = [
-  { id: "1", title: "Headline Title Shown", author: "Rahim", timeAgo: "5 hours ago", status: "Published" },
-  { id: "2", title: "Headline Title Shown", author: "Rahim", timeAgo: "5 hours ago", status: "Review" },
-  { id: "3", title: "Headline Title Shown", author: "Rahim", timeAgo: "5 hours ago", status: "Cancel" },
-  { id: "4", title: "Headline Title Shown", author: "Rahim", timeAgo: "5 hours ago", status: "Published" },
-  { id: "5", title: "Headline Title Shown", author: "Rahim", timeAgo: "5 hours ago", status: "Published" },
-]
-
-export function RecentArticles({ articles = defaultArticles }: RecentArticlesProps) {
-  const getStatusStyle = (status: string) => {
-    switch (status) {
-      case "Published":
-        return "bg-blue-50 text-blue-600 hover:bg-blue-50"
-      case "Review":
-        return "bg-blue-500 text-white hover:bg-blue-500"
-      case "Cancel":
-        return "bg-gray-100 text-gray-600 hover:bg-gray-100"
-      default:
-        return "bg-gray-100 text-gray-600 hover:bg-gray-100"
-    }
+  console.log(data?.data?.recent_content);
+  if (isLoading) {
+    return <div>Loading ....</div>;
   }
 
+  if (isError) {
+    return <div>{error?.message || "Somethings went wrong"}</div>;
+  }
   return (
     <div className="bg-white rounded-lg p-6 shadow-sm">
-      <h2 className="text-lg font-semibold text-gray-900 dark:text-black mb-6">Recent Articles</h2>
-      <div className="space-y-4">
-        {articles.map((article) => (
-          <div key={article.id} className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              {/* Gray rectangular placeholder exactly as shown */}
-              <div className="w-12 h-12 bg-gray-300 rounded-md flex-shrink-0"></div>
-              <div>
-                <h3 className="font-medium text-gray-900 text-sm">{article.title}</h3>
-                <p className="text-xs text-gray-500 mt-1">
-                  By {article.author} • {article.timeAgo}
-                </p>
-              </div>
-            </div>
-            <Badge className={`${getStatusStyle(article.status)} px-3 py-1 text-xs font-medium rounded-md border-0`}>
-              {article.status}
-            </Badge>
-          </div>
-        ))}
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-black mb-6">
+        Recent Articles
+      </h2>
+      <div>
+        <table className="w-full">
+          <tbody>
+            {data?.data?.recent_content?.map((content) => {
+              return (
+                <tr
+                  key={content?.id}
+                  className="w-full flex items-center justify-between pb-4"
+                >
+                  <div className="flex items-center gap-4">
+                    <td>
+                      <Image
+                        src={`${process?.env?.NEXT_PUBLIC_BACKEND_URL}/${content?.image1}`}
+                        alt={content?.heading}
+                        width={60}
+                        height={60}
+                        className="w-[60px] h-[60px] rounded-[8px]"
+                      />
+                    </td>
+                    <td
+                      className="text-black dark:text-black"
+                      dangerouslySetInnerHTML={{ __html: content?.heading }}
+                    />
+                  </div>
+
+                  <td>
+                    <Badge className="bg-[#E6EEFE] py-[2px] px-[8px] rounded-full text-base font-semibold text-[#131313]  leading-normal">
+                      {content?.status}
+                    </Badge>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
-  )
-}
+  );
+};
+
+export default RecentArticles;
