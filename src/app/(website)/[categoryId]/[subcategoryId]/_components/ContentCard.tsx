@@ -119,7 +119,7 @@ const SecondContents: React.FC<SecondContentsProps> = ({ posts }) => {
                 alt={post.heading.replace(/<[^>]+>/g, "")} // Strip HTML for alt text
                 width={400}
                 height={300}
-                className="w-full h-[300px] object-cover rounded-t-lg"
+                className="w-full h-[300px] object-cover rounded-t-lg border-image"
                 priority
               />
               <div className="p-4">
