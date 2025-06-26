@@ -220,9 +220,9 @@ export function ColorPicker({ selectedColor, onColorChange, previousColor }: Col
               id="colorHex"
               value={selectedColor}
               onChange={(e) => handleColorChange(e.target.value)}
-              className="w-24"
+              className="w-24 text-black"
             />
-            <Button variant="outline" className="h-10 px-4" onClick={handleClearColor}>
+            <Button variant="outline" className="h-10 px-4 text-black" onClick={handleClearColor}>
               Clear
             </Button>
           </div>
@@ -231,7 +231,7 @@ export function ColorPicker({ selectedColor, onColorChange, previousColor }: Col
           {previousColor && (
             <div className="flex items-center gap-2 mt-2">
               <div className="w-6 h-6 rounded-sm border border-gray-300" style={{ backgroundColor: previousColor }} />
-              <span className="text-xs text-gray-500">Previous: {previousColor}</span>
+              <span className="text-xs text-gray-500 dark:text-black">Previous: {previousColor}</span>
             </div>
           )}
         </div>

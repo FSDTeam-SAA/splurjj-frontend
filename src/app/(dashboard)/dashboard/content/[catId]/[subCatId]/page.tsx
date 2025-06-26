@@ -30,7 +30,7 @@ export default function SubcategoryContentPage() {
     queryKey: ["all-contents", currentPage],
     queryFn: () =>
       fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${categoryId}/${subcategoryId}?paginate_count=7&page=${currentPage}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/content-dashbaord/${categoryId}/${subcategoryId}?paginate_count=7&page=${currentPage}`,
         {
           method: "GET",
           headers: {

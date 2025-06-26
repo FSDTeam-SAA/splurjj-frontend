@@ -240,7 +240,7 @@ export default function FileUpload({
 
   return (
     <div className="space-y-2">
-      <label className={`text-base font-bold ${disabled ? "text-gray-400" : "text-black"}`}>
+      <label className={`text-base font-bold ${disabled ? "text-gray-500" : "text-black"}`}>
         {label}
       </label>
       <input
@@ -248,7 +248,7 @@ export default function FileUpload({
         accept={type + "/*"}
         onChange={handleFileChange}
         disabled={disabled}
-        className={`block mt-1 ${disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
+        className={`block mt-1 text-black/70 ${disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}
       />
       {preview && (
         <div className="relative mt-3 w-fit">

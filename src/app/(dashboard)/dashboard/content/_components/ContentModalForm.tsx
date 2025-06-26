@@ -330,7 +330,7 @@ export default function ContentAddEditForm({
                     Author
                   </FormLabel>
                   <FormControl>
-                    <Input placeholder="Write Name" {...field} />
+                    <Input className="text-black" placeholder="Write Name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -350,6 +350,7 @@ export default function ContentAddEditForm({
                   <div className="relative flex gap-2 ">
                     <FormControl>
                       <Input
+                      
                         value={field.value.toLocaleDateString("en-US", {
                           day: "2-digit",
                           month: "long",
@@ -368,7 +369,7 @@ export default function ContentAddEditForm({
                             setOpen(true);
                           }
                         }}
-                        className="bg-background pr-10 "
+                        className="bg-background dark:bg-white pr-10 text-black"
                         placeholder="June 01, 2025"
                       />
                     </FormControl>
@@ -420,6 +421,7 @@ export default function ContentAddEditForm({
             </FormLabel>
             <div className="flex items-center gap-2 mb-3 mt-2 relative">
               <Input
+              className="text-black"
                 placeholder="Add a tag"
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
@@ -440,10 +442,10 @@ export default function ContentAddEditForm({
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {tags.map((tag, i) => (
+              {tags?.map((tag, i) => (
                 <div
                   key={i}
-                  className="h-[30px] flex items-center gap-1 bg-gray-200 pl-4 pr-1 py-1 rounded-full text-sm"
+                  className="h-[30px] flex items-center gap-1 bg-gray-200 text-black pl-4 pr-1 py-1 rounded-full text-sm"
                 >
                   {tag}
                   <Button
@@ -584,7 +586,7 @@ export default function ContentAddEditForm({
                         placeholder="https://example.com/image.jpg"
                         {...field}
                         disabled={!!image1}
-                        className="border border-[#e2e8f0]"
+                        className="border border-[#e2e8f0] text-black"
                       />
                     </FormControl>
                     {field.value && (

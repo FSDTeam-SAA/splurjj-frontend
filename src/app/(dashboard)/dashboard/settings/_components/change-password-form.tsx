@@ -18,7 +18,7 @@ export default function ChangePasswordForm() {
             <div className="flex items-center gap-1">
               <Link
                 href="/dashboard"
-                className="hover:underline text-xl font-normal  leading-[120%] tracking-[0%] text-[#595959]"
+                className="hover:underline text-xl font-normal  leading-[120%] tracking-[0%] text-[#595959] dark:text-white"
               >
                 Dashboard
               </Link>
@@ -28,7 +28,7 @@ export default function ChangePasswordForm() {
               <Link href="/dashboard/settings">
                 <button
                  
-                  className="hover:underline text-xl font-normal  leading-[120%] tracking-[0%] text-[#595959]"
+                  className="hover:underline text-xl font-normal  leading-[120%] tracking-[0%] text-[#595959] dark:text-white"
                 >
                   Settings
                 </button>

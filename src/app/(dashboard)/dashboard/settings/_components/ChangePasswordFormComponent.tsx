@@ -75,8 +75,8 @@ export default function ChangePasswordFormComponent() {
   }
 
   return (
-    <div className="">
-      <div className="flex justify-end items-center mb-4">
+    <div className="dark:bg-white p-6 rounded-lg">
+      <div className="flex justify-end items-center mb-4 ">
         <Button
           type="submit"
           onClick={form.handleSubmit(onSubmit)}

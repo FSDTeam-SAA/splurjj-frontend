@@ -21,7 +21,7 @@ export default function SettingsMenu({ onSectionSelect }: SettingsMenuProps) {
           <div className="flex items-center gap-1">
             <Link
               href="/dashboard"
-              className="hover:underline text-xl font-normal  leading-[120%] tracking-[0%] text-[#595959]"
+              className="hover:underline text-xl font-normal  leading-[120%] tracking-[0%] text-[#595959] dark:text-white"
             >
               Dashboard
             </Link>
@@ -46,7 +46,7 @@ export default function SettingsMenu({ onSectionSelect }: SettingsMenuProps) {
                   className="w-full h-[61px] justify-between p-4"
                   onClick={() => onSectionSelect("personal")}
                 >
-                  <span className="text-2xl font-semibold  leading-[120%] tracking-[0%] text-[#212121]">
+                  <span className="text-2xl font-semibold  leading-[120%] tracking-[0%] text-[#212121] dark:text-black">
                     Personal Information
                   </span>
                   <ChevronRight className="!h-6 !w-6 text-[#212121]" />
@@ -63,7 +63,7 @@ export default function SettingsMenu({ onSectionSelect }: SettingsMenuProps) {
                   className="w-full h-[61px] justify-between p-4"
                   onClick={() => onSectionSelect("password")}
                 >
-                  <span className="text-2xl font-semibold  leading-[120%] tracking-[0%] text-[#212121]">
+                  <span className="text-2xl font-semibold  leading-[120%] tracking-[0%] text-[#212121] dark:text-black">
                     Change Password
                   </span>
                   <ChevronRight className="!h-6 !w-6 text-[#212121]" />

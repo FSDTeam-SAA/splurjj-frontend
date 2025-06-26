@@ -189,6 +189,7 @@ export default function HorizontalAdvertising() {
                     </FormLabel>
                     <FormControl>
                       <Input
+                      className="text-black"
                         placeholder="Enter ads link"
                         {...field}
                         disabled={rightSideActive}
@@ -219,7 +220,7 @@ export default function HorizontalAdvertising() {
             </div>
 
             <div className="w-1/5 flex items-center justify-center">
-              <h2 className="text-3xl font-bold text-black">OR</h2>
+              <h2 className="text-3xl font-bold text-black dark:text-black">OR</h2>
             </div>
 
             {/* Right: Embed Code */}
@@ -238,7 +239,7 @@ export default function HorizontalAdvertising() {
                     </FormLabel>
                     <FormControl>
                       <Textarea
-                        className="h-[150px] w-full"
+                        className="h-[150px] w-full text-black"
                         placeholder="Enter Embed Code"
                         {...field}
                         disabled={leftSideActive}

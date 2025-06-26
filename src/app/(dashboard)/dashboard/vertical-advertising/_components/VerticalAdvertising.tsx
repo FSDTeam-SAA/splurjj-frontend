@@ -1,4 +1,3 @@
-
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -176,7 +175,9 @@ export default function VerticalAdvertising() {
             {/* Left: Link + Image */}
             <div
               className={`w-2/5 border rounded-[10px] px-4 py-8 bg-white shadow-xl transition-opacity duration-200 ${
-                rightSideActive ? "opacity-50 pointer-events-none" : "opacity-100"
+                rightSideActive
+                  ? "opacity-50 pointer-events-none"
+                  : "opacity-100"
               }`}
             >
               <FormField
@@ -189,6 +190,7 @@ export default function VerticalAdvertising() {
                     </FormLabel>
                     <FormControl>
                       <Input
+                        className="text-black"
                         placeholder="Enter ads link"
                         {...field}
                         disabled={rightSideActive}
@@ -219,13 +221,15 @@ export default function VerticalAdvertising() {
             </div>
 
             <div className="w-1/5 flex items-center justify-center">
-              <h2 className="text-3xl font-bold text-black">OR</h2>
+              <h2 className="text-3xl font-bold text-black dark:text-black">OR</h2>
             </div>
 
             {/* Right: Embed Code */}
             <div
               className={`w-2/5 border rounded-[10px] p-4 bg-white shadow-xl transition-opacity duration-200 ${
-                leftSideActive ? "opacity-50 pointer-events-none" : "opacity-100"
+                leftSideActive
+                  ? "opacity-50 pointer-events-none"
+                  : "opacity-100"
               }`}
             >
               <FormField
