@@ -598,7 +598,7 @@ import { signOut, useSession } from "next-auth/react";
 import LogoutModal from "@/components/shared/modals/LogoutModal";
 import { toast } from "sonner";
 import { motion, AnimatePresence, easeInOut } from "framer-motion";
-import { TfiMenuAlt } from "react-icons/tfi";
+// import { TfiMenuAlt } from "react-icons/tfi";
 
 interface Subcategory {
   id: number;
@@ -950,13 +950,13 @@ export default function Sidebar() {
                         : "bg-transparent  text-black/70 dark:text-white"
                     }`}
                   >
-                    <TfiMenuAlt
+                    {/* <TfiMenuAlt
                       className={
                         isRouteActive("/dashboard/add-category")
                           ? "text-white w-4 h-4 text-base font-normal leading-[120%] tracking-[0%] transition-colors"
                           : "text-black/70 dark:text-white w-4 h-4 text-base font-normal leading-[120%] tracking-[0%] transition-colors"
                       }
-                    />
+                    /> */}
                     {/* <Plus
                       className={
                         isRouteActive("/dashboard/add-category")
@@ -964,7 +964,7 @@ export default function Sidebar() {
                           : "text-black"
                       }
                     />{" "} */}
-                    Add Category
+                    Category
                   </Button>
                 </Link>
               </div>
