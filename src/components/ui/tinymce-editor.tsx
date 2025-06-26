@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { Editor } from "@tinymce/tinymce-react";
@@ -69,7 +67,7 @@ export default function TinyMCEEditor({
       )}
 
       <Editor
-        apiKey="8gwbewbth4t3ujq74fy42zdjic5c98o0skn6kueraxhfmuip" // Replace with your actual TinyMCE API key
+        apiKey="05dya1uu1pfcwfx39h8dlrx72jqywg9k0oc5016oayowiook" // Replace with your actual TinyMCE API key
         onInit={(_evt: unknown, editor: Editor) => (editorRef.current = editor)}
         value={value}
         onEditorChange={handleEditorChange}
