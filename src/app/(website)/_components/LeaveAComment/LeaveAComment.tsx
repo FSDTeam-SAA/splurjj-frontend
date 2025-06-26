@@ -103,16 +103,16 @@ export function LeaveAComment({ UserEmail, blogId }: LeaveACommentProps) {
               name="comment"
               render={({ field }) => (
                 <FormItem>
-                  <h4 className="text-lg md:text-xl font-semibold font-manrope leading-[120%] tracking-[0%] text-black uppercase text-left pb-3 md:pb-4">
+                  <h4 className="text-lg md:text-xl font-semibold  leading-[120%] tracking-[0%] text-black uppercase text-left pb-3 md:pb-4">
                     Leave A Comment
                   </h4>
-                  <FormLabel className="text-lg md:text-xl font-semibold font-manrope leading-[120%] tracking-[0%] text-secondary">
+                  <FormLabel className="text-lg md:text-xl font-semibold  leading-[120%] tracking-[0%] text-secondary">
                     You must be <Link href="/login" className="underline">logged in</Link> to post
                   </FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Write Comments"
-                      className="h-[150px] text-lg md:text-xl font-semibold font-manrope leading-[120%] tracking-[0%] text-black placeholder:text-[#929292] capitalize border-[1.5px] border-secondary rounded-[8px]"
+                      className="h-[150px] text-lg md:text-xl font-semibold  leading-[120%] tracking-[0%] text-black placeholder:text-[#929292] capitalize border-[1.5px] border-secondary rounded-[8px]"
                       disabled={mutation.isPending} // Disable textarea during submission
                       {...field}
                     />
@@ -123,7 +123,7 @@ export function LeaveAComment({ UserEmail, blogId }: LeaveACommentProps) {
             />
             <div className="mt-4 md:mt-5 lg:mt-6">
               <Button
-                className="text-white py-3 px-6 text-base font-bold font-manrope leading-[120%] tracking-[0%] bg-primary"
+                className="text-white py-3 px-6 text-base font-bold  leading-[120%] tracking-[0%] bg-primary"
                 type="submit"
                 disabled={mutation.isPending} // Disable button during submission
               >

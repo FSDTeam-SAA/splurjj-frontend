@@ -26,10 +26,10 @@ const FirstContent = ({
               <div className="w-full md:w-3/7">
                 <div className="flex items-center gap-4 mb-2">
                   <div className="flex items-center gap-[1.5px]">
-                    <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                    <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white">
                       Read
                     </button>
-                    <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                    <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white">
                       {content?.[0]?.category_name}
                     </button>
                   </div>
@@ -46,9 +46,9 @@ const FirstContent = ({
                   </div>
                 </div>
 
-                <h1 dangerouslySetInnerHTML={{ __html: content?.[0]?.heading ?? '' }} className="text-2xl md:text-[28px] lg:text-[32px] font-manrope font-bold leading-[120%] tracking-[0%] text-[#131313]"/>
-                <p dangerouslySetInnerHTML={{ __html: content?.[0]?.sub_heading?.slice(0, 100) ?? '' }} className="text-base font-normal font-manrope leading-[150%] tracking-[0%] uppercase text-[#424242] my-4"/>
-                <p dangerouslySetInnerHTML={{ __html: content?.[0]?.body1?.slice(0, 250) ?? '' }} className="text-base font-normal font-manrope leading-[150%] tracking-[0%] uppercase text-[#424242] "/>
+                <h1 dangerouslySetInnerHTML={{ __html: content?.[0]?.heading ?? '' }} className="text-2xl md:text-[28px] lg:text-[32px]  font-bold leading-[120%] tracking-[0%] text-[#131313]"/>
+                <p dangerouslySetInnerHTML={{ __html: content?.[0]?.sub_heading?.slice(0, 100) ?? '' }} className="text-base font-normal  leading-[150%] tracking-[0%] uppercase text-[#424242] my-4"/>
+                <p dangerouslySetInnerHTML={{ __html: content?.[0]?.body1?.slice(0, 250) ?? '' }} className="text-base font-normal  leading-[150%] tracking-[0%] uppercase text-[#424242] "/>
               </div>
               <div className="w-full md:w-4/7">
                 <Image
@@ -70,16 +70,16 @@ const FirstContent = ({
                 className="w-full h-[443px] object-cover rounded-[8px]"
               />
             </div>
-            <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242] text-right mt-2">
+            <p className="text-base font-semibold  leading-[120%] tracking-[0%] uppercase text-[#424242] text-right mt-2">
               Credits - {content?.[3]?.date ?? ''}
             </p>
 
             <div className="flex items-center gap-4 mb-2 mt-4">
               <div className="flex items-center gap-[1.5px]">
-                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white">
                   Read
                 </button>
-                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white">
                  {content?.[0]?.category_name}
                 </button>
               </div>
@@ -96,18 +96,18 @@ const FirstContent = ({
               </div>
             </div>
 
-            <h1 dangerouslySetInnerHTML={{ __html: content?.[1]?.heading ?? '' }} className="text-2xl md:text-[28px] lg:text-[32px] font-manrope font-bold leading-[120%] tracking-[0%] text-[#131313]"/>
-            <p dangerouslySetInnerHTML={{ __html: content?.[0]?.sub_heading?.slice(0, 400) ?? '' }} className="text-base font-normal font-manrope leading-[150%] tracking-[0%] uppercase text-[#424242] mt-4"/>
+            <h1 dangerouslySetInnerHTML={{ __html: content?.[1]?.heading ?? '' }} className="text-2xl md:text-[28px] lg:text-[32px]  font-bold leading-[120%] tracking-[0%] text-[#131313]"/>
+            <p dangerouslySetInnerHTML={{ __html: content?.[0]?.sub_heading?.slice(0, 400) ?? '' }} className="text-base font-normal  leading-[150%] tracking-[0%] uppercase text-[#424242] mt-4"/>
           </div>
           <div className="md:col-span-3">
             {/* first part  */}
             <div>
               <div className="flex items-center gap-4 mb-2">
                 <div className="flex items-center gap-[1.5px]">
-                  <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                  <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white">
                     Read
                   </button>
-                  <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                  <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white">
                     {content?.[0]?.category_name}
                   </button>
                 </div>
@@ -124,8 +124,8 @@ const FirstContent = ({
                 </div>
               </div>
 
-              <h1 dangerouslySetInnerHTML={{ __html: content?.[2]?.heading ?? '' }} className="text-2xl md:text-[28px] lg:text-[32px] font-manrope font-bold leading-[120%] tracking-[0%] text-[#131313]"/>
-              <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242] mt-4 md:mt-5 lg:mt-6">
+              <h1 dangerouslySetInnerHTML={{ __html: content?.[2]?.heading ?? '' }} className="text-2xl md:text-[28px] lg:text-[32px]  font-bold leading-[120%] tracking-[0%] text-[#131313]"/>
+              <p className="text-base font-semibold  leading-[120%] tracking-[0%] uppercase text-[#424242] mt-4 md:mt-5 lg:mt-6">
                 Credits - {content?.[3]?.date ?? ''}
               </p>
               <div className="mt-4 md:mt-5 lg:mt-6">
@@ -142,10 +142,10 @@ const FirstContent = ({
             <div className="pt-4">
               <div className="flex items-center gap-4 mb-2">
                 <div className="flex items-center gap-[1.5px]">
-                  <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                  <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white">
                     Read
                   </button>
-                  <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                  <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white">
                    {content?.[0]?.category_name}
                   </button>
                 </div>
@@ -162,8 +162,8 @@ const FirstContent = ({
                 </div>
               </div>
 
-              <h1 dangerouslySetInnerHTML={{ __html: content?.[3]?.heading ?? '' }} className="text-2xl md:text-[28px] lg:text-[32px] font-manrope font-bold leading-[120%] tracking-[0%] text-[#131313]"/>
-              <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242] mt-4 md:mt-5 lg:mt-6">
+              <h1 dangerouslySetInnerHTML={{ __html: content?.[3]?.heading ?? '' }} className="text-2xl md:text-[28px] lg:text-[32px]  font-bold leading-[120%] tracking-[0%] text-[#131313]"/>
+              <p className="text-base font-semibold  leading-[120%] tracking-[0%] uppercase text-[#424242] mt-4 md:mt-5 lg:mt-6">
                 Credits - {content?.[3]?.date ?? ''}
               </p>
               <div className="mt-4 md:mt-5 lg:mt-6">

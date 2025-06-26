@@ -60,14 +60,14 @@ export function FooterMenu() {
                   name={`item${i}` as keyof z.infer<typeof formSchema>}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-lg font-normal font-poppins text-[#212121]">
+                      <FormLabel className="text-lg font-normal  text-[#212121]">
                         Item Name {i}
                       </FormLabel>
                       <FormControl>
                         <Input
                           placeholder={`Item ${i}`}
                           {...field}
-                          className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base rounded-[8px]"
+                          className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base rounded-[8px]"
                         />
                       </FormControl>
                       <FormMessage className="text-red-500 text-sm font-medium" />
@@ -79,14 +79,14 @@ export function FooterMenu() {
                   name={`itemLink${i}` as keyof z.infer<typeof formSchema>}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-lg font-normal font-poppins text-[#212121]">
+                      <FormLabel className="text-lg font-normal  text-[#212121]">
                         Item Link {i}
                       </FormLabel>
                       <FormControl>
                         <Input
                           placeholder={`https://www.example.com/item-${i}`}
                           {...field}
-                          className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base rounded-[8px]"
+                          className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base rounded-[8px]"
                         />
                       </FormControl>
                       <FormMessage className="text-red-500 text-sm font-medium" />

@@ -522,7 +522,7 @@ export default function ContentAddEditForm({
                     ) : (
                       <>
                         <div className="flex items-center justify-center">
-                          <FormLabel className="w-full text-base text-center font-medium font-poppins text-black leading-[120%] tracking-[0%] pb-2">
+                          <FormLabel className="w-full text-base text-center font-medium  text-black leading-[120%] tracking-[0%] pb-2">
                             Upload your image file
                           </FormLabel>
                         </div>
@@ -564,7 +564,7 @@ export default function ContentAddEditForm({
               {/* Rest of your code remains the same */}
               <div className="flex items-center gap-4">
                 <div className="flex-1 h-px bg-white/30" />
-                <span className="text-black text-lg leading-normal font-semibold font-poppins pt-4 pb-2">
+                <span className="text-black text-lg leading-normal font-semibold  pt-4 pb-2">
                   Or
                 </span>
                 <div className="flex-1 h-px bg-white/30" />

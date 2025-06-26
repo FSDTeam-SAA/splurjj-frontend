@@ -81,7 +81,7 @@ export function LogingForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
+              <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                 Email Address
               </FormLabel>
               <FormControl>
@@ -91,7 +91,7 @@ export function LogingForm() {
                     placeholder="Enter your email"
                     type="email"
                     className="border border-[#616161] h-[49px] bg-white text-[#131313]
-placeholder:text-[#929292] font-medium font-manrope 
+placeholder:text-[#929292] font-medium  
 leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                   />
                   {/* <Mail className="absolute left-3 top-3.5 w-5 h-5 text-black" /> */}
@@ -109,7 +109,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
+                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                   Password
                 </FormLabel>
                 <FormControl>
@@ -120,7 +120,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                       type={showPassword ? "text" : "password"}
                       autoComplete="current-password"
                       className="border border-[#616161] h-[49px] bg-white text-[#131313]
-placeholder:text-[#929292] font-medium font-manrope 
+placeholder:text-[#929292] font-medium  
 leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                     />
                     {/* <Lock className="absolute left-3 top-3.5 w-5 h-5 text-black" /> */}
@@ -158,7 +158,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                 />
                 <label
                   htmlFor="rememberMe"
-                  className="text-sm font-manrope font-normal leading-[120%] tracking-[0%] text-[#131313]"
+                  className="text-sm  font-normal leading-[120%] tracking-[0%] text-[#131313]"
                 >
                   Remember me
                 </label>
@@ -169,7 +169,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
           <div>
             <Link
               href="/forgot-password"
-              className="text-sm font-normal font-manrope leading-[120%] text-[#131313] tracking-[0%]"
+              className="text-sm font-normal  leading-[120%] text-[#131313] tracking-[0%]"
             >
               Forgot password?
             </Link>
@@ -180,7 +180,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
         <div className="">
           <button
             type="submit"
-            className="w-full h-[51px] bg-[#0253F7] rounded-[8px] text-base font-bold tracking-[0%] font-poppins text-white "
+            className="w-full h-[51px] bg-[#0253F7] rounded-[8px] text-base font-bold tracking-[0%]  text-white "
             disabled={isLoading}
           >
             {isLoading ? "Logging..." : "Login"}
@@ -189,7 +189,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
 
         {/* sign up link  */}
         <div className="text-center mt-6 md:mt-8">
-          <span className="text-base text-[#272727] font-manrope font-normal leading-[150%] tracking-[0%]">
+          <span className="text-base text-[#272727]  font-normal leading-[150%] tracking-[0%]">
             Don’t have an account? 
             <Link
               href="/sign-up"

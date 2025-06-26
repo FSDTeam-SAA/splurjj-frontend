@@ -39,14 +39,14 @@ const DashboardOverviewContainer = () => {
       </div>
     );
   }
-  
+
   return (
     <div>
       <div>
-        <h2 className="text-2xl font-bold text-[#131313] leading-[120%] tracking-[0%] font-manrope">
+        <h2 className="text-2xl font-bold text-[#131313] leading-[120%] tracking-[0%] ">
           Dashboard Overview
         </h2>
-        <p className="text-base font-medium text-[#929292] leading-[120%] tracking-[0%] font-manrope pt-[14px]">
+        <p className="text-base font-medium text-[#929292] leading-[120%] tracking-[0%]  pt-[14px]">
           Dashboard
         </p>
       </div>

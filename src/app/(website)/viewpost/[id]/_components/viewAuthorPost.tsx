@@ -186,13 +186,13 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
               <div className="flex items-center gap-2">
                 <Link
                   href={`/blogs/${encodeURIComponent(post.category_name)}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
                 >
                   {post.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${post.category_id}/${post.subcategory_id}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
                 >
                   {post.sub_category_name || "Subcategory"}
                 </Link>
@@ -205,7 +205,7 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
                   className="text-2xl font-medium hover:text-primary"
                 />
               </Link>
-              <p className="text-sm font-semibold font-manrope uppercase text-[#424242] mt-2">
+              <p className="text-sm font-semibold  uppercase text-[#424242] mt-2">
                 {post.author} - {post.date}
               </p>
               <div className="flex items-center gap-3 mt-2 relative">
@@ -267,7 +267,7 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
               </div>
               <p
                 dangerouslySetInnerHTML={{ __html: sanitizeHTML(post.body1) }}
-                className="text-sm font-normal font-manrope text-[#424242] line-clamp-3 mt-2"
+                className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
               />
             </div>
           </div>

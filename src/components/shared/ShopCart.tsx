@@ -29,21 +29,21 @@ const ShopCart = ({ shop }: { shop: ShopDataType }) => {
             <FaRegCommentDots className="w-6 h-6 text-black" />
           </span>
         </div>
-        <button className="text-sm font-bold font-manrope leading-[120%] tracking-[0%] text-white uppercase py-[6px] px-[12px] bg-[#0253F7] rounded-[4px]">
+        <button className="text-sm font-bold  leading-[120%] tracking-[0%] text-white uppercase py-[6px] px-[12px] bg-[#0253F7] rounded-[4px]">
           ADD TO CART
         </button>
       </div>
-      <h4 className="text-lg md:text-xl font-manrope font-semibold leading-[120%] tracking-[0%] text-[#131313]">
+      <h4 className="text-lg md:text-xl  font-semibold leading-[120%] tracking-[0%] text-[#131313]">
         {shop?.title}
       </h4>
-      <p className="text-base font-manrope font-normal leading-[150%] tracking-[0%] text-[#424242] py-2">
+      <p className="text-base  font-normal leading-[150%] tracking-[0%] text-[#424242] py-2">
         {shop?.desc}
       </p>
       <div className="flex items-center gap-1">
-        <span className="text-lg md:text-xl font-manrope font-semibold leading-[120%] tracking-[0%] text-[#0253F7]">
+        <span className="text-lg md:text-xl  font-semibold leading-[120%] tracking-[0%] text-[#0253F7]">
           {shop?.price}
         </span>{" "}
-        <span className="text-lg md:text-xl font-semibold font-manrope leading-[120%] tracking-[0%] text-[#424242]">
+        <span className="text-lg md:text-xl font-semibold  leading-[120%] tracking-[0%] text-[#424242]">
           NEW
         </span>
       </div>

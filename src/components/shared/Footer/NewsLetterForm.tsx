@@ -82,7 +82,7 @@ const NewsLetterForm = () => {
           <div className="">
             <button
               disabled={isPending}
-              className="w-[127px] h-[40px] bg-[#0253F7] text-[#F2F2F2] rounded-r-[8px] text-lg font-bold font-manrope leading-normal "
+              className="w-[127px] h-[40px] bg-[#0253F7] text-[#F2F2F2] rounded-r-[8px] text-lg font-bold  leading-normal "
               type="submit"
             >
               {isPending ? "Subscribing..." : "Subscribe"}

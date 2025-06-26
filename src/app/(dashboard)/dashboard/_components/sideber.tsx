@@ -319,7 +319,7 @@
 //                     }`}
 //                   >
 //                     <span
-//                       className={`text-base font-normal leading-[120%] text-black font-poppins tracking-[0%] `}
+//                       className={`text-base font-normal leading-[120%] text-black  tracking-[0%] `}
 //                     >
 //                       {category.category_name}
 //                     </span>
@@ -387,7 +387,7 @@
 //                             <div className="flex items-center justify-between p-1 rounded hover:bg-blue-200/30">
 //                               <Link
 //                                 href={`/dashboard/content/${category.category_id}/${subcategory.id}`}
-//                                 className="text-sm font-poppins leading-[120%] tracking-[0%] text-[#737373] font-medium"
+//                                 className="text-sm  leading-[120%] tracking-[0%] text-[#737373] font-medium"
 //                               >
 //                                 {subcategory.name}
 //                               </Link>
@@ -485,7 +485,7 @@
 //               <Link href="/dashboard/advertising">
 //                 <Button
 //                   variant="ghost"
-//                   className="w-full justify-start text-[#424242] hover:bg-red-50 text-lg font-medium leading-[120%] tracking-[0%] font-poppins"
+//                   className="w-full justify-start text-[#424242] hover:bg-red-50 text-lg font-medium leading-[120%] tracking-[0%] "
 //                 >
 //                   Advertising
 //                 </Button>
@@ -498,7 +498,7 @@
 //               <Link href="/dashboard/header">
 //                 <Button
 //                   variant="ghost"
-//                   className="w-full justify-start text-[#424242] hover:bg-red-50 text-lg font-medium leading-[120%] tracking-[0%] font-poppins"
+//                   className="w-full justify-start text-[#424242] hover:bg-red-50 text-lg font-medium leading-[120%] tracking-[0%] "
 //                 >
 //                   Header
 //                 </Button>
@@ -511,7 +511,7 @@
 //               <Link href="/dashboard/footer">
 //                 <Button
 //                   variant="ghost"
-//                   className="w-full justify-start text-[#424242] hover:bg-red-50 text-lg font-medium leading-[120%] tracking-[0%] font-poppins"
+//                   className="w-full justify-start text-[#424242] hover:bg-red-50 text-lg font-medium leading-[120%] tracking-[0%] "
 //                 >
 //                   Footer
 //                 </Button>
@@ -523,7 +523,7 @@
 //             <Link href="/dashboard/subscriber">
 //               <Button
 //                 variant="ghost"
-//                 className="w-full justify-start text-[#424242] hover:bg-red-50 text-lg font-medium leading-[120%] tracking-[0%] font-poppins"
+//                 className="w-full justify-start text-[#424242] hover:bg-red-50 text-lg font-medium leading-[120%] tracking-[0%] "
 //               >
 //                 Subscriber
 //               </Button>
@@ -534,7 +534,7 @@
 //               <Link href="/dashboard/role">
 //                 <Button
 //                   variant="ghost"
-//                   className="w-full justify-start text-[#424242] hover:bg-red-50 text-lg font-medium leading-[120%] tracking-[0%] font-poppins"
+//                   className="w-full justify-start text-[#424242] hover:bg-red-50 text-lg font-medium leading-[120%] tracking-[0%] "
 //                 >
 //                   Role Management
 //                 </Button>
@@ -546,7 +546,7 @@
 //             <Link href="/dashboard/settings">
 //               <Button
 //                 variant="ghost"
-//                 className="w-full justify-start items-center gap-3 text-[#424242] hover:bg-red-50 text-lg font-medium leading-[120%] tracking-[0%] font-poppins"
+//                 className="w-full justify-start items-center gap-3 text-[#424242] hover:bg-red-50 text-lg font-medium leading-[120%] tracking-[0%] "
 //               >
 //                 <Settings /> Setting
 //               </Button>
@@ -557,7 +557,7 @@
 //             <Button
 //               onClick={() => setLogoutModalOpen(true)}
 //               variant="ghost"
-//               className="w-full flex justify-start items-center gap-3 text-base font-poppins leading-[120%] tracking-[0%] text-[#CE3837] hover:text-red-700 hover:bg-red-50"
+//               className="w-full flex justify-start items-center gap-3 text-base  leading-[120%] tracking-[0%] text-[#CE3837] hover:text-red-700 hover:bg-red-50"
 //             >
 //               <LogOut /> Log Out
 //             </Button>
@@ -925,7 +925,7 @@ export default function Sidebar() {
             <Link href="/dashboard">
               <Button
                 variant="ghost"
-                className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
+                className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
                   isRouteActive("/dashboard")
                     ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
                     : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
@@ -936,7 +936,7 @@ export default function Sidebar() {
             </Link>
           </div>
           <div className="space-y-2">
-            <h5 className="text-lg font-semibold text-[#131313] leading-[120%] uppercase tracking-[0%] font-manrope">
+            <h5 className="text-lg font-semibold text-[#131313] leading-[120%] uppercase tracking-[0%] ">
               Content Management
             </h5>
             {(isAdmin || isEditor || isAuthor) && (
@@ -987,7 +987,7 @@ export default function Sidebar() {
                   >
                     <div className="w-full flex items-center justify-between">
                       <span
-                        className={`text-base font-normal leading-[120%] font-poppins tracking-[0%] transition-colors ${
+                        className={`text-base font-normal leading-[120%]  tracking-[0%] transition-colors ${
                           categoryActive
                             ? "text-white dark:text-blue-300 font-medium "
                             : "text-black dark:text-white"
@@ -1082,7 +1082,7 @@ export default function Sidebar() {
                                 >
                                   <Link
                                     href={`/dashboard/content/${category.category_id}/${subcategory.id}`}
-                                    className={`text-sm font-poppins leading-[120%] tracking-[0%] transition-colors ${
+                                    className={`text-sm  leading-[120%] tracking-[0%] transition-colors ${
                                       subcategoryActive
                                         ? "text-blue-700 dark:text-blue-300 font-medium"
                                         : "text-black dark:text-gray-300 font-medium"
@@ -1197,7 +1197,7 @@ export default function Sidebar() {
                   <Link href="/dashboard/horizontal-advertising">
                     <Button
                       variant="ghost"
-                      className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
+                      className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
                         isRouteActive("/dashboard/horizontal-advertising")
                           ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
                           : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
@@ -1211,7 +1211,7 @@ export default function Sidebar() {
                   <Link href="/dashboard/vertical-advertising">
                     <Button
                       variant="ghost"
-                      className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
+                      className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
                         isRouteActive("/dashboard/vertical-advertising")
                           ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
                           : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
@@ -1233,7 +1233,7 @@ export default function Sidebar() {
               <Link href="/dashboard/role">
                 <Button
                   variant="ghost"
-                  className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
+                  className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
                     isRouteActive("/dashboard/role")
                       ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
                       : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
@@ -1249,7 +1249,7 @@ export default function Sidebar() {
               <Link href="/dashboard/subscriber">
                 <Button
                   variant="ghost"
-                  className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
+                  className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
                     isRouteActive("/dashboard/subscriber")
                       ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
                       : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
@@ -1266,7 +1266,7 @@ export default function Sidebar() {
               <Link href="/dashboard/header">
                 <Button
                   variant="ghost"
-                  className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
+                  className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
                     isRouteActive("/dashboard/header")
                       ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
                       : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
@@ -1283,7 +1283,7 @@ export default function Sidebar() {
               <Link href="/dashboard/footer">
                 <Button
                   variant="ghost"
-                  className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
+                  className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
                     isRouteActive("/dashboard/footer")
                       ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
                       : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
@@ -1299,7 +1299,7 @@ export default function Sidebar() {
             <Link href="/dashboard/settings">
               <Button
                 variant="ghost"
-                className={`w-full justify-start items-center gap-3 transition-colors text-lg font-medium leading-[120%] tracking-[0%] font-poppins ${
+                className={`w-full justify-start items-center gap-3 transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
                   isRouteActive("/dashboard/settings")
                     ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
                     : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
@@ -1314,7 +1314,7 @@ export default function Sidebar() {
             <Button
               onClick={() => setLogoutModalOpen(true)}
               variant="ghost"
-              className="w-full flex justify-start items-center gap-3 text-base font-poppins leading-[120%] tracking-[0%] text-[#CE3837] hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+              className="w-full flex justify-start items-center gap-3 text-base  leading-[120%] tracking-[0%] text-[#CE3837] hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
             >
               <LogOut /> Log Out
             </Button>

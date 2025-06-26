@@ -163,7 +163,7 @@ export default function OtpForm() {
               ref={(el) => {
                 inputRefs.current[index] = el;
               }}
-              className={`font-poppins w-[56px] md:w-[60px] lg:w-[70px] h-[56px] md:h-[60px] lg:h-[70px] bg-white text-[#212121] placeholder:text-[#999999] text-center tracking-[0%] !text-xl font-semibold leading-[120%] rounded-md focus:outline-none border ${
+              className={` w-[56px] md:w-[60px] lg:w-[70px] h-[56px] md:h-[60px] lg:h-[70px] bg-white text-[#212121] placeholder:text-[#999999] text-center tracking-[0%] !text-xl font-semibold leading-[120%] rounded-md focus:outline-none border ${
                 digit ? "border-[#212121]" : "border-black"
               }`}
               aria-label={`OTP digit ${index + 1}`}
@@ -173,13 +173,13 @@ export default function OtpForm() {
 
         {/* Resend OTP */}
         <div className="text-center flex items-center justify-between pt-4 pb-6 md:pb-7 lg:mb-8">
-          <span className="font-poppins text-base font-normal leading-[120%] text-black tracking-[0%]">
+          <span className=" text-base font-normal leading-[120%] text-black tracking-[0%]">
             Didn&apos;t Receive OTP?{" "}
           </span>
           <button
             onClick={handleResendOtp}
             disabled={resentOtpPending}
-            className="font-poppins text-base font-normal leading-[120%] text-black tracking-[0%] hover:underline"
+            className=" text-base font-normal leading-[120%] text-black tracking-[0%] hover:underline"
           >
             {resentOtpPending ? "Resending..." : "RESEND OTP"}
           </button>
@@ -189,7 +189,7 @@ export default function OtpForm() {
         <button
           onClick={handleVerify}
           type="submit"
-          className="w-full h-[52px] bg-[#0253F7] rounded-[8px] py-[15px] px-[151px] text-lg font-semibold font-poppins leading-[120%] tracking-[0%] text-[#F4F4F4]"
+          className="w-full h-[52px] bg-[#0253F7] rounded-[8px] py-[15px] px-[151px] text-lg font-semibold  leading-[120%] tracking-[0%] text-[#F4F4F4]"
           disabled={isPending}
         >
           {isPending ? "Verifying..." : "Verify"}

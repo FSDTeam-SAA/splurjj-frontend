@@ -39,10 +39,10 @@ else if(isError){
           <div className="md:col-span-5">
             <div className="flex items-center gap-4 mb-2">
               <div className="flex items-center gap-[1.5px]">
-                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white">
                   Read
                 </button>
-                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white">
                   {/* {content?.[0]?.category_name} */}
                 </button>
               </div>
@@ -64,17 +64,17 @@ else if(isError){
                 dangerouslySetInnerHTML={{
                   __html: content?.heading ?? "",
                 }}
-                className="text-3xl md:text-[45px] lg:text-[60px] font-manrope font-extrabold leading-[120%] tracking-[0%] text-[#131313] cursor-pointer"
+                className="text-3xl md:text-[45px] lg:text-[60px]  font-extrabold leading-[120%] tracking-[0%] text-[#131313] cursor-pointer"
               />
             </Link>
             <p
               dangerouslySetInnerHTML={{
                 __html: content?.sub_heading ?? "",
               }}
-              className="text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#424242] my-4 md:my-5 lg:my-6"
+              className="text-base font-normal  leading-[150%] tracking-[0%] text-[#424242] my-4 md:my-5 lg:my-6"
             />
 
-            <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242]">
+            <p className="text-base font-semibold  leading-[120%] tracking-[0%] uppercase text-[#424242]">
               Credits - {content?.date ?? ""}
             </p>
             <div className="mt-[30px] md:mt-[50px] lg:mt-[72px]">
@@ -88,7 +88,7 @@ else if(isError){
             </div>
             <p
               dangerouslySetInnerHTML={{ __html: content?.body1 ?? "" }}
-              className="text-base font-normal font-manrope leading-normal tracking-[0%] text-[#424242] my-4 md:my-5 lg:my-6"
+              className="text-base font-normal  leading-normal tracking-[0%] text-[#424242] my-4 md:my-5 lg:my-6"
             />
           </div>
           <div className="md:col-span-2">

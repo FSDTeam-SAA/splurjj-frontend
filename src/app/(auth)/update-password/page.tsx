@@ -7,10 +7,10 @@ const UpdatePassword = () => {
       className={`h-screen w-full flex flex-col items-center justify-center `}
     >
       <div className="pb-[30px] w-full md:w-[570px]">
-        <h1 className="font-manrope text-[32px] md:text-[36px] ld:text-[40px] font-bold leading-[120%] text-black tracking-[0%]">
+        <h1 className=" text-[32px] md:text-[36px] ld:text-[40px] font-bold leading-[120%] text-black tracking-[0%]">
           Reset Password
         </h1>
-        <p className="font-manrope text-base font-normal leading-[150%] text-[#424242] pt-[5px] tracking-[0%]">
+        <p className=" text-base font-normal leading-[150%] text-[#424242] pt-[5px] tracking-[0%]">
           Create your new password
         </p>
       </div>

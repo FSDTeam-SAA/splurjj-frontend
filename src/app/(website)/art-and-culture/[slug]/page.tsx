@@ -23,17 +23,17 @@ const ArtAndCultureDetails = ({ params }: { params: { slug: string } }) => {
           <div className="grid grid-cols-1 md:grid-cols-7 gap-[30px] md:gap-[50px] lg:gap-[72px]">
             <div className="md:col-span-2 flex flex-col gap-[25px] md:gap-[32px] lg:gap-[40px]">
               <div>
-                <h2 className="text-[24px] md:text-[32px] lg:text-[40px] font-semibold leading-[120%] text-[#131313] font-manrope tracking-[0%]">
+                <h2 className="text-[24px] md:text-[32px] lg:text-[40px] font-semibold leading-[120%] text-[#131313]  tracking-[0%]">
                   {blog?.heading}
                 </h2>
-                <p className="text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#424242] py-4 md:py-5 lg:py-6">
+                <p className="text-base font-normal  leading-[150%] tracking-[0%] text-[#424242] py-4 md:py-5 lg:py-6">
                   {blog?.subHeading}
                 </p>
-                <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] text-[#424242]">
+                <p className="text-base font-semibold  leading-[120%] tracking-[0%] text-[#424242]">
                   Credits - {blog?.date}
                 </p>
                 <div className="mt-3 md:mt-4">
-                  <button className="w-full bg-primary py-[12px] px-[24px] rounded-[4px] text-xl font-bold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                  <button className="w-full bg-primary py-[12px] px-[24px] rounded-[4px] text-xl font-bold  leading-[120%] tracking-[0%] uppercase text-white">
                     Leave A comment
                   </button>
                 </div>
@@ -58,7 +58,7 @@ const ArtAndCultureDetails = ({ params }: { params: { slug: string } }) => {
                   className="w-full h-[443px] object-cover rounded-[8px]"
                 />
               </div>
-              <p className="text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8">
+              <p className="text-base font-normal  leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8">
                 {blog?.body}
               </p>
               <div className="w-full flex items-center justify-center">
@@ -70,21 +70,21 @@ const ArtAndCultureDetails = ({ params }: { params: { slug: string } }) => {
           <div className="mt-[25px] md:mt-[37px] lg:mt-[51px] w-full flex flex-col items-center ">
             {/* first  */}
             <div className="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-7 gap-2">
-              <h4 className="md:col-span-2 text-lg md:text-xl text-secondary font-bold font-manrope leading-[120%] tracking-[0%] upercase">
+              <h4 className="md:col-span-2 text-lg md:text-xl text-secondary font-bold  leading-[120%] tracking-[0%] upercase">
                 Posted in
               </h4>
               <div className="md:col-span-5 flex items-center gap-[1.5px]">
-                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white">
                   Read
                 </button>
-                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white">
                   Video
                 </button>
               </div>
             </div>
             {/* second  */}
             <div className="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-7 gap-2 mt-4 md:mt-5 lg:mt-6">
-              <h4 className="md:col-span-2 text-lg md:text-xl text-secondary font-bold font-manrope leading-[120%] tracking-[0%] uppercase">
+              <h4 className="md:col-span-2 text-lg md:text-xl text-secondary font-bold  leading-[120%] tracking-[0%] uppercase">
                 Tags
               </h4>
               <div className="md:col-span-5 flex flex-col items-start gap-3 md:gap-4">
@@ -92,7 +92,7 @@ const ArtAndCultureDetails = ({ params }: { params: { slug: string } }) => {
                   {blog?.tags?.map((tag, index) => (
                     <button
                       key={index}
-                      className="bg-secondary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white"
+                      className="bg-secondary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white"
                     >
                       {tag}
                     </button>
@@ -115,10 +115,10 @@ const ArtAndCultureDetails = ({ params }: { params: { slug: string } }) => {
                 </div>
               </div>
               <div className="md:col-span-5 h-full flex flex-col justify-center mt-2 md:mt-0">
-                <h4 className="text-lg font-semibold leading-[120%] tracking-[0%] uppercase font-manrope text-secondary">
+                <h4 className="text-lg font-semibold leading-[120%] tracking-[0%] uppercase  text-secondary">
                   {blog?.author }
                 </h4>
-                <p className="mt-4 text-base font-manrope font-normal leading-[150%] tracking-[0%] text-secondary">
+                <p className="mt-4 text-base  font-normal leading-[150%] tracking-[0%] text-secondary">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
                 </p>
@@ -137,7 +137,7 @@ const ArtAndCultureDetails = ({ params }: { params: { slug: string } }) => {
                       <FiTwitter className="w-[48px] h-[48px] text-[#B6B6B6] hover:text-primary cursor-pointer" />
                     </span>
                   </div>
-                  <p className="text-lg font-extrabold font-manrope leadig-[120%] tracking-[0%] text-secondary">
+                  <p className="text-lg font-extrabold  leadig-[120%] tracking-[0%] text-secondary">
                     view posts
                   </p>
                 </div>

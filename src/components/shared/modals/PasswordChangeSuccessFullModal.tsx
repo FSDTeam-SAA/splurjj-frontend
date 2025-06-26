@@ -31,15 +31,15 @@ const PasswordChangeSuccessFullModal: React.FC<Props> = ({
               className="w-[130px] h-[130px] bg-cover"
             />
           </div>
-          <DialogTitle className="text-3xl md:text-[34px] lg:text-10 text-black font-semibold text-center font-manrope mt-[10px]">
+          <DialogTitle className="text-3xl md:text-[34px] lg:text-10 text-black font-semibold text-center  mt-[10px]">
             Password Changed Successfully
           </DialogTitle>
-          <DialogDescription className="text-base font-normal text-[#424242] text-center font-manrope mt-[10px] pb-4">
+          <DialogDescription className="text-base font-normal text-[#424242] text-center  mt-[10px] pb-4">
             Your password has been updated successfully
           </DialogDescription>
           <div className="pt-2">
             <Link href="/login" passHref>
-              <button className="text-base font-bold font-manrope text-white bg-[#0253F7] rounded-[8px] h-[51px] w-full">
+              <button className="text-base font-bold  text-white bg-[#0253F7] rounded-[8px] h-[51px] w-full">
                 Back to Login
               </button>
             </Link>

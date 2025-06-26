@@ -71,7 +71,7 @@ export default function AccountContainer() {
 
   return (
     <div className="min-h-screen py-10 md:py-[60px] lg:py-[88px]">
-      <h1 className="text-3xl md:text-[35px] lg:text-[40px] font-bold leading-[120%] tracking-[0%] text-[#131313] font-manrope text-center mb-6 md:mb-8 lg:mb-10">
+      <h1 className="text-3xl md:text-[35px] lg:text-[40px] font-bold leading-[120%] tracking-[0%] text-[#131313]  text-center mb-6 md:mb-8 lg:mb-10">
         Accounts
       </h1>
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-7 gap-[30px]">

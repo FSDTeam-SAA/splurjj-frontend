@@ -163,13 +163,13 @@ const ArtCulture: React.FC = () => {
             <div className="flex items-center gap-2">
               <Link
                 href={`/blogs/${firstPost.category_name}`}
-                className="bg-primary py-2 px-4 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white"
               >
                 {firstPost.category_name || "Category"}
               </Link>
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}`}
-                className="bg-primary py-2 px-4 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white"
               >
                 {firstPost.sub_category_name || "Subcategory"}
               </Link>
@@ -236,11 +236,11 @@ const ArtCulture: React.FC = () => {
             <div className="bg-[#DDD618] max-h-[455px] flex items-center justify-center rounded-l-md p-4">
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
-                className="text-2xl font-medium font-manrope text-[#131313] hover:underline"
+                className="text-2xl font-medium  text-[#131313] hover:underline"
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-4xl font-bold font-manrope text-[#131313]"
+                  className="text-4xl font-bold  text-[#131313]"
                 />
               </Link>
             </div>
@@ -253,7 +253,7 @@ const ArtCulture: React.FC = () => {
                 className="w-full h-[455px] object-cover rounded-r-md"
                 priority
               />
-              <p className="text-base font-semibold font-manrope uppercase text-[#424242] pt-4 text-end">
+              <p className="text-base font-semibold  uppercase text-[#424242] pt-4 text-end">
                 {firstPost.author} - {firstPost.date}
               </p>
             </div>
@@ -268,13 +268,13 @@ const ArtCulture: React.FC = () => {
               <div className="flex items-center gap-2 mb-2">
                 <Link
                   href={`/blogs/${thirdPost.category_name}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
                 >
                   {thirdPost.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
                 >
                   {thirdPost.sub_category_name || "Subcategory"}
                 </Link>
@@ -293,10 +293,10 @@ const ArtCulture: React.FC = () => {
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
-                    className="text-2xl font-medium font-manrope text-[#131313] hover:underline"
+                    className="text-2xl font-medium  text-[#131313] hover:underline"
                   />
                 </Link>
-                <p className="text-sm font-semibold font-manrope uppercase text-[#424242] mt-2">
+                <p className="text-sm font-semibold  uppercase text-[#424242] mt-2">
                   {thirdPost.author} - {thirdPost.date}
                 </p>
                 <div className="flex items-center gap-3 mt-2 relative">
@@ -358,7 +358,7 @@ const ArtCulture: React.FC = () => {
                 </div>
                 <p
                   dangerouslySetInnerHTML={{ __html: thirdPost.body1 }}
-                  className="text-sm font-normal font-manrope text-[#424242] line-clamp-3 mt-2"
+                  className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
                 />
               </div>
             </div>
@@ -369,13 +369,13 @@ const ArtCulture: React.FC = () => {
               <div className="flex items-center gap-2 mb-2">
                 <Link
                   href={`/blogs/${fourthPost.category_name}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
                 >
                   {fourthPost.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
                 >
                   {fourthPost.sub_category_name || "Subcategory"}
                 </Link>
@@ -394,10 +394,10 @@ const ArtCulture: React.FC = () => {
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
-                    className="text-2xl font-medium font-manrope text-[#131313] hover:underline"
+                    className="text-2xl font-medium  text-[#131313] hover:underline"
                   />
                 </Link>
-                <p className="text-sm font-semibold font-manrope uppercase text-[#424242] mt-2">
+                <p className="text-sm font-semibold  uppercase text-[#424242] mt-2">
                   {fourthPost.author} - {fourthPost.date}
                 </p>
                 <div className="flex items-center gap-3 mt-2 relative">
@@ -459,7 +459,7 @@ const ArtCulture: React.FC = () => {
                 </div>
                 <p
                   dangerouslySetInnerHTML={{ __html: fourthPost.body1 }}
-                  className="text-sm font-normal font-manrope text-[#424242] line-clamp-3 mt-2"
+                  className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
                 />
               </div>
             </div>
@@ -470,13 +470,13 @@ const ArtCulture: React.FC = () => {
               <div className="flex items-center gap-2 mb-2">
                 <Link
                   href={`/blogs/${fifthPost.category_name}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
                 >
                   {fifthPost.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
                 >
                   {fifthPost.sub_category_name || "Subcategory"}
                 </Link>
@@ -495,10 +495,10 @@ const ArtCulture: React.FC = () => {
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: fifthPost.heading }}
-                    className="text-2xl font-medium font-manrope text-[#131313] hover:underline"
+                    className="text-2xl font-medium  text-[#131313] hover:underline"
                   />
                 </Link>
-                <p className="text-sm font-semibold font-manrope uppercase text-[#424242] mt-2">
+                <p className="text-sm font-semibold  uppercase text-[#424242] mt-2">
                   {fifthPost.author} - {fifthPost.date}
                 </p>
                 <div className="flex items-center gap-3 mt-2 relative">
@@ -560,7 +560,7 @@ const ArtCulture: React.FC = () => {
                 </div>
                 <p
                   dangerouslySetInnerHTML={{ __html: fifthPost.body1 }}
-                  className="text-sm font-normal font-manrope text-[#424242] line-clamp-3 mt-2"
+                  className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
                 />
               </div>
             </div>
@@ -571,7 +571,7 @@ const ArtCulture: React.FC = () => {
       <div className="flex justify-end py-4">
         <Link
           href={`/blogs/${firstPost?.category_name}`}
-          className="bg-primary py-2 px-4 rounded text-sm font-extrabold font-manrope uppercase text-white flex items-center gap-2"
+          className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white flex items-center gap-2"
         >
           EXPLORE MORE <ArrowRight size={16} />
         </Link>

@@ -81,12 +81,12 @@ export default function ChangePasswordFormComponent() {
           type="submit"
           onClick={form.handleSubmit(onSubmit)}
           disabled={isPending}
-          className="h-[44px] text-white font-sm font-medium leading-[120%] tracking-[0%] font-poppins py-[13px] px-[28px] bg-[#34A1E8] rounded-[8px]"
+          className="h-[44px] text-white font-sm font-medium leading-[120%] tracking-[0%]  py-[13px] px-[28px] bg-[#34A1E8] rounded-[8px]"
         >
           {isPending ? "Saving..." : "Save"}
         </Button>
       </div>
-      <h2 className="text-2xl text-[#212121] font-poppins font-semibold leading-[120%] tracking-[0%] pb-8">
+      <h2 className="text-2xl text-[#212121]  font-semibold leading-[120%] tracking-[0%] pb-8">
         Change Password
       </h2>
 
@@ -97,7 +97,7 @@ export default function ChangePasswordFormComponent() {
             name="current_password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
                   Current Password
                 </FormLabel>
                 <FormControl>
@@ -105,7 +105,7 @@ export default function ChangePasswordFormComponent() {
                     <Input
                       type={showCurrentPassword ? "text" : "password"}
                       placeholder="Enter your current password"
-                      className="w-full h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                      className="w-full h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
                       {...field}
                     />
                     <button
@@ -130,7 +130,7 @@ export default function ChangePasswordFormComponent() {
               name="new_password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                  <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
                     New Password
                   </FormLabel>
                   <FormControl>
@@ -138,7 +138,7 @@ export default function ChangePasswordFormComponent() {
                       <Input
                         type={showNewPassword ? "text" : "password"}
                         placeholder="Enter new password"
-                        className="w-full h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                        className="w-full h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
                         {...field}
                       />
                       <button
@@ -160,7 +160,7 @@ export default function ChangePasswordFormComponent() {
               name="confirm_new_password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                  <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
                     Confirm New Password
                   </FormLabel>
                   <FormControl>
@@ -168,7 +168,7 @@ export default function ChangePasswordFormComponent() {
                       <Input
                         type={showConfirmNewPassword ? "text" : "password"}
                         placeholder="Confirm new password"
-                        className="w-full h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                        className="w-full h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
                         {...field}
                       />
                       <button

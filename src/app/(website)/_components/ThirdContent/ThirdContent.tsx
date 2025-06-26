@@ -22,10 +22,10 @@ const ThirdContent = ({
           <div className="w-full md:w-1/2">
             <div className="flex items-center gap-4 mb-2">
               <div className="flex items-center gap-[1.5px]">
-                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white">
                   Read
                 </button>
-                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white">
                   {content?.[0]?.category_name || ""}
                 </button>
               </div>
@@ -44,9 +44,9 @@ const ThirdContent = ({
 
             <h1
               dangerouslySetInnerHTML={{ __html: content?.[0]?.heading || "" }}
-              className="text-2xl md:text-[28px] lg:text-[32px] font-manrope font-bold leading-[120%] tracking-[0%] text-[#131313]"
+              className="text-2xl md:text-[28px] lg:text-[32px]  font-bold leading-[120%] tracking-[0%] text-[#131313]"
             />
-            <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242] mt-4 md:mt-5 lg:mt-6">
+            <p className="text-base font-semibold  leading-[120%] tracking-[0%] uppercase text-[#424242] mt-4 md:mt-5 lg:mt-6">
               Credits - {content?.[0]?.category_name || ""}
             </p>
             <div className="mt-4 md:mt-5 lg:mt-6">
@@ -62,10 +62,10 @@ const ThirdContent = ({
           <div className="w-full md:w-1/2">
             <div className="flex items-center gap-4 mb-2">
               <div className="flex items-center gap-[1.5px]">
-                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white">
                   Read
                 </button>
-                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                <button className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white">
                   {content?.[1]?.category_name || ""}
                 </button>
               </div>
@@ -84,9 +84,9 @@ const ThirdContent = ({
 
             <h1
               dangerouslySetInnerHTML={{ __html: content?.[1]?.heading || "" }}
-              className="text-2xl md:text-[28px] lg:text-[32px] font-manrope font-bold leading-[120%] tracking-[0%] text-[#131313]"
+              className="text-2xl md:text-[28px] lg:text-[32px]  font-bold leading-[120%] tracking-[0%] text-[#131313]"
             />
-            <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242] mt-4 md:mt-5 lg:mt-6">
+            <p className="text-base font-semibold  leading-[120%] tracking-[0%] uppercase text-[#424242] mt-4 md:mt-5 lg:mt-6">
               Credits - {content?.[1]?.date}
             </p>
             <div className="mt-4 md:mt-5 lg:mt-6">

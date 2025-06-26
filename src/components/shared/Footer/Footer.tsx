@@ -182,7 +182,7 @@ const Footer = () => {
         <div className="">
           <div className="grid grid-cols-1 lg:grid-cols-10 gap-5 pb-3 md:pb-4">
             <div className="lg:col-span-2">
-              <h4 className="text-xl font-bold font-manrope text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6">
+              <h4 className="text-xl font-bold  text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6">
                 CATEGORIES
               </h4>
               <ul>
@@ -191,7 +191,7 @@ const Footer = () => {
                     <Link
                       href={`/blogs/${item?.category_name}`}
                       key={index}
-                      className="text-sm font-semibold font-manrope text-black cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2 "
+                      className="text-sm font-semibold  text-black cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2 "
                     >
                       {item?.category_name}
                     </Link>
@@ -201,14 +201,14 @@ const Footer = () => {
             </div>
 
             <div className="lg:col-span-1">
-              <h4 className="text-xl font-bold font-manrope text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6">
+              <h4 className="text-xl font-bold  text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6">
                 SHOP
               </h4>
               <ul>
                 {shopData?.map((item, index) => (
                   <li
                     key={index}
-                    className="text-sm font-semibold font-manrope text-black cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2"
+                    className="text-sm font-semibold  text-black cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2"
                   >
                     {item?.shop}
                   </li>
@@ -217,14 +217,14 @@ const Footer = () => {
             </div>
 
             <div className="lg:col-span-2">
-              <h4 className="text-xl font-bold font-manrope text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6">
+              <h4 className="text-xl font-bold  text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6">
                 OTHER
               </h4>
               <ul>
                 {otherData?.map((item, index) => (
                   <li
                     key={index}
-                    className="text-sm font-semibold font-manrope text-black cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2"
+                    className="text-sm font-semibold  text-black cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2"
                   >
                     {item?.other}
                   </li>
@@ -233,14 +233,14 @@ const Footer = () => {
             </div>
 
             <div className="lg:col-span-2">
-              <h4 className="text-xl font-bold font-manrope text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6">
+              <h4 className="text-xl font-bold  text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6">
                 ABOUT US
               </h4>
               <ul>
                 {aboutData?.map((item, index) => (
                   <li
                     key={index}
-                    className=" text-sm font-semibold font-manrope text-black cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2"
+                    className=" text-sm font-semibold  text-black cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2"
                   >
                     {item?.about}
                   </li>
@@ -249,7 +249,7 @@ const Footer = () => {
             </div>
 
             <div className="lg:col-span-3">
-              <h4 className="text-xl font-bold font-manrope text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6">
+              <h4 className="text-xl font-bold  text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6">
                 FOLLOW US
               </h4>
               <div className="flex items-center gap-3">
@@ -278,7 +278,7 @@ const Footer = () => {
                   <FaFacebookF className="text-primary w-8 h-8 cursor-pointer" />
                 </Link>
               </div>
-              <p className="py-3 md:py-4 text-sm font-semibold font-manrope text-black tracking-[0%] leading-[150%]">
+              <p className="py-3 md:py-4 text-sm font-semibold  text-black tracking-[0%] leading-[150%]">
                 Don&apos;t miss out on the latest news by signing up <br /> for
                 our newsletters.
               </p>
@@ -287,7 +287,7 @@ const Footer = () => {
                 <NewsLetterForm />
               </div>
 
-              <p className="pt-2 text-base font-medium font-manrope text-black tracking-[0%] leading-[150%]">
+              <p className="pt-2 text-base font-medium  text-black tracking-[0%] leading-[150%]">
                 By subscribing, you agree to our <br />
                 <span className="text-primary hover:underline">
                   Terms of Use
@@ -298,7 +298,7 @@ const Footer = () => {
                   Privacy <br className="hidden md:block" /> Policy.
                 </span>
               </p>
-              <h5 className="text-lg md:text-xl font-manrope font-semibold text-[#2A2A2A] leading-[120%] tracking-[0%] pt-3 md:pt-4">
+              <h5 className="text-lg md:text-xl  font-semibold text-[#2A2A2A] leading-[120%] tracking-[0%] pt-3 md:pt-4">
                 Download our App
               </h5>
               <div className="flex items-center gap-4 mt-3 md:mt-4">
@@ -324,7 +324,7 @@ const Footer = () => {
 
           {/* footer bottom  */}
           <div className="w-full h-[1px]" />
-          <p className="w-full flex flex-col md:flex-row items-center justify-center pt-3 md:pt-4 text-base font-medium leading-[120%] tracking-[0%] text-black  font-manrope">
+          <p className="w-full flex flex-col md:flex-row items-center justify-center pt-3 md:pt-4 text-base font-medium leading-[120%] tracking-[0%] text-black  ">
             {footer?.copyright}
             <Tally1 className="text-black w-[5px] h-auto" />
             <span className="px-2" />

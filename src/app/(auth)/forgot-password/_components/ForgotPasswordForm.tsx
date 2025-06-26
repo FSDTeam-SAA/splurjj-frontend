@@ -68,7 +68,7 @@ export function ForgotPasswordForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
+              <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                 Email Address
               </FormLabel>
               <FormControl>
@@ -78,7 +78,7 @@ export function ForgotPasswordForm() {
                     placeholder="Enter your email"
                     type="email"
                     className="border border-[#616161] h-[49px] bg-white text-[#131313]
-placeholder:text-[#929292] font-medium font-manrope 
+placeholder:text-[#929292] font-medium  
 leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                   />
                 </div>
@@ -92,7 +92,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
         <div className="mt-6 md:mt-8">
           <button
             type="submit"
-            className="w-full h-[51px] bg-[#0253F7] rounded-[8px] text-base font-bold tracking-[0%] font-poppins text-white "
+            className="w-full h-[51px] bg-[#0253F7] rounded-[8px] text-base font-bold tracking-[0%]  text-white "
             disabled={isPending}
           >
             {isPending ? "Sending..." : "Send OTP"}

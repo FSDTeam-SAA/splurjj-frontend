@@ -99,23 +99,23 @@ export default function SubcategoryContentPage() {
         <div className="flex justify-between items-start mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-800 mb-2">{data?.data?.data[0]?.category_name} Lists</h1>
-            <div className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%] flex items-center gap-2">
+            <div className="text-base text-[#929292]  font-medium leading-[120%] tracking-[0%] flex items-center gap-2">
               <Link
                 href="/dashboard"
-                className="hover:underline text-base text-[#929292] dark:text-white font-manrope font-medium leading-[120%] tracking-[0%]"
+                className="hover:underline text-base text-[#929292] dark:text-white  font-medium leading-[120%] tracking-[0%]"
               >
                 Dashboard
               </Link>
               <span className="text-[#929292]">
                 <ChevronRight className="w-5 h-5" />
               </span>
-              <span className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">
+              <span className="text-base text-[#929292]  font-medium leading-[120%] tracking-[0%]">
                 {data?.data?.data[0]?.category_name}
               </span>
               <span className=" text-[#929292]">
                 <ChevronRight className="w-5 h-5" />
               </span>
-              <span className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%]">
+              <span className="text-base text-[#929292]  font-medium leading-[120%] tracking-[0%]">
                 {data?.data?.data[0]?.sub_category_name}
               </span>
             </div>
