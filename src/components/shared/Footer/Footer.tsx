@@ -174,7 +174,7 @@ const Footer = () => {
 
   return (
     <div
-      className={`h-full lg:h-[533px] w-full py-6 md:py-[30px] lg:py-10 px-6 md:px-0`}
+      className={`h-full lg:h-[533px] w-full pt-24`}
       style={{ backgroundColor: footer?.bg_color || "#ffffff" }}
     >
       <div className="container">
@@ -191,7 +191,7 @@ const Footer = () => {
                     <Link
                       href={`/blogs/${item?.category_name}`}
                       key={index}
-                      className="text-sm font-semibold  text-black cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2 "
+                      className="text-sm font-semibold  text-black dark:text-white cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2 "
                     >
                       {item?.category_name}
                     </Link>
@@ -287,17 +287,17 @@ const Footer = () => {
                 <NewsLetterForm />
               </div>
 
-              <p className="pt-2 text-base font-medium  text-black tracking-[0%] leading-[150%]">
+              {/* <p className="pt-2 text-base font-medium  text-black tracking-[0%] leading-[150%]">
                 By subscribing, you agree to our <br />
                 <span className="text-primary hover:underline">
                   Terms of Use
                 </span>{" "}
                 and{" "}
-                <span className="text-primary hover:underline">
+                <span className="text-primary dark:text-white hover:underline">
                   {" "}
                   Privacy <br className="hidden md:block" /> Policy.
                 </span>
-              </p>
+              </p> */}
               <h5 className="text-lg md:text-xl  font-semibold text-[#2A2A2A] leading-[120%] tracking-[0%] pt-3 md:pt-4">
                 Download our App
               </h5>
@@ -322,9 +322,10 @@ const Footer = () => {
             </div>
           </div>
 
+                <div className="border-b border-[#D9D9D9] mt-4"  />
           {/* footer bottom  */}
           <div className="w-full h-[1px]" />
-          <p className="w-full flex flex-col md:flex-row items-center justify-center pt-3 md:pt-4 text-base font-medium leading-[120%] tracking-[0%] text-black  ">
+          <p className="w-full flex flex-col md:flex-row items-center justify-center pt-4 text-base font-medium leading-[120%] tracking-[0%] text-black  ">
             {footer?.copyright}
             <Tally1 className="text-black w-[5px] h-auto" />
             <span className="px-2" />

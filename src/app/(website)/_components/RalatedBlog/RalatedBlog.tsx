@@ -243,7 +243,7 @@ const RelatedContent = ({
                     alt={post.heading || "Blog Image"}
                     width={888}
                     height={552}
-                    className="w-full h-[455px] object-cover rounded-t-md"
+                    className="w-full h-[455px] object-cover rounded-t-md border-image"
                     priority
                   />
                 </div>

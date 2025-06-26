@@ -222,7 +222,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
               alt={firstPost.heading.replace(/<[^>]+>/g, "")} // Strip HTML for alt text
               width={1200}
               height={600}
-              className="w-full object-cover rounded-lg h-[680px]"
+              className="w-full object-cover rounded-lg h-[680px] border-image"
             />
           </div>
         </div>
@@ -330,7 +330,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                   alt={secondPost.heading}
                   width={400}
                   height={300}
-                  className="w-full h-[300px] object-cover rounded-t-lg"
+                  className="w-full h-[300px] object-cover rounded-t-lg border-image"
                   priority
                 />
               </div>
@@ -346,7 +346,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                 alt={thirdPost.heading}
                 width={400}
                 height={300}
-                className="w-full h-[443px] object-cover rounded-t-lg"
+                className="w-full h-[443px] object-cover rounded-t-lg border-image"
                 priority
               />
               <div className="py-4">
@@ -538,7 +538,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                   alt={fourthPost.heading}
                   width={400}
                   height={300}
-                  className="w-full h-[300px] object-cover rounded-t-lg"
+                  className="w-full h-[300px] object-cover rounded-t-lg border-image"
                   priority
                 />
               </div>
@@ -637,7 +637,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                   alt={fivethPost.heading}
                   width={400}
                   height={300}
-                  className="w-full h-[300px] object-cover rounded-t-lg"
+                  className="w-full h-[300px] object-cover rounded-t-lg border-image"
                   priority
                 />
               </div>
