@@ -1175,7 +1175,7 @@ export default function Sidebar() {
                               <Button
                                 variant="ghost"
                                 size="sm"
-                                className="w-full justify-start text-left p-1 h-7 text-xs text-gray-500 hover:bg-blue-100/50 dark:hover:bg-blue-900/30 mx-6"
+                                className="w-full justify-start text-left p-1 h-7 text-xs text-gray-500 dark:text-black hover:bg-blue-100/50 dark:hover:bg-blue-900/30 mx-6"
                                 onClick={() =>
                                   setAddingSubcategory(category.category_id)
                                 }
