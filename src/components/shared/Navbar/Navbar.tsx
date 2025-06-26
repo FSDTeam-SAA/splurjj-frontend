@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import ThemeToggle from "@/app/theme-toggle";
 import Image from "next/image";
 
+// Interfaces
 interface Subcategory {
   id: number;
   name: string;
@@ -50,28 +51,24 @@ interface ThemeHeader {
   menu_item_color: string;
 }
 
+// Fetch Functions
 const fetchCategories = async (): Promise<Category[]> => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/categories`
   );
-  if (!response.ok) {
-    throw new Error("Failed to fetch categories");
-  }
+  if (!response.ok) throw new Error("Failed to fetch categories");
   const result: ApiResponse = await response.json();
   return result.data;
 };
 
 const fetchHeader = async (): Promise<ThemeHeader> => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/header`
-  );
-  if (!response.ok) {
-    throw new Error("Failed to fetch header");
-  }
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/header`);
+  if (!response.ok) throw new Error("Failed to fetch header");
   const result = await response.json();
-  return result.data; // Adjust if the API returns { success: boolean, data: ThemeHeader }
+  return result.data;
 };
 
+// Component
 export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -113,9 +110,7 @@ export default function Header() {
     try {
       toast.success("Logout successful!");
       setTimeout(async () => {
-        await signOut({
-          callbackUrl: "/",
-        });
+        await signOut({ callbackUrl: "/" });
       }, 1000);
     } catch (error) {
       console.error("Logout failed:", error);
@@ -123,7 +118,6 @@ export default function Header() {
     }
   };
 
-  // Helper function to determine if a category is active
   const isCategoryActive = (categoryId: number) => {
     return (
       pathName === `/${categoryId}` ||
@@ -173,8 +167,6 @@ export default function Header() {
                   {item.name}
                 </Link>
               ))}
-
-              {/* Dynamic Categories with Dropdowns */}
               {categories.map((category) => {
                 const isActive = isCategoryActive(category.category_id);
                 if (category.subcategories.length === 0) {
@@ -193,7 +185,6 @@ export default function Header() {
                     </Link>
                   );
                 }
-
                 return (
                   <DropdownMenu key={category.category_id}>
                     <DropdownMenuTrigger
@@ -207,10 +198,7 @@ export default function Header() {
                       <span>{category.category_name.toUpperCase()}</span>
                       <ChevronDown className="h-4 w-4" />
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                      className="w-48 bg-white text-[18px] font-semibold border-0 mt-[20px]"
-                      style={{ backgroundColor: header?.bg_color || "#ffffff" }}
-                    >
+                    <DropdownMenuContent className="w-48 bg-white text-[18px] font-semibold border-0 mt-[20px]">
                       {category.subcategories.map((subcategory) => (
                         <DropdownMenuItem key={subcategory.id} asChild>
                           <Link
@@ -235,7 +223,7 @@ export default function Header() {
               })}
             </nav>
 
-            {/* Right Side Actions */}
+            {/* Right Actions */}
             <div className="flex items-center space-x-2">
               {/* Search */}
               <div className="relative">
@@ -249,73 +237,46 @@ export default function Header() {
                       className="w-48 h-8"
                       autoFocus
                     />
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setIsSearchOpen(false)}
-                      className="ml-1"
-                    >
-                      <X className="h-8 w-8" />
+                    <Button type="button" variant="ghost" size="sm" onClick={() => setIsSearchOpen(false)} className="ml-1">
+                      <X className="h-8 w-8 dark:text-black" />
                     </Button>
                   </form>
                 ) : (
-                  <Button
-                    variant="ghost"
-                    onClick={() => setIsSearchOpen(true)}
-                    className=""
-                  >
+                  <Button variant="ghost" onClick={() => setIsSearchOpen(true)}>
                     <Search className="text-black !w-[30px] !h-[30px]" />
                   </Button>
                 )}
               </div>
 
-              {/* Shopping Cart Button */}
+              {/* Cart (Hidden on sm) */}
               {token && role !== "admin" && (
-                <ShoppingCart className="text-black" size={30}/>
+                <ShoppingCart className="text-black hidden sm:block" size={30} />
               )}
 
-              {/* User Menu */}
-              <div>
+              {/* User Menu (Hidden on sm) */}
+              <div className="hidden sm:block">
                 {token ? (
                   <DropdownMenu>
-                    <DropdownMenuTrigger className="p-1 rounded-full hover:bg-gray-100 transition-colors border-none outline-none ring-0">
+                    <DropdownMenuTrigger className="p-1 rounded-full hover:bg-gray-100">
                       <User className="text-black w-[33px] h-[33px]" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="bg-white w-[130px]">
                       {["admin", "editor", "author"].includes(role ?? "") ? (
                         <Link href="/dashboard">
-                          <DropdownMenuLabel
-                            className={`text-base md:text-[17px] lg:text-lg font-semibold leading-[120%] tracking-[0%]`}
-                            style={{
-                              color:
-                                pathName === "/dashboard"
-                                  ? header?.menu_item_active_color || "#0253F7"
-                                  : header?.menu_item_color || "#131313",
-                            }}
-                          >
+                          <DropdownMenuLabel style={{ color: pathName === "/dashboard" ? header?.menu_item_active_color : header?.menu_item_color }}>
                             Dashboard
                           </DropdownMenuLabel>
                         </Link>
                       ) : (role ?? "") === "user" ? (
                         <Link href="/accounts">
-                          <DropdownMenuLabel
-                            className={`text-base md:text-[17px] lg:text-lg font-semibold leading-[120%] tracking-[0%]`}
-                            style={{
-                              color:
-                                pathName === "/accounts"
-                                  ? header?.menu_item_active_color || "#0253F7"
-                                  : header?.menu_item_color || "#131313",
-                            }}
-                          >
+                          <DropdownMenuLabel style={{ color: pathName === "/accounts" ? header?.menu_item_active_color : header?.menu_item_color }}>
                             My Account
                           </DropdownMenuLabel>
                         </Link>
                       ) : null}
-
                       <DropdownMenuItem
                         onClick={() => setLogoutModalOpen(true)}
-                        className="text-base md:text-[17px] lg:text-lg font-semibold leading-[120%] tracking-[0%] text-[#DB0000] cursor-pointer"
+                        className="text-[#DB0000] cursor-pointer"
                       >
                         Log Out
                       </DropdownMenuItem>
@@ -324,33 +285,32 @@ export default function Header() {
                 ) : (
                   <Link
                     href="/sign-up"
-                    className="p-1 rounded text-white px-4 bg-[#0253F7] hover:bg-[#0253F7] transition-colors"
+                    className="p-1 rounded text-white px-4 py-2 bg-[#0253F7] hover:bg-[#0253F7]"
                   >
                     Sign In
                   </Link>
                 )}
               </div>
 
-              {/* Theme Toggle */}
               <ThemeToggle />
 
               {/* Mobile Menu Button */}
               <Button
                 variant="ghost"
-                size="sm"
+                size="lg"
                 className="lg:hidden"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               >
                 {isMobileMenuOpen ? (
-                  <X className="h-6 w-6" />
+                  <X className="h-6 w-6 dark:text-black" size={40} />
                 ) : (
-                  <Menu className="h-6 w-6" />
+                  <Menu className="dark:text-black" size={40} />
                 )}
               </Button>
             </div>
           </div>
 
-          {/* Mobile Navigation */}
+          {/* Mobile Nav */}
           {isMobileMenuOpen && (
             <div className="lg:hidden border-t py-4">
               <nav className="flex flex-col space-y-4">
@@ -358,12 +318,12 @@ export default function Header() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="text-sm font-medium transition-colors hover:text-primary"
+                    className="text-sm font-medium"
                     style={{
                       color:
                         pathName === item.href
-                          ? header?.menu_item_active_color || "#0253F7"
-                          : header?.menu_item_color || "text-muted-foreground",
+                          ? header?.menu_item_active_color
+                          : header?.menu_item_color,
                     }}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
@@ -371,62 +331,72 @@ export default function Header() {
                   </Link>
                 ))}
 
-                {/* Mobile Categories */}
                 {categories.map((category) => {
                   const isActive = isCategoryActive(category.category_id);
-                  if (category.subcategories.length === 0) {
-                    return (
-                      <Link
-                        key={category.category_id}
-                        href={`/${category.category_id}`}
-                        className="text-sm font-medium transition-colors hover:text-primary"
-                        style={{
-                          color: isActive
-                            ? header?.menu_item_active_color || "#0253F7"
-                            : header?.menu_item_color ||
-                              "text-muted-foreground",
-                        }}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        {category.category_name.toUpperCase()}
-                      </Link>
-                    );
-                  }
-
                   return (
                     <div key={category.category_id} className="space-y-2">
-                      <span
-                        className="text-sm font-medium"
-                        style={{
-                          color: isActive
-                            ? header?.menu_item_active_color || "#0253F7"
-                            : header?.menu_item_color ||
-                              "text-muted-foreground",
-                        }}
-                      >
+                      <span className="text-sm font-medium" style={{
+                        color: isActive
+                          ? header?.menu_item_active_color
+                          : header?.menu_item_color,
+                      }}>
                         {category.category_name.toUpperCase()}
                       </span>
-                      {category.subcategories.map((subcategory) => (
+                      {category.subcategories.map((sub) => (
                         <Link
-                          key={subcategory.id}
-                          href={`/${category.category_id}/${subcategory.id}`}
-                          className="block pl-4 text-sm transition-colors hover:text-primary"
+                          key={sub.id}
+                          href={`/${category.category_id}/${sub.id}`}
+                          className="block pl-4 text-sm"
                           style={{
                             color:
-                              pathName ===
-                              `/${category.category_id}/${subcategory.id}`
-                                ? header?.menu_item_active_color || "#0253F7"
-                                : header?.menu_item_color ||
-                                  "text-muted-foreground",
+                              pathName === `/${category.category_id}/${sub.id}`
+                                ? header?.menu_item_active_color
+                                : header?.menu_item_color,
                           }}
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
-                          {subcategory.name}
+                          {sub.name}
                         </Link>
                       ))}
                     </div>
                   );
                 })}
+
+                {/* Mobile Shopping Cart and User Menu */}
+                {token && role !== "admin" && (
+                  <div className="flex items-center space-x-4 mt-4 sm:hidden">
+                    <ShoppingCart className="text-black" size={30} />
+                  </div>
+                )}
+
+                <div className="mt-2 sm:hidden">
+                  {token ? (
+                    <div className="flex flex-col space-y-2">
+                      {["admin", "editor", "author"].includes(role ?? "") ? (
+                        <Link href="/dashboard" className="text-base font-semibold">
+                          Dashboard
+                        </Link>
+                      ) : (role ?? "") === "user" ? (
+                        <Link href="/accounts" className="text-base font-semibold">
+                          My Account
+                        </Link>
+                      ) : null}
+                      <button
+                        onClick={() => setLogoutModalOpen(true)}
+                        className="text-[#DB0000] font-semibold text-base text-left"
+                      >
+                        Log Out
+                      </button>
+                    </div>
+                  ) : (
+                    <Link
+                      href="/sign-up"
+                      className="block p-2 rounded text-white bg-[#0253F7] text-center mt-2"
+                    >
+                      Sign In
+                    </Link>
+                  )}
+                </div>
               </nav>
             </div>
           )}
@@ -438,25 +408,15 @@ export default function Header() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg max-w-sm w-full mx-4">
             <h3 className="text-lg font-semibold mb-4">Confirm Logout</h3>
-            <p className="text-gray-600 mb-6">
-              Are you sure you want to log out?
-            </p>
+            <p className="text-gray-600 mb-6">Are you sure you want to log out?</p>
             <div className="flex space-x-4">
-              <Button
-                variant="outline"
-                onClick={() => setLogoutModalOpen(false)}
-                className="flex-1"
-              >
+              <Button variant="outline" onClick={() => setLogoutModalOpen(false)} className="flex-1">
                 Cancel
               </Button>
-              <Button
-                variant="destructive"
-                onClick={() => {
-                  setLogoutModalOpen(false);
-                  handLogout();
-                }}
-                className="flex-1"
-              >
+              <Button variant="destructive" onClick={() => {
+                setLogoutModalOpen(false);
+                handLogout();
+              }} className="flex-1">
                 Log Out
               </Button>
             </div>
