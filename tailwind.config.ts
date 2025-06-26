@@ -22,9 +22,9 @@ const config: Config = {
       //     lg: "1440px",
       //   },
       // },
+
       fontFamily: {
-        poppins: ["var(--font-poppins)", "sans-serif"],
-        manrope: ["var(--font-manrope)", "sans-serif"],
+        helvetica: ["var(--font-helvetica)", "sans-serif"],
       },
 
       colors: {

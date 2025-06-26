@@ -15,13 +15,13 @@ export function ProductsReport({
 }: ProductsReportProps) {
   return (
     <div className="bg-white rounded-lg p-6 shadow-sm">
-      <h2 className="text-lg font-semibold text-gray-900 mb-6">{title}</h2>
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-black mb-6">{title}</h2>
 
       <div className="flex items-start justify-between ">
         {/* Circular Chart */}
         <div className="w-full flex items-center justify-center">
           <div className="relative w-[430px] h-[430px]">
-          <svg className="w-full h-full transform -rotate-90 border-2 border-red-500" viewBox="0 0 200 200">
+          <svg className="w-full h-full transform -rotate-90" viewBox="0 0 200 200">
             {/* Background circles */}
             <circle cx="100" cy="100" r="85" fill="none" stroke="#f1f5f9" strokeWidth="12" />
             <circle cx="100" cy="100" r="65" fill="none" stroke="#e2e8f0" strokeWidth="12" />

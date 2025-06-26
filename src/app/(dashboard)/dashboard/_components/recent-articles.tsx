@@ -36,7 +36,7 @@ export function RecentArticles({ articles = defaultArticles }: RecentArticlesPro
 
   return (
     <div className="bg-white rounded-lg p-6 shadow-sm">
-      <h2 className="text-lg font-semibold text-gray-900 mb-6">Recent Articles</h2>
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-black mb-6">Recent Articles</h2>
       <div className="space-y-4">
         {articles.map((article) => (
           <div key={article.id} className="flex items-center justify-between">
