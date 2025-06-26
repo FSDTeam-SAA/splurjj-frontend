@@ -15,13 +15,13 @@ export default function SettingsMenu({ onSectionSelect }: SettingsMenuProps) {
       <div className="">
         {/* Header */}
         <div className="mb-10">
-          <h1 className="text-3xl md:text-[35px] lg:text-10 font-poppins font-semibold text-[#212121] leading-[120%] mb-2">
+          <h1 className="text-3xl md:text-[35px] lg:text-10  font-semibold text-[#212121] leading-[120%] mb-2">
             Settings
           </h1>
           <div className="flex items-center gap-1">
             <Link
               href="/dashboard"
-              className="hover:underline text-xl font-normal font-poppins leading-[120%] tracking-[0%] text-[#595959]"
+              className="hover:underline text-xl font-normal  leading-[120%] tracking-[0%] text-[#595959]"
             >
               Dashboard
             </Link>
@@ -29,7 +29,7 @@ export default function SettingsMenu({ onSectionSelect }: SettingsMenuProps) {
               <ChevronRight className="text-[#595959] w-6 h-6" />
             </span>
             <Link href="/dashboard/settings">
-            <span className="text-xl font-normal font-poppins leading-[120%] tracking-[0%] text-[#595959]">
+            <span className="text-xl font-normal  leading-[120%] tracking-[0%] text-[#595959]">
               Settings
             </span>
             </Link>
@@ -46,7 +46,7 @@ export default function SettingsMenu({ onSectionSelect }: SettingsMenuProps) {
                   className="w-full h-[61px] justify-between p-4"
                   onClick={() => onSectionSelect("personal")}
                 >
-                  <span className="text-2xl font-semibold font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                  <span className="text-2xl font-semibold  leading-[120%] tracking-[0%] text-[#212121]">
                     Personal Information
                   </span>
                   <ChevronRight className="!h-6 !w-6 text-[#212121]" />
@@ -63,7 +63,7 @@ export default function SettingsMenu({ onSectionSelect }: SettingsMenuProps) {
                   className="w-full h-[61px] justify-between p-4"
                   onClick={() => onSectionSelect("password")}
                 >
-                  <span className="text-2xl font-semibold font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                  <span className="text-2xl font-semibold  leading-[120%] tracking-[0%] text-[#212121]">
                     Change Password
                   </span>
                   <ChevronRight className="!h-6 !w-6 text-[#212121]" />

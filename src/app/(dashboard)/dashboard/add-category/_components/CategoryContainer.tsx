@@ -171,7 +171,7 @@ export default function CategoryContainer() {
         </div>
 
         {/* Categories Table */}
-        <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+        <Card className="bg-white backdrop-blur-sm border-0 shadow-lg">
           <CardHeader>
             <CardTitle className="text-xl font-semibold text-gray-800">
               Category Management

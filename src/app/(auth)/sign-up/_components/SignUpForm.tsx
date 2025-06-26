@@ -106,7 +106,7 @@ export function SignUpForm() {
               name="first_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
+                  <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                     First Name
                   </FormLabel>
                   <FormControl>
@@ -114,7 +114,7 @@ export function SignUpForm() {
                       {...field}
                       placeholder="Enter your first name"
                       className="border border-[#272727] h-[49px] bg-white text-[#131313]
-placeholder:text-[#929292] font-medium font-manrope 
+placeholder:text-[#929292] font-medium  
 leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                     />
                   </FormControl>
@@ -127,7 +127,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
               name="last_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
+                  <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                     Last Name
                   </FormLabel>
                   <FormControl>
@@ -135,7 +135,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                       {...field}
                       placeholder="Enter your last name"
                       className="border border-[#272727] h-[49px] bg-white text-[#131313]
-placeholder:text-[#929292] font-medium font-manrope 
+placeholder:text-[#929292] font-medium  
 leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                     />
                   </FormControl>
@@ -151,7 +151,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
             name="company_name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
+                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                   Company Name
                 </FormLabel>
                 <FormControl>
@@ -159,7 +159,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                     {...field}
                     placeholder="Enter your company name"
                     className="border border-[#272727] h-[49px] bg-white text-[#131313]
-placeholder:text-[#929292] font-medium font-manrope 
+placeholder:text-[#929292] font-medium  
 leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                   />
                 </FormControl>
@@ -174,7 +174,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
+                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                   Email
                 </FormLabel>
                 <FormControl>
@@ -183,7 +183,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                     placeholder="Enter your email"
                     type="email"
                     className="border border-[#272727] h-[49px] bg-white text-[#131313]
-placeholder:text-[#929292] font-medium font-manrope 
+placeholder:text-[#929292] font-medium  
 leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                   />
                 </FormControl>
@@ -198,7 +198,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
+                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                   Phone Number
                 </FormLabel>
                 <FormControl>
@@ -207,7 +207,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                     placeholder="Enter your phone number"
                     type="tel"
                     className="border border-[#272727] h-[49px] bg-white text-[#131313]
-placeholder:text-[#929292] font-medium font-manrope 
+placeholder:text-[#929292] font-medium  
 leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                   />
                 </FormControl>
@@ -222,7 +222,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
+                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                   Password
                 </FormLabel>
                 <FormControl>
@@ -233,7 +233,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                       type={showPassword ? "text" : "password"}
                       autoComplete="new-password"
                       className="border border-[#272727] h-[49px] bg-white text-[#131313]
-placeholder:text-[#929292] font-medium font-manrope 
+placeholder:text-[#929292] font-medium  
 leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                     />
                     <button
@@ -261,7 +261,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
             name="confirm_password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
+                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                   Confirm Password
                 </FormLabel>
                 <FormControl>
@@ -272,7 +272,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                       type={showConfirmPassword ? "text" : "password"}
                       autoComplete="new-password"
                       className="border border-[#272727] h-[49px] bg-white text-[#131313]
-placeholder:text-[#929292] font-medium font-manrope 
+placeholder:text-[#929292] font-medium  
 leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                     />
                     <button
@@ -309,7 +309,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                   />
                 </FormControl>
                 <div className="space-y-1 leading-none">
-                  <FormLabel className="text-sm font-medium leading-[120%] tracking-[0%] text-[#131313] font-manrope">
+                  <FormLabel className="text-sm font-medium leading-[120%] tracking-[0%] text-[#131313] ">
                     I agree to the Terms and Conditions
                   </FormLabel>
                   <FormMessage className="text-[#DB0000]" />
@@ -322,7 +322,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
           <div className="py-[14px]">
             <Button
               type="submit"
-              className="w-full h-[51px] bg-[#0253F7] hover:bg-[#2891d4] rounded-lg text-base font-normal font-manrope leading-[120%] tracking-[0%] text-white"
+              className="w-full h-[51px] bg-[#0253F7] hover:bg-[#2891d4] rounded-lg text-base font-normal  leading-[120%] tracking-[0%] text-white"
               disabled={isPending}
             >
               {isPending ? "Creating Account..." : "Sign Up"}
@@ -331,7 +331,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
 
           {/* Sign In Link */}
           <div className="text-center ">
-            <span className="text-base text-[#272727] font-manrope font-normal leading-[150%] tracking-[0%]">
+            <span className="text-base text-[#272727]  font-normal leading-[150%] tracking-[0%]">
               Already have an account?{" "}
               <Link
                 href="/login"

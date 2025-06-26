@@ -144,11 +144,11 @@ const RelatedContent = ({
 
   return (
     <div className="container py-[30px] md:py-[50px] lg:py-[72px]">
-      <h2 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold tracking-[0%] text-[#131313] uppercase leading-[120%] font-manrope pb-2">
+      <h2 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold tracking-[0%] text-[#131313] uppercase leading-[120%]  pb-2">
         RELATED
       </h2>
       <div className="w-1/2 h-[2px] bg-secondary" />
-      <p className="text-lg md:text-xl font-semibold font-manrope leading-[120%] tracking-[0%] text-[#929292] pb-[25px] md:pb-[32px] lg:pb-[40px] pt-3 md:pt-4">
+      <p className="text-lg md:text-xl font-semibold  leading-[120%] tracking-[0%] text-[#929292] pb-[25px] md:pb-[32px] lg:pb-[40px] pt-3 md:pt-4">
         More like this one
       </p>
 
@@ -168,13 +168,13 @@ const RelatedContent = ({
                   <div className="flex items-center gap-2">
                     <Link
                       href={`/blogs/${post.category_name}`}
-                      className="bg-primary py-2 px-4 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                      className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white"
                     >
                       {post.category_name || "Category"}
                     </Link>
                     <Link
                       href={`/${post.category_id}/${post.subcategory_id}`}
-                      className="bg-primary py-2 px-4 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                      className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white"
                     >
                       {post.sub_category_name || "Subcategory"}
                     </Link>
@@ -252,15 +252,15 @@ const RelatedContent = ({
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: post.heading }}
-                    className="text-2xl font-medium font-manrope text-[#131313] hover:underline"
+                    className="text-2xl font-medium  text-[#131313] hover:underline"
                   />
                 </Link>
-                <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242] mt-4 md:mt-5 lg:mt-6">
+                <p className="text-base font-semibold  leading-[120%] tracking-[0%] uppercase text-[#424242] mt-4 md:mt-5 lg:mt-6">
                   {post.author} - {post.date}
                 </p>
                 <p
                   dangerouslySetInnerHTML={{ __html: post.sub_heading ?? "" }}
-                  className="text-sm font-normal font-manrope text-[#424242] line-clamp-3 mt-2"
+                  className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
                 />
               </div>
             ))}

@@ -151,15 +151,15 @@ const ContentBlogDetails = ({
                 dangerouslySetInnerHTML={{
                   __html: sanitizeHTML(blogData.heading ?? ""),
                 }}
-                className="text-[24px] md:text-[32px] lg:text-[40px] font-semibold leading-[120%] text-[#131313] font-manrope tracking-[0%]"
+                className="text-[24px] md:text-[32px] lg:text-[40px] font-semibold leading-[120%] text-[#131313]  tracking-[0%]"
               />
               <p
                 dangerouslySetInnerHTML={{
                   __html: sanitizeHTML(blogData.sub_heading ?? ""),
                 }}
-                className="text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#424242] py-4 md:py-5 lg:py-6 line-clamp-3 mb-2"
+                className="text-base font-normal  leading-[150%] tracking-[0%] text-[#424242] py-4 md:py-5 lg:py-6 line-clamp-3 mb-2"
               />
-              <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] text-[#424242]">
+              <p className="text-base font-semibold  leading-[120%] tracking-[0%] text-[#424242]">
                 Credits - {blogData.date}
               </p>
               <div className="mt-3 md:mt-4">
@@ -169,7 +169,7 @@ const ContentBlogDetails = ({
                       ?.getElementById("comment")
                       ?.scrollIntoView({ behavior: "smooth" })
                   }
-                  className="w-full bg-primary py-[12px] px-[24px] rounded-[4px] text-xl font-bold font-manrope leading-[120%] tracking-[0%] uppercase text-white"
+                  className="w-full bg-primary py-[12px] px-[24px] rounded-[4px] text-xl font-bold  leading-[120%] tracking-[0%] uppercase text-white"
                 >
                   Leave A Comment
                 </button>
@@ -185,7 +185,7 @@ const ContentBlogDetails = ({
                 dangerouslySetInnerHTML={{
                   __html: sanitizeHTML(blogData.sub_heading ?? ""),
                 }}
-                className="text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8"
+                className="text-base font-normal  leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8"
               />
               <div className="pb-[25px] md:pb-[32px] lg:pb-[40px]">
                 <Image
@@ -200,7 +200,7 @@ const ContentBlogDetails = ({
                 dangerouslySetInnerHTML={{
                   __html: sanitizeHTML(blogData.body1 ?? ""),
                 }}
-                className="text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8"
+                className="text-base font-normal  leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8"
               />
               <div className="w-full flex items-center justify-center">
                 <span className="w-2/3 h-[2px] bg-secondary" />
@@ -210,19 +210,19 @@ const ContentBlogDetails = ({
             <div className="mt-[25px] md:mt-[37px] lg:mt-[51px]">
               {/* Posted in */}
               <div className="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-7 gap-2">
-                <h4 className="md:col-span-2 text-lg md:text-xl text-secondary font-bold font-manrope leading-[120%] tracking-[0%] uppercase">
+                <h4 className="md:col-span-2 text-lg md:text-xl text-secondary font-bold  leading-[120%] tracking-[0%] uppercase">
                   Posted in
                 </h4>
                 <div className="flex items-center gap-2">
                   <Link
                     href={`/blogs/${blogData.category_name}`}
-                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
                   >
                     {blogData.category_name || "Category"}
                   </Link>
                   <Link
                     href={`/${blogData.category_id}/${blogData.subcategory_id}`}
-                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
                   >
                     {blogData.subcategory_name || "Subcategory"}
                   </Link>
@@ -231,7 +231,7 @@ const ContentBlogDetails = ({
               {/* Tags */}
               {cleanedTags.length > 0 && (
                 <div className="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-7 gap-2 mt-4 md:mt-5 lg:mt-6">
-                  <h4 className="md:col-span-2 text-lg md:text-xl text-secondary font-bold font-manrope leading-[120%] tracking-[0%] uppercase">
+                  <h4 className="md:col-span-2 text-lg md:text-xl text-secondary font-bold  leading-[120%] tracking-[0%] uppercase">
                     Tags
                   </h4>
                   <div className="md:col-span-5 flex flex-col items-start gap-3 md:gap-4">
@@ -243,7 +243,7 @@ const ContentBlogDetails = ({
                           )}`}
                           key={index}
                         >
-                          <button className="bg-secondary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white">
+                          <button className="bg-secondary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white">
                             {tag}
                           </button>
                         </Link>
@@ -264,10 +264,10 @@ const ContentBlogDetails = ({
                   />
                 </div>
                 <div className="md:col-span-5 h-full flex flex-col justify-center mt-2 md:mt-0">
-                  <h4 className="text-lg font-semibold leading-[120%] tracking-[0%] uppercase font-manrope text-secondary">
+                  <h4 className="text-lg font-semibold leading-[120%] tracking-[0%] uppercase  text-secondary">
                     {blogData.user?.first_name || blogData.author}
                   </h4>
-                  <p className="mt-4 text-base font-manrope font-normal leading-[150%] tracking-[0%] text-secondary">
+                  <p className="mt-4 text-base  font-normal leading-[150%] tracking-[0%] text-secondary">
                     {blogData.user?.description || "No description available."}
                   </p>
                   <div className="flex items-center justify-between">
@@ -309,7 +309,7 @@ const ContentBlogDetails = ({
                         </a>
                       )}
                     </div>
-                    <Link href={`/viewpost/${blogData.user?.id}`} className="text-lg font-extrabold font-manrope leading-[120%] tracking-[0%] text-secondary">
+                    <Link href={`/viewpost/${blogData.user?.id}`} className="text-lg font-extrabold  leading-[120%] tracking-[0%] text-secondary">
                       View posts
                     </Link>
                   </div>

@@ -8,6 +8,10 @@
   }
 }
 
+body {
+  @apply font-helvetica;
+}
+
 .container{
   max-width: 98%;
   margin: 0 auto;

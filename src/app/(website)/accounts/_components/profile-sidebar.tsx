@@ -56,10 +56,10 @@ export default function ProfileSidebar({
           }`}
           token={token}
         />
-        <h2 className="text-lg md:text-xl font-semibold leading-[120%] text-[#424242] tracking-[0%] font-poppins pt-3">
+        <h2 className="text-lg md:text-xl font-semibold leading-[120%] text-[#424242] tracking-[0%]  pt-3">
           {userProfile?.first_name || ""} {userProfile?.last_name || ""}
         </h2>
-        <p className="text-base font-normal text-[#BFBFBF] font-poppins leading-[120%] tracking-[0%] ">
+        <p className="text-base font-normal text-[#BFBFBF]  leading-[120%] tracking-[0%] ">
           {userProfile?.email || ""}
         </p>
       </div>
@@ -67,7 +67,7 @@ export default function ProfileSidebar({
       <nav className="space-y-[7px]">
         <button
           onClick={() => setActiveTab("personal")}
-          className={`w-full md:w-[307px] h-[62px] flex items-center gap-[10px] text-lg font-normal font-poppins leading-[120%] tracking-[0%] px-4 py-3 rounded-[8px] text-left transition-colors ${
+          className={`w-full md:w-[307px] h-[62px] flex items-center gap-[10px] text-lg font-normal  leading-[120%] tracking-[0%] px-4 py-3 rounded-[8px] text-left transition-colors ${
             activeTab === "personal"
               ? "bg-[#595959] text-white"
               : "text-[#131313]"
@@ -79,7 +79,7 @@ export default function ProfileSidebar({
 
         <button
           onClick={() => setActiveTab("password")}
-          className={`w-full md:w-[307px] h-[62px] flex items-center gap-[10px] text-lg font-normal font-poppins leading-[120%] tracking-[0%] px-4 py-3 rounded-[8px] text-left transition-colors ${
+          className={`w-full md:w-[307px] h-[62px] flex items-center gap-[10px] text-lg font-normal  leading-[120%] tracking-[0%] px-4 py-3 rounded-[8px] text-left transition-colors ${
             activeTab === "password"
               ? "bg-[#595959] text-white"
               : "text-[#131313]"
@@ -91,7 +91,7 @@ export default function ProfileSidebar({
 
         <button
           onClick={() => setLogoutModalOpen(true)}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left hover:bg-red-50 transition-colors text-lg md:text-xl font-medium leading-[120%] font-poppins text-[#FF0000]"
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left hover:bg-red-50 transition-colors text-lg md:text-xl font-medium leading-[120%]  text-[#FF0000]"
         >
           <LogOut className="w-[30px] h-[30px]" />
           Log out

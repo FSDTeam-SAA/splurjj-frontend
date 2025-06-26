@@ -85,7 +85,7 @@ export default function ChangePassword() {
     <div>
       <div className="flex items-center justify-end mb-6 md:mb-8 lg:mb-10">
         <Button
-          className="w-[160px] h-[51px] rounded-[8px] bg-[#0253F7] hover:bg-blue-700 text-white font-manrope font-bold leading-[120%] tracking-[0%] px-[61px] py-[16px]"
+          className="w-[160px] h-[51px] rounded-[8px] bg-[#0253F7] hover:bg-blue-700 text-white  font-bold leading-[120%] tracking-[0%] px-[61px] py-[16px]"
           onClick={form.handleSubmit(onSubmit)}
           disabled={isPending}
         >
@@ -93,7 +93,7 @@ export default function ChangePassword() {
         </Button>
       </div>
       <div className="flex justify-between items-center my-6 md:my-8">
-        <h2 className="text-xl md:text-[22px] lg:text-2xl font-semibold text-[#131313] leading-[120%] tracking-[0%] font-manrope">
+        <h2 className="text-xl md:text-[22px] lg:text-2xl font-semibold text-[#131313] leading-[120%] tracking-[0%] ">
           Change password
         </h2>
       </div>
@@ -105,7 +105,7 @@ export default function ChangePassword() {
             name="current_password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base md:text-[17px] lg:text-lg font-manrope font-medium leading-[120%] tracking-[0%] text-[#131313]">
+                <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313]">
                   Current Password
                 </FormLabel>
                 <FormControl>
@@ -114,7 +114,7 @@ export default function ChangePassword() {
                       type={showCurrentPassword ? "text" : "password"}
                       placeholder="##############"
                       {...field}
-                      className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161]"
+                      className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161]"
                     />
                     <button
                       type="button"
@@ -138,7 +138,7 @@ export default function ChangePassword() {
               name="new_password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base md:text-[17px] lg:text-lg font-manrope font-medium leading-[120%] tracking-[0%] text-[#131313]">
+                  <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313]">
                     New Password
                   </FormLabel>
                   <FormControl>
@@ -147,7 +147,7 @@ export default function ChangePassword() {
                         type={showNewPassword ? "text" : "password"}
                         placeholder="##############"
                         {...field}
-                        className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161]"
+                        className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161]"
                       />
                       <button
                         type="button"
@@ -167,7 +167,7 @@ export default function ChangePassword() {
               name="confirm_new_password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base md:text-[17px] lg:text-lg font-manrope font-medium leading-[120%] tracking-[0%] text-[#131313]">
+                  <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313]">
                     Confirm New Password
                   </FormLabel>
                   <FormControl>
@@ -176,7 +176,7 @@ export default function ChangePassword() {
                         type={showConfirmNewPassword ? "text" : "password"}
                         placeholder="##############"
                         {...field}
-                        className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal font-manrope leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161]"
+                        className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161]"
                       />
                       <button
                         type="button"

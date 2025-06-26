@@ -181,7 +181,7 @@ export default function PersonalInfoForm() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-[106px]">
         <div className="md:col-span-3">
           <div className="flex items-center justify-between pb-8">
-            <h1 className="text-2xl text-[#212121] font-poppins font-semibold leading-[120%] tracking-[0%]">
+            <h1 className="text-2xl text-[#212121]  font-semibold leading-[120%] tracking-[0%]">
               Personal Information
             </h1>
             <Button
@@ -189,7 +189,7 @@ export default function PersonalInfoForm() {
               size="lg"
               disabled={isPending}
               onClick={form.handleSubmit(onSubmit)}
-              className="h-[37px] text-white font-sm font-medium leading-[120%] tracking-[0%] font-poppins py-[10px] px-[26px] bg-[#34A1E8] rounded-[8px]"
+              className="h-[37px] text-white font-sm font-medium leading-[120%] tracking-[0%]  py-[10px] px-[26px] bg-[#34A1E8] rounded-[8px]"
             >
               {isPending ? "Saving..." : "Save"}
             </Button>
@@ -212,14 +212,14 @@ export default function PersonalInfoForm() {
                     name={name as keyof FormData}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                        <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
                           {label}
                         </FormLabel>
                         <FormControl>
                           <Input
                             {...field}
                             type={type || "text"}
-                            className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                            className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
                             placeholder={`Enter your ${label.toLowerCase()}`}
                           />
                         </FormControl>
@@ -237,13 +237,13 @@ export default function PersonalInfoForm() {
                   name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                      <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
                         Description
                       </FormLabel>
                       <FormControl>
                         <Textarea
                           {...field}
-                          className="w-full h-[100px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                          className="w-full h-[100px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
                           placeholder="Tell us about yourself"
                         />
                       </FormControl>
@@ -262,13 +262,13 @@ export default function PersonalInfoForm() {
                       name="facebook_link"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                          <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
                             Facebook Url Link
                           </FormLabel>
                           <FormControl>
                             <Input
                               {...field}
-                              className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                              className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
                               placeholder="https://www.facebook.com/your-profile"
                               type="url"
                             />
@@ -284,13 +284,13 @@ export default function PersonalInfoForm() {
                       name="instagram_link"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                          <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
                             Instagram Url Link
                           </FormLabel>
                           <FormControl>
                             <Input
                               {...field}
-                              className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                              className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
                               placeholder="https://www.instagram.com/your-profile"
                               type="url"
                             />
@@ -309,13 +309,13 @@ export default function PersonalInfoForm() {
                       name="youtube_link"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                          <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
                             YouTube Url Link
                           </FormLabel>
                           <FormControl>
                             <Input
                               {...field}
-                              className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                              className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
                               placeholder="https://www.youtube.com/your-channel"
                               type="url"
                             />
@@ -332,13 +332,13 @@ export default function PersonalInfoForm() {
                       name="twitter_link"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                          <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
                             Twitter Url Link
                           </FormLabel>
                           <FormControl>
                             <Input
                               {...field}
-                              className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                              className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
                               placeholder="https://www.twitter.com/your-profile"
                               type="url"
                             />

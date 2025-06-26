@@ -138,7 +138,7 @@ function ContentComments({ blogId }: ContentCommentsProps) {
     <div className="container w-full flex flex-col items-center justify-center">
       <Toaster position="top-right" reverseOrder={false} /> {/* Add Toaster component */}
       <div className="w-full md:w-2/3">
-        <h4 className="text-lg md:text-xl font-semibold font-manrope leading-[120%] tracking-[0%] text-black uppercase text-left pb-3 md:pb-4">
+        <h4 className="text-lg md:text-xl font-semibold  leading-[120%] tracking-[0%] text-black uppercase text-left pb-3 md:pb-4">
           Comments
         </h4>
         <div className="border-b border-gray-200 py-4">
@@ -172,14 +172,14 @@ function ContentComments({ blogId }: ContentCommentsProps) {
         </div>
         <div className="flex justify-end gap-2 mt-4">
           <button
-            className="flex items-center justify-center group text-white py-3 px-6 font-manrope leading-[120%] tracking-[0%] bg-primary rounded-md"
+            className="flex items-center justify-center group text-white py-3 px-6  leading-[120%] tracking-[0%] bg-primary rounded-md"
             onClick={handlePrev}
           >
             <MoveLeft className="h-4 w-4 text-white" />
             <span className="sr-only">Previous</span>
           </button>
           <button
-            className="flex items-center justify-center group text-white py-3 px-6 font-manrope leading-[120%] tracking-[0%] bg-primary rounded-md"
+            className="flex items-center justify-center group text-white py-3 px-6  leading-[120%] tracking-[0%] bg-primary rounded-md"
             onClick={handleNext}
           >
             <MoveRight className="h-4 w-4 text-white" />

@@ -248,7 +248,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
               <div className="flex items-center gap-2">
                 <Link
                   href={`/blogs//${post.category_name}`}
-                  className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white"
+                  className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white"
                   aria-label={`Watch video: ${post.heading.replace(
                     /<[^>]+>/g,
                     ""
@@ -258,7 +258,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
                 </Link>
                 <Link
                   href={`/${categoryId}/${subcategoryId}`}
-                  className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold font-manrope leading-[120%] tracking-[0%] uppercase text-white"
+                  className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white"
                   aria-label={`Watch video: ${post.heading.replace(
                     /<[^>]+>/g,
                     ""
@@ -275,7 +275,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
                   className="text-2xl font-medium line-clamp-2"
                 />
               </Link>
-              <p className="text-base font-semibold font-manrope leading-[120%] tracking-[0%] uppercase text-[#424242] mt-4 md:mt-5 lg:mt-6">
+              <p className="text-base font-semibold  leading-[120%] tracking-[0%] uppercase text-[#424242] mt-4 md:mt-5 lg:mt-6">
                 {post.author} - {post.date}
               </p>
 
@@ -349,7 +349,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
 
               <p
                 dangerouslySetInnerHTML={{ __html: post.body1 }}
-                className="text-sm font-normal font-manrope text-[#424242] line-clamp-3 mt-2"
+                className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
               />
             </div>
           </article>

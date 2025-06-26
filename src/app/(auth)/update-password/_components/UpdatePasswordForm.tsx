@@ -108,7 +108,7 @@ export default function UpdatePasswordForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
+                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                   New Password
                 </FormLabel>
                 <FormControl>
@@ -117,7 +117,7 @@ export default function UpdatePasswordForm() {
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your New Password"
                       className="border border-[#272727] h-[49px] bg-white text-[#131313]
-placeholder:text-[#929292] font-medium font-manrope 
+placeholder:text-[#929292] font-medium  
 leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                       {...field}
                     />
@@ -146,7 +146,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
               name="password_confirmation"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg font-manrope leading-[120%] tracking-[0%]">
+                  <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                     Confirm Password
                   </FormLabel>
                   <FormControl>
@@ -155,7 +155,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                         type={showConfirmPassword ? "text" : "password"}
                         placeholder="Enter your Confirm Password"
                         className="border border-[#272727] h-[49px] bg-white text-[#131313]
-placeholder:text-[#929292] font-medium font-manrope 
+placeholder:text-[#929292] font-medium  
 leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                         {...field}
                       />
@@ -183,7 +183,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
           {/* Continue Button */}
           <button
             type="submit"
-            className="w-full h-[51px] bg-[#0253F7] rounded-[8px] py-[16px] px-[81px] text-lg font-semibold font-poppins leading-[120%] tracking-[0%] text-[#F4F4F4]"
+            className="w-full h-[51px] bg-[#0253F7] rounded-[8px] py-[16px] px-[81px] text-lg font-semibold  leading-[120%] tracking-[0%] text-[#F4F4F4]"
             disabled={isPending}
           >
             {isPending ? "Loading..." : "Continue"}

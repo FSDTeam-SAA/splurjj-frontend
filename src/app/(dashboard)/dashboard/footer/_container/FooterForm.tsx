@@ -195,13 +195,13 @@ export function FooterForm() {
                 name="facebook_link"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                    <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
                       Facebook Url Link
                     </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                        className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
                         placeholder="https://www.facebook.com/your-profile"
                         type="url"
                       />
@@ -217,13 +217,13 @@ export function FooterForm() {
                 name="instagram_link"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                    <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
                       Instagram Url Link
                     </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                        className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
                         placeholder="https://www.instagram.com/your-profile"
                         type="url"
                       />
@@ -239,13 +239,13 @@ export function FooterForm() {
                 name="linkedin_link"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                    <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
                       Linkedin Url Link
                     </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                        className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
                         placeholder="https://www.youtube.com/your-channel"
                         type="url"
                       />
@@ -261,13 +261,13 @@ export function FooterForm() {
                 name="twitter_link"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                    <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
                       Twitter Url Link
                     </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                        className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
                         placeholder="https://www.twitter.com/your-profile"
                         type="url"
                       />
@@ -283,13 +283,13 @@ export function FooterForm() {
                 name="app_store_link"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                    <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
                       App Store Url Link
                     </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                        className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
                         placeholder="https://www.apple.com/app-store/your-app"
                         type="url"
                       />
@@ -305,13 +305,13 @@ export function FooterForm() {
                 name="google_play_link"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                    <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
                       Google Play Url Link
                     </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                        className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
                         placeholder="https://play.google.com/store/your-apps"
                         type="url"
                       />
@@ -328,13 +328,13 @@ export function FooterForm() {
               name="copyright"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-lg font-normal font-poppins leading-[120%] tracking-[0%] text-[#212121]">
+                  <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
                     Copyright
                   </FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121] font-poppins font-normal text-base tracking-[0%] rounded-[8px]"
+                      className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
                       placeholder="Copyright © 2025 Your Company. All rights reserved."
                       type="text"
                     />

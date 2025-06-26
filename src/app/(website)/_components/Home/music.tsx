@@ -148,13 +148,13 @@ const Music: React.FC = () => {
             <div className="flex items-center gap-2">
               <Link
                 href={`/blogs/${firstPost.category_name}`}
-                className="bg-primary py-2 px-4 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white"
               >
                 {firstPost.category_name || "Category"}
               </Link>
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}`}
-                className="bg-primary py-2 px-4 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white"
               >
                 {firstPost.sub_category_name || "Subcategory"}
               </Link>
@@ -232,12 +232,12 @@ const Music: React.FC = () => {
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-2xl font-medium font-manrope text-white hover:underline"
+                  className="text-2xl font-medium  text-white hover:underline"
                 />
               </Link>
               <p
                 dangerouslySetInnerHTML={{ __html: firstPost.body1 }}
-                className="text-sm font-normal font-manrope text-white line-clamp-3 mt-2"
+                className="text-sm font-normal  text-white line-clamp-3 mt-2"
               />
             </div>
           </div>
@@ -263,20 +263,20 @@ const Music: React.FC = () => {
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: secondPost.heading }}
-                    className="text-lg font-medium font-manrope text-[#131313] hover:underline"
+                    className="text-lg font-medium  text-[#131313] hover:underline"
                   />
                 </Link>
                 <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2">
                     <Link
                       href={`/blogs/${secondPost.category_name}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
                     >
                       {secondPost.category_name || "Category"}
                     </Link>
                     <Link
                       href={`/${secondPost.category_id}/${secondPost.subcategory_id}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
                     >
                       {secondPost.sub_category_name || "Subcategory"}
                     </Link>
@@ -341,9 +341,9 @@ const Music: React.FC = () => {
                 </div>
                 <p
                   dangerouslySetInnerHTML={{ __html: secondPost.body1 }}
-                  className="text-sm font-normal font-manrope text-[#424242] line-clamp-3"
+                  className="text-sm font-normal  text-[#424242] line-clamp-3"
                 />
-                <p className="text-sm font-semibold font-manrope uppercase text-[#424242]">
+                <p className="text-sm font-semibold  uppercase text-[#424242]">
                   {secondPost.author} - {secondPost.date}
                 </p>
               </div>
@@ -367,20 +367,20 @@ const Music: React.FC = () => {
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
-                    className="text-lg font-medium font-manrope text-[#131313] hover:underline"
+                    className="text-lg font-medium  text-[#131313] hover:underline"
                   />
                 </Link>
                 <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2">
                     <Link
                       href={`/blogs/${thirdPost.category_id}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
                     >
                       {thirdPost.category_name || "Category"}
                     </Link>
                     <Link
                       href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold font-manrope uppercase text-white"
+                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
                     >
                       {thirdPost.sub_category_name || "Subcategory"}
                     </Link>
@@ -445,9 +445,9 @@ const Music: React.FC = () => {
                 </div>
                 <p
                   dangerouslySetInnerHTML={{ __html: thirdPost.body1 }}
-                  className="text-sm font-normal font-manrope text-[#424242] line-clamp-3"
+                  className="text-sm font-normal  text-[#424242] line-clamp-3"
                 />
-                <p className="text-sm font-semibold font-manrope uppercase text-[#424242]">
+                <p className="text-sm font-semibold  uppercase text-[#424242]">
                   {thirdPost.author} - {thirdPost.date}
                 </p>
               </div>
@@ -457,7 +457,7 @@ const Music: React.FC = () => {
         <div className="flex justify-end py-4">
           <Link
             href={`/blogs/${firstPost?.category_name}`}
-            className="bg-primary py-2 px-4 rounded text-sm font-extrabold font-manrope uppercase text-white flex items-center gap-2"
+            className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white flex items-center gap-2"
           >
             EXPLORE MORE <ArrowRight size={16} />
           </Link>
