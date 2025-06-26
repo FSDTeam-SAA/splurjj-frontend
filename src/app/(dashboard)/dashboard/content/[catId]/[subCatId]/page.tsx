@@ -1,32 +1,31 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { ChevronRight, Plus } from "lucide-react";
-import Link from "next/link";
-import { useParams } from "next/navigation";
-import ContentTable from "../../_components/content-table";
-import { useSession } from "next-auth/react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { AllContentResponse, Content } from "../../_components/ContentDataType";
-import ContentModalForm from "../../_components/ContentModalForm";
-import { toast } from "react-toastify";
-import SplurjjPagination from "@/components/ui/SplurjjPagination";
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { ChevronRight, Plus } from "lucide-react"
+import Link from "next/link"
+import { useParams } from "next/navigation"
+import ContentTable from "../../_components/content-table"
+import { useSession } from "next-auth/react"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import type { AllContentResponse, Content } from "../../_components/ContentDataType"
+import { toast } from "react-toastify"
+import SplurjjPagination from "@/components/ui/SplurjjPagination"
+import ContentAddEditForm from "../../_components/ContentModalForm"
 
 export default function SubcategoryContentPage() {
-  const params = useParams();
-  const categoryId = params?.catId;
-  const subcategoryId = params?.subCatId;
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingContent, setEditingContent] = useState<Content | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  const params = useParams()
+  const categoryId = params?.catId
+  const subcategoryId = params?.subCatId
+  const [editingContent, setEditingContent] = useState<Content | null>(null)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [showForm, setShowForm] = useState(false)
 
-  const session = useSession();
-  const token = (session?.data?.user as { token: string })?.token;
-  const queryClient = useQueryClient();
+  const session = useSession()
+  const token = (session?.data?.user as { token: string })?.token
+  const queryClient = useQueryClient()
 
   // get all content
-
   const { data, isLoading, error, isError } = useQuery<AllContentResponse>({
     queryKey: ["all-contents", currentPage],
     queryFn: () =>
@@ -38,52 +37,60 @@ export default function SubcategoryContentPage() {
             Authorization: `Bearer ${token}`,
             "content-type": "application/json",
           },
-        }
+        },
       ).then((res) => res.json()),
-  });
+  })
 
-  console.log("all contents", data?.data);
+  console.log("all contents", data?.data)
   if (isError) {
-    console.log(error);
+    console.log(error)
   }
 
   // content delete api
   const { mutate: deleteContent } = useMutation({
     mutationKey: ["delete-content"],
     mutationFn: (contentId: number) =>
-      fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${contentId}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "content-type": "application/json",
-          },
-        }
-      ).then((res) => res.json()),
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${contentId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "content-type": "application/json",
+        },
+      }).then((res) => res.json()),
     onSuccess: (data) => {
       if (!data?.status) {
-        toast.error(data?.message || "Something went wrong");
-        return;
+        toast.error(data?.message || "Something went wrong")
+        return
       }
-      toast.success(data?.message || "Content deleted successfully");
-      queryClient.invalidateQueries({ queryKey: ["all-contents"] });
+      toast.success(data?.message || "Content deleted successfully")
+      queryClient.invalidateQueries({ queryKey: ["all-contents"] })
     },
-  });
+  })
 
   const handleDeleteContent = (contentId: number) => {
-    deleteContent(contentId);
-  };
-
-  const handleEditContent = (content: Content) => {
-    setEditingContent(content);
-    setIsModalOpen(true);
-  };
+    deleteContent(contentId)
+  }
 
   const handleAddContent = () => {
-    setEditingContent(null);
-    setIsModalOpen(true);
-  };
+    setEditingContent(null)
+    setShowForm(true)
+  }
+
+  const handleEditContent = (content: Content) => {
+    setEditingContent(content)
+    setShowForm(true)
+  }
+
+  const handleCloseForm = () => {
+    setShowForm(false)
+    setEditingContent(null)
+  }
+
+  const handleFormSuccess = () => {
+    setShowForm(false)
+    setEditingContent(null)
+    queryClient.invalidateQueries({ queryKey: ["all-contents"] })
+  }
 
   return (
     <div className="p-6">
@@ -91,9 +98,7 @@ export default function SubcategoryContentPage() {
         {/* Header */}
         <div className="flex justify-between items-start mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">
-              {data?.data?.data[0]?.category_name} Lists
-            </h1>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">{data?.data?.data[0]?.category_name} Lists</h1>
             <div className="text-base text-[#929292] font-manrope font-medium leading-[120%] tracking-[0%] flex items-center gap-2">
               <Link
                 href="/dashboard"
@@ -125,41 +130,53 @@ export default function SubcategoryContentPage() {
           </Button>
         </div>
 
-        {/* Content Table */}
-        <ContentTable
-          contents={data?.data?.data || []}
-          loading={isLoading}
-          onDelete={handleDeleteContent}
-          onEdit={handleEditContent}
-        />
-
-        {/* pagination  */}
-        <div className="pb-[108px]">
-          {data && data?.total_pages > 1 && (
-            <div className="mt-[30px] w-full flex justify-between">
-              <p className="font-normal text-base leading-[120%] text-secondary-100">
-                Showing {data?.data?.current_page} from {data?.total_pages}
-              </p>
-              <div>
-                <SplurjjPagination
-                  currentPage={currentPage}
-                  totalPages={data?.total_pages}
-                  onPageChange={(page) => setCurrentPage(page)}
-                />
-              </div>
+        {/* Conditional rendering: Show either the table or the form */}
+        {showForm ? (
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold">{editingContent ? "Edit Content" : "Add New Content"}</h2>
+              <Button variant="outline" onClick={handleCloseForm} className="bg-white text-gray-600 border-gray-300">
+                Back to List
+              </Button>
             </div>
-          )}
-        </div>
-      </div>
+            <ContentAddEditForm
+              initialContent={editingContent}
+              categoryId={categoryId!}
+              subcategoryId={subcategoryId!}
+              onSuccess={handleFormSuccess}
+              onCancel={handleCloseForm}
+            />
+          </div>
+        ) : (
+          <>
+            {/* Content Table */}
+            <ContentTable
+              contents={data?.data?.data || []}
+              loading={isLoading}
+              onDelete={handleDeleteContent}
+              onEdit={handleEditContent}
+            />
 
-      {/* content modal form  */}
-      <ContentModalForm
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        categoryId={categoryId}
-        subcategoryId={subcategoryId}
-        initialContent={editingContent}
-      />
+            {/* pagination  */}
+            <div className="pb-[108px]">
+              {data && data?.total_pages > 1 && (
+                <div className="mt-[30px] w-full flex justify-between">
+                  <p className="font-normal text-base leading-[120%] text-secondary-100">
+                    Showing {data?.data?.current_page} from {data?.total_pages}
+                  </p>
+                  <div>
+                    <SplurjjPagination
+                      currentPage={currentPage}
+                      totalPages={data?.total_pages}
+                      onPageChange={(page) => setCurrentPage(page)}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          </>
+        )}
+      </div>
     </div>
-  );
+  )
 }
