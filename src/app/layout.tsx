@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import { Manrope } from "next/font/google";
-import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { ToastContainer } from "react-toastify";
@@ -8,17 +6,13 @@ import "react-toastify/dist/ReactToastify.css";
 import AuthProvider from "@/components/provider/AuthProvider";
 import AppProvider from "@/components/provider/AppProvider";
 import { ThemeProvider } from "next-themes";
+import localFont from "next/font/local";
 
-const manrope = Manrope({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"], // customize as needed
-  variable: "--font-manrope", // for Tailwind CSS
-  display: "swap",
-});
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"], // Choose the weights you need
-  variable: "--font-poppins", // Required for Tailwind integration
+// ✅ DO NOT export this font
+const helvetica = localFont({
+  src: "./fonts/HelveticaNeueBold.otf",
+  variable: "--font-helvetica",
+  weight: "100 200 300 400 500 600 700 800 900", // fixed spacing (use space or single value)
   display: "swap",
 });
 
@@ -33,8 +27,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${poppins.variable} ${manrope.variable} antialiased`}>
+    <html
+      lang="en"
+      className={`${helvetica.variable} antialiased`}
+      suppressHydrationWarning
+    >
+      <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthProvider>
             <AppProvider>

@@ -972,7 +972,7 @@ export default function Sidebar() {
               return (
                 <div
                   key={category.category_id}
-                  className={`rounded-lg transition-colors pl-3 ${
+                  className={`rounded-lg transition-colors ml-3 ${
                     categoryActive
                       ? "bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800"
                       : "bg-white dark:bg-transparent"

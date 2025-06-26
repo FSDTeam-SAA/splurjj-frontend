@@ -65,17 +65,17 @@ export function RevenueReport() {
     <Card className="w-full bg-white shadow-sm">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-8">
         <div className="flex items-center space-x-4">
-          <h2 className="text-xl font-semibold text-gray-900">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-black">
             Revenue report
           </h2>
           <div className="flex items-center space-x-6">
             <div className="flex items-center space-x-2">
               <div className="w-3 h-3 rounded-full bg-violet-500"></div>
-              <span className="text-sm text-gray-600">This Year</span>
+              <span className="text-sm text-gray-600 dark:text-black">This Year</span>
             </div>
             <div className="flex items-center space-x-2">
               <div className="w-3 h-3 rounded-full bg-pink-500"></div>
-              <span className="text-sm text-gray-600">Last Year</span>
+              <span className="text-sm text-gray-600 dark:text-black">Last Year</span>
             </div>
           </div>
         </div>

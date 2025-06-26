@@ -126,7 +126,7 @@ export default function SubcategoryContentPage() {
             onClick={handleAddContent}
           >
             <Plus className="h-8 w-8 text-white" />
-            Add Blog
+            Add Post
           </Button>
         </div>
 

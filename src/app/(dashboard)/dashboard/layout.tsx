@@ -9,7 +9,7 @@ const DashboardLayout = ({children}: {children: React.ReactNode}) => {
             <div className='h-full flex flex-col'>
                 <DashboardHeader />
                 <div className='flex flex-1 overflow-hidden'>
-                    <div className='w-64 min-w-[16rem]'>
+                    <div className='w-[300px] min-w-[16rem]'>
                         <Sidebar />
                     </div>
                     <div className='flex-1 overflow-auto p-6'>
