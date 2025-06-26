@@ -265,9 +265,9 @@ export default function ContentAddEditForm({
         <Button
           variant="outline"
           onClick={handleCloseForm}
-          className="bg-white text-[#0253F7] text-lg font-bold leading-normal border-2 border-[#0253F7]"
+          className="bg-white text-[#0253F7] dark:text-[#0253F7] text-lg font-bold leading-normal border-2 border-[#0253F7]"
         >
-          <FaArrowLeft /> Back to List
+          <FaArrowLeft className="dark:text-[#0253F7]"/> Back to List
         </Button>
       </div>
       <Form {...form}>
@@ -620,7 +620,7 @@ export default function ContentAddEditForm({
               type="button"
               variant="outline"
               onClick={onCancel}
-              className="bg-white text-gray-600 border-gray-300 px-12 py-3 rounded-lg text-lg font-medium"
+              className="bg-white text-gray-600  dark:text-black border-gray-300 px-12 py-3 rounded-lg text-lg font-medium"
             >
               Cancel
             </Button>

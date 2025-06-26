@@ -61,13 +61,14 @@ const QuillEditor = ({ value, onChange, id }: QuillEditorProps) => {
         theme="snow"
       />
 
-      <style jsx global>{`
+      {/* <style jsx global>{`
         .quill-editor-wrapper .ql-container {
           border-color: #e2e8f0;
           border-bottom-left-radius: 0.375rem;
           border-bottom-right-radius: 0.375rem;
           min-height: 150px;
           font-size: 1rem;
+          color: #000000;
         }
         .quill-editor-wrapper .ql-toolbar {
           border-color: #e2e8f0;
@@ -77,6 +78,36 @@ const QuillEditor = ({ value, onChange, id }: QuillEditorProps) => {
         }
         .quill-editor-wrapper .ql-editor {
           min-height: 150px;
+        }
+      `}</style> */}
+
+      <style jsx global>{`
+        .quill-editor-wrapper .ql-container {
+          border-color: #e2e8f0;
+          border-bottom-left-radius: 0.375rem;
+          border-bottom-right-radius: 0.375rem;
+          min-height: 150px;
+          font-size: 1rem;
+          background-color: #ffffff;
+          color: #000000;
+        }
+
+        .quill-editor-wrapper .ql-editor {
+          min-height: 150px;
+          color: #000000;
+        }
+
+        /* Dark mode - ONLY input field */
+        .dark .quill-editor-wrapper .ql-container {
+          background-color: #1f2937; /* dark gray */
+        }
+
+        .dark .quill-editor-wrapper .ql-editor {
+          color: #f9fafb; /* light text */
+        }
+
+        .dark .quill-editor-wrapper .ql-editor.ql-blank::before {
+          color: #9ca3af; /* placeholder text color */
         }
       `}</style>
     </div>
