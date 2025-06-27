@@ -55,6 +55,8 @@ const AllContents: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [showShareMenu, setShowShareMenu] = useState<number | null>(null);
 
+  // fdfdf 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -165,7 +167,7 @@ const AllContents: React.FC = () => {
         <div className="mb-16">
           <div>
             <div className="flex items-center gap-4 mb-4">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 ">
                 <Link
                   href={`/blogs/${firstPost.category_name}`}
                   className="bg-primary py-2 px-4 rounded text-base font-extrabold  uppercase text-white"
@@ -235,9 +237,9 @@ const AllContents: React.FC = () => {
                 </Link>
               </div>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-4 border-2 border-red-500">
               <Link
-                href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
+                href={`/${firstPost?.category_id}/${firstPost?.subcategory_id}/${firstPost?.id}`}
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
