@@ -140,44 +140,107 @@ const Ride: React.FC = () => {
       "_blank"
     );
   };
-console.log(loading)
-  // if (loading)
-  //   return <div className="loading text-center py-8">Loading...</div>;
-  if (error)
-    return (
-      <div className="error text-center py-8 text-red-500">Error: {error}</div>
-    );
-  if (posts.length === 0)
-    return <div className="error text-center py-8">No posts found</div>;
+
+  // Skeleton Loading Component
+  const SkeletonLoader = () => (
+    <div className="animate-pulse py-8">
+      {/* Skeleton for First Post */}
+      <div className="mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+          <div className="col-span-2 space-y-4">
+            <div className="bg-gray-300 h-6 w-3/4 rounded"></div>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
+                <div className="bg-gray-300 h-6 w-20 rounded"></div>
+                <div className="bg-gray-300 h-6 w-20 rounded"></div>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+                <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+                <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+              </div>
+            </div>
+            <div className="bg-gray-300 h-4 w-full rounded"></div>
+            <div className="bg-gray-300 h-4 w-5/6 rounded"></div>
+            <div className="bg-gray-300 h-4 w-2/3 rounded"></div>
+            <div className="bg-gray-300 h-4 w-1/2 rounded"></div>
+          </div>
+          <div className="col-span-3">
+            <div className="bg-gray-300 w-full h-[213px] rounded-md"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Skeleton for Second Post */}
+      <div className="mb-8">
+        <div className="grid grid-cols-5 gap-4">
+          <div className="col-span-5 lg:col-span-3">
+            <div className="bg-gray-300 w-full h-[213px] rounded-md"></div>
+          </div>
+          <div className="col-span-5 lg:col-span-2 space-y-4">
+            <div className="bg-gray-300 h-6 w-3/4 rounded"></div>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2">
+                <div className="bg-gray-300 h-6 w-20 rounded"></div>
+                <div className="bg-gray-300 h-6 w-20 rounded"></div>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+                <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+                <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+              </div>
+            </div>
+            <div className="bg-gray-300 h-4 w-full rounded"></div>
+            <div className="bg-gray-300 h-4 w-5/6 rounded"></div>
+            <div className="bg-gray-300 h-4 w-2/3 rounded"></div>
+            <div className="bg-gray-300 h-4 w-1/2 rounded"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Skeleton for Explore More Button */}
+      <div className="flex justify-end py-4">
+        <div className="bg-gray-300 h-8 w-32 rounded"></div>
+      </div>
+    </div>
+  );
+
+  if (loading) return <SkeletonLoader />;
+  if (error) return (
+    <div className="error text-center py-8 text-red-500">Error: {error}</div>
+  );
+  if (posts.length === 0) return (
+    <div className="error text-center py-8">No posts found</div>
+  );
 
   const firstPost = posts[0];
   const secondPost = posts[1];
 
   return (
-    <div className=" py-8">
+    <div className="py-8">
       {firstPost && (
         <div className="mb-8">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-            <div className="col-span-2 space-y-4">
+            <div className="col-span-2 space-y-4 ">
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-lg font-medium  text-[#131313] hover:underline"
+                  className="text-lg font-medium text-[#131313] hover:underline text-end"
                 />
               </Link>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center justify-end gap-2">
                 <div className="flex items-center gap-2">
                   <Link
                     href={`/blogs/${firstPost.category_name}`}
-                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                   >
                     {firstPost.category_name || "Category"}
                   </Link>
                   <Link
                     href={`/${firstPost.category_id}/${firstPost.subcategory_id}`}
-                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                   >
                     {firstPost.sub_category_name || "Subcategory"}
                   </Link>
@@ -241,12 +304,17 @@ console.log(loading)
                 </div>
               </div>
               <p
-                dangerouslySetInnerHTML={{ __html: firstPost.body1 }}
-                className="text-sm font-normal  text-[#424242] line-clamp-3"
+                dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
+                className="text-sm font-normal text-[#424242] line-clamp-3 text-end"
               />
-              <p className="text-sm font-semibold  uppercase text-[#424242]">
+              
+              <p className="text-sm font-semibold uppercase text-[#424242] text-end">
                 {firstPost.author} - {firstPost.date}
               </p>
+              <p
+                dangerouslySetInnerHTML={{ __html: firstPost.body1 }}
+                className="text-sm font-normal text-[#424242] line-clamp-3 text-end"
+              />
             </div>
             <div className="col-span-3">
               <Image
@@ -254,7 +322,7 @@ console.log(loading)
                 alt={firstPost.heading || "Blog Image"}
                 width={300}
                 height={200}
-                className="w-full h-[213px] object-cover rounded-md"
+                className="w-full h-[467px] object-cover rounded-md"
               />
             </div>
           </div>
@@ -270,7 +338,7 @@ console.log(loading)
                 alt={secondPost.heading || "Blog Image"}
                 width={300}
                 height={200}
-                className="w-full h-[213px] object-cover rounded-md"
+                className="w-full h-[467px] object-cover rounded-md"
               />
             </div>
             <div className="col-span-5 lg:col-span-2 space-y-4">
@@ -279,20 +347,20 @@ console.log(loading)
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: secondPost.heading }}
-                  className="text-lg font-medium  text-[#131313] hover:underline"
+                  className="text-lg font-medium text-[#131313] hover:underline"
                 />
               </Link>
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-2">
                   <Link
                     href={`/blogs/${secondPost.category_name}`}
-                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                   >
                     {secondPost.category_name || "Category"}
                   </Link>
                   <Link
                     href={`/${secondPost.category_id}/${secondPost.subcategory_id}`}
-                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                   >
                     {secondPost.sub_category_name || "Subcategory"}
                   </Link>
@@ -357,9 +425,9 @@ console.log(loading)
               </div>
               <p
                 dangerouslySetInnerHTML={{ __html: secondPost.body1 }}
-                className="text-sm font-normal  text-[#424242] line-clamp-3"
+                className="text-sm font-normal text-[#424242] line-clamp-3"
               />
-              <p className="text-sm font-semibold  uppercase text-[#424242]">
+              <p className="text-sm font-semibold uppercase text-[#424242]">
                 {secondPost.author} - {secondPost.date}
               </p>
             </div>
@@ -369,8 +437,8 @@ console.log(loading)
 
       <div className="flex justify-end py-4">
         <Link
-          href={`/blogs/${firstPost?.category_id}`}
-          className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white flex items-center gap-2"
+          href={`/blogs/${firstPost?.category_name}`}
+          className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white flex items-center gap-2"
         >
           EXPLORE MORE <ArrowRight size={16} />
         </Link>

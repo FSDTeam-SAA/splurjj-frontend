@@ -141,15 +141,68 @@ const Music: React.FC = () => {
     );
   };
 
-  console.log(loading);
+  // Skeleton Loading Component
+  const SkeletonLoader = () => (
+    <div className="animate-pulse">
+      {/* Skeleton for First Post */}
+      <div className="py-8">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2">
+            <div className="bg-gray-300 h-8 w-24 rounded"></div>
+            <div className="bg-gray-300 h-8 w-24 rounded"></div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+            <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+            <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+          </div>
+        </div>
+        <div className="bg-gray-300 w-full h-[433px] rounded-lg"></div>
+      </div>
 
-  // if (loading) return <div className="loading text-center py-8">Loading...</div>;
-  if (error)
-    return (
-      <div className="error text-center py-8 text-red-500">Error: {error}</div>
-    );
-  if (posts.length === 0)
-    return <div className="error text-center py-8">No posts found</div>;
+      {/* Skeleton for Two-Post Grid */}
+      <div className="py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[1, 2].map((_, index) => (
+            <div key={index} className="grid grid-cols-5 gap-4">
+              <div className="col-span-5 lg:col-span-2">
+                <div className="bg-gray-300 w-full h-[213px] rounded-md"></div>
+              </div>
+              <div className="col-span-5 lg:col-span-3 space-y-4">
+                <div className="bg-gray-300 h-6 w-3/4 rounded"></div>
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2">
+                    <div className="bg-gray-300 h-6 w-20 rounded"></div>
+                    <div className="bg-gray-300 h-6 w-20 rounded"></div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+                    <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+                    <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+                  </div>
+                </div>
+                <div className="bg-gray-300 h-4 w-full rounded"></div>
+                <div className="bg-gray-300 h-4 w-5/6 rounded"></div>
+                <div className="bg-gray-300 h-4 w-2/3 rounded"></div>
+                <div className="bg-gray-300 h-4 w-1/2 rounded"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-end py-4">
+          <div className="bg-gray-300 h-8 w-32 rounded"></div>
+        </div>
+      </div>
+    </div>
+  );
+
+  if (loading) return <SkeletonLoader />;
+  if (error) return (
+    <div className="error text-center py-8 text-red-500">Error: {error}</div>
+  );
+  if (posts.length === 0) return (
+    <div className="error text-center py-8">No posts found</div>
+  );
 
   const firstPost = posts[0];
   const secondPost = posts[1];
@@ -163,13 +216,13 @@ const Music: React.FC = () => {
             <div className="flex items-center gap-2">
               <Link
                 href={`/blogs/${firstPost.category_name}`}
-                className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white"
+                className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
               >
                 {firstPost.category_name || "Category"}
               </Link>
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}`}
-                className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white"
+                className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
               >
                 {firstPost.sub_category_name || "Subcategory"}
               </Link>
@@ -243,23 +296,7 @@ const Music: React.FC = () => {
                 backgroundSize: "cover",
               }}
               className="flex items-center justify-end rounded-lg"
-            >
-              {/* <div className="text-center bg-black text-white bg-opacity-50 p-6 rounded lg:w-1/2 border-2 border-red-500">
-              <Link
-              className="dark:text-white"
-                href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
-              >
-                <p
-                  dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-2xl font-medium  dark:text-white hover:underline"
-                />
-              </Link>
-              <p
-                dangerouslySetInnerHTML={{ __html: firstPost.body1 }}
-                className="text-sm font-normal  dark:text-white line-clamp-3 mt-2"
-              />
-            </div> */}
-            </div>
+            />
           </Link>
         </div>
       )}
@@ -283,20 +320,20 @@ const Music: React.FC = () => {
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: secondPost.heading }}
-                    className="text-lg font-medium  text-[#131313] hover:underline"
+                    className="text-lg font-medium text-[#131313] hover:underline"
                   />
                 </Link>
                 <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2">
                     <Link
                       href={`/blogs/${secondPost.category_name}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                     >
                       {secondPost.category_name || "Category"}
                     </Link>
                     <Link
                       href={`/${secondPost.category_id}/${secondPost.subcategory_id}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                     >
                       {secondPost.sub_category_name || "Subcategory"}
                     </Link>
@@ -361,9 +398,9 @@ const Music: React.FC = () => {
                 </div>
                 <p
                   dangerouslySetInnerHTML={{ __html: secondPost.body1 }}
-                  className="text-sm font-normal  text-[#424242] line-clamp-3"
+                  className="text-sm font-normal text-[#424242] line-clamp-3"
                 />
-                <p className="text-sm font-semibold  uppercase text-[#424242]">
+                <p className="text-sm font-semibold uppercase text-[#424242]">
                   {secondPost.author} - {secondPost.date}
                 </p>
               </div>
@@ -387,20 +424,20 @@ const Music: React.FC = () => {
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
-                    className="text-lg font-medium  text-[#131313] hover:underline"
+                    className="text-lg font-medium text-[#131313] hover:underline"
                   />
                 </Link>
                 <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2">
                     <Link
-                      href={`/blogs/${thirdPost.category_id}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                      href={`/blogs/${thirdPost.category_name}`}
+                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                     >
                       {thirdPost.category_name || "Category"}
                     </Link>
                     <Link
                       href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                     >
                       {thirdPost.sub_category_name || "Subcategory"}
                     </Link>
@@ -465,9 +502,9 @@ const Music: React.FC = () => {
                 </div>
                 <p
                   dangerouslySetInnerHTML={{ __html: thirdPost.body1 }}
-                  className="text-sm font-normal  text-[#424242] line-clamp-3"
+                  className="text-sm font-normal text-[#424242] line-clamp-3"
                 />
-                <p className="text-sm font-semibold  uppercase text-[#424242]">
+                <p className="text-sm font-semibold uppercase text-[#424242]">
                   {thirdPost.author} - {thirdPost.date}
                 </p>
               </div>
@@ -477,7 +514,7 @@ const Music: React.FC = () => {
         <div className="flex justify-end py-4">
           <Link
             href={`/blogs/${firstPost?.category_name}`}
-            className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white flex items-center gap-2"
+            className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white flex items-center gap-2"
           >
             EXPLORE MORE <ArrowRight size={16} />
           </Link>
