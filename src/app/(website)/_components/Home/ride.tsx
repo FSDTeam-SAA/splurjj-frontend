@@ -317,13 +317,17 @@ const Ride: React.FC = () => {
               />
             </div>
             <div className="col-span-3">
-              <Image
+              <Link
+                    href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
+                    className="cursor-pointer"
+                  > <Image
                 src={getImageUrl(firstPost.image1)}
                 alt={firstPost.heading || "Blog Image"}
                 width={300}
                 height={200}
-                className="w-full h-[467px] object-cover rounded-md"
-              />
+                className="w-full h-[467px] object-cover rounded-md border-image"
+              /></Link>
+             
             </div>
           </div>
         </div>
@@ -333,13 +337,16 @@ const Ride: React.FC = () => {
         <div className="mb-8">
           <div className="grid grid-cols-5 gap-4">
             <div className="col-span-5 lg:col-span-3">
-              <Image
+              <Link
+                href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
+              ><Image
                 src={getImageUrl(secondPost.image1)}
                 alt={secondPost.heading || "Blog Image"}
                 width={300}
                 height={200}
-                className="w-full h-[467px] object-cover rounded-md"
-              />
+                className="w-full h-[467px] object-cover rounded-md border-image"
+              /></Link>
+              
             </div>
             <div className="col-span-5 lg:col-span-2 space-y-4">
               <Link

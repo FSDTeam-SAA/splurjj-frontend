@@ -297,16 +297,16 @@ const Gear: React.FC = () => {
                 backgroundPosition: "center",
                 backgroundSize: "cover",
               }}
-              className="flex items-center justify-center rounded-lg"
+              className="flex items-center justify-center rounded-lg border-image"
             >
               <div>
                 <div
                   dangerouslySetInnerHTML={{ __html: sanitizedHeading }}
-                  className="!text-white white-text"
+                  className="!text-white white-text text-5xl"
                 />
                 <div
                   dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
-                  className="text-sm font-normal text-[#424242] line-clamp-3 white-text text-center"
+                  className="text-lg font-normal text-[#424242] line-clamp-3 white-text text-center"
                 />
               </div>
             </div>
@@ -319,13 +319,16 @@ const Gear: React.FC = () => {
           {secondPost && (
             <div className="grid grid-cols-5 gap-4">
               <div className="col-span-5 lg:col-span-2">
-                <Image
+                <Link
+                  href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
+                ><Image
                   src={getImageUrl(secondPost.image1)}
                   alt={secondPost.heading || "Blog Image"}
                   width={300}
                   height={200}
-                  className="w-full h-[213px] object-cover rounded-md"
-                />
+                  className="w-full h-[213px] object-cover rounded-md border-image"
+                /></Link>
+                
               </div>
               <div className="col-span-5 lg:col-span-3 space-y-4">
                 <Link
@@ -423,13 +426,16 @@ const Gear: React.FC = () => {
           {thirdPost && (
             <div className="grid grid-cols-5 gap-4">
               <div className="col-span-5 lg:col-span-2">
-                <Image
+                <Link
+                  href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
+                ><Image
                   src={getImageUrl(thirdPost.image1)}
                   alt={thirdPost.heading || "Blog Image"}
                   width={300}
                   height={200}
-                  className="w-full h-[213px] object-cover rounded-md"
-                />
+                  className="w-full h-[213px] object-cover rounded-md border-image"
+                /></Link>
+                
               </div>
               <div className="col-span-5 lg:col-span-3 space-y-4">
                 <Link

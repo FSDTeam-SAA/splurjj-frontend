@@ -55,7 +55,7 @@
 //   const [error, setError] = useState<string | null>(null);
 //   const [showShareMenu, setShowShareMenu] = useState<number | null>(null);
 
-//   // fdfdf 
+//   // fdfdf
 
 //   useEffect(() => {
 //     const fetchData = async () => {
@@ -896,13 +896,17 @@ const AllContents: React.FC = () => {
             </div>
           </div>
           <div className="mt-8">
-            <Image
-              src={getImageUrl(firstPost.image1)}
-              alt={firstPost.heading}
-              width={1200}
-              height={600}
-              className="w-full h-[680px] object-cover rounded-lg border-image"
-            />
+            <Link
+              href={`/${firstPost?.category_id}/${firstPost?.subcategory_id}/${firstPost?.id}`}
+            >
+              <Image
+                src={getImageUrl(firstPost.image1)}
+                alt={firstPost.heading}
+                width={1200}
+                height={600}
+                className="w-full h-[680px] object-cover rounded-lg border-image"
+              />
+            </Link>
           </div>
         </div>
       )}
@@ -924,14 +928,21 @@ const AllContents: React.FC = () => {
                 {secondPost.sub_category_name || "Subcategory"}
               </Link>
             </div>
-            <Image
-              src={getImageUrl(secondPost.image1)}
-              alt={secondPost.heading}
-              width={400}
-              height={300}
-              className="w-full h-[300px] object-cover rounded-t-lg"
-              priority
-            />
+            <div>
+              <Link
+                href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
+              >
+                <Image
+                  src={getImageUrl(secondPost.image1)}
+                  alt={secondPost.heading}
+                  width={400}
+                  height={300}
+                  className="w-full h-[300px] object-cover rounded-t-lg border-image"
+                  priority
+                />
+              </Link>
+            </div>
+
             <div className="p-4">
               <Link
                 href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
@@ -1023,14 +1034,20 @@ const AllContents: React.FC = () => {
                 {thirdPost.sub_category_name || "Subcategory"}
               </Link>
             </div>
-            <Image
-              src={getImageUrl(thirdPost.image1)}
-              alt={thirdPost.heading}
-              width={400}
-              height={300}
-              className="w-full h-[300px] object-cover rounded-t-lg"
-              priority
-            />
+            <div>
+              <Link
+                href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
+              >
+                <Image
+                  src={getImageUrl(thirdPost.image1)}
+                  alt={thirdPost.heading}
+                  width={400}
+                  height={300}
+                  className="w-full h-[300px] object-cover rounded-t-lg border-image"
+                  priority
+                />
+              </Link>
+            </div>
             <div className="p-4">
               <Link
                 href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
@@ -1122,14 +1139,20 @@ const AllContents: React.FC = () => {
                 {fourthPost.sub_category_name || "Subcategory"}
               </Link>
             </div>
-            <Image
-              src={getImageUrl(fourthPost.image1)}
-              alt={fourthPost.heading}
-              width={400}
-              height={300}
-              className="w-full h-[300px] object-cover rounded-t-lg"
-              priority
-            />
+            <div>
+              <Link
+                href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
+              >
+                <Image
+                  src={getImageUrl(fourthPost.image1)}
+                  alt={fourthPost.heading}
+                  width={400}
+                  height={300}
+                  className="w-full h-[300px] object-cover rounded-t-lg border-image"
+                  priority
+                />
+              </Link>
+            </div>
             <div className="p-4">
               <Link
                 href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
