@@ -62,7 +62,9 @@ const fetchCategories = async (): Promise<Category[]> => {
 };
 
 const fetchHeader = async (): Promise<ThemeHeader> => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/header`);
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/header`
+  );
   if (!response.ok) throw new Error("Failed to fetch header");
   const result = await response.json();
   return result.data;
@@ -80,11 +82,19 @@ export default function Header() {
   const token = (session?.data?.user as { token: string })?.token;
   const role = session?.data?.user?.role;
 
-  const { data: categories = [] } = useQuery({
+  const {
+    data: categories = [],
+    isLoading: categoriesLoading,
+    error: categoriesError,
+  } = useQuery({
     queryKey: ["categories"],
     queryFn: fetchCategories,
   });
-  const { data: header } = useQuery({
+  const {
+    data: header,
+    isLoading: headerLoading,
+    error: headerError,
+  } = useQuery({
     queryKey: ["header"],
     queryFn: fetchHeader,
   });
@@ -126,6 +136,60 @@ export default function Header() {
         ?.subcategories.some((sub) => pathName === `/${categoryId}/${sub.id}`)
     );
   };
+
+  // Skeleton Loader Component
+  const SkeletonLoader = () => (
+    <div className="animate-pulse">
+      {/* Top Border */}
+      <div className="h-[16px] bg-gray-300" />
+
+      {/* Header */}
+      <header className="w-full border-b bg-white">
+        <div className="container">
+          <div className="flex h-[80px] items-center justify-between">
+            {/* Logo */}
+            <div className="bg-gray-300 h-[55px] w-[90px] rounded"></div>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-8">
+              {/* Static Menu Item (LATEST) */}
+              <div className="bg-gray-300 h-4 w-16 rounded"></div>
+              {/* Category Placeholders */}
+              {[1, 2, 3, 4].map((_, index) => (
+                <div key={index} className="flex items-center space-x-1">
+                  <div className="bg-gray-300 h-4 w-20 rounded"></div>
+                  <div className="bg-gray-300 h-4 w-4 rounded"></div>
+                </div>
+              ))}
+            </nav>
+
+            {/* Right Actions */}
+            <div className="flex items-center space-x-2">
+              {/* Search Button */}
+              <div className="bg-gray-300 h-8 w-8 rounded-full"></div>
+              {/* Cart Icon */}
+              <div className="bg-gray-300 h-8 w-8 rounded-full hidden sm:block"></div>
+              {/* User Menu */}
+              <div className="bg-gray-300 h-8 w-8 rounded-full hidden sm:block"></div>
+              {/* Theme Toggle */}
+              <div className="bg-gray-300 h-8 w-8 rounded-full"></div>
+              {/* Mobile Menu Button */}
+              <div className="bg-gray-300 h-8 w-8 rounded-full lg:hidden"></div>
+            </div>
+          </div>
+        </div>
+      </header>
+    </div>
+  );
+
+  // Check loading or error states
+  if (categoriesLoading || headerLoading) return <SkeletonLoader />;
+  if (categoriesError || headerError)
+    return (
+      <div className="text-center py-8 text-red-500">
+        Error: {(categoriesError || headerError)?.message || "Failed to load header"}
+      </div>
+    );
 
   return (
     <>
@@ -228,7 +292,10 @@ export default function Header() {
               {/* Search */}
               <div className="relative">
                 {isSearchOpen ? (
-                  <form onSubmit={handleSearch} className="flex items-center">
+                  <form
+                    onSubmit={handleSearch}
+                    className="flex items-center"
+                  >
                     <Input
                       type="text"
                       placeholder="Search..."
@@ -237,12 +304,21 @@ export default function Header() {
                       className="w-48 h-8"
                       autoFocus
                     />
-                    <Button type="button" variant="ghost" size="sm" onClick={() => setIsSearchOpen(false)} className="ml-1">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setIsSearchOpen(false)}
+                      className="ml-1"
+                    >
                       <X className="h-8 w-8 dark:text-black" />
                     </Button>
                   </form>
                 ) : (
-                  <Button variant="ghost" onClick={() => setIsSearchOpen(true)}>
+                  <Button
+                    variant="ghost"
+                    onClick={() => setIsSearchOpen(true)}
+                  >
                     <Search className="text-black !w-[30px] !h-[30px]" />
                   </Button>
                 )}
@@ -250,7 +326,10 @@ export default function Header() {
 
               {/* Cart (Hidden on sm) */}
               {token && role !== "admin" && (
-                <ShoppingCart className="text-black hidden sm:block" size={30} />
+                <ShoppingCart
+                  className="text-black hidden sm:block"
+                  size={30}
+                />
               )}
 
               {/* User Menu (Hidden on sm) */}
@@ -263,13 +342,27 @@ export default function Header() {
                     <DropdownMenuContent className="bg-white w-[130px]">
                       {["admin", "editor", "author"].includes(role ?? "") ? (
                         <Link href="/dashboard">
-                          <DropdownMenuLabel style={{ color: pathName === "/dashboard" ? header?.menu_item_active_color : header?.menu_item_color }}>
+                          <DropdownMenuLabel
+                            style={{
+                              color:
+                                pathName === "/dashboard"
+                                  ? header?.menu_item_active_color
+                                  : header?.menu_item_color,
+                            }}
+                          >
                             Dashboard
                           </DropdownMenuLabel>
                         </Link>
                       ) : (role ?? "") === "user" ? (
                         <Link href="/accounts">
-                          <DropdownMenuLabel style={{ color: pathName === "/accounts" ? header?.menu_item_active_color : header?.menu_item_color }}>
+                          <DropdownMenuLabel
+                            style={{
+                              color:
+                                pathName === "/accounts"
+                                  ? header?.menu_item_active_color
+                                  : header?.menu_item_color,
+                            }}
+                          >
                             My Account
                           </DropdownMenuLabel>
                         </Link>
@@ -335,11 +428,14 @@ export default function Header() {
                   const isActive = isCategoryActive(category.category_id);
                   return (
                     <div key={category.category_id} className="space-y-2">
-                      <span className="text-sm font-medium" style={{
-                        color: isActive
-                          ? header?.menu_item_active_color
-                          : header?.menu_item_color,
-                      }}>
+                      <span
+                        className="text-sm font-medium"
+                        style={{
+                          color: isActive
+                            ? header?.menu_item_active_color
+                            : header?.menu_item_color,
+                        }}
+                      >
                         {category.category_name.toUpperCase()}
                       </span>
                       {category.subcategories.map((sub) => (
@@ -349,7 +445,8 @@ export default function Header() {
                           className="block pl-4 text-sm"
                           style={{
                             color:
-                              pathName === `/${category.category_id}/${sub.id}`
+                              pathName ===
+                              `/${category.category_id}/${sub.id}`
                                 ? header?.menu_item_active_color
                                 : header?.menu_item_color,
                           }}
@@ -373,11 +470,17 @@ export default function Header() {
                   {token ? (
                     <div className="flex flex-col space-y-2">
                       {["admin", "editor", "author"].includes(role ?? "") ? (
-                        <Link href="/dashboard" className="text-base font-semibold">
+                        <Link
+                          href="/dashboard"
+                          className="text-base font-semibold"
+                        >
                           Dashboard
                         </Link>
                       ) : (role ?? "") === "user" ? (
-                        <Link href="/accounts" className="text-base font-semibold">
+                        <Link
+                          href="/accounts"
+                          className="text-base font-semibold"
+                        >
                           My Account
                         </Link>
                       ) : null}
@@ -408,15 +511,25 @@ export default function Header() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg max-w-sm w-full mx-4">
             <h3 className="text-lg font-semibold mb-4">Confirm Logout</h3>
-            <p className="text-gray-600 mb-6">Are you sure you want to log out?</p>
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to log out?
+            </p>
             <div className="flex space-x-4">
-              <Button variant="outline" onClick={() => setLogoutModalOpen(false)} className="flex-1">
+              <Button
+                variant="outline"
+                onClick={() => setLogoutModalOpen(false)}
+                className="flex-1"
+              >
                 Cancel
               </Button>
-              <Button variant="destructive" onClick={() => {
-                setLogoutModalOpen(false);
-                handLogout();
-              }} className="flex-1">
+              <Button
+                variant="destructive"
+                onClick={() => {
+                  setLogoutModalOpen(false);
+                  handLogout();
+                }}
+                className="flex-1"
+              >
                 Log Out
               </Button>
             </div>
