@@ -205,12 +205,12 @@ const ArtCulture: React.FC = () => {
   );
 
   if (loading) return <SkeletonLoader />;
-  if (error) return (
-    <div className="error text-center py-8 text-red-500">Error: {error}</div>
-  );
-  if (posts.length === 0) return (
-    <div className="error text-center py-8">No posts found</div>
-  );
+  if (error)
+    return (
+      <div className="error text-center py-8 text-red-500">Error: {error}</div>
+    );
+  if (posts.length === 0)
+    return <div className="error text-center py-8">No posts found</div>;
 
   const firstPost = posts[0];
   const thirdPost = posts[1];
@@ -221,7 +221,7 @@ const ArtCulture: React.FC = () => {
     <div className="">
       {firstPost && (
         <div className="py-8">
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-4 ">
             <div className="flex items-center gap-2">
               <Link
                 href={`/blogs/${firstPost.category_name}`}
@@ -236,7 +236,7 @@ const ArtCulture: React.FC = () => {
                 {firstPost.sub_category_name || "Subcategory"}
               </Link>
             </div>
-            <div className="flex items-center gap-3 relative">
+            <div className="flex items-center gap-3 relative ">
               <span
                 onClick={() => handleShare(firstPost)}
                 className="cursor-pointer"
@@ -295,7 +295,7 @@ const ArtCulture: React.FC = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 rounded">
-            <div className="bg-[#DDD618] max-h-[455px] flex items-center justify-center rounded-l-md p-4">
+            <div className="bg-[#DDD618] max-h-[455px] flex items-center justify-center rounded-l-md p-4 ">
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
                 className="text-2xl font-medium text-[#131313] hover:underline"
@@ -306,15 +306,20 @@ const ArtCulture: React.FC = () => {
                 />
               </Link>
             </div>
-            <div>
-              <Image
-                src={getImageUrl(firstPost.image1)}
-                alt={firstPost.heading || "Blog Image"}
-                width={888}
-                height={552}
-                className="w-full h-[455px] object-cover rounded-r-md"
-                priority
-              />
+            <div className="">
+              <Link
+                href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
+              >
+                <Image
+                  src={getImageUrl(firstPost.image1)}
+                  alt={firstPost.heading || "Blog Image"}
+                  width={888}
+                  height={552}
+                  className="w-full h-[455px] object-cover rounded-r-md border-image"
+                  priority
+                />
+              </Link>
+
               <p className="text-base font-semibold uppercase text-[#424242] pt-4 text-end">
                 {firstPost.author} - {firstPost.date}
               </p>
@@ -341,14 +346,21 @@ const ArtCulture: React.FC = () => {
                   {thirdPost.sub_category_name || "Subcategory"}
                 </Link>
               </div>
-              <Image
-                src={getImageUrl(thirdPost.image1)}
-                alt={thirdPost.heading || "Blog Image"}
-                width={400}
-                height={300}
-                className="w-full h-[300px] object-cover rounded-t-md"
-                priority
-              />
+              <div>
+                <Link
+                  href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
+                >
+                  <Image
+                    src={getImageUrl(thirdPost.image1)}
+                    alt={thirdPost.heading || "Blog Image"}
+                    width={400}
+                    height={300}
+                    className="w-full h-[300px] object-cover rounded-t-md border-image"
+                    priority
+                  />
+                </Link>
+              </div>
+
               <div className="p-4">
                 <Link
                   href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
@@ -442,14 +454,21 @@ const ArtCulture: React.FC = () => {
                   {fourthPost.sub_category_name || "Subcategory"}
                 </Link>
               </div>
-              <Image
-                src={getImageUrl(fourthPost.image1)}
-                alt={fourthPost.heading || "Blog Image"}
-                width={400}
-                height={300}
-                className="w-full h-[300px] object-cover rounded-t-md"
-                priority
-              />
+              <div>
+                <Link
+                  href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
+                >
+                  <Image
+                    src={getImageUrl(fourthPost.image1)}
+                    alt={fourthPost.heading || "Blog Image"}
+                    width={400}
+                    height={300}
+                    className="w-full h-[300px] object-cover rounded-t-md border-image"
+                    priority
+                  />
+                </Link>
+              </div>
+
               <div className="p-4">
                 <Link
                   href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
@@ -544,90 +563,97 @@ const ArtCulture: React.FC = () => {
                 </Link>
               </div>
               <div className="relative">
-              <Image
-                src={getImageUrl(fifthPost.image1)}
-                alt={fifthPost.heading || "Blog Image"}
-                width={400}
-                height={300}
-                className="w-full h-[300px] object-cover rounded-t-md"
-                priority
-              />
-            <div className="p-4">
-                <Link
-                  href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
-                >
-                  <p
-                    dangerouslySetInnerHTML={{ __html: fifthPost.heading }}
-                    className="text-2xl font-medium text-[#131313] hover:underline"
-                  />
-                </Link>
-                <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
-                  {fifthPost.author} - {fifthPost.date}
-                </p>
-                <div className="flex items-center gap-3 mt-2 relative">
-                  <span
-                    onClick={() => handleShare(fifthPost)}
-                    className="cursor-pointer"
-                  >
-                    <RiShareForwardLine className="w-6 h-6" />
-                  </span>
-                  {showShareMenu === fifthPost.id && (
-                    <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
-                      <FaTwitter
-                        className="w-6 h-6 cursor-pointer text-blue-500"
-                        onClick={() =>
-                          shareToTwitter(
-                            getShareUrl(
-                              fifthPost.category_id,
-                              fifthPost.subcategory_id,
-                              fifthPost.id
-                            ),
-                            fifthPost.heading
-                          )
-                        }
-                      />
-                      <FaFacebook
-                        className="w-6 h-6 cursor-pointer text-blue-700"
-                        onClick={() =>
-                          shareToFacebook(
-                            getShareUrl(
-                              fifthPost.category_id,
-                              fifthPost.subcategory_id,
-                              fifthPost.id
-                            )
-                          )
-                        }
-                      />
-                      <FaLinkedin
-                        className="w-6 h-6 cursor-pointer text-blue-600"
-                        onClick={() =>
-                          shareToLinkedIn(
-                            getShareUrl(
-                              fifthPost.category_id,
-                              fifthPost.subcategory_id,
-                              fifthPost.id
-                            ),
-                            fifthPost.heading
-                          )
-                        }
-                      />
-                    </div>
-                  )}
-                  <TbTargetArrow className="w-6 h-6" />
+                <div>
                   <Link
-                    href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}#comment`}
-                    className="cursor-pointer"
+                    href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
                   >
-                    <FaRegCommentDots className="w-6 h-6" />
+                    <Image
+                      src={getImageUrl(fifthPost.image1)}
+                      alt={fifthPost.heading || "Blog Image"}
+                      width={400}
+                      height={300}
+                      className="w-full h-[300px] object-cover rounded-t-md border-image"
+                      priority
+                    />
                   </Link>
                 </div>
-                <p
-                  dangerouslySetInnerHTML={{ __html: fifthPost.body1 }}
-                  className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
-                />
+
+                <div className="p-4">
+                  <Link
+                    href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
+                  >
+                    <p
+                      dangerouslySetInnerHTML={{ __html: fifthPost.heading }}
+                      className="text-2xl font-medium text-[#131313] hover:underline"
+                    />
+                  </Link>
+                  <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
+                    {fifthPost.author} - {fifthPost.date}
+                  </p>
+                  <div className="flex items-center gap-3 mt-2 relative">
+                    <span
+                      onClick={() => handleShare(fifthPost)}
+                      className="cursor-pointer"
+                    >
+                      <RiShareForwardLine className="w-6 h-6" />
+                    </span>
+                    {showShareMenu === fifthPost.id && (
+                      <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
+                        <FaTwitter
+                          className="w-6 h-6 cursor-pointer text-blue-500"
+                          onClick={() =>
+                            shareToTwitter(
+                              getShareUrl(
+                                fifthPost.category_id,
+                                fifthPost.subcategory_id,
+                                fifthPost.id
+                              ),
+                              fifthPost.heading
+                            )
+                          }
+                        />
+                        <FaFacebook
+                          className="w-6 h-6 cursor-pointer text-blue-700"
+                          onClick={() =>
+                            shareToFacebook(
+                              getShareUrl(
+                                fifthPost.category_id,
+                                fifthPost.subcategory_id,
+                                fifthPost.id
+                              )
+                            )
+                          }
+                        />
+                        <FaLinkedin
+                          className="w-6 h-6 cursor-pointer text-blue-600"
+                          onClick={() =>
+                            shareToLinkedIn(
+                              getShareUrl(
+                                fifthPost.category_id,
+                                fifthPost.subcategory_id,
+                                fifthPost.id
+                              ),
+                              fifthPost.heading
+                            )
+                          }
+                        />
+                      </div>
+                    )}
+                    <TbTargetArrow className="w-6 h-6" />
+                    <Link
+                      href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}#comment`}
+                      className="cursor-pointer"
+                    >
+                      <FaRegCommentDots className="w-6 h-6" />
+                    </Link>
+                  </div>
+                  <p
+                    dangerouslySetInnerHTML={{ __html: fifthPost.body1 }}
+                    className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
+                  />
+                </div>
               </div>
             </div>
-          </div>
           )}
         </div>
       </div>

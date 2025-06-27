@@ -295,12 +295,12 @@ const Music: React.FC = () => {
                 backgroundPosition: "center",
                 backgroundSize: "cover",
               }}
-              className="flex items-center justify-center rounded-lg"
+              className="flex items-center justify-center rounded-lg border-image"
             >
-              <div>
+              <div className="">
                 <div
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-[40px] font-medium white-text hover:underline"
+                  className="text-5xl font-medium white-text hover:underline"
                 />
                 <div
                   dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
@@ -317,13 +317,18 @@ const Music: React.FC = () => {
           {secondPost && (
             <div className="grid grid-cols-5 gap-4">
               <div className="col-span-5 lg:col-span-2">
-                <Image
+                <div>
+                  <Link
+                  href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
+                > <Image
                   src={getImageUrl(secondPost.image1)}
                   alt={secondPost.heading || "Blog Image"}
                   width={300}
                   height={200}
-                  className="w-full h-[213px] object-cover rounded-md"
-                />
+                  className="w-full h-[213px] object-cover rounded-md border-image"
+                /></Link>
+                </div>
+               
               </div>
               <div className="col-span-5 lg:col-span-3 space-y-4">
                 <Link
@@ -421,13 +426,16 @@ const Music: React.FC = () => {
           {thirdPost && (
             <div className="grid grid-cols-5 gap-4">
               <div className="col-span-5 lg:col-span-2">
-                <Image
+                <Link
+                  href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
+                ><Image
                   src={getImageUrl(thirdPost.image1)}
                   alt={thirdPost.heading || "Blog Image"}
                   width={300}
                   height={200}
-                  className="w-full h-[213px] object-cover rounded-md"
-                />
+                  className="w-full h-[213px] object-cover rounded-md border-image"
+                /></Link>
+                
               </div>
               <div className="col-span-5 lg:col-span-3 space-y-4">
                 <Link
@@ -439,7 +447,7 @@ const Music: React.FC = () => {
                   />
                 </Link>
                 <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-2 border-2 border-red-500">
+                  <div className="flex items-center gap-2">
                     <Link
                       href={`/blogs/${thirdPost.category_name}`}
                       className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"

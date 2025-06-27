@@ -94,7 +94,11 @@ const Video: React.FC = () => {
   };
 
   const handleShare = async (post: BlogPost) => {
-    const shareUrl = getShareUrl(post.category_id, post.subcategory_id, post.id);
+    const shareUrl = getShareUrl(
+      post.category_id,
+      post.subcategory_id,
+      post.id
+    );
     const shareData = {
       title: post.heading,
       text: post.sub_heading || "Check out this blog post!",
@@ -194,12 +198,12 @@ const Video: React.FC = () => {
   );
 
   if (loading) return <SkeletonLoader />;
-  if (error) return (
-    <div className="error text-center py-8 text-red-600">Error: {error}</div>
-  );
-  if (posts.length === 0) return (
-    <div className="error text-center py-8">No posts found</div>
-  );
+  if (error)
+    return (
+      <div className="error text-center py-8 text-red-600">Error: {error}</div>
+    );
+  if (posts.length === 0)
+    return <div className="error text-center py-8">No posts found</div>;
 
   const firstPost = posts[0];
   const thirdPost = posts[2];
@@ -222,14 +226,18 @@ const Video: React.FC = () => {
               </Link>
             </div>
             <div>
-              <Image
-                src={getImageUrl(firstPost.image1)}
-                alt={firstPost.heading || "Blog Image"}
-                width={600}
-                height={455}
-                className="w-full h-[455px] object-cover rounded-r-md"
-                priority
-              />
+              <Link
+                href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
+              >
+                <Image
+                  src={getImageUrl(firstPost.image1)}
+                  alt={firstPost.heading || "Blog Image"}
+                  width={600}
+                  height={455}
+                  className="w-full h-[455px] object-cover rounded-r-md border-image"
+                  priority
+                />
+              </Link>
             </div>
           </div>
           <div className="pt-4">
@@ -306,9 +314,7 @@ const Video: React.FC = () => {
                 </Link>
               </div>
             </div>
-            <p
-              className="text-sm font-semibold uppercase text-[#424242] pt-4"
-            >
+            <p className="text-sm font-semibold uppercase text-[#424242] pt-4">
               {firstPost.author} - {firstPost.date}
             </p>
             <p
@@ -337,14 +343,22 @@ const Video: React.FC = () => {
                   {thirdPost.sub_category_name || "Subcategory"}
                 </Link>
               </div>
-              <Image
-                src={getImageUrl(thirdPost.image1)}
-                alt={thirdPost.heading || "Blog Image"}
-                width={400}
-                height={455}
-                className="w-full h-[455px] object-cover rounded-t-md"
-                priority
-              />
+              <div>
+                <Link
+                  href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
+                >
+                  {" "}
+                  <Image
+                    src={getImageUrl(thirdPost.image1)}
+                    alt={thirdPost.heading || "Blog Image"}
+                    width={400}
+                    height={455}
+                    className="w-full h-[455px] object-cover rounded-t-md border-image"
+                    priority
+                  />
+                </Link>
+              </div>
+
               <Link
                 href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
               >
@@ -353,9 +367,7 @@ const Video: React.FC = () => {
                   className="text-2xl font-medium text-[#131313] hover:underline mt-2"
                 />
               </Link>
-              <p
-                className="text-sm font-semibold uppercase text-[#424242] mt-2"
-              >
+              <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
                 {thirdPost.author} - {thirdPost.date}
               </p>
               <div className="flex items-center gap-3 relative mt-2">
@@ -438,14 +450,21 @@ const Video: React.FC = () => {
                   {fourthPost.sub_category_name || "Subcategory"}
                 </Link>
               </div>
-              <Image
-                src={getImageUrl(fourthPost.image1)}
-                alt={fourthPost.heading || "Blog Image"}
-                width={400}
-                height={455}
-                className="w-full h-[455px] object-cover rounded-t-md"
-                priority
-              />
+              <div>
+                <Link
+                  href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
+                >
+                  <Image
+                    src={getImageUrl(fourthPost.image1)}
+                    alt={fourthPost.heading || "Blog Image"}
+                    width={400}
+                    height={455}
+                    className="w-full h-[455px] object-cover rounded-t-md border-image"
+                    priority
+                  />
+                </Link>
+              </div>
+
               <Link
                 href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
               >
@@ -454,9 +473,7 @@ const Video: React.FC = () => {
                   className="text-2xl font-medium text-[#131313] hover:underline mt-2"
                 />
               </Link>
-              <p
-                className="text-sm font-semibold uppercase text-[#424242] mt-2"
-              >
+              <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
                 {fourthPost.author} - {fourthPost.date}
               </p>
               <div className="flex items-center gap-3 relative mt-2">
@@ -539,14 +556,19 @@ const Video: React.FC = () => {
                   {fifthPost.sub_category_name || "Subcategory"}
                 </Link>
               </div>
-              <Image
-                src={getImageUrl(fifthPost.image1)}
-                alt={fifthPost.heading || "Blog Image"}
-                width={400}
-                height={455}
-                className="w-full h-[455px] object-cover rounded-t-md"
-                priority
-              />
+              <Link
+                href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
+              >
+                <Image
+                  src={getImageUrl(fifthPost.image1)}
+                  alt={fifthPost.heading || "Blog Image"}
+                  width={400}
+                  height={455}
+                  className="w-full h-[455px] object-cover rounded-t-md border-image"
+                  priority
+                />
+              </Link>
+
               <Link
                 href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
               >
@@ -555,9 +577,7 @@ const Video: React.FC = () => {
                   className="text-2xl font-medium text-[#131313] hover:underline mt-2"
                 />
               </Link>
-              <p
-                className="text-sm font-semibold uppercase text-[#424242] mt-2"
-              >
+              <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
                 {fifthPost.author} - {fifthPost.date}
               </p>
               <div className="flex items-center gap-3 relative mt-2">
