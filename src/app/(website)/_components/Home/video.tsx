@@ -139,7 +139,7 @@ const Video: React.FC = () => {
 
   // Skeleton Loading Component
   const SkeletonLoader = () => (
-    <div className="animate-pulse">
+    <div className="animate-pulse ">
       {/* Skeleton for First Post */}
       <div className="py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 rounded">
@@ -625,7 +625,7 @@ const Video: React.FC = () => {
           )}
         </div>
 
-        <div className="flex justify-end py-4 mt-[70px] lg:mt-0">
+        <div className="flex justify-end py-4 mt-[70px] md:mt-[100px] ">
           <Link
             href={`/blogs/${firstPost?.category_name}`}
             className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white flex items-center gap-2"

@@ -14,7 +14,7 @@ interface Comment {
   created_at: string;
 }
 
-interface ApiResponse {
+export interface ApiResponse {
   success: boolean;
   message: string;
   data: Comment[];
