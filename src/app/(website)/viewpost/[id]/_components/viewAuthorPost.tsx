@@ -170,7 +170,7 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
 
  
   return (
-    <div className="">
+    <div className="container">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {posts.map((post) => (
           <div key={post.id} className="relative">
@@ -179,7 +179,7 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
               alt={sanitizeHTML(post.heading)}
               width={400}
               height={300}
-              className="w-full h-[300px] object-cover rounded-t-lg"
+              className="w-full h-[300px] object-cover rounded-t-lg border-image"
               priority
             />
             <div className="p-4">
@@ -202,7 +202,7 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: sanitizeHTML(post.heading) }}
-                  className="text-2xl font-medium hover:text-primary"
+                  className="text-2xl font-medium hover:text-primary line-clamp-2"
                 />
               </Link>
               <p className="text-sm font-semibold  uppercase text-[#424242] mt-2">
@@ -266,7 +266,7 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
                 </Link>
               </div>
               <p
-                dangerouslySetInnerHTML={{ __html: sanitizeHTML(post.body1) }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHTML(post.sub_heading) }}
                 className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
               />
             </div>

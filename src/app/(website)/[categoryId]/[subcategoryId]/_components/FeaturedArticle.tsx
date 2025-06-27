@@ -329,8 +329,8 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                   src={getImageUrl(secondPost.image1)}
                   alt={secondPost.heading}
                   width={400}
-                  height={300}
-                  className="w-full h-[300px] object-cover rounded-t-lg border-image"
+                  height={315}
+                  className="w-full h-[315px] object-cover rounded-t-lg border-image"
                   priority
                 />
               </div>
@@ -345,7 +345,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                 src={getImageUrl(thirdPost.image1)}
                 alt={thirdPost.heading}
                 width={400}
-                height={300}
+                height={443}
                 className="w-full h-[443px] object-cover rounded-t-lg border-image"
                 priority
               />
