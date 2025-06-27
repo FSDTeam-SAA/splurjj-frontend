@@ -55,7 +55,7 @@ const RecentArticles = () => {
                   className="w-full flex items-center justify-between pb-4"
                 >
                   <div className="flex items-center gap-4">
-                    <td className="w-[200px] h-full">
+                    <td className="w-[60px] h-full">
                       <Image
                         // src="/assets/images/no-images.jpg"
                         src={
@@ -70,7 +70,7 @@ const RecentArticles = () => {
                       />
                     </td>
                     <td
-                      className="text-black dark:text-black"
+                      className="text-black dark:text-black black-text"
                       dangerouslySetInnerHTML={{ __html: content?.heading }}
                     />
                   </div>

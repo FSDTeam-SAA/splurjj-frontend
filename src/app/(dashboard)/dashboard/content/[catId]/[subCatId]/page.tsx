@@ -12,6 +12,7 @@ import type { AllContentResponse, Content } from "../../_components/ContentDataT
 import { toast } from "react-toastify"
 import SplurjjPagination from "@/components/ui/SplurjjPagination"
 import ContentAddEditForm from "../../_components/ContentModalForm"
+import { ConfirmationModal } from "@/components/shared/modals/ConfirmationModal"
 
 export default function SubcategoryContentPage() {
   const params = useParams()
@@ -20,6 +21,8 @@ export default function SubcategoryContentPage() {
   const [editingContent, setEditingContent] = useState<Content | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [showForm, setShowForm] = useState(false)
+    const [showDeleteModal, setShowDeleteModal] = useState(false) // Add this state
+  const [contentToDelete, setContentToDelete] = useState<number | null>(null)
 
   const session = useSession()
   const token = (session?.data?.user as { token: string })?.token
@@ -47,6 +50,30 @@ export default function SubcategoryContentPage() {
   }
 
   // content delete api
+  // const { mutate: deleteContent } = useMutation({
+  //   mutationKey: ["delete-content"],
+  //   mutationFn: (contentId: number) =>
+  //     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${contentId}`, {
+  //       method: "DELETE",
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //         "content-type": "application/json",
+  //       },
+  //     }).then((res) => res.json()),
+  //   onSuccess: (data) => {
+  //     if (!data?.status) {
+  //       toast.error(data?.message || "Something went wrong")
+  //       return
+  //     }
+  //     toast.success(data?.message || "Content deleted successfully")
+  //     queryClient.invalidateQueries({ queryKey: ["all-contents"] })
+  //   },
+  // })
+
+  // const handleDeleteContent = (contentId: number) => {
+  //   deleteContent(contentId)
+  // }
+
   const { mutate: deleteContent } = useMutation({
     mutationKey: ["delete-content"],
     mutationFn: (contentId: number) =>
@@ -64,11 +91,24 @@ export default function SubcategoryContentPage() {
       }
       toast.success(data?.message || "Content deleted successfully")
       queryClient.invalidateQueries({ queryKey: ["all-contents"] })
+      setShowDeleteModal(false) // Close modal after successful deletion
     },
   })
 
-  const handleDeleteContent = (contentId: number) => {
-    deleteContent(contentId)
+  const handleDeleteClick = (contentId: number) => {
+    setContentToDelete(contentId)
+    setShowDeleteModal(true)
+  }
+
+  const handleConfirmDelete = () => {
+    if (contentToDelete) {
+      deleteContent(contentToDelete)
+    }
+  }
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false)
+    setContentToDelete(null)
   }
 
   const handleAddContent = () => {
@@ -150,7 +190,7 @@ export default function SubcategoryContentPage() {
             <ContentTable
               contents={data?.data?.data || []}
               loading={isLoading}
-              onDelete={handleDeleteContent}
+              onDelete={handleDeleteClick}
               onEdit={handleEditContent}
             />
 
@@ -174,6 +214,18 @@ export default function SubcategoryContentPage() {
           </>
         )}
       </div>
+
+
+      {/* delete modal content  */}
+       <ConfirmationModal
+        isOpen={showDeleteModal}
+        onClose={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+        title="Delete Post"
+        description="Are you sure you want to delete this content? This action cannot be undone."
+        confirmText="Yes, Delete"
+        cancelText="Cancel"
+      />
     </div>
   )
 }

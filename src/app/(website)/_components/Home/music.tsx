@@ -439,7 +439,7 @@ const Music: React.FC = () => {
                   />
                 </Link>
                 <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 border-2 border-red-500">
                     <Link
                       href={`/blogs/${thirdPost.category_name}`}
                       className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
