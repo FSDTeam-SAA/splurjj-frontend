@@ -56,7 +56,7 @@ const ContentStatusDropDown = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="px-2 py-1 text-base border font-normal rounded-[30px] leading-[120%] bg-white text-black flex items-center gap-1">
+        <button className="px-2 py-1 text-base border font-normal rounded-[30px] leading-[120%] bg-white text-black dark:text-black flex items-center gap-1">
           {status}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -74,15 +74,15 @@ const ContentStatusDropDown = ({
           </svg>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-white">
+      <DropdownMenuContent className="bg-white dark:text-black">
         <DropdownMenuItem
-          className="cursor-pointer"
+          className="cursor-pointer dark:text-black"
           onClick={() => handleStatusChange("pending")}
         >
           Pending
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="cursor-pointer"
+          className="cursor-pointer dark:text-black"
           onClick={() => handleStatusChange("active")}
         >
           Active

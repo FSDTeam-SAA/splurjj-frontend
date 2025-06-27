@@ -468,7 +468,7 @@ export default function ContentAddEditForm({
                     onClick={() => removeTag(i)}
                     type="button"
                   >
-                    <X className="h-3 w-3" />
+                    <X className="h-3 w-3 dark:text-black" />
                   </Button>
                 </div>
               ))}

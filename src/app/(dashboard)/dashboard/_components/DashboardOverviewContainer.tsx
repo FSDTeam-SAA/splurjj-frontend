@@ -59,7 +59,7 @@ const DashboardOverviewContainer = () => {
               Total Revenue
             </h3>
             <p className="flex items-center gap-1 text-lg font-medium text-[#424242] dark:text-black leading-[120%] tracking-[0%] pt-2">
-              <GoDotFill className="text-[#DDE067] w-5 h-5" /> 132,570
+              <GoDotFill className="text-[#DDE067] w-5 h-5" /> 00000 
             </p>
           </div>
           <div>

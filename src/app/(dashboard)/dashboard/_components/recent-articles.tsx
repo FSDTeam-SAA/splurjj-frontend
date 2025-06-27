@@ -23,7 +23,7 @@ const RecentArticles = () => {
         }).then((res) => res.json()),
     });
 
-  console.log(data?.data?.recent_content);
+  // console.log(data?.data?.recent_content);
   if (isLoading) {
     return (
       <div>
@@ -48,7 +48,7 @@ const RecentArticles = () => {
       <div>
         <table className="w-full">
           <tbody>
-            {data?.data?.recent_content?.map((content) => {
+            {data?.data?.recent_content?.slice(0,6)?.map((content) => {
               return (
                 <tr
                   key={content?.id}

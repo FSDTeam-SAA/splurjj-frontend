@@ -53,54 +53,6 @@ interface BlogData {
   };
 }
 
-// interface User {
-//   id: number;
-//   first_name: string;
-//   description: string;
-//   profilePic: string;
-//   facebook_link: string;
-//   instagram_link: string;
-//   twitter_link: string;
-//   youtube_link: string;
-// }
-
-// interface ContentDataType {
-//   id: number;
-//   category_id: number;
-//   category_name: string;
-//   subcategory_id: number;
-//   subcategory_name?: string;
-//   heading: string;
-//   author: string;
-//   body1: string;
-//   created_at: string;
-//   date: string;
-//   image1: string;
-//   image1_url: string;
-//   status: string;
-//   sub_heading: string;
-//   tags: string[];
-//   updated_at: string;
-//   user: User;
-//   user_id: number;
-//   advertisingLink: string | null;
-//   advertising_image: string | null;
-//   advertising_image_url: string | null;
-//   imageLink: string | null;
-//   relatedBlogs?: ContentDataType[];
-// }
-
-// interface ContentDataResponse {
-//   data?: ContentDataType;
-// }
-
-// interface ContentAllDataTypeResponse {
-//   data: ContentDataType;
-//   // You might have other fields like status, message, etc. in the response
-//   status?: string;
-//   message?: string;
-// }
-
 const ContentBlogDetails = ({
   params,
 }: {
@@ -108,9 +60,11 @@ const ContentBlogDetails = ({
 }) => {
   const { id, categoryId, subcategoryId } = params;
 
-  console.log(id, categoryId, subcategoryId);
+  // console.log(id, categoryId, subcategoryId);
 
   const session = useSession();
+  const commentAccess = session?.data?.user?.role;
+  console.log(commentAccess);
   const userId = session?.data?.user?.id;
   console.log("UserId", userId);
   const userEmail = session?.data?.user?.email;
@@ -364,7 +318,7 @@ const ContentBlogDetails = ({
                     </div>
                     <Link
                       href={`/viewpost/${blogData.user?.id}`}
-                      className="text-lg font-extrabold  leading-[120%] tracking-[0%] text-secondary"
+                      className="text-lg font-extrabold  leading-[120%] tracking-[0%] text-secondary dark:text-white"
                     >
                       View posts
                     </Link>
@@ -373,9 +327,13 @@ const ContentBlogDetails = ({
               </div>
             </div>
             {/* Leave a comment */}
-            <section id="comment" className="py-10">
-              <LeaveAComment UserEmail={userEmail} blogId={id} />
-            </section>
+            {commentAccess && (
+              <div>
+                <section id="comment" className="py-10">
+                  <LeaveAComment UserEmail={userEmail} blogId={id} />
+                </section>
+              </div>
+            )}
             <div>
               <ContentComments blogId={id} />
             </div>

@@ -21,8 +21,8 @@ import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 
 const FormSchema = z.object({
-  comment: z.string().min(10, {
-    message: "Comment must be at least 10 characters.",
+  comment: z.string().min(2, {
+    message: "Comment must be at least 2 characters.",
   }),
 });
 
@@ -52,6 +52,7 @@ export function LeaveAComment({ UserEmail, blogId }: LeaveACommentProps) {
 
   // Define the mutation for posting the comment
   const mutation = useMutation({
+    mutationKey: ["comment"],
     mutationFn: async (data: CommentPayload) => {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/comment`,
@@ -65,13 +66,19 @@ export function LeaveAComment({ UserEmail, blogId }: LeaveACommentProps) {
       );
       return response.data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      if(!data?.success) {
+        toast.error(data?.message || "Something went wrong");
+        return;
+      }
       toast.success("Comment submitted successfully!");
       queryClient.invalidateQueries({
-        queryKey: ["comments", blogId], // Invalidate the comments query to refresh the
+        queryKey: ["comments"], 
       });
-      form.reset(); // Reset the form after successful submission
+      form.reset(); 
     },
+
+    
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -102,7 +109,7 @@ export function LeaveAComment({ UserEmail, blogId }: LeaveACommentProps) {
               render={({ field }) => (
                 <FormItem>
                   <h4 className="text-lg md:text-xl font-semibold  leading-[120%] tracking-[0%] text-black uppercase text-left pb-3 md:pb-4">
-                    Leave A Comment
+                    Leave A Comment 
                   </h4>
                   <FormLabel className="text-lg md:text-xl font-semibold  leading-[120%] tracking-[0%] text-secondary">
                     <p>
