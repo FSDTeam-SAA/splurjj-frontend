@@ -35,18 +35,30 @@ function Vertical() {
     fetchAdData();
   }, []);
 
-  console.log(loading)
+  // Skeleton Loading Component
+  const SkeletonLoader = () => (
+    <div className="animate-pulse w-full h-[300px]">
+      <div className="bg-gray-300 w-full h-[300px] rounded-lg"></div>
+    </div>
+  );
 
-  // if (loading) return <div>Loading...</div>;
+  if (loading) return <SkeletonLoader />;
   if (error) return <div>{error}</div>;
 
   return (
-    <div className='w-full h-[300px]'>
+    <div className="w-full h-[300px]">
       {adData?.code ? (
-        <div dangerouslySetInnerHTML={{ __html: adData.code }} />
+        <div dangerouslySetInnerHTML={{ __html: adData.code }} className="w-full h-[300px]" />
       ) : adData?.image && adData?.link ? (
         <a href={adData.link} target="_blank" rel="noopener noreferrer">
-          <Image src={adData.image} alt="Advertisement" style={{ maxWidth: '100%' }}  className='w-full h-[300px]' width={2600} height={300}/>
+          <Image
+            src={adData.image}
+            alt="Advertisement"
+            style={{ maxWidth: '100%' }}
+            className="w-full h-[300px] object-cover rounded-lg"
+            width={2600}
+            height={300}
+          />
         </a>
       ) : (
         <div>No advertisement available</div>

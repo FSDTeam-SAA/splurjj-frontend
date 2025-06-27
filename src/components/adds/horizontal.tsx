@@ -4,7 +4,6 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 // import { toast } from 'react-toastify';
 
-
 type AdData = {
   code?: string;
   image?: string;
@@ -37,17 +36,23 @@ function Horizontal() {
     fetchAdData();
   }, []);
 
-  console.log(loading)
-  // if (loading) return <div>Loading...</div>;
+  // Skeleton Loading Component
+  const SkeletonLoader = () => (
+    <div className="animate-pulse">
+      <div className="bg-gray-300 w-[400px] h-[300px] rounded-lg"></div>
+    </div>
+  );
+
+  if (loading) return <SkeletonLoader />;
   if (error) return <div>{error}</div>;
 
   return (
-    <div className='w-[200px] h-[300px]'>
+    <div className="w-[200px] h-[300px]">
       {adData?.code ? (
-        <div dangerouslySetInnerHTML={{ __html: adData.code }} className='w-[200px] h-[300px]'/>
+        <div dangerouslySetInnerHTML={{ __html: adData.code }} className="w-[200px] h-[300px]" />
       ) : adData?.image && adData?.link ? (
         <a href={adData.link} target="_blank" rel="noopener noreferrer">
-          <Image src={adData.image} alt="Advertisement" className='w-[300px] h-[300px]' width={200} height={300}/>
+          <Image src={adData.image} alt="Advertisement" className="w-[200px] h-[300px]" width={200} height={300} />
         </a>
       ) : (
         <div>No advertisement available</div>

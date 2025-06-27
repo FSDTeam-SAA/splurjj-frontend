@@ -4,7 +4,12 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { FaFacebook, FaLinkedin, FaRegCommentDots, FaTwitter } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaLinkedin,
+  FaRegCommentDots,
+  FaTwitter,
+} from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
 
@@ -132,11 +137,69 @@ const Video: React.FC = () => {
     );
   };
 
-  console.log(loading)
+  // Skeleton Loading Component
+  const SkeletonLoader = () => (
+    <div className="animate-pulse">
+      {/* Skeleton for First Post */}
+      <div className="py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 rounded">
+          <div className="bg-gray-300 h-[455px] rounded-l-md"></div>
+          <div className="bg-gray-300 h-[455px] rounded-r-md"></div>
+        </div>
+        <div className="pt-4">
+          <div className="flex items-center gap-2">
+            <div className="bg-gray-300 h-8 w-24 rounded"></div>
+            <div className="bg-gray-300 h-8 w-24 rounded"></div>
+            <div className="flex items-center gap-3 ml-auto">
+              <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+              <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+              <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+            </div>
+          </div>
+          <div className="bg-gray-300 h-4 w-1/2 rounded mt-4"></div>
+          <div className="bg-gray-300 h-4 w-full rounded mt-2"></div>
+          <div className="bg-gray-300 h-4 w-5/6 rounded mt-2"></div>
+          <div className="bg-gray-300 h-4 w-2/3 rounded mt-2"></div>
+        </div>
+      </div>
 
-  // if (loading) return <div className="loading text-center py-8">Loading...</div>;
-  if (error) return <div className="error text-center py-8 text-red-600">Error: {error}</div>;
-  if (posts.length === 0) return <div className="error text-center py-8">No posts found</div>;
+      {/* Skeleton for Three-Post Grid */}
+      <div className="py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1, 2, 3].map((_, index) => (
+            <div key={index} className="max-h-[600px]">
+              <div className="flex items-center gap-2 pb-2">
+                <div className="bg-gray-300 h-6 w-20 rounded"></div>
+                <div className="bg-gray-300 h-6 w-20 rounded"></div>
+              </div>
+              <div className="bg-gray-300 w-full h-[455px] rounded-t-md"></div>
+              <div className="bg-gray-300 h-8 w-3/4 rounded mt-2"></div>
+              <div className="bg-gray-300 h-4 w-1/2 rounded mt-2"></div>
+              <div className="flex items-center gap-3 mt-2">
+                <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+                <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+                <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+              </div>
+              <div className="bg-gray-300 h-4 w-full rounded mt-2"></div>
+              <div className="bg-gray-300 h-4 w-5/6 rounded mt-2"></div>
+              <div className="bg-gray-300 h-4 w-2/3 rounded mt-2"></div>
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-end py-4 mt-[70px] lg:mt-0">
+          <div className="bg-gray-300 h-8 w-32 rounded"></div>
+        </div>
+      </div>
+    </div>
+  );
+
+  if (loading) return <SkeletonLoader />;
+  if (error) return (
+    <div className="error text-center py-8 text-red-600">Error: {error}</div>
+  );
+  if (posts.length === 0) return (
+    <div className="error text-center py-8">No posts found</div>
+  );
 
   const firstPost = posts[0];
   const thirdPost = posts[2];
@@ -154,7 +217,7 @@ const Video: React.FC = () => {
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-4xl font-bold  text-[#131313] px-4 hover:underline"
+                  className="text-4xl font-bold text-[#131313] px-4 hover:underline"
                 />
               </Link>
             </div>
@@ -169,86 +232,88 @@ const Video: React.FC = () => {
               />
             </div>
           </div>
-          <div className="pt-4 ">
+          <div className="pt-4">
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-2">
-              <Link
-                href={`/blogs/${firstPost.category_name}`}
-                className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white"
-              >
-                {firstPost.category_name || "Category"}
-              </Link>
-              <Link
-                href={`/${firstPost.category_id}/${firstPost.subcategory_id}`}
-                className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white"
-              >
-                {firstPost.sub_category_name || "Subcategory"}
-              </Link>
-            </div>
-            <div className="flex items-center gap-3 relative mt-2">
-              <span
-                onClick={() => handleShare(firstPost)}
-                className="cursor-pointer"
-              >
-                <RiShareForwardLine className="w-6 h-6" />
-              </span>
-              {showShareMenu === firstPost.id && (
-                <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
-                  <FaTwitter
-                    className="w-6 h-6 cursor-pointer text-blue-500"
-                    onClick={() =>
-                      shareToTwitter(
-                        getShareUrl(
-                          firstPost.category_id,
-                          firstPost.subcategory_id,
-                          firstPost.id
-                        ),
-                        firstPost.heading
-                      )
-                    }
-                  />
-                  <FaFacebook
-                    className="w-6 h-6 cursor-pointer text-blue-700"
-                    onClick={() =>
-                      shareToFacebook(
-                        getShareUrl(
-                          firstPost.category_id,
-                          firstPost.subcategory_id,
-                          firstPost.id
+                <Link
+                  href={`/blogs/${firstPost.category_name}`}
+                  className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
+                >
+                  {firstPost.category_name || "Category"}
+                </Link>
+                <Link
+                  href={`/${firstPost.category_id}/${firstPost.subcategory_id}`}
+                  className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
+                >
+                  {firstPost.sub_category_name || "Subcategory"}
+                </Link>
+              </div>
+              <div className="flex items-center gap-3 relative mt-2">
+                <span
+                  onClick={() => handleShare(firstPost)}
+                  className="cursor-pointer"
+                >
+                  <RiShareForwardLine className="w-6 h-6" />
+                </span>
+                {showShareMenu === firstPost.id && (
+                  <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
+                    <FaTwitter
+                      className="w-6 h-6 cursor-pointer text-blue-500"
+                      onClick={() =>
+                        shareToTwitter(
+                          getShareUrl(
+                            firstPost.category_id,
+                            firstPost.subcategory_id,
+                            firstPost.id
+                          ),
+                          firstPost.heading
                         )
-                      )
-                    }
-                  />
-                  <FaLinkedin
-                    className="w-6 h-6 cursor-pointer text-blue-600"
-                    onClick={() =>
-                      shareToLinkedIn(
-                        getShareUrl(
-                          firstPost.category_id,
-                          firstPost.subcategory_id,
-                          firstPost.id
-                        ),
-                        firstPost.heading
-                      )
-                    }
-                  />
-                </div>
-              )}
-              <TbTargetArrow className="w-6 h-6" />
-              <Link
-                href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}#comment`}
-                className="cursor-pointer"
-              >
-              <FaRegCommentDots className="w-6 h-6" />
-              </Link>
+                      }
+                    />
+                    <FaFacebook
+                      className="w-6 h-6 cursor-pointer text-blue-700"
+                      onClick={() =>
+                        shareToFacebook(
+                          getShareUrl(
+                            firstPost.category_id,
+                            firstPost.subcategory_id,
+                            firstPost.id
+                          )
+                        )
+                      }
+                    />
+                    <FaLinkedin
+                      className="w-6 h-6 cursor-pointer text-blue-600"
+                      onClick={() =>
+                        shareToLinkedIn(
+                          getShareUrl(
+                            firstPost.category_id,
+                            firstPost.subcategory_id,
+                            firstPost.id
+                          ),
+                          firstPost.heading
+                        )
+                      }
+                    />
+                  </div>
+                )}
+                <TbTargetArrow className="w-6 h-6" />
+                <Link
+                  href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}#comment`}
+                  className="cursor-pointer"
+                >
+                  <FaRegCommentDots className="w-6 h-6" />
+                </Link>
+              </div>
             </div>
-            </div>
-            <p className="text-sm font-semibold  uppercase text-[#424242] pt-4">
+            <p
+              className="text-sm font-semibold uppercase text-[#424242] pt-4"
+            >
               {firstPost.author} - {firstPost.date}
             </p>
             <p
               dangerouslySetInnerHTML={{ __html: firstPost.body1 }}
-              className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
+              className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
             />
           </div>
         </div>
@@ -261,13 +326,13 @@ const Video: React.FC = () => {
               <div className="flex items-center gap-2 pb-2">
                 <Link
                   href={`/blogs/${thirdPost.category_name}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {thirdPost.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {thirdPost.sub_category_name || "Subcategory"}
                 </Link>
@@ -285,10 +350,12 @@ const Video: React.FC = () => {
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
-                  className="text-2xl font-medium  text-[#131313] hover:underline mt-2"
+                  className="text-2xl font-medium text-[#131313] hover:underline mt-2"
                 />
               </Link>
-              <p className="text-sm font-semibold  uppercase text-[#424242] mt-2">
+              <p
+                className="text-sm font-semibold uppercase text-[#424242] mt-2"
+              >
                 {thirdPost.author} - {thirdPost.date}
               </p>
               <div className="flex items-center gap-3 relative mt-2">
@@ -345,12 +412,12 @@ const Video: React.FC = () => {
                   href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}#comment`}
                   className="cursor-pointer"
                 >
-                <FaRegCommentDots className="w-6 h-6" />
+                  <FaRegCommentDots className="w-6 h-6" />
                 </Link>
               </div>
               <p
                 dangerouslySetInnerHTML={{ __html: thirdPost.body1 }}
-                className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
+                className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
               />
             </div>
           )}
@@ -360,13 +427,13 @@ const Video: React.FC = () => {
               <div className="flex items-center gap-2 pb-2">
                 <Link
                   href={`/blogs/${fourthPost.category_name}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {fourthPost.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {fourthPost.sub_category_name || "Subcategory"}
                 </Link>
@@ -384,10 +451,12 @@ const Video: React.FC = () => {
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
-                  className="text-2xl font-medium  text-[#131313] hover:underline mt-2"
+                  className="text-2xl font-medium text-[#131313] hover:underline mt-2"
                 />
               </Link>
-              <p className="text-sm font-semibold  uppercase text-[#424242] mt-2">
+              <p
+                className="text-sm font-semibold uppercase text-[#424242] mt-2"
+              >
                 {fourthPost.author} - {fourthPost.date}
               </p>
               <div className="flex items-center gap-3 relative mt-2">
@@ -444,12 +513,12 @@ const Video: React.FC = () => {
                   href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}#comment`}
                   className="cursor-pointer"
                 >
-                <FaRegCommentDots className="w-6 h-6" />
+                  <FaRegCommentDots className="w-6 h-6" />
                 </Link>
               </div>
               <p
                 dangerouslySetInnerHTML={{ __html: fourthPost.body1 }}
-                className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
+                className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
               />
             </div>
           )}
@@ -459,13 +528,13 @@ const Video: React.FC = () => {
               <div className="flex items-center gap-2 pb-2">
                 <Link
                   href={`/blogs/${fifthPost.category_name}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {fifthPost.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {fifthPost.sub_category_name || "Subcategory"}
                 </Link>
@@ -483,10 +552,12 @@ const Video: React.FC = () => {
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: fifthPost.heading }}
-                  className="text-2xl font-medium  text-[#131313] hover:underline mt-2"
+                  className="text-2xl font-medium text-[#131313] hover:underline mt-2"
                 />
               </Link>
-              <p className="text-sm font-semibold  uppercase text-[#424242] mt-2">
+              <p
+                className="text-sm font-semibold uppercase text-[#424242] mt-2"
+              >
                 {fifthPost.author} - {fifthPost.date}
               </p>
               <div className="flex items-center gap-3 relative mt-2">
@@ -543,12 +614,12 @@ const Video: React.FC = () => {
                   href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}#comment`}
                   className="cursor-pointer"
                 >
-                <FaRegCommentDots className="w-6 h-6" />
+                  <FaRegCommentDots className="w-6 h-6" />
                 </Link>
               </div>
               <p
                 dangerouslySetInnerHTML={{ __html: fifthPost.body1 }}
-                className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
+                className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
               />
             </div>
           )}
@@ -556,8 +627,8 @@ const Video: React.FC = () => {
 
         <div className="flex justify-end py-4 mt-[70px] lg:mt-0">
           <Link
-            href={`/blogs/${firstPost?.category_id}`}
-            className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white flex items-center gap-2"
+            href={`/blogs/${firstPost?.category_name}`}
+            className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white flex items-center gap-2"
           >
             EXPLORE MORE <ArrowRight size={16} />
           </Link>

@@ -141,17 +141,76 @@ const ArtCulture: React.FC = () => {
     );
   };
 
-  console.log(loading)
+  // Skeleton Loading Component
+  const SkeletonLoader = () => (
+    <div className="animate-pulse">
+      {/* Skeleton for First Post */}
+      <div className="py-8">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2">
+            <div className="bg-gray-300 h-8 w-24 rounded"></div>
+            <div className="bg-gray-300 h-8 w-24 rounded"></div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+            <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+            <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-[#DDD618] max-h-[455px] flex items-center justify-center rounded-l-md p-4">
+            <div className="bg-gray-300 h-12 w-3/4 rounded"></div>
+          </div>
+          <div>
+            <div className="bg-gray-300 w-full h-[455px] rounded-r-md"></div>
+            <div className="flex justify-end pt-4">
+              <div className="bg-gray-300 h-4 w-1/4 rounded"></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  // if (loading)
-  //   return <div className="loading text-center py-8">Loading...</div>;
+      {/* Skeleton for Three-Post Grid */}
+      <div className="py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1, 2, 3].map((_, index) => (
+            <div key={index} className="max-h-[600px] relative">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="bg-gray-300 h-6 w-20 rounded"></div>
+                <div className="bg-gray-300 h-6 w-20 rounded"></div>
+              </div>
+              <div className="bg-gray-300 w-full h-[300px] rounded-t-md"></div>
+              <div className="p-4 space-y-2">
+                <div className="bg-gray-300 h-6 w-3/4 rounded"></div>
+                <div className="bg-gray-300 h-4 w-1/2 rounded"></div>
+                <div className="flex items-center gap-3">
+                  <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+                  <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+                  <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+                </div>
+                <div className="bg-gray-300 h-4 w-full rounded"></div>
+                <div className="bg-gray-300 h-4 w-5/6 rounded"></div>
+                <div className="bg-gray-300 h-4 w-2/3 rounded"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
-  if (error)
-    return (
-      <div className="error text-center py-8 text-red-500">Error: {error}</div>
-    );
-  if (posts.length === 0)
-    return <div className="error text-center py-8">No posts found</div>;
+      {/* Skeleton for Explore More Button */}
+      <div className="flex justify-end py-4">
+        <div className="bg-gray-300 h-8 w-32 rounded"></div>
+      </div>
+    </div>
+  );
+
+  if (loading) return <SkeletonLoader />;
+  if (error) return (
+    <div className="error text-center py-8 text-red-500">Error: {error}</div>
+  );
+  if (posts.length === 0) return (
+    <div className="error text-center py-8">No posts found</div>
+  );
 
   const firstPost = posts[0];
   const thirdPost = posts[1];
@@ -166,13 +225,13 @@ const ArtCulture: React.FC = () => {
             <div className="flex items-center gap-2">
               <Link
                 href={`/blogs/${firstPost.category_name}`}
-                className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white"
+                className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
               >
                 {firstPost.category_name || "Category"}
               </Link>
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}`}
-                className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white"
+                className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
               >
                 {firstPost.sub_category_name || "Subcategory"}
               </Link>
@@ -239,11 +298,11 @@ const ArtCulture: React.FC = () => {
             <div className="bg-[#DDD618] max-h-[455px] flex items-center justify-center rounded-l-md p-4">
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
-                className="text-2xl font-medium  text-[#131313] hover:underline"
+                className="text-2xl font-medium text-[#131313] hover:underline"
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-4xl font-bold  text-[#131313]"
+                  className="text-4xl font-bold text-[#131313]"
                 />
               </Link>
             </div>
@@ -256,7 +315,7 @@ const ArtCulture: React.FC = () => {
                 className="w-full h-[455px] object-cover rounded-r-md"
                 priority
               />
-              <p className="text-base font-semibold  uppercase text-[#424242] pt-4 text-end">
+              <p className="text-base font-semibold uppercase text-[#424242] pt-4 text-end">
                 {firstPost.author} - {firstPost.date}
               </p>
             </div>
@@ -271,13 +330,13 @@ const ArtCulture: React.FC = () => {
               <div className="flex items-center gap-2 mb-2">
                 <Link
                   href={`/blogs/${thirdPost.category_name}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {thirdPost.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {thirdPost.sub_category_name || "Subcategory"}
                 </Link>
@@ -296,10 +355,10 @@ const ArtCulture: React.FC = () => {
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
-                    className="text-2xl font-medium  text-[#131313] hover:underline"
+                    className="text-2xl font-medium text-[#131313] hover:underline"
                   />
                 </Link>
-                <p className="text-sm font-semibold  uppercase text-[#424242] mt-2">
+                <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
                   {thirdPost.author} - {thirdPost.date}
                 </p>
                 <div className="flex items-center gap-3 mt-2 relative">
@@ -356,12 +415,12 @@ const ArtCulture: React.FC = () => {
                     href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}#comment`}
                     className="cursor-pointer"
                   >
-                  <FaRegCommentDots className="w-6 h-6" />
+                    <FaRegCommentDots className="w-6 h-6" />
                   </Link>
                 </div>
                 <p
                   dangerouslySetInnerHTML={{ __html: thirdPost.body1 }}
-                  className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
+                  className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
                 />
               </div>
             </div>
@@ -372,13 +431,13 @@ const ArtCulture: React.FC = () => {
               <div className="flex items-center gap-2 mb-2">
                 <Link
                   href={`/blogs/${fourthPost.category_name}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {fourthPost.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {fourthPost.sub_category_name || "Subcategory"}
                 </Link>
@@ -397,10 +456,10 @@ const ArtCulture: React.FC = () => {
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
-                    className="text-2xl font-medium  text-[#131313] hover:underline"
+                    className="text-2xl font-medium text-[#131313] hover:underline"
                   />
                 </Link>
-                <p className="text-sm font-semibold  uppercase text-[#424242] mt-2">
+                <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
                   {fourthPost.author} - {fourthPost.date}
                 </p>
                 <div className="flex items-center gap-3 mt-2 relative">
@@ -457,12 +516,12 @@ const ArtCulture: React.FC = () => {
                     href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}#comment`}
                     className="cursor-pointer"
                   >
-                  <FaRegCommentDots className="w-6 h-6" /> 
+                    <FaRegCommentDots className="w-6 h-6" />
                   </Link>
                 </div>
                 <p
                   dangerouslySetInnerHTML={{ __html: fourthPost.body1 }}
-                  className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
+                  className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
                 />
               </div>
             </div>
@@ -473,17 +532,18 @@ const ArtCulture: React.FC = () => {
               <div className="flex items-center gap-2 mb-2">
                 <Link
                   href={`/blogs/${fifthPost.category_name}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {fifthPost.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {fifthPost.sub_category_name || "Subcategory"}
                 </Link>
               </div>
+              <div className="relative">
               <Image
                 src={getImageUrl(fifthPost.image1)}
                 alt={fifthPost.heading || "Blog Image"}
@@ -492,16 +552,16 @@ const ArtCulture: React.FC = () => {
                 className="w-full h-[300px] object-cover rounded-t-md"
                 priority
               />
-              <div className="p-4">
+            <div className="p-4">
                 <Link
                   href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: fifthPost.heading }}
-                    className="text-2xl font-medium  text-[#131313] hover:underline"
+                    className="text-2xl font-medium text-[#131313] hover:underline"
                   />
                 </Link>
-                <p className="text-sm font-semibold  uppercase text-[#424242] mt-2">
+                <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
                   {fifthPost.author} - {fifthPost.date}
                 </p>
                 <div className="flex items-center gap-3 mt-2 relative">
@@ -558,15 +618,16 @@ const ArtCulture: React.FC = () => {
                     href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}#comment`}
                     className="cursor-pointer"
                   >
-                  <FaRegCommentDots className="w-6 h-6" />
+                    <FaRegCommentDots className="w-6 h-6" />
                   </Link>
                 </div>
                 <p
                   dangerouslySetInnerHTML={{ __html: fifthPost.body1 }}
-                  className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
+                  className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
                 />
               </div>
             </div>
+          </div>
           )}
         </div>
       </div>
@@ -574,7 +635,7 @@ const ArtCulture: React.FC = () => {
       <div className="flex justify-end py-4">
         <Link
           href={`/blogs/${firstPost?.category_name}`}
-          className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white flex items-center gap-2"
+          className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white flex items-center gap-2"
         >
           EXPLORE MORE <ArrowRight size={16} />
         </Link>
