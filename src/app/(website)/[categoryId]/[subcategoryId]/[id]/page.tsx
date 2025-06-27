@@ -23,7 +23,7 @@ interface BlogData {
     category_id: number;
     subcategory_id: number;
     category_name: string;
-    subcategory_name?: string;
+    sub_category_name?: string;
     heading: string; // HTML content
     author: string;
     date: string; // ISO date format
@@ -137,6 +137,8 @@ const ContentBlogDetails = ({
     return <div className="text-center py-10">Blog not found</div>;
   }
 
+  console.log(blogData);
+
   // Get cleaned tags
   const cleanedTags = cleanTags(blogData.tags || []);
 
@@ -221,13 +223,13 @@ const ContentBlogDetails = ({
                     href={`/blogs/${blogData.category_name}`}
                     className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
                   >
-                    {blogData.category_name || "Category"}
+                    {blogData?.category_name || ""}
                   </Link>
                   <Link
                     href={`/${blogData.category_id}/${blogData.subcategory_id}`}
                     className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
                   >
-                    {blogData.subcategory_name || "Subcategory"}
+                    {blogData?.sub_category_name || ""}
                   </Link>
                 </div>
               </div>
@@ -261,13 +263,13 @@ const ContentBlogDetails = ({
                   <Image
                     src={
                       blogData.user?.profilePic
-                        ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/${blogData.user.profilePic}`
+                        ? `${blogData.user.profilePic}`
                         : "/assets/images/no-images.jpg"
                     }
                     alt={blogData.user?.first_name || "Author"}
                     width={180}
                     height={180}
-                    className="w-[180px] h-[180px] object-cover rounded-full"
+                    className="w-[180px] h-[180px] object-cover rounded-full border"
                   />
                 </div>
                 <div className="md:col-span-5 h-full flex flex-col justify-center mt-2 md:mt-0">
