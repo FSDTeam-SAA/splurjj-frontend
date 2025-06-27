@@ -49,6 +49,7 @@ function CategoryContents({
   posts,
   currentPage,
   totalPages,
+  loading,
   totalItems,
   setCurrentPage,
 }: CategoryContentsProps) {
@@ -116,6 +117,49 @@ function CategoryContents({
       "_blank"
     );
   };
+
+
+   const SkeletonLoader = () => (
+    <div className="animate-pulse">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {Array.from({ length: 9 }).map((_, index) => (
+          <div key={index} className="relative">
+            {/* Image */}
+            <div className="bg-gray-300 w-full h-[300px] rounded-t-lg"></div>
+            {/* Content */}
+            <div className="p-4">
+              <div className="flex items-center gap-2">
+                <div className="bg-gray-300 h-6 w-20 rounded"></div>
+                <div className="bg-gray-300 h-6 w-20 rounded"></div>
+              </div>
+              <div className="bg-gray-300 h-8 w-3/4 rounded mt-2"></div>
+              <div className="bg-gray-300 h-4 w-1/2 rounded mt-2"></div>
+              <div className="flex items-center gap-3 mt-2">
+                <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+                <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+                <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+              </div>
+              <div className="bg-gray-300 h-4 w-full rounded mt-2"></div>
+              <div className="bg-gray-300 h-4 w-5/6 rounded mt-2"></div>
+              <div className="bg-gray-300 h-4 w-2/3 rounded mt-2"></div>
+            </div>
+          </div>
+        ))}
+      </div>
+      {/* Pagination */}
+      <div className="flex justify-between items-center mt-4 px-4 py-2">
+        <div className="bg-gray-300 h-4 w-32 rounded"></div>
+        <div className="flex space-x-2">
+          <div className="bg-gray-300 h-8 w-8 rounded"></div>
+          <div className="bg-gray-300 h-8 w-8 rounded"></div>
+          <div className="bg-gray-300 h-8 w-8 rounded"></div>
+        </div>
+      </div>
+    </div>
+  );
+
+  if (loading) return <SkeletonLoader />;
+  if (!posts.length) return <div className="text-center py-8">No content found</div>;
 
   return (
     <div className="">

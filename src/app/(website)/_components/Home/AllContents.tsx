@@ -877,7 +877,7 @@ const AllContents: React.FC = () => {
                 </Link>
               </div>
             </div>
-            <div className="space-y-4 border-2 border-red-500">
+            <div className="space-y-4">
               <Link
                 href={`/${firstPost?.category_id}/${firstPost?.subcategory_id}/${firstPost?.id}`}
               >
