@@ -93,10 +93,10 @@ export default function CategoryTable({
                     <Button
                       size="sm"
                       variant="outline"
-                      className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                      className="text-red-500 hover:text-red-700 dark:text-red-500 hover:bg-red-50"
                       onClick={() => onDelete(category.category_id)}
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 className="h-4 w-4 dark:text-red-500" />
                     </Button>
                 </div>
               </TableCell>

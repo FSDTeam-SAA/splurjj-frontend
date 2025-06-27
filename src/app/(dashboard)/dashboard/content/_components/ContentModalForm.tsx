@@ -537,7 +537,7 @@ export default function ContentAddEditForm({
                     ) : (
                       <>
                         <div className="flex items-center justify-center">
-                          <FormLabel className="w-full text-base text-center font-medium  text-black leading-[120%] tracking-[0%] pb-2">
+                          <FormLabel className="w-full text-base text-center font-normal  text-black/60 leading-[120%] tracking-[0%] pb-2">
                             Upload your image file
                           </FormLabel>
                         </div>
@@ -557,13 +557,13 @@ export default function ContentAddEditForm({
                             >
                               <label
                                 htmlFor="image-upload"
-                                className={`flex flex-col items-center gap-2 ${
+                                className={`flex flex-col items-center gap-2 text-black md:text-black ${
                                   imageLink
                                     ? "opacity-50 pointer-events-none"
                                     : ""
                                 }`}
                               >
-                                <Upload className="w-8 h-8" />
+                                <Upload className="w-8 h-8 text-black dark:text-black" />
                                 Upload
                               </label>
                             </button>

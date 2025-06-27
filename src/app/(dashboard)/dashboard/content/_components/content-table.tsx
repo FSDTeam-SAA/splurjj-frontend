@@ -69,7 +69,7 @@ export default function ContentTable({
       <TableHeader className="">
         <TableRow className="border border-[#616161] !h-[39px] w-full py-[10px]">
           <TableHead className="text-base font-bold text-[#131313] dark:text-white tracking-[0%] leading-[120%]  border-r border-[#616161] pl-10">
-            Blog Name
+            Post Name
           </TableHead>
           <TableHead className="border-r border-[#616161] text-center text-base font-bold text-[#131313] dark:text-white tracking-[0%] leading-[120%] ">
             Date
