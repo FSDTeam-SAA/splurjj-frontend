@@ -24,20 +24,20 @@ interface BlogData {
     subcategory_id: number;
     category_name: string;
     sub_category_name?: string;
-    heading: string; // HTML content
+    heading: string;
     author: string;
-    date: string; // ISO date format
-    sub_heading: string; // HTML content
-    body1: string; // HTML content
+    date: string;
+    sub_heading: string;
+    body1: string;
     image1: string | null;
     advertising_image: string | null;
-    tags: string[]; // Array of strings (though the format seems inconsistent)
-    created_at: string; // ISO datetime format
-    updated_at: string; // ISO datetime format
+    tags: string[];
+    created_at: string;
+    updated_at: string;
     imageLink: string | null;
     advertisingLink: string | null;
     user_id: number;
-    status: string; // Could be enum: "active" | "inactive" etc.
+    status: string;
     image1_url: string | null;
     advertising_image_url: string | null;
     user: {
@@ -59,42 +59,32 @@ const ContentBlogDetails = ({
   params: { id: number; categoryId: string; subcategoryId: string };
 }) => {
   const { id, categoryId, subcategoryId } = params;
-
-  // console.log(id, categoryId, subcategoryId);
-
-  const session = useSession();
-  const commentAccess = session?.data?.user?.role;
-  console.log(commentAccess);
-  const userId = session?.data?.user?.id;
-  console.log("UserId", userId);
-  const userEmail = session?.data?.user?.email;
+  const { data: session } = useSession();
+  const commentAccess = session?.user?.role;
+  const userEmail = session?.user?.email;
 
   // Improved cleanTags function to handle malformed JSON strings
   const cleanTags = (tags: string[]): string[] => {
     if (!tags || !Array.isArray(tags)) return [];
 
-    // First try to parse as JSON if it looks like a JSON string
     if (tags.length === 1 && tags[0].startsWith("[")) {
       try {
         const parsedTags = JSON.parse(tags[0].replace(/\\"/g, '"'));
         return Array.isArray(parsedTags) ? parsedTags : [];
       } catch {
-        // If parsing fails, fall back to string cleaning
+        // Fallback to string cleaning
       }
     }
 
-    // Handle individual string cleaning
     return tags
-      .map((tag) => {
-        // Remove escaped quotes and brackets
-        const cleaned = tag
+      .map((tag) =>
+        tag
           .replace(/^\[|\]$/g, "")
           .replace(/^"|"$/g, "")
           .replace(/\\"/g, "")
-          .trim();
-        return cleaned;
-      })
-      .filter((tag) => tag.length > 0); // Filter out empty tags
+          .trim()
+      )
+      .filter((tag) => tag.length > 0);
   };
 
   const sanitizeHTML = (html: string): string => {
@@ -109,22 +99,132 @@ const ContentBlogDetails = ({
       ).then((res) => res.json()),
   });
 
-  console.log(data?.data?.heading);
   const blogData = data?.data || null;
 
-  // const blogData = data?.data || null;
-  console.log(blogData?.heading);
+  // Skeleton Loader Component
+  const SkeletonLoader = () => (
+    <div className="animate-pulse container py-[30px] md:py-[50px] lg:py-[72px]">
+      <div className="grid grid-cols-1 md:grid-cols-7 gap-[30px] md:gap-[50px] lg:gap-[72px]">
+        {/* Left Column */}
+        <div className="md:col-span-2 flex flex-col gap-[25px] md:gap-[32px] lg:gap-[40px]">
+          <div>
+            <div className="bg-gray-300 h-10 md:h-12 w-3/4 rounded"></div>
+            <div className="space-y-2 mt-4">
+              <div className="bg-gray-300 h-4 w-full rounded"></div>
+              <div className="bg-gray-300 h-4 w-5/6 rounded"></div>
+              <div className="bg-gray-300 h-4 w-2/3 rounded"></div>
+            </div>
+            <div className="bg-gray-300 h-4 w-1/2 rounded mt-4"></div>
+            <div className="bg-gray-300 h-12 w-full rounded mt-3 md:mt-4"></div>
+          </div>
+          <div className="sticky top-[120px]">
+            <div className="bg-gray-300 h-32 w-full rounded"></div>
+          </div>
+        </div>
+        {/* Right Column */}
+        <div className="md:col-span-5">
+          <div>
+            <div className="space-y-2">
+              <div className="bg-gray-300 h-4 w-full rounded"></div>
+              <div className="bg-gray-300 h-4 w-5/6 rounded"></div>
+              <div className="bg-gray-300 h-4 w-2/3 rounded"></div>
+            </div>
+            <div className="pb-[25px] md:pb-[32px] lg:pb-[40px] mt-5 md:mt-7 lg:mt-8">
+              <div className="bg-gray-300 w-full h-[443px] rounded-[8px] border border-gray-400"></div>
+            </div>
+            <div className="space-y-2">
+              <div className="bg-gray-300 h-4 w-full rounded"></div>
+              <div className="bg-gray-300 h-4 w-5/6 rounded"></div>
+              <div className="bg-gray-300 h-4 w-2/3 rounded"></div>
+              <div className="bg-gray-300 h-4 w-full rounded"></div>
+              <div className="bg-gray-300 h-4 w-5/6 rounded"></div>
+            </div>
+            <div className="w-full flex items-center justify-center mt-5 md:mt-7 lg:mt-8">
+              <div className="bg-gray-300 w-2/3 h-[2px] rounded"></div>
+            </div>
+          </div>
+          {/* Second Part */}
+          <div className="mt-[25px] md:mt-[37px] lg:mt-[51px]">
+            {/* Posted In */}
+            <div className="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-7 gap-2">
+              <div className="md:col-span-2 bg-gray-300 h-5 w-24 rounded"></div>
+              <div className="flex items-center gap-2">
+                <div className="bg-gray-300 h-6 w-20 rounded"></div>
+                <div className="bg-gray-300 h-6 w-20 rounded"></div>
+              </div>
+            </div>
+            {/* Tags */}
+            <div className="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-7 gap-2 mt-4 md:mt-5 lg:mt-6">
+              <div className="md:col-span-2 bg-gray-300 h-5 w-24 rounded"></div>
+              <div className="md:col-span-5 flex flex-wrap items-center gap-3 md:gap-4">
+                <div className="bg-gray-300 h-6 w-24 rounded"></div>
+                <div className="bg-gray-300 h-6 w-24 rounded"></div>
+                <div className="bg-gray-300 h-6 w-24 rounded"></div>
+              </div>
+            </div>
+            {/* Author */}
+            <div className="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-7 mt-[25px] md:mt-[37px] lg:mt-[51px]">
+              <div className="md:col-span-2">
+                <div className="bg-gray-300 h-[180px] w-[180px] rounded-full"></div>
+              </div>
+              <div className="md:col-span-5 flex flex-col gap-4 mt-2 md:mt-0">
+                <div className="bg-gray-300 h-5 w-1/3 rounded"></div>
+                <div className="space-y-2">
+                  <div className="bg-gray-300 h-4 w-full rounded"></div>
+                  <div className="bg-gray-300 h-4 w-5/6 rounded"></div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="bg-gray-300 h-12 w-12 rounded-full"></div>
+                    <div className="bg-gray-300 h-12 w-12 rounded-full"></div>
+                    <div className="bg-gray-300 h-12 w-12 rounded-full"></div>
+                  </div>
+                  <div className="bg-gray-300 h-4 w-24 rounded"></div>
+                </div>
+              </div>
+            </div>
+            {/* Comments */}
+            <div className="mt-10">
+              <div className="bg-gray-300 h-16 w-full rounded"></div>
+              <div className="mt-4 space-y-4">
+                {Array.from({ length: 3 }).map((_, index) => (
+                  <div key={index} className="space-y-2">
+                    <div className="bg-gray-300 h-4 w-1/4 rounded"></div>
+                    <div className="bg-gray-300 h-4 w-full rounded"></div>
+                    <div className="bg-gray-300 h-4 w-5/6 rounded"></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Vertical Ad */}
+      <div className="sticky mb-2">
+        <div className="bg-gray-300 h-64 w-full rounded"></div>
+      </div>
+      {/* Related Content */}
+      <section className="container py-[30px] md:py-[50px] lg:py-[72px]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <div key={index} className="space-y-2">
+              <div className="bg-gray-300 h-[300px] w-full rounded-t-lg border border-gray-400"></div>
+              <div className="flex items-center gap-2">
+                <div className="bg-gray-300 h-6 w-20 rounded"></div>
+                <div className="bg-gray-300 h-6 w-20 rounded"></div>
+              </div>
+              <div className="bg-gray-300 h-8 w-3/4 rounded"></div>
+              <div className="bg-gray-300 h-4 w-1/2 rounded"></div>
+              <div className="bg-gray-300 h-4 w-full rounded"></div>
+              <div className="bg-gray-300 h-4 w-5/6 rounded"></div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
 
-  // const getImageUrl = (path: string | null): string => {
-  //   if (!path) return "";
-  //   if (path.startsWith("http")) return path;
-  //   return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${path.replace(/^\/+/, "")}`;
-  // };
-
-  if (isLoading) {
-    return <div className="text-center py-10">Loading...</div>;
-  }
-
+  if (isLoading) return <SkeletonLoader />;
   if (isError) {
     return (
       <div className="text-center py-10 text-red-500">
@@ -132,14 +232,10 @@ const ContentBlogDetails = ({
       </div>
     );
   }
-
   if (!blogData) {
     return <div className="text-center py-10">Blog not found</div>;
   }
 
-  console.log(blogData);
-
-  // Get cleaned tags
   const cleanedTags = cleanTags(blogData.tags || []);
 
   return (
@@ -153,15 +249,15 @@ const ContentBlogDetails = ({
                 dangerouslySetInnerHTML={{
                   __html: sanitizeHTML(blogData.heading ?? ""),
                 }}
-                className="text-[24px] md:text-[32px] lg:text-[40px] font-semibold leading-[120%] text-[#131313]  tracking-[0%]"
+                className="text-[24px] md:text-[32px] lg:text-[40px] font-semibold leading-[120%] text-[#131313] tracking-[0%]"
               />
               <p
                 dangerouslySetInnerHTML={{
                   __html: sanitizeHTML(blogData.sub_heading ?? ""),
                 }}
-                className="text-base font-normal  leading-[150%] tracking-[0%] text-[#424242] py-4 md:py-5 lg:py-6 line-clamp-3 mb-2"
+                className="text-base font-normal leading-[150%] tracking-[0%] text-[#424242] py-4 md:py-5 lg:py-6 line-clamp-3 mb-2"
               />
-              <p className="text-base font-semibold  leading-[120%] tracking-[0%] text-[#424242]">
+              <p className="text-base font-semibold leading-[120%] tracking-[0%] text-[#424242]">
                 Credits - {blogData.date}
               </p>
               <div className="mt-3 md:mt-4">
@@ -171,7 +267,7 @@ const ContentBlogDetails = ({
                       ?.getElementById("comment")
                       ?.scrollIntoView({ behavior: "smooth" })
                   }
-                  className="w-full bg-primary py-[12px] px-[24px] rounded-[4px] text-xl font-bold  leading-[120%] tracking-[0%] uppercase text-white"
+                  className="w-full bg-primary py-[12px] px-[24px] rounded-[4px] text-xl font-bold leading-[120%] tracking-[0%] uppercase text-white"
                 >
                   Leave A Comment
                 </button>
@@ -187,13 +283,14 @@ const ContentBlogDetails = ({
                 dangerouslySetInnerHTML={{
                   __html: sanitizeHTML(blogData.sub_heading ?? ""),
                 }}
-                className="text-base font-normal  leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8"
+                className="text-base font-normal leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8"
               />
               <div className="pb-[25px] md:pb-[32px] lg:pb-[40px]">
                 <Image
                   src={
+                    blogData.image1_url ||
                     `${process.env.NEXT_PUBLIC_BACKEND_URL}/${blogData.image1}` ||
-                    ""
+                    "/fallback-image.jpg"
                   }
                   alt={blogData.heading || "Blog image"}
                   width={888}
@@ -205,7 +302,7 @@ const ContentBlogDetails = ({
                 dangerouslySetInnerHTML={{
                   __html: sanitizeHTML(blogData.body1 ?? ""),
                 }}
-                className="text-base font-normal  leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8"
+                className="text-base font-normal leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8"
               />
               <div className="w-full flex items-center justify-center">
                 <span className="w-2/3 h-[2px] bg-secondary" />
@@ -215,19 +312,19 @@ const ContentBlogDetails = ({
             <div className="mt-[25px] md:mt-[37px] lg:mt-[51px]">
               {/* Posted in */}
               <div className="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-7 gap-2">
-                <h4 className="md:col-span-2 text-lg md:text-xl text-secondary font-bold  leading-[120%] tracking-[0%] uppercase">
+                <h4 className="md:col-span-2 text-lg md:text-xl text-secondary font-bold leading-[120%] tracking-[0%] uppercase">
                   Posted in
                 </h4>
                 <div className="flex items-center gap-2">
                   <Link
                     href={`/blogs/${blogData.category_name}`}
-                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                   >
                     {blogData?.category_name || ""}
                   </Link>
                   <Link
                     href={`/${blogData.category_id}/${blogData.subcategory_id}`}
-                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                   >
                     {blogData?.sub_category_name || ""}
                   </Link>
@@ -236,7 +333,7 @@ const ContentBlogDetails = ({
               {/* Tags */}
               {cleanedTags.length > 0 && (
                 <div className="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-7 gap-2 mt-4 md:mt-5 lg:mt-6">
-                  <h4 className="md:col-span-2 text-lg md:text-xl text-secondary font-bold  leading-[120%] tracking-[0%] uppercase">
+                  <h4 className="md:col-span-2 text-lg md:text-xl text-secondary font-bold leading-[120%] tracking-[0%] uppercase">
                     Tags
                   </h4>
                   <div className="md:col-span-5 flex flex-col items-start gap-3 md:gap-4">
@@ -248,7 +345,7 @@ const ContentBlogDetails = ({
                           )}`}
                           key={index}
                         >
-                          <button className="bg-secondary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white">
+                          <button className="bg-secondary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold leading-[120%] tracking-[0%] uppercase text-white">
                             {tag}
                           </button>
                         </Link>
@@ -273,10 +370,10 @@ const ContentBlogDetails = ({
                   />
                 </div>
                 <div className="md:col-span-5 h-full flex flex-col justify-center mt-2 md:mt-0">
-                  <h4 className="text-lg font-semibold leading-[120%] tracking-[0%] uppercase  text-secondary">
+                  <h4 className="text-lg font-semibold leading-[120%] tracking-[0%] uppercase text-secondary">
                     {blogData.user?.first_name || blogData.author}
                   </h4>
-                  <p className="mt-4 text-base  font-normal leading-[150%] tracking-[0%] text-secondary">
+                  <p className="mt-4 text-base font-normal leading-[150%] tracking-[0%] text-secondary">
                     {blogData.user?.description || "No description available."}
                   </p>
                   <div className="flex items-center justify-between">
@@ -320,7 +417,7 @@ const ContentBlogDetails = ({
                     </div>
                     <Link
                       href={`/viewpost/${blogData.user?.id}`}
-                      className="text-lg font-extrabold  leading-[120%] tracking-[0%] text-secondary dark:text-white"
+                      className="text-lg font-extrabold leading-[120%] tracking-[0%] text-secondary dark:text-white"
                     >
                       View posts
                     </Link>
@@ -345,7 +442,7 @@ const ContentBlogDetails = ({
       <div className="sticky mb-2">
         <Vertical />
       </div>
-      {/* Related blogs (uncomment when ready) */}
+      {/* Related blogs */}
       <section>
         <RelatedContent categoryId={categoryId} subcategoryId={subcategoryId} />
       </section>
