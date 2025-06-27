@@ -197,16 +197,18 @@ const Gear: React.FC = () => {
   );
 
   if (loading) return <SkeletonLoader />;
-  if (error) return (
-    <div className="error text-center py-8 text-red-500">Error: {error}</div>
-  );
-  if (posts.length === 0) return (
-    <div className="error text-center py-8">No posts found</div>
-  );
+  if (error)
+    return (
+      <div className="error text-center py-8 text-red-500">Error: {error}</div>
+    );
+  if (posts.length === 0)
+    return <div className="error text-center py-8">No posts found</div>;
 
   const firstPost = posts[0];
   const secondPost = posts[1];
   const thirdPost = posts[2];
+
+  const sanitizedHeading = secondPost.heading.replace(/style="[^"]*"/g, "");
 
   return (
     <div className="">
@@ -296,7 +298,18 @@ const Gear: React.FC = () => {
                 backgroundSize: "cover",
               }}
               className="flex items-center justify-center rounded-lg"
-            />
+            >
+              <div>
+                <div
+                  dangerouslySetInnerHTML={{ __html: sanitizedHeading }}
+                  className="!text-white white-text"
+                />
+                <div
+                  dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
+                  className="text-sm font-normal text-[#424242] line-clamp-3 white-text text-center"
+                />
+              </div>
+            </div>
           </Link>
         </div>
       )}

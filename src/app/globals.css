@@ -237,3 +237,7 @@ Textarea{
 }
 
 /* styles.css */
+
+.white-text p {
+  color: #fff !important;
+}

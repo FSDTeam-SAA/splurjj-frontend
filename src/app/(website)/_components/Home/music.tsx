@@ -197,12 +197,12 @@ const Music: React.FC = () => {
   );
 
   if (loading) return <SkeletonLoader />;
-  if (error) return (
-    <div className="error text-center py-8 text-red-500">Error: {error}</div>
-  );
-  if (posts.length === 0) return (
-    <div className="error text-center py-8">No posts found</div>
-  );
+  if (error)
+    return (
+      <div className="error text-center py-8 text-red-500">Error: {error}</div>
+    );
+  if (posts.length === 0)
+    return <div className="error text-center py-8">No posts found</div>;
 
   const firstPost = posts[0];
   const secondPost = posts[1];
@@ -295,8 +295,19 @@ const Music: React.FC = () => {
                 backgroundPosition: "center",
                 backgroundSize: "cover",
               }}
-              className="flex items-center justify-end rounded-lg"
-            />
+              className="flex items-center justify-center rounded-lg"
+            >
+              <div>
+                <div
+                  dangerouslySetInnerHTML={{ __html: firstPost.heading }}
+                  className="text-[40px] font-medium white-text hover:underline"
+                />
+                <div
+                  dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
+                  className="text-lg font-medium white-text hover:underline text-center"
+                />
+              </div>
+            </div>
           </Link>
         </div>
       )}
