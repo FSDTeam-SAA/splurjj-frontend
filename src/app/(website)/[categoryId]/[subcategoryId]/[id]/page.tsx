@@ -15,49 +15,91 @@ import Vertical from "@/components/adds/vertical";
 import Horizontal from "@/components/adds/horizontal";
 import RelatedContent from "@/app/(website)/_components/RalatedBlog/RalatedBlog";
 
-interface User {
-  id: number;
-  first_name: string;
-  description: string;
-  profilePic: string;
-  facebook_link: string;
-  instagram_link: string;
-  twitter_link: string;
-  youtube_link: string;
+interface BlogData {
+  status: boolean;
+  message: string;
+  data: {
+    id: number;
+    category_id: number;
+    subcategory_id: number;
+    category_name: string;
+    subcategory_name?: string;
+    heading: string; // HTML content
+    author: string;
+    date: string; // ISO date format
+    sub_heading: string; // HTML content
+    body1: string; // HTML content
+    image1: string | null;
+    advertising_image: string | null;
+    tags: string[]; // Array of strings (though the format seems inconsistent)
+    created_at: string; // ISO datetime format
+    updated_at: string; // ISO datetime format
+    imageLink: string | null;
+    advertisingLink: string | null;
+    user_id: number;
+    status: string; // Could be enum: "active" | "inactive" etc.
+    image1_url: string | null;
+    advertising_image_url: string | null;
+    user: {
+      id: number;
+      description: string | null;
+      first_name: string | null;
+      facebook_link: string | null;
+      instagram_link: string | null;
+      youtube_link: string | null;
+      twitter_link: string | null;
+      profilePic: string;
+    };
+  };
 }
 
-interface ContentDataType {
-  id: number;
-  category_id: number;
-  category_name: string;
-  subcategory_id: number;
-  subcategory_name?: string;
-  heading: string;
-  author: string;
-  body1: string;
-  created_at: string;
-  date: string;
-  image1: string;
-  image1_url: string;
-  status: string;
-  sub_heading: string;
-  tags: string[];
-  updated_at: string;
-  user: User;
-  user_id: number;
-  advertisingLink: string | null;
-  advertising_image: string | null;
-  advertising_image_url: string | null;
-  imageLink: string | null;
-  relatedBlogs?: ContentDataType[]; // Added this line to fix the error
-}
+// interface User {
+//   id: number;
+//   first_name: string;
+//   description: string;
+//   profilePic: string;
+//   facebook_link: string;
+//   instagram_link: string;
+//   twitter_link: string;
+//   youtube_link: string;
+// }
 
-interface ContentAllDataTypeResponse {
-  data: ContentDataType;
-  // You might have other fields like status, message, etc. in the response
-  // status?: string;
-  // message?: string;
-}
+// interface ContentDataType {
+//   id: number;
+//   category_id: number;
+//   category_name: string;
+//   subcategory_id: number;
+//   subcategory_name?: string;
+//   heading: string;
+//   author: string;
+//   body1: string;
+//   created_at: string;
+//   date: string;
+//   image1: string;
+//   image1_url: string;
+//   status: string;
+//   sub_heading: string;
+//   tags: string[];
+//   updated_at: string;
+//   user: User;
+//   user_id: number;
+//   advertisingLink: string | null;
+//   advertising_image: string | null;
+//   advertising_image_url: string | null;
+//   imageLink: string | null;
+//   relatedBlogs?: ContentDataType[];
+// }
+
+// interface ContentDataResponse {
+//   data?: ContentDataType;
+// }
+
+// interface ContentAllDataTypeResponse {
+//   data: ContentDataType;
+//   // You might have other fields like status, message, etc. in the response
+//   status?: string;
+//   message?: string;
+// }
 
 const ContentBlogDetails = ({
   params,
@@ -66,9 +108,11 @@ const ContentBlogDetails = ({
 }) => {
   const { id, categoryId, subcategoryId } = params;
 
+  console.log(id, categoryId, subcategoryId);
+
   const session = useSession();
   const userId = session?.data?.user?.id;
-  console.log("UUUUUUUUUUUUUUUU",userId)
+  console.log("UserId", userId);
   const userEmail = session?.data?.user?.email;
 
   // Improved cleanTags function to handle malformed JSON strings
@@ -103,23 +147,25 @@ const ContentBlogDetails = ({
     return html; // Replace with actual sanitization in production
   };
 
-  const { data, isLoading, error, isError } =
-    useQuery<ContentAllDataTypeResponse>({
-      queryKey: ["all-content", categoryId, subcategoryId, id],
-      queryFn: () =>
-        fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${categoryId}/${subcategoryId}/${id}`
-        ).then((res) => res.json()),
-    });
+  const { data, isLoading, error, isError } = useQuery<BlogData>({
+    queryKey: ["all-content", categoryId, subcategoryId, id],
+    queryFn: () =>
+      fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${categoryId}/${subcategoryId}/${id}`
+      ).then((res) => res.json()),
+  });
 
-  const blogData = data?.data;
-  console.log(blogData);
+  console.log(data?.data?.heading);
+  const blogData = data?.data || null;
 
-  const getImageUrl = (path: string | null): string => {
-    if (!path) return "";
-    if (path.startsWith("http")) return path;
-    return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${path.replace(/^\/+/, "")}`;
-  };
+  // const blogData = data?.data || null;
+  console.log(blogData?.heading);
+
+  // const getImageUrl = (path: string | null): string => {
+  //   if (!path) return "";
+  //   if (path.startsWith("http")) return path;
+  //   return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${path.replace(/^\/+/, "")}`;
+  // };
 
   if (isLoading) {
     return <div className="text-center py-10">Loading...</div>;
@@ -189,7 +235,10 @@ const ContentBlogDetails = ({
               />
               <div className="pb-[25px] md:pb-[32px] lg:pb-[40px]">
                 <Image
-                  src={getImageUrl(blogData.image1)}
+                  src={
+                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/${blogData.image1}` ||
+                    ""
+                  }
                   alt={blogData.heading || "Blog image"}
                   width={888}
                   height={552}
@@ -256,7 +305,11 @@ const ContentBlogDetails = ({
               <div className="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-7 mt-[25px] md:mt-[37px] lg:mt-[51px]">
                 <div className="md:col-span-2">
                   <Image
-                    src={blogData.user?.profilePic}
+                    src={
+                      blogData.user?.profilePic
+                        ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/${blogData.user.profilePic}`
+                        : "/assets/images/no-images.jpg"
+                    }
                     alt={blogData.user?.first_name || "Author"}
                     width={180}
                     height={180}
@@ -309,7 +362,10 @@ const ContentBlogDetails = ({
                         </a>
                       )}
                     </div>
-                    <Link href={`/viewpost/${blogData.user?.id}`} className="text-lg font-extrabold  leading-[120%] tracking-[0%] text-secondary">
+                    <Link
+                      href={`/viewpost/${blogData.user?.id}`}
+                      className="text-lg font-extrabold  leading-[120%] tracking-[0%] text-secondary"
+                    >
                       View posts
                     </Link>
                   </div>
@@ -327,11 +383,11 @@ const ContentBlogDetails = ({
         </div>
       </div>
       <div className="sticky mb-2">
-         <Vertical />
+        <Vertical />
       </div>
       {/* Related blogs (uncomment when ready) */}
       <section>
-        <RelatedContent  categoryId={categoryId} subcategoryId={subcategoryId} />
+        <RelatedContent categoryId={categoryId} subcategoryId={subcategoryId} />
       </section>
     </div>
   );
