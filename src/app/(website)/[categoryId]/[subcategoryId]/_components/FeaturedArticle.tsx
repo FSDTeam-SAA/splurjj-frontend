@@ -217,13 +217,17 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
             </div>
           </div>
           <div className="mt-8">
-            <Image
-              src={getImageUrl(firstPost.image1)}
-              alt={firstPost.heading.replace(/<[^>]+>/g, "")} // Strip HTML for alt text
-              width={1200}
-              height={600}
-              className="w-full object-cover rounded-lg h-[680px] border-image"
-            />
+            <Link
+              href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}#comment`}
+            >
+              <Image
+                src={getImageUrl(firstPost.image1)}
+                alt={firstPost.heading.replace(/<[^>]+>/g, "")} // Strip HTML for alt text
+                width={1200}
+                height={600}
+                className="w-full object-cover rounded-lg h-[680px] border-image"
+              />
+            </Link>
           </div>
         </div>
       ) : (
@@ -325,6 +329,9 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                 </div>
               </div>
               <div className="col-span-5 lg:col-span-3">
+                <Link
+                  href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}#comment`}
+                >
                 <Image
                   src={getImageUrl(secondPost.image1)}
                   alt={secondPost.heading}
@@ -333,6 +340,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                   className="w-full h-[315px] object-cover rounded-t-lg border-image"
                   priority
                 />
+                </Link>
               </div>
             </div>
           )}
@@ -341,6 +349,9 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
         <div className="mt-8">
           {thirdPost && (
             <div className="relative">
+              <Link
+                href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}#comment`}
+              >
               <Image
                 src={getImageUrl(thirdPost.image1)}
                 alt={thirdPost.heading}
@@ -349,6 +360,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                 className="w-full h-[443px] object-cover rounded-t-lg border-image"
                 priority
               />
+              </Link>
               <div className="py-4">
                 <div className="md:flex items-center justify-between gap-4 mb-2">
                   <div className="flex items-center gap-2">
@@ -533,6 +545,9 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                     {fourthPost.author} - {fourthPost.date}
                   </p>
                 </div>
+                <Link
+                  href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}#comment`}
+                >
                 <Image
                   src={getImageUrl(fourthPost.image1)}
                   alt={fourthPost.heading}
@@ -541,6 +556,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                   className="w-full h-[300px] object-cover rounded-t-lg border-image"
                   priority
                 />
+                </Link>
               </div>
             )}
           </div>
@@ -632,6 +648,9 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                     {fivethPost.author} - {fivethPost.date}
                   </p>
                 </div>
+                <Link
+                  href={`/${fivethPost.category_id}/${fivethPost.subcategory_id}/${fivethPost.id}#comment`}
+                >
                 <Image
                   src={getImageUrl(fivethPost.image1)}
                   alt={fivethPost.heading}
@@ -640,6 +659,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                   className="w-full h-[300px] object-cover rounded-t-lg border-image"
                   priority
                 />
+                </Link>
               </div>
             )}
           </div>
