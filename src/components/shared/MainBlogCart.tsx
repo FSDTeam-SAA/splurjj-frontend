@@ -32,7 +32,7 @@ const newPathName =
   pathName === "/art-and-culture" ? "ART & CULTURE" : `${pathName}`;
 
 
-    console.log("newPathName", newPathName);
+    // console.log("newPathName", newPathName);
 
   return (
     <div>

@@ -60,7 +60,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
   const [error, setError] = useState<string | null>(null);
   const [showShareMenu, setShowShareMenu] = useState<number | null>(null);
 
-  console.log("category objectssssssss", categoryName.categoryName);
+  // console.log("category objectssssssss", categoryName.categoryName);
 
   useEffect(() => {
     const fetchData = async () => {

@@ -202,7 +202,7 @@ export default function Header() {
         style={{ backgroundColor: header?.bg_color || "#ffffff" }}
       >
         <div className="container">
-          <div className="flex h-[80px] items-center justify-between">
+          <div className="flex h-[65px] md:h-[80px] items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-2">
               <Image
@@ -210,7 +210,7 @@ export default function Header() {
                 alt="Logo"
                 width={500}
                 height={30}
-                className="h-[55px] w-[90px]"
+                className="h-[40px] md:h-[55px] w-[70px] md:w-[90px]"
               />
             </Link>
 

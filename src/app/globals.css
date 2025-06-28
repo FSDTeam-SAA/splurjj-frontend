@@ -245,3 +245,18 @@ Textarea{
 .black-text p {
   color: #000 !important;
 }
+
+.vertical-adds iframe {
+  width: 460px !important;
+  height: 100% !important;
+  max-width: 520px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .vertical-adds iframe {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+}

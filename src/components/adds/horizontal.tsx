@@ -47,12 +47,12 @@ function Horizontal() {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="w-[200px] h-[300px]">
+    <div className="w-full h-full ">
       {adData?.code ? (
-        <div dangerouslySetInnerHTML={{ __html: adData.code }} className="w-[200px] h-[300px]" />
+        <div dangerouslySetInnerHTML={{ __html: adData.code }} className="w-full h-[300px] object-cover" />
       ) : adData?.image && adData?.link ? (
         <a href={adData.link} target="_blank" rel="noopener noreferrer">
-          <Image src={adData.image} alt="Advertisement" className="w-[200px] h-[300px]" width={200} height={300} />
+          <Image src={adData.image} alt="Advertisement" className="w-full h-[300px] object-cover" width={200} height={300} />
         </a>
       ) : (
         <div>No advertisement available</div>
