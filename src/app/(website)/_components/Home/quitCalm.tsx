@@ -53,7 +53,7 @@ interface ArtCultureProps {
   categoryName: { categoryName: string };
 }
 
-const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
+const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -664,4 +664,4 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
   );
 };
 
-export default Video;
+export default QuitCalm;

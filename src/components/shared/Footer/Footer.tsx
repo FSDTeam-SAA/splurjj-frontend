@@ -68,8 +68,6 @@ const Footer = () => {
     queryFn: fetchFooter,
   });
 
-  console.log("CCCCCCCCCCCCCCCCCCCC", footer?.bg_color);
-
   // const categoryData = [
   //   {
   //     id: 1,

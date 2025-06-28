@@ -49,7 +49,11 @@ interface ApiResponse {
   };
 }
 
-const Music: React.FC = () => {
+interface ArtCultureProps {
+  categoryName: { categoryName: string };
+}
+
+const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -57,9 +61,10 @@ const Music: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (categoryName.categoryName){
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home/Music`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home/${categoryName.categoryName}`
         );
         if (!response.ok) {
           throw new Error(`Failed to fetch data: ${response.statusText}`);
@@ -73,10 +78,11 @@ const Music: React.FC = () => {
       } finally {
         setLoading(false);
       }
+      }
     };
 
     fetchData();
-  }, []);
+  }, [categoryName.categoryName]);
 
   const getImageUrl = (path: string | null): string => {
     if (!path) return "/assets/images/fallback.jpg"; // Fallback image

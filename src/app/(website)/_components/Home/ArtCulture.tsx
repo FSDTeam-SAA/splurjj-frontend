@@ -49,34 +49,44 @@ interface ApiResponse {
   };
 }
 
-const ArtCulture: React.FC = () => {
+
+interface ArtCultureProps {
+  categoryName: { categoryName: string };
+}
+
+const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [showShareMenu, setShowShareMenu] = useState<number | null>(null);
 
+  console.log("category objectssssssss", categoryName.categoryName);
+
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home/Art%20&%20Culture`
-        );
-        if (!response.ok) {
-          throw new Error(`Failed to fetch data: ${response.statusText}`);
+      if (categoryName.categoryName) {
+        try {
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home/${categoryName.categoryName}`
+          );
+          if (!response.ok) {
+            throw new Error(`Failed to fetch data: ${response.statusText}`);
+          }
+          const data: ApiResponse = await response.json();
+          setPosts(data.data || []); // Set posts from data.data, default to empty array
+        } catch (err) {
+          setError(
+            err instanceof Error ? err.message : "An unknown error occurred"
+          );
+        } finally {
+          setLoading(false);
         }
-        const data: ApiResponse = await response.json();
-        setPosts(data.data || []); // Set posts from data.data, default to empty array
-      } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "An unknown error occurred"
-        );
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [categoryName.categoryName]);
+
 
   const getImageUrl = (path: string | null): string => {
     if (!path) return "/assets/videos/blog1.jpg";

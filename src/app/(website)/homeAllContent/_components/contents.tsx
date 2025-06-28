@@ -92,6 +92,8 @@ function Contents() {
     [limit],
   )
 
+  console.log(contents)
+
   useEffect(() => {
     fetchData(1)
   }, [fetchData])
