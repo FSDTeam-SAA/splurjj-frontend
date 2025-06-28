@@ -1,9 +1,8 @@
 "use client";
 
-import SplurjjPagination from "@/components/ui/SplurjjPagination";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import {
   FaFacebook,
   FaLinkedin,
@@ -12,6 +11,7 @@ import {
 } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
+import { Loader2 } from "lucide-react";
 import DOMPurify from "dompurify";
 
 interface BlogPost {
@@ -38,6 +38,17 @@ interface BlogPost {
   advertising_image_url: string | null;
 }
 
+interface ApiResponse {
+  success: boolean;
+  data: BlogPost[];
+  meta: {
+    current_page: number;
+    last_page: number;
+    total: number;
+    per_page: number;
+  };
+}
+
 interface ViewAuthorPostProps {
   userId: number;
 }
@@ -45,55 +56,95 @@ interface ViewAuthorPostProps {
 function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
   const [totalItems, setTotalItems] = useState(0);
   const [showShareMenu, setShowShareMenu] = useState<number | null>(null);
   const shareMenuRef = useRef<HTMLDivElement>(null);
+  const observerRef = useRef<HTMLDivElement>(null);
+  const limit = 9;
 
-  console.log(loading, error);
+
+  console.log(totalItems)
 
   // Fetch posts by user ID
-  useEffect(() => {
-    const fetchPostsByUser = async () => {
+  const fetchPostsByUser = useCallback(
+    async (page: number, isLoadMore = false) => {
       try {
-        setLoading(true);
+        if (isLoadMore) {
+          setLoadingMore(true);
+        } else {
+          setLoading(true);
+        }
+
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/view-posts/${userId}?page=${currentPage}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/view-posts/${userId}?page=${page}&limit=${limit}`
         );
-        
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
-        const data = await response.json();
 
-        console.log("Fetched posts:", data.data);
-        
+        const data: ApiResponse = await response.json();
+        console.log("Fetched posts:", data);
+
         if (data.success) {
-          setPosts(data.data);
-          setTotalPages(data.meta.last_page);
+          if (isLoadMore) {
+            setPosts((prev) => [...prev, ...data.data]);
+          } else {
+            setPosts(data.data);
+          }
           setTotalItems(data.meta.total);
+          setHasMore(page < data.meta.last_page);
         } else {
-          throw new Error(data.message || "Failed to fetch posts");
+          throw new Error("Failed to fetch posts");
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : "An unknown error occurred");
       } finally {
         setLoading(false);
+        setLoadingMore(false);
+      }
+    },
+    [userId, limit]
+  );
+
+  // Initial fetch
+  useEffect(() => {
+    fetchPostsByUser(1);
+  }, [fetchPostsByUser]);
+
+  // Set up Intersection Observer for infinite scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const target = entries[0];
+        if (target.isIntersecting && hasMore && !loadingMore && !loading) {
+          const nextPage = currentPage + 1;
+          setCurrentPage(nextPage);
+          fetchPostsByUser(nextPage, true);
+        }
+      },
+      {
+        root: null,
+        rootMargin: "100px",
+        threshold: 0.1,
+      }
+    );
+
+    const currentObserverRef = observerRef.current;
+    if (currentObserverRef) {
+      observer.observe(currentObserverRef);
+    }
+
+    return () => {
+      if (currentObserverRef) {
+        observer.unobserve(currentObserverRef);
       }
     };
-
-    fetchPostsByUser();
-  }, [userId, currentPage]);
-
-
-
-  // Sanitize HTML content
-  const sanitizeHTML = (html: string) => {
-    return DOMPurify.sanitize(html, { USE_PROFILES: { html: true } });
-  };
+  }, [currentPage, hasMore, loadingMore, loading, fetchPostsByUser]);
 
   // Close share menu when clicking outside
   useEffect(() => {
@@ -108,6 +159,11 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // Sanitize HTML content
+  const sanitizeHTML = (html: string) => {
+    return DOMPurify.sanitize(html, { USE_PROFILES: { html: true } });
+  };
 
   const getImageUrl = (path: string | null): string => {
     if (!path) return "/assets/videos/blog1.jpg";
@@ -168,7 +224,46 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
     );
   };
 
- 
+  // Skeleton Loader Component
+  const SkeletonLoader = () => (
+    <div className="animate-pulse">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {Array.from({ length: limit }).map((_, index) => (
+          <div key={index} className="relative">
+            {/* Image */}
+            <div className="bg-gray-300 w-full h-[300px] rounded-t-lg"></div>
+            {/* Content */}
+            <div className="p-4">
+              <div className="flex items-center gap-2">
+                <div className="bg-gray-300 h-6 w-20 rounded"></div>
+                <div className="bg-gray-300 h-6 w-20 rounded"></div>
+              </div>
+              <div className="bg-gray-300 h-8 w-3/4 rounded mt-2"></div>
+              <div className="bg-gray-300 h-4 w-1/2 rounded mt-2"></div>
+              <div className="flex items-center gap-3 mt-2">
+                <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+                <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+                <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
+              </div>
+              <div className="bg-gray-300 h-4 w-full rounded mt-2"></div>
+              <div className="bg-gray-300 h-4 w-5/6 rounded mt-2"></div>
+              <div className="bg-gray-300 h-4 w-2/3 rounded mt-2"></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  if (loading && posts.length === 0) return <SkeletonLoader />;
+  if (error) return <div className="text-center py-8">Error: {error}</div>;
+  if (!posts.length && !loading)
+    return (
+      <div className="text-center py-8">
+        No posts found for this author.
+      </div>
+    );
+
   return (
     <div className="container">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -186,13 +281,13 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
               <div className="flex items-center gap-2">
                 <Link
                   href={`/blogs/${encodeURIComponent(post.category_name)}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {post.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${post.category_id}/${post.subcategory_id}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {post.sub_category_name || "Subcategory"}
                 </Link>
@@ -205,7 +300,7 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
                   className="text-2xl font-medium hover:text-primary line-clamp-2"
                 />
               </Link>
-              <p className="text-sm font-semibold  uppercase text-[#424242] mt-2">
+              <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
                 {post.author} - {post.date}
               </p>
               <div className="flex items-center gap-3 mt-2 relative">
@@ -267,25 +362,23 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
               </div>
               <p
                 dangerouslySetInnerHTML={{ __html: sanitizeHTML(post.sub_heading) }}
-                className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
+                className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
               />
             </div>
           </div>
         ))}
       </div>
 
-      {totalPages > 10 && (
-        <div className="flex justify-between items-center mt-4 px-4 py-2">
-          <div className="text-sm text-muted-foreground">
-            Showing {posts.length} of {totalItems} items
-          </div>
-          <SplurjjPagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
-          />
+      {/* Loading indicator for infinite scroll */}
+      {loadingMore && (
+        <div className="flex justify-center items-center py-8">
+          <Loader2 className="w-8 h-8 animate-spin" />
+          <span className="ml-2 text-muted-foreground">Loading more content...</span>
         </div>
       )}
+
+      {/* Intersection observer target */}
+      <div ref={observerRef} className="h-10" />
     </div>
   );
 }
