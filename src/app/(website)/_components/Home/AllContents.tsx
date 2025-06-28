@@ -883,7 +883,7 @@ const AllContents: React.FC = () => {
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-3xl md:text-[40px] lg:text-[60px] font-[800] text-[#131313]"
+                  className="text-3xl md:text-[40px] lg:text-[60px] font-[800] text-[#131313] leading-[120%]"
                 />
               </Link>
               <p
