@@ -222,7 +222,6 @@ const TagContainer: React.FC<TagContainerProps> = ({
     );
   }
 
-  console.log("Posts received in TagContainer:", posts);
 
   return (
     <div className="container py-10">
@@ -234,20 +233,20 @@ const TagContainer: React.FC<TagContainerProps> = ({
             aria-labelledby={`post-heading-${post.id}`}
           >
             <div className="space-y-2">
-              <div>
+              <Link href={`/${post.category_id}/${post.sub_category_id}/${post.id}#comment`}>
                 <Image
                   src={getImageUrl(post.image1)}
                   alt={post.heading.replace(/<[^>]+>/g, "")} // Strip HTML
                   width={458}
                   height={346}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                  className="w-full h-[346px] object-cover rounded-t-lg"
+                  className="w-full h-[346px] object-cover rounded-t-lg border-image"
                 />
-              </div>
+              </Link>
 
               <div className="flex items-center gap-2">
                 <Link
-                  href={`/blogs//${post.category_name}`}
+                  href={`/blogs/${post.category_name}`}
                   className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white"
                   aria-label={`Watch video: ${post.heading.replace(
                     /<[^>]+>/g,
@@ -268,7 +267,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
                 </Link>
               </div>
               <Link
-                href={`/${categoryId}/${subcategoryId}/${post.id}`}
+                href={`/${post.category_id}/${post.sub_category_id}/${post.id}#comment`}
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: post.heading }}

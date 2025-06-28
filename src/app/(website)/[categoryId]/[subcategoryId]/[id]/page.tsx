@@ -274,7 +274,7 @@ const ContentBlogDetails = ({
               </div>
             </div>
             <div className="sticky top-[120px] mb-2">
-              <Horizontal />
+              <Vertical />
             </div>
           </div>
           <div className="md:col-span-5">
@@ -440,7 +440,7 @@ const ContentBlogDetails = ({
         </div>
       </div>
       <div className="sticky mb-2">
-        <Vertical />
+        <Horizontal />
       </div>
       {/* Related blogs */}
       <section>

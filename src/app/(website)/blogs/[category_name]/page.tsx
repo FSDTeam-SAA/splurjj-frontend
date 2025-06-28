@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import CategoryContents from "./_components/categoryContents";
-import Horizontal from "@/components/adds/horizontal";
+import Vertical from "@/components/adds/vertical";
 
 interface BlogPost {
   id: number;
@@ -94,11 +94,6 @@ const capitalize = (str: string) =>
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">
           {capitalize(params.category_name)} Contents
         </h1>
-        <p className="max-w-2xl mx-auto mt-4 text-gray-600">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrud exercitation.
-        </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-8 gap-4 py-16">
         {/* Main content */}
@@ -117,7 +112,7 @@ const capitalize = (str: string) =>
         {/* Sticky sidebar */}
         <div className="col-span-1 md:col-span-2">
           <div className="sticky top-[120px]">
-            <Horizontal />
+            <Vertical />
           </div>
         </div>
       </div>

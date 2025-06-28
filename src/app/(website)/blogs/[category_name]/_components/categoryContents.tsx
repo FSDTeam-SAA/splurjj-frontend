@@ -118,8 +118,7 @@ function CategoryContents({
     );
   };
 
-
-   const SkeletonLoader = () => (
+  const SkeletonLoader = () => (
     <div className="animate-pulse">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {Array.from({ length: 9 }).map((_, index) => (
@@ -159,21 +158,27 @@ function CategoryContents({
   );
 
   if (loading) return <SkeletonLoader />;
-  if (!posts.length) return <div className="text-center py-8">No content found</div>;
+  if (!posts.length)
+    return <div className="text-center py-8">No content found</div>;
 
   return (
     <div className="">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {posts.map((post) => (
           <div key={post.id} className="relative">
-            <Image
-              src={getImageUrl(post.image1)}
-              alt={post.heading}
-              width={400}
-              height={300}
-              className="w-full h-[300px] object-cover rounded-t-lg border-image"
-              priority
-            />
+            <Link
+              href={`/${post.category_id}/${post.subcategory_id}/${post.id}#comment`}
+            >
+              <Image
+                src={getImageUrl(post.image1)}
+                alt={post.heading}
+                width={400}
+                height={300}
+                className="w-full h-[300px] object-cover rounded-t-lg border-image"
+                priority
+              />
+            </Link>
+
             <div className="p-4">
               <div className="flex items-center gap-2">
                 <Link
@@ -251,7 +256,7 @@ function CategoryContents({
                 <Link
                   href={`/${post.category_id}/${post.subcategory_id}/${post.id}#comment`}
                 >
-                <FaRegCommentDots className="w-6 h-6" />
+                  <FaRegCommentDots className="w-6 h-6" />
                 </Link>
               </div>
               <p
