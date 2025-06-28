@@ -214,7 +214,7 @@ const Gear: React.FC<ArtCultureProps> = ({ categoryName }) => {
   const secondPost = posts[1];
   const thirdPost = posts[2];
 
-  const sanitizedHeading = secondPost.heading.replace(/style="[^"]*"/g, "");
+  const sanitizedHeading = secondPost?.heading?.replace(/style="[^"]*"/g, "");
 
   return (
     <div className="">
@@ -308,7 +308,7 @@ const Gear: React.FC<ArtCultureProps> = ({ categoryName }) => {
               <div>
                 <div
                   dangerouslySetInnerHTML={{ __html: sanitizedHeading }}
-                  className="!text-white white-text text-5xl"
+                  className="!text-white white-text text-4xl lg:text-5xl text-center md:text-left"
                 />
                 <div
                   dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
@@ -342,7 +342,7 @@ const Gear: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: secondPost.heading }}
-                    className="text-lg font-medium text-[#131313] hover:underline"
+                    className="text-lg font-medium text-[#131313] hover:underline "
                   />
                 </Link>
                 <div className="flex items-center justify-between">

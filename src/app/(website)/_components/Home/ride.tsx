@@ -227,7 +227,7 @@ const Ride: React.FC<ArtCultureProps> = ({ categoryName }) => {
     <div className="py-8">
       {firstPost && (
         <div className="mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 ">
             <div className="col-span-2 space-y-4 ">
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}

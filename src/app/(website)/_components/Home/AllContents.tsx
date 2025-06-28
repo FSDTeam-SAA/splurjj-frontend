@@ -237,7 +237,7 @@
 //                 </Link>
 //               </div>
 //             </div>
-//             <div className="space-y-4 border-2 border-red-500">
+//             <div className="space-y-4 ">
 //               <Link
 //                 href={`/${firstPost?.category_id}/${firstPost?.subcategory_id}/${firstPost?.id}`}
 //               >
@@ -883,7 +883,7 @@ const AllContents: React.FC = () => {
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-[60px] font-[800] text-[#131313]"
+                  className="text-3xl md:text-[40px] lg:text-[60px] font-[800] text-[#131313]"
                 />
               </Link>
               <p

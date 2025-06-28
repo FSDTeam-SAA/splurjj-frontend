@@ -306,7 +306,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
               <div className="">
                 <div
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-5xl font-medium white-text hover:underline"
+                  className="font-medium white-text hover:underline text-4xl lg:text-5xl text-center md:text-left"
                 />
                 <div
                   dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}

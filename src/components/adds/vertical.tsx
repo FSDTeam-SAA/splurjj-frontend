@@ -45,10 +45,12 @@ function Vertical() {
   if (loading) return <SkeletonLoader />;
   if (error) return <div>{error}</div>;
 
+  console.log("ads console",adData?.code)
+
   return (
-    <div className="w-full h-[300px]">
+    <div className=" h-[300px]">
       {adData?.code ? (
-        <div dangerouslySetInnerHTML={{ __html: adData.code }} className="w-full h-[300px]" />
+        <div dangerouslySetInnerHTML={{ __html: adData.code }} className="vertical-adds h-[300px]" />
       ) : adData?.image && adData?.link ? (
         <a href={adData.link} target="_blank" rel="noopener noreferrer">
           <Image

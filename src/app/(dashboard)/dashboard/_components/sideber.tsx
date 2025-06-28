@@ -337,7 +337,7 @@
 //                       animate="visible"
 //                       exit="exit"
 //                       variants={subcategoryVariants}
-//                       className=" space-y-1 overflow-hidden border-2 border-red-500 bg-red-200"
+//                       className=" space-y-1 overflow-hidden  bg-red-200"
 //                     >
 //                       {category.subcategories.map((subcategory) => (
 //                         <div key={subcategory.id} className="group ml-6">

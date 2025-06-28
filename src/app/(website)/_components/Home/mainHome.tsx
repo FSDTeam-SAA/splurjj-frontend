@@ -38,15 +38,12 @@ const fetchCategories = async (): Promise<Category[]> => {
 };
 
 function MainHome() {
-  const {
-    data: categories = []
-  } = useQuery({
+  const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
     queryFn: fetchCategories,
   });
 
-
-  console.log(categories)
+  console.log(categories);
 
   const firstCategory = categories[0]?.category_name;
   const secoundCategory = categories[1]?.category_name;
@@ -54,7 +51,6 @@ function MainHome() {
   const forthPost = categories[3]?.category_name;
   const fifthPost = categories[4]?.category_name;
   const sixthPost = categories[5]?.category_name;
-
 
   return (
     <div>
@@ -68,79 +64,79 @@ function MainHome() {
           {/* Sticky sidebar */}
           <div className="col-span-8 md:col-span-2">
             <div className="sticky top-[120px] mb-2">
-              <Horizontal />
+              <Vertical />
             </div>
           </div>
         </div>
       </div>
 
-      <Vertical />
+      <Horizontal />
       <div className="container">
         <div className="grid grid-cols-8 gap-4 pt-16">
           {/* Main content */}
           <div className="col-span-8 md:col-span-6 pb-16">
             <ArtCulture categoryName={{ categoryName: firstCategory }} />
-            <Gear categoryName={{ categoryName: secoundCategory }}/>
+            <Gear categoryName={{ categoryName: secoundCategory }} />
           </div>
 
           {/* Sticky sidebar */}
           <div className="col-span-8 md:col-span-2">
             <div className="sticky top-[120px] mb-2">
-              <Horizontal />
+              <Vertical />
             </div>
           </div>
         </div>
       </div>
-      <Vertical />
+      <Horizontal />
       <div className="container">
         <div className="grid grid-cols-8 gap-4 pt-16">
           {/* Main content */}
           <div className="col-span-8 md:col-span-6 pb-16">
-            <Music categoryName={{categoryName: thirdPost}}/>
-            <Ride categoryName={{categoryName:forthPost}}/>
+            <Music categoryName={{ categoryName: thirdPost }} />
+            <Ride categoryName={{ categoryName: forthPost }} />
           </div>
 
           {/* Sticky sidebar */}
           <div className="col-span-8 md:col-span-2">
             <div className="sticky top-[120px] mb-2">
-              <Horizontal />
+              <Vertical />
             </div>
           </div>
         </div>
       </div>
-      <Vertical />
+      <Horizontal />
       <div className="container">
         <div className="grid grid-cols-8 gap-4 pt-16">
           {/* Main content */}
           <div className="col-span-8 md:col-span-6 pb-16">
-            <Video categoryName={{categoryName: fifthPost}}/>
+            <Video categoryName={{ categoryName: fifthPost }} />
           </div>
 
           {/* Sticky sidebar */}
           <div className="col-span-8 md:col-span-2">
             <div className="sticky top-[120px] mb-2">
-              <Horizontal />
+              <Vertical />
             </div>
           </div>
         </div>
       </div>
-      <Vertical />
+      <Horizontal />
       <div className="container">
         <div className="grid grid-cols-8 gap-4 pt-16">
           {/* Main content */}
           <div className="col-span-8 md:col-span-6 pb-16">
-            <QuitCalm categoryName={{categoryName: sixthPost}}/>
+            <QuitCalm categoryName={{ categoryName: sixthPost }} />
           </div>
 
           {/* Sticky sidebar */}
           <div className="col-span-8 md:col-span-2">
             <div className="sticky top-[120px] mb-2">
-              <Horizontal />
+              <Vertical />
             </div>
           </div>
         </div>
       </div>
-      <Vertical />
+      <Horizontal />
     </div>
   );
 }

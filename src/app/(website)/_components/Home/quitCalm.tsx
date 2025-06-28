@@ -334,7 +334,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
       <div className="py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {thirdPost && (
-            <div className="max-h-[600px]">
+            <div className="">
               <div className="flex items-center gap-2 pb-2">
                 <Link
                   href={`/blogs/${thirdPost.category_name}`}
@@ -441,7 +441,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
           )}
 
           {fourthPost && (
-            <div className="max-h-[600px]">
+            <div className="">
               <div className="flex items-center gap-2 pb-2">
                 <Link
                   href={`/blogs/${fourthPost.category_name}`}
@@ -547,7 +547,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
           )}
 
           {fifthPost && (
-            <div className="max-h-[600px]">
+            <div className="">
               <div className="flex items-center gap-2 pb-2">
                 <Link
                   href={`/blogs/${fifthPost.category_name}`}
@@ -562,7 +562,8 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   {fifthPost.sub_category_name || "Subcategory"}
                 </Link>
               </div>
-              <Link
+              <div className="">
+                <Link
                 href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
               >
                 <Image
@@ -574,6 +575,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   priority
                 />
               </Link>
+              </div>
 
               <Link
                 href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
@@ -651,7 +653,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
           )}
         </div>
 
-        <div className="flex justify-end py-4 mt-[70px] md:mt-[100px] ">
+        <div className="flex justify-end md:py-4 mt-[60px] md:mt-[100px]">
           <Link
             href={`/blogs/${firstPost?.category_name}`}
             className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white flex items-center gap-2"
