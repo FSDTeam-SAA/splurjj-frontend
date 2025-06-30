@@ -5,16 +5,24 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthProvider from "@/components/provider/AuthProvider";
 import AppProvider from "@/components/provider/AppProvider";
+import {Manrope} from "next/font/google"
 import { ThemeProvider } from "next-themes";
-import localFont from "next/font/local";
+// import localFont from "next/font/local";
 
 // ✅ DO NOT export this font
-const helvetica = localFont({
-  src: "./fonts/HelveticaNeueBold.otf",
-  variable: "--font-helvetica",
-  weight: "100 200 300 400 500 600 700 800 900", 
+// const helvetica = localFont({
+//   src: "./fonts/HelveticaNeueBold.otf",
+//   variable: "--font-helvetica",
+//   weight: "100 200 300 400 500 600 700 800 900", 
+//   display: "swap",
+// });
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-manrope",
   display: "swap",
-});
+})
 
 export const metadata: Metadata = {
   title: "Splurjj",
@@ -29,7 +37,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${helvetica.variable} antialiased`}
+      className={`${manrope.className} antialiased`}
       suppressHydrationWarning
     >
       <body>

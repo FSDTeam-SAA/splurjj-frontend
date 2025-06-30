@@ -10,6 +10,7 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import { TbTargetArrow } from "react-icons/tb";
+import parse from 'html-react-parser';
 
 // Define the Post interface to match the data structure from AllContentContainer
 interface Post {
@@ -121,7 +122,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
   return (
     <div className="">
       {firstPost ? (
-        <div className="mb-16">
+        <div className="mb-16 ">
           <div>
             <div className="flex items-center gap-4 mb-4">
               <div className="flex items-center gap-2">
@@ -208,9 +209,9 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                 />
               </Link>
               <p
-                dangerouslySetInnerHTML={{ __html: firstPost.body1 }}
-                className="text-base font-normal  text-[#424242] line-clamp-3"
-              />
+                // dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(firstPost.body1)  }}
+                className="text-[16px] font-extralight font-helvetica text-[#424242] line-clamp-3"
+              >{parse(firstPost.body1)}</p>
               <p className="text-base font-semibold  uppercase text-[#424242]">
                 {firstPost.author} - {firstPost.date}
               </p>
