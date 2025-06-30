@@ -238,7 +238,13 @@ Textarea{
 
 /* styles.css */
 
-.white-text p {
+.white-text p,
+.white-text h1,
+.white-text h2,
+.white-text h3,
+.white-text h4,
+.white-text h5,
+.white-text h6 {
   color: #fff !important;
 }
 

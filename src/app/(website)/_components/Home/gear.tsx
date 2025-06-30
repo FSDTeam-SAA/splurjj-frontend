@@ -303,7 +303,7 @@ const Gear: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 backgroundPosition: "center",
                 backgroundSize: "cover",
               }}
-              className="flex items-center justify-center rounded-lg border-image"
+              className="flex items-center justify-center"
             >
               <div>
                 <div
@@ -332,7 +332,7 @@ const Gear: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={secondPost.heading || "Blog Image"}
                   width={300}
                   height={200}
-                  className="w-full h-[213px] object-cover rounded-md border-image"
+                  className="w-full h-[213px] object-cover"
                 /></Link>
                 
               </div>
@@ -439,7 +439,7 @@ const Gear: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={thirdPost.heading || "Blog Image"}
                   width={300}
                   height={200}
-                  className="w-full h-[213px] object-cover rounded-md border-image"
+                  className="w-full h-[213px] object-cover"
                 /></Link>
                 
               </div>

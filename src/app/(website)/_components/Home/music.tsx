@@ -301,12 +301,12 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 backgroundPosition: "center",
                 backgroundSize: "cover",
               }}
-              className="flex items-center justify-center rounded-lg border-image"
+              className="flex items-center justify-center"
             >
               <div className="">
                 <div
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="font-medium white-text hover:underline text-4xl lg:text-5xl text-center md:text-left"
+                  className="font-medium white-text hover:underline text-4xl lg:text-5xl text-center text-white"
                 />
                 <div
                   dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
@@ -331,7 +331,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={secondPost.heading || "Blog Image"}
                   width={300}
                   height={200}
-                  className="w-full h-[213px] object-cover rounded-md border-image"
+                  className="w-full h-[213px] object-cover"
                 /></Link>
                 </div>
                
@@ -439,7 +439,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={thirdPost.heading || "Blog Image"}
                   width={300}
                   height={200}
-                  className="w-full h-[213px] object-cover rounded-md border-image"
+                  className="w-full h-[213px] object-cover"
                 /></Link>
                 
               </div>

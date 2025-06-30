@@ -57,7 +57,7 @@ function Vertical() {
             src={adData.image}
             alt="Advertisement"
             style={{ maxWidth: '100%' }}
-            className="w-full h-[300px] object-cover rounded-lg"
+            className="w-full h-[300px] object-cover"
             width={2600}
             height={300}
           />
