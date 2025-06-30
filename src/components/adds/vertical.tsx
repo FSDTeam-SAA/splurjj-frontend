@@ -1,6 +1,6 @@
 "use client";
 
-import Image from 'next/image';
+// import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
 type AdData = {
@@ -52,15 +52,13 @@ function Vertical() {
       {adData?.code ? (
         <div dangerouslySetInnerHTML={{ __html: adData.code }} className="vertical-adds h-[300px]" />
       ) : adData?.image && adData?.link ? (
-        <a href={adData.link} target="_blank" rel="noopener noreferrer">
-          <Image
+        <a href={adData.link} target="_blank" rel="noopener noreferrer" className='w-[2600px] h-[300px] '>
+          <img
             src={adData.image}
             alt="Advertisement"
             style={{ maxWidth: '100%' }}
             className="w-full h-[300px] object-cover"
-            width={2600}
-            height={300}
-          />
+                      />
         </a>
       ) : (
         <div>No advertisement available</div>

@@ -20,6 +20,22 @@ import { Input } from "@/components/ui/input";
 import ThemeToggle from "@/app/theme-toggle";
 import Image from "next/image";
 
+export type FooterData = {
+  success: boolean;
+  message: string;
+  data: {
+    footer_links: string; // Adjust type if you have a structure for the links
+    facebook_link: string;
+    instagram_link: string;
+    linkedin_link: string;
+    twitter_link: string;
+    app_store_link: string;
+    google_play_link: string;
+    bg_color: string;
+    copyright: string;
+  };
+};
+
 // Interfaces
 interface Subcategory {
   id: number;
@@ -137,6 +153,17 @@ export default function Header() {
     );
   };
 
+  // footer api integration
+  const { data } = useQuery<FooterData>({
+    queryKey: ["footerData"],
+    queryFn: () =>
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/footer`).then((res) =>
+        res.json()
+      ),
+  });
+
+  console.log(data?.data?.bg_color)
+
   // Skeleton Loader Component
   const SkeletonLoader = () => (
     <div className="animate-pulse">
@@ -187,7 +214,8 @@ export default function Header() {
   if (categoriesError || headerError)
     return (
       <div className="text-center py-8 text-red-500">
-        Error: {(categoriesError || headerError)?.message || "Failed to load header"}
+        Error:{" "}
+        {(categoriesError || headerError)?.message || "Failed to load header"}
       </div>
     );
 
@@ -195,7 +223,7 @@ export default function Header() {
     <>
       <div
         className="h-[16px] sticky top-0 z-50"
-        style={{ backgroundColor: header?.border_color || "#ffffff" }}
+        style={{ backgroundColor: data?.data?.bg_color || "#000000" }}
       />
       <header
         className="sticky top-0 z-50 w-full border-b bg-white backdrop-blur supports-[backdrop-filter]:bg-background/60"
@@ -292,10 +320,7 @@ export default function Header() {
               {/* Search */}
               <div className="relative">
                 {isSearchOpen ? (
-                  <form
-                    onSubmit={handleSearch}
-                    className="flex items-center"
-                  >
+                  <form onSubmit={handleSearch} className="flex items-center">
                     <Input
                       type="text"
                       placeholder="Search..."
@@ -315,10 +340,7 @@ export default function Header() {
                     </Button>
                   </form>
                 ) : (
-                  <Button
-                    variant="ghost"
-                    onClick={() => setIsSearchOpen(true)}
-                  >
+                  <Button variant="ghost" onClick={() => setIsSearchOpen(true)}>
                     <Search className="text-black !w-[30px] !h-[30px]" />
                   </Button>
                 )}
@@ -445,8 +467,7 @@ export default function Header() {
                           className="block pl-4 text-sm"
                           style={{
                             color:
-                              pathName ===
-                              `/${category.category_id}/${sub.id}`
+                              pathName === `/${category.category_id}/${sub.id}`
                                 ? header?.menu_item_active_color
                                 : header?.menu_item_color,
                           }}

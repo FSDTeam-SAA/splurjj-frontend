@@ -1,6 +1,6 @@
 "use client";
 
-import Image from 'next/image';
+// import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 // import { toast } from 'react-toastify';
 
@@ -51,8 +51,8 @@ function Horizontal() {
       {adData?.code ? (
         <div dangerouslySetInnerHTML={{ __html: adData.code }} className="w-full h-[300px] object-cover" />
       ) : adData?.image && adData?.link ? (
-        <a href={adData.link} target="_blank" rel="noopener noreferrer">
-          <Image src={adData.image} alt="Advertisement" className="w-full h-[300px] object-cover" width={200} height={300} />
+        <a href={adData.link} target="_blank" rel="noopener noreferrer" className='w-full h-[300px]'>
+          <img src={adData.image} alt="Advertisement" className="w-full h-[300px] object-cover" />
         </a>
       ) : (
         <div>No advertisement available</div>

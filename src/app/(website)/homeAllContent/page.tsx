@@ -1,6 +1,6 @@
 import React from "react";
 import Contents from "./_components/contents";
-import Horizontal from "@/components/adds/horizontal";
+import Vertical from "@/components/adds/vertical";
 
 function page() {
   return (
@@ -18,7 +18,7 @@ function page() {
         {/* Sticky sidebar */}
         <div className="col-span-8 md:col-span-2">
           <div className="sticky top-[120px] mb-2">
-            <Horizontal />
+            <Vertical />
           </div>
         </div>
       </div>

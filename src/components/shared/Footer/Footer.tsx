@@ -8,6 +8,7 @@ import Image from "next/image";
 import { Linkedin, Tally1, Twitter } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import { FooterData } from "../Navbar/Navbar";
 
 interface Category {
   category_id: number;
@@ -47,57 +48,12 @@ const fetchCategories = async (): Promise<Category[]> => {
 };
 
 
-const fetchFooter = async (): Promise<Footer> => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/footer`
-  );
-  if (!response.ok) {
-    throw new Error("Failed to fetch header");
-  }
-  const result = await response.json();
-  return result.data; // Adjust if the API returns { success: boolean, data: ThemeHeader }
-};
-
 const Footer = () => {
   const { data: categories = [] } = useQuery({
     queryKey: ["categories"],
     queryFn: fetchCategories,
   });
-  const { data: footer } = useQuery({
-    queryKey: ["footer"],
-    queryFn: fetchFooter,
-  });
 
-  // const categoryData = [
-  //   {
-  //     id: 1,
-  //     category: "Latest",
-  //   },
-  //   {
-  //     id: 2,
-  //     category: "Art & Culture",
-  //   },
-  //   {
-  //     id: 3,
-  //     category: "Gear",
-  //   },
-  //   {
-  //     id: 4,
-  //     category: "Music",
-  //   },
-  //   {
-  //     id: 5,
-  //     category: "Quiet Calm",
-  //   },
-  //   {
-  //     id: 6,
-  //     category: "Ride",
-  //   },
-  //   {
-  //     id: 7,
-  //     category: "Videos",
-  //   },
-  // ];
   const shopData = [
     {
       id: 1,
@@ -170,10 +126,21 @@ const Footer = () => {
     },
   ];
 
+
+    const { data } = useQuery<FooterData>({
+      queryKey: ["footerData"],
+      queryFn: () =>
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/footer`).then((res) =>
+          res.json()
+        ),
+    });
+
+    const footer = data?.data;
+
   return (
     <div
       className={`h-full lg:h-[533px] w-full pt-24`}
-      style={{ backgroundColor: footer?.bg_color || "#ffffff" }}
+      style={{ backgroundColor: footer?.bg_color }}
     >
       <div className="container">
         {/* small and large devices  */}
