@@ -111,7 +111,7 @@ const SecondContents: React.FC<SecondContentsProps> = ({ posts }) => {
           {posts.map((post) => (
             <article
               key={post.id}
-              className="space-y-2 border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+              className="space-y-2 overflow-hidden"
               aria-labelledby={`card-heading-${post.id}`}
             >
               <Image
@@ -119,7 +119,7 @@ const SecondContents: React.FC<SecondContentsProps> = ({ posts }) => {
                 alt={post.heading.replace(/<[^>]+>/g, "")} // Strip HTML for alt text
                 width={400}
                 height={300}
-                className="w-full h-[300px] object-cover rounded-t-lg border-image"
+                className="w-full h-[300px] object-cover"
                 priority
               />
               <div className="p-4">

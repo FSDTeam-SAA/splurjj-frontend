@@ -220,8 +220,8 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
     <div className="">
       {firstPost && (
         <div className="py-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 rounded">
-            <div className="bg-[#DDD618] h-[455px] flex items-center justify-center rounded-l-md">
+          <div className="grid grid-cols-1 md:grid-cols-2 ">
+            <div className="bg-[#DDD618] h-[455px] flex items-center justify-center">
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
               >
@@ -240,7 +240,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={firstPost.heading || "Blog Image"}
                   width={600}
                   height={455}
-                  className="w-full h-[455px] object-cover rounded-r-md border-image"
+                  className="w-full h-[455px] object-cover"
                   priority
                 />
               </Link>
@@ -359,7 +359,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={thirdPost.heading || "Blog Image"}
                     width={400}
                     height={455}
-                    className="w-full h-[455px] object-cover rounded-t-md border-image"
+                    className="w-full h-[455px] object-cover"
                     priority
                   />
                 </Link>
@@ -465,7 +465,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={fourthPost.heading || "Blog Image"}
                     width={400}
                     height={455}
-                    className="w-full h-[455px] object-cover rounded-t-md border-image"
+                    className="w-full h-[455px] object-cover"
                     priority
                   />
                 </Link>
@@ -571,7 +571,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={fifthPost.heading || "Blog Image"}
                   width={400}
                   height={455}
-                  className="w-full h-[455px] object-cover rounded-t-md border-image"
+                  className="w-full h-[455px] object-cover"
                   priority
                 />
               </Link>

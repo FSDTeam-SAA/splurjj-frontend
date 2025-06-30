@@ -904,7 +904,7 @@ const AllContents: React.FC = () => {
                 alt={firstPost.heading}
                 width={1200}
                 height={600}
-                className="w-full h-[680px] object-cover rounded-lg border-image"
+                className="w-full h-[680px] object-cover"
               />
             </Link>
           </div>
@@ -937,7 +937,7 @@ const AllContents: React.FC = () => {
                   alt={secondPost.heading}
                   width={400}
                   height={300}
-                  className="w-full h-[300px] object-cover rounded-t-lg border-image"
+                  className="w-full h-[300px] object-cover"
                   priority
                 />
               </Link>
@@ -1043,7 +1043,7 @@ const AllContents: React.FC = () => {
                   alt={thirdPost.heading}
                   width={400}
                   height={300}
-                  className="w-full h-[300px] object-cover rounded-t-lg border-image"
+                  className="w-full h-[300px] object-cover"
                   priority
                 />
               </Link>
@@ -1148,7 +1148,7 @@ const AllContents: React.FC = () => {
                   alt={fourthPost.heading}
                   width={400}
                   height={300}
-                  className="w-full h-[300px] object-cover rounded-t-lg border-image"
+                  className="w-full h-[300px] object-cover"
                   priority
                 />
               </Link>
