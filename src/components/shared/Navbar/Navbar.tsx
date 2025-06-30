@@ -162,7 +162,7 @@ export default function Header() {
       ),
   });
 
-  console.log(data?.data?.bg_color)
+  console.log(data?.data?.bg_color);
 
   // Skeleton Loader Component
   const SkeletonLoader = () => (
@@ -231,89 +231,94 @@ export default function Header() {
       >
         <div className="container">
           <div className="flex h-[65px] md:h-[80px] items-center justify-between">
-            {/* Logo */}
-            <Link href="/" className="flex items-center space-x-2">
-              <Image
-                src={getImageUrl(header?.logo || "/logo.png")}
-                alt="Logo"
-                width={500}
-                height={30}
-                className="h-[40px] md:h-[55px] w-[70px] md:w-[90px]"
-              />
-            </Link>
+            <div className="flex items-center justify-start">
+              {/* Logo */}
+              <Link href="/" className="flex items-center space-x-2">
+                <Image
+                  src={getImageUrl(header?.logo || "/logo.png")}
+                  alt="Logo"
+                  width={500}
+                  height={30}
+                  className="h-[40px] md:h-[55px] w-[70px] md:w-[90px]"
+                />
+              </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-8">
-              {staticMenuItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="text-sm font-medium transition-colors hover:text-primary"
-                  style={{
-                    color:
-                      pathName === item.href
-                        ? header?.menu_item_active_color || "#0253F7"
-                        : header?.menu_item_color || "text-muted-foreground",
-                  }}
-                >
-                  {item.name}
-                </Link>
-              ))}
-              {categories.map((category) => {
-                const isActive = isCategoryActive(category.category_id);
-                if (category.subcategories.length === 0) {
+              {/* Desktop Navigation */}
+              <nav className="hidden lg:flex items-start space-x-8">
+                {staticMenuItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="text-sm font-medium transition-colors hover:text-primary"
+                    style={{
+                      color:
+                        pathName === item.href
+                          ? header?.menu_item_active_color || "#0253F7"
+                          : header?.menu_item_color || "text-muted-foreground",
+                    }}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+                {categories.map((category) => {
+                  const isActive = isCategoryActive(category.category_id);
+                  if (category.subcategories.length === 0) {
+                    return (
+                      <Link
+                        key={category.category_id}
+                        href={`/${category.category_id}`}
+                        className="text-sm font-medium transition-colors hover:text-primary"
+                        style={{
+                          color: isActive
+                            ? header?.menu_item_active_color || "#0253F7"
+                            : header?.menu_item_color ||
+                              "text-muted-foreground",
+                        }}
+                      >
+                        {category.category_name.toUpperCase()}
+                      </Link>
+                    );
+                  }
                   return (
-                    <Link
-                      key={category.category_id}
-                      href={`/${category.category_id}`}
-                      className="text-sm font-medium transition-colors hover:text-primary"
-                      style={{
-                        color: isActive
-                          ? header?.menu_item_active_color || "#0253F7"
-                          : header?.menu_item_color || "text-muted-foreground",
-                      }}
-                    >
-                      {category.category_name.toUpperCase()}
-                    </Link>
+                    <DropdownMenu key={category.category_id}>
+                      <DropdownMenuTrigger
+                        className="flex items-center space-x-1 text-sm font-medium transition-colors hover:text-primary border-0 outline-none ring-0"
+                        style={{
+                          color: isActive
+                            ? header?.menu_item_active_color || "#0253F7"
+                            : header?.menu_item_color ||
+                              "text-muted-foreground",
+                        }}
+                      >
+                        <span>{category.category_name.toUpperCase()}</span>
+                        <ChevronDown className="h-4 w-4" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-48 bg-white text-[18px] font-semibold border-0 mt-[20px]">
+                        {category.subcategories.map((subcategory) => (
+                          <DropdownMenuItem key={subcategory.id} asChild>
+                            <Link
+                              href={`/${category.category_id}/${subcategory.id}`}
+                              className="cursor-pointer"
+                              style={{
+                                color:
+                                  pathName ===
+                                  `/${category.category_id}/${subcategory.id}`
+                                    ? header?.menu_item_active_color ||
+                                      "#0253F7"
+                                    : header?.menu_item_color ||
+                                      "text-muted-foreground",
+                              }}
+                            >
+                              {subcategory.name}
+                            </Link>
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   );
-                }
-                return (
-                  <DropdownMenu key={category.category_id}>
-                    <DropdownMenuTrigger
-                      className="flex items-center space-x-1 text-sm font-medium transition-colors hover:text-primary border-0 outline-none ring-0"
-                      style={{
-                        color: isActive
-                          ? header?.menu_item_active_color || "#0253F7"
-                          : header?.menu_item_color || "text-muted-foreground",
-                      }}
-                    >
-                      <span>{category.category_name.toUpperCase()}</span>
-                      <ChevronDown className="h-4 w-4" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-48 bg-white text-[18px] font-semibold border-0 mt-[20px]">
-                      {category.subcategories.map((subcategory) => (
-                        <DropdownMenuItem key={subcategory.id} asChild>
-                          <Link
-                            href={`/${category.category_id}/${subcategory.id}`}
-                            className="cursor-pointer"
-                            style={{
-                              color:
-                                pathName ===
-                                `/${category.category_id}/${subcategory.id}`
-                                  ? header?.menu_item_active_color || "#0253F7"
-                                  : header?.menu_item_color ||
-                                    "text-muted-foreground",
-                            }}
-                          >
-                            {subcategory.name}
-                          </Link>
-                        </DropdownMenuItem>
-                      ))}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                );
-              })}
-            </nav>
+                })}
+              </nav>
+            </div>
 
             {/* Right Actions */}
             <div className="flex items-center space-x-2">
