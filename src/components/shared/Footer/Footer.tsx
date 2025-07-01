@@ -28,6 +28,7 @@ interface ApiResponse {
 interface Footer  {
   app_store_link: string;
   bg_color: string;
+  text_color: string;
   copyright: string;
   facebook_link: string; // Currently an empty array in your data
   google_play_link: string;
@@ -80,51 +81,51 @@ const Footer = () => {
       shop: "Sale",
     },
   ];
-  // const otherData = [
-  //   {
-  //     id: 1,
-  //     other: "Brand Directory",
-  //   },
-  //   {
-  //     id: 2,
-  //     other: "Brand Recognition",
-  //   },
-  // ];
+  const otherData = [
+    {
+      id: 1,
+      other: "Brand Directory",
+    },
+    {
+      id: 2,
+      other: "Brand Recognition",
+    },
+  ];
 
-  // const aboutData = [
-  //   {
-  //     id: 1,
-  //     about: "Splurjj Nation",
-  //   },
-  //   {
-  //     id: 2,
-  //     about: "Newsroom",
-  //   },
-  //   {
-  //     id: 3,
-  //     about: "Leadership",
-  //   },
-  //   {
-  //     id: 4,
-  //     about: "Career Opportunities",
-  //   },
-  //   {
-  //     id: 5,
-  //     about: "Investor Relations",
-  //   },
-  //   {
-  //     id: 6,
-  //     about: "Advertising",
-  //   },
-  //   {
-  //     id: 7,
-  //     about: "Legal",
-  //   },
-  //   {
-  //     id: 8,
-  //     about: "Contact Us",
-  //   },
-  // ];
+  const aboutData = [
+    {
+      id: 1,
+      about: "Splurjj Nation",
+    },
+    {
+      id: 2,
+      about: "Newsroom",
+    },
+    {
+      id: 3,
+      about: "Leadership",
+    },
+    {
+      id: 4,
+      about: "Career Opportunities",
+    },
+    {
+      id: 5,
+      about: "Investor Relations",
+    },
+    {
+      id: 6,
+      about: "Advertising",
+    },
+    {
+      id: 7,
+      about: "Legal",
+    },
+    {
+      id: 8,
+      about: "Contact Us",
+    },
+  ];
 
 
     const { data } = useQuery<FooterData>({
@@ -145,8 +146,8 @@ const Footer = () => {
       <div className="container">
         {/* small and large devices  */}
         <div className="">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 pb-3 md:pb-4">
-            <div className="lg:col-span-1">
+          <div className="grid grid-cols-1 lg:grid-cols-10 gap-5 pb-3 md:pb-4">
+            <div className="lg:col-span-2">
               <h4 className="text-xl font-bold  text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6">
                 CATEGORIES
               </h4>
@@ -181,7 +182,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* <div className="lg:col-span-2">
+            <div className="lg:col-span-2">
               <h4 className="text-xl font-bold  text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6">
                 OTHER
               </h4>
@@ -211,9 +212,9 @@ const Footer = () => {
                   </li>
                 ))}
               </ul>
-            </div> */}
+            </div>
 
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-3">
               <h4 className="text-xl font-bold  text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6">
                 FOLLOW US
               </h4>
@@ -293,8 +294,9 @@ const Footer = () => {
           <p className="w-full flex flex-col md:flex-row items-center justify-center pt-4 text-base font-medium leading-[120%] tracking-[0%] text-black  ">
             {footer?.copyright}
             <Tally1 className="text-black w-[5px] h-auto" />
+            Terms & Conditions
             <span className="px-2" />
-            Privecy Policy {/* <Tally1 className="text-white " /> */}
+            Privecy Policy 
             <span className="px-2" />
             Cookie Policy {/* <Tally1 className="text-white" />  */}
             <span className="px-2" />
