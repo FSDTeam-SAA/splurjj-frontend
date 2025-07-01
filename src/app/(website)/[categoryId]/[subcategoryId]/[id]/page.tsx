@@ -295,7 +295,7 @@ const ContentBlogDetails = ({
                   alt={blogData.heading || "Blog image"}
                   width={888}
                   height={552}
-                  className="w-full h-[443px] object-cover rounded-[8px] border-image"
+                  className="w-full h-[443px] object-cover "
                 />
               </div>
               <p

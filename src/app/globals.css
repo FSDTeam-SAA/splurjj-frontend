@@ -232,10 +232,6 @@ Textarea{
   @apply text-[#131313] dark:text-white
 }
 
-.border-image{
-  @apply border-2 border-[#b24040] 
-}
-
 /* styles.css */
 
 .white-text p,

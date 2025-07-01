@@ -274,7 +274,7 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
               alt={sanitizeHTML(post.heading)}
               width={400}
               height={300}
-              className="w-full h-[300px] object-cover rounded-t-lg border-image"
+              className="w-full h-[300px] object-cover "
               priority
             />
             <div className="p-4">
