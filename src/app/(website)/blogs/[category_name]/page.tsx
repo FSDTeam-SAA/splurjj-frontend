@@ -95,9 +95,9 @@ const capitalize = (str: string) =>
           {capitalize(params.category_name)} Contents
         </h1>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-8 gap-4 py-16">
+      <div className="grid grid-cols-8 gap-4 py-16">
         {/* Main content */}
-        <div className="col-span-1 md:col-span-6">
+        <div className="col-span-8 md:col-span-5 lg:col-span-6">
           <CategoryContents
             posts={posts}
             loading={loading}
@@ -110,7 +110,7 @@ const capitalize = (str: string) =>
         </div>
 
         {/* Sticky sidebar */}
-        <div className="col-span-1 md:col-span-2">
+        <div className="col-span-8 md:col-span-3 lg:col-span-2">
           <div className="sticky top-[120px]">
             <Vertical />
           </div>
