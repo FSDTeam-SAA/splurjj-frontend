@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 // import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 // import { toast } from 'react-toastify';
 
 type AdData = {
@@ -18,16 +19,18 @@ function Horizontal() {
   useEffect(() => {
     const fetchAdData = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/advertising/horizontal`);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/advertising/horizontal`
+        );
         const result = await response.json();
         if (result.success) {
           setAdData(result.data);
         } else {
-          setError('Failed to fetch advertising data');
+          setError("Failed to fetch advertising data");
         }
       } catch (error) {
         // toast.error(error instanceof Error ? error.message : 'Error fetching data');
-        console.error('Error fetching ad data:', error);
+        console.error("Error fetching ad data:", error);
       } finally {
         setLoading(false);
       }
@@ -49,10 +52,24 @@ function Horizontal() {
   return (
     <div className="w-full h-full ">
       {adData?.code ? (
-        <div dangerouslySetInnerHTML={{ __html: adData.code }} className="w-full h-[300px] object-cover" />
+        <div
+          dangerouslySetInnerHTML={{ __html: adData.code }}
+          className="w-full h-[300px] object-cover"
+        />
       ) : adData?.image && adData?.link ? (
-        <a href={adData.link} target="_blank" rel="noopener noreferrer" className='w-full h-[300px]'>
-          <img src={adData.image} alt="Advertisement" className="w-full h-[300px] object-cover" />
+        <a
+          href={adData.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full h-[300px]"
+        >
+          <Image
+            src={adData.image}
+            alt="Advertisement"
+            className="w-full h-[300px]"
+            width={2600}
+            height={300}
+          />
         </a>
       ) : (
         <div>No advertisement available</div>
