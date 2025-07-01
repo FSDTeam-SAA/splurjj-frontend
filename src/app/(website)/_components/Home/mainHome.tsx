@@ -57,7 +57,7 @@ function MainHome() {
       <div className="container">
         <div className="grid grid-cols-8 gap-4 pt-16">
           {/* Main content */}
-          <div className="col-span-8 md:col-span-6 pb-16">
+          <div className="col-span-8 md:col-span-6 pb-32">
             <AllContents />
           </div>
 
