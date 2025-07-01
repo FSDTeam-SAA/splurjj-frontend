@@ -1,6 +1,3 @@
-
-
-
 "use client";
 
 import React from "react";
@@ -195,25 +192,35 @@ const Footer = () => {
             </div>
             <div className="flex items-center gap-3">
               <Link
-                href={footer?.twitter_link || "https://x.com/splurjj?lang=ar-x-fm"}
+                href={
+                  footer?.twitter_link || "https://x.com/splurjj?lang=ar-x-fm"
+                }
                 className="bg-[#E6EEFE] p-3 rounded-full"
               >
                 <Twitter className="text-primary w-8 h-8 cursor-pointer" />
               </Link>
               <Link
-                href={footer?.instagram_link || "https://www.instagram.com/accounts/login/?next=%2Fsplurjj%2F&source=omni_redirect"}
+                href={
+                  footer?.instagram_link ||
+                  "https://www.instagram.com/accounts/login/?next=%2Fsplurjj%2F&source=omni_redirect"
+                }
                 className="bg-[#E6EEFE] p-3 rounded-full"
               >
                 <IoLogoInstagram className="text-primary w-8 h-8 cursor-pointer" />
               </Link>
               <Link
-                href={footer?.linkedin_link || "https://www.linkedin.com/in/sharif-dyson-795b62132"}
+                href={
+                  footer?.linkedin_link ||
+                  "https://www.linkedin.com/in/sharif-dyson-795b62132"
+                }
                 className="bg-[#E6EEFE] p-3 rounded-full"
               >
                 <Linkedin className="text-primary w-8 h-8 cursor-pointer" />
               </Link>
               <Link
-                href={footer?.facebook_link || "https://www.facebook.com/splurjj/"}
+                href={
+                  footer?.facebook_link || "https://www.facebook.com/splurjj/"
+                }
                 className="bg-[#E6EEFE] p-3 rounded-full"
               >
                 <FaFacebookF className="text-primary w-8 h-8 cursor-pointer" />
@@ -238,7 +245,12 @@ const Footer = () => {
               Download our App
             </div>
             <div className="flex items-center gap-4 mt-3 md:mt-4">
-              <Link href={footer?.app_store_link || "https://apps.apple.com/us/app/doppl-google/id6741596720"}>
+              <Link
+                href={
+                  footer?.app_store_link ||
+                  "https://apps.apple.com/us/app/doppl-google/id6741596720"
+                }
+              >
                 <Image
                   src="/assets/images/app_store.png"
                   alt="app store"
@@ -246,7 +258,12 @@ const Footer = () => {
                   height={56}
                 />
               </Link>
-              <Link href={footer?.google_play_link || "https://play.google.com/store/games?hl=en&pli=1"}>
+              <Link
+                href={
+                  footer?.google_play_link ||
+                  "https://play.google.com/store/games?hl=en&pli=1"
+                }
+              >
                 <Image
                   src="/assets/images/google_play.png"
                   alt="google play"
@@ -264,13 +281,14 @@ const Footer = () => {
           className="w-full flex flex-col md:flex-row items-center justify-center pt-4 text-base font-medium leading-[120%] tracking-[0%] text-black"
           style={{ color: footer?.text_color || "#D93232" }}
         >
-          {footer?.copyright || "Copyright © 2025 SPLURJJ. All Rights Reserved."}
+          {footer?.copyright ||
+            "Copyright © 2025 SPLURJJ. All Rights Reserved."}
           <Tally1 className="text-black w-[5px] h-auto" />
-          Terms & Conditions
+          <Link className="hover:underline" href="/terms-and-conditions">Terms & Conditions</Link>
           <span className="px-2" />
-          Privacy Policy
+          <Link className="hover:underline" href="/privacy-policy">Privacy Policy</Link>
           <span className="px-2" />
-          Cookie Policy
+          <Link className="hover:underline" href="/cookies-policy">Cookie Policy</Link>
           <span className="px-2" />
           Investment Disclaimer
         </div>
