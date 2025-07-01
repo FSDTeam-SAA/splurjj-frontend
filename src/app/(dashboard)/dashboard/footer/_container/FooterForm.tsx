@@ -67,6 +67,9 @@ const formSchema = z.object({
   bg_color: z.string().min(6, {
     message: "Please pick a background color.",
   }),
+  text_color: z.string().min(6, {
+    message: "Please pick a text color.",
+  }),
 });
 
 export type FooterLink = {
@@ -86,6 +89,7 @@ export type FooterApiResponse = {
     app_store_link: string;
     google_play_link: string;
     bg_color: string;
+    text_color: string;
     copyright: string;
   };
 };
@@ -118,6 +122,7 @@ export function FooterForm() {
       app_store_link: "",
       copyright: "",
       bg_color: "#000000",
+      text_color: "#000000",
     },
   });
 
@@ -132,6 +137,8 @@ export function FooterForm() {
         app_store_link: data?.data?.app_store_link || "",
         copyright: data?.data?.copyright || "",
         bg_color: data?.data?.bg_color || "#000000",
+        text_color: data?.data?.text_color || "#000000",
+
       });
     }
   }, [data, form]);
@@ -165,8 +172,9 @@ export function FooterForm() {
     <div className="p-8 bg-white rounded-lg shadow-lg">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+           <div className="w-full flex items-center justify-start gap-10 md:gap-14">
+             {/*add background Color */}
           <div>
-            {/* Color Picker */}
             <FormField
               control={form.control}
               name="bg_color"
@@ -187,6 +195,29 @@ export function FooterForm() {
               )}
             />
           </div>
+           {/*add text Color */}
+          <div>
+            <FormField
+              control={form.control}
+              name="text_color"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-base font-bold text-black">
+                    Add Text Color
+                  </FormLabel>
+                  <FormControl>
+                    <ColorPicker
+                      selectedColor={field.value ?? "#FFFFFF"}
+                      onColorChange={field.onChange}
+                      previousColor={"#000000"}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500 text-sm font-medium" />
+                </FormItem>
+              )}
+            />
+          </div>
+           </div>
           {/* social url input field  */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
             <div className="">
