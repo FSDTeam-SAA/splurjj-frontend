@@ -214,9 +214,9 @@ p{
 li{
   @apply text-[#131313] dark:text-white
 }
-Link{
+/* Link{
   @apply text-[#131313] dark:text-white
-}
+} */
 /* span{
   @apply text-[#131313] dark:text-white
 } */
@@ -239,8 +239,7 @@ Textarea{
 .white-text h2,
 .white-text h3,
 .white-text h4,
-.white-text h5,
-.white-text h6 {
+.white-text h5 {
   color: #fff !important;
 }
 
