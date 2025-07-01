@@ -231,7 +231,7 @@ export default function Header() {
       >
         <div className="container">
           <div className="flex h-[65px] md:h-[80px] items-center justify-between">
-            <div className="flex items-center justify-start">
+            <div className="flex items-center justify.must-start">
               {/* Logo */}
               <Link href="/" className="flex items-center space-x-2">
                 <Image
@@ -420,6 +420,8 @@ export default function Header() {
                 size="lg"
                 className="lg:hidden"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-expanded={isMobileMenuOpen}
+                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
               >
                 {isMobileMenuOpen ? (
                   <X className="h-6 w-6 dark:text-black" size={40} />
@@ -432,8 +434,11 @@ export default function Header() {
 
           {/* Mobile Nav */}
           {isMobileMenuOpen && (
-            <div className="lg:hidden border-t py-4">
-              <nav className="flex flex-col space-y-4">
+            <div
+              className="lg:hidden border-t py-4 overflow-y-auto"
+              style={{ maxHeight: "calc(100vh - 65px)" }}
+            >
+              <nav className="flex flex-col space-y-4 px-4">
                 {staticMenuItems.map((item) => (
                   <Link
                     key={item.name}
@@ -528,7 +533,7 @@ export default function Header() {
                 </div>
               </nav>
             </div>
-          )}
+        )}
         </div>
       </header>
 

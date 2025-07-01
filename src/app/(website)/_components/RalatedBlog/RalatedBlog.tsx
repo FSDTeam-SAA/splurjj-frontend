@@ -9,8 +9,8 @@ import {
 } from "react-icons/fa6";
 import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
-import Horizontal from "@/components/adds/horizontal";
 import SplurjjPagination from "@/components/ui/SplurjjPagination";
+import Vertical from "@/components/adds/vertical";
 
 // Define the BlogPost type
 interface BlogPost {
@@ -154,14 +154,14 @@ const RelatedContent = ({
 
       <div className="grid grid-cols-8 gap-4 pt-16">
         {/* Sticky sidebar */}
-        <div className="col-span-8 md:col-span-2">
+        <div className="col-span-8 md:col-span-3 lg:col-span-2">
           <div className="sticky top-[120px] mb-2">
-            <Horizontal />
+            <Vertical />
           </div>
         </div>
         {/* Main content */}
-        <div className="col-span-8 md:col-span-6 pb-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-[24px] md:gap-[30px] lg:gap-[36px] capitalize">
+        <div className="col-span-8 md:col-span-5 lg:col-span-6 pb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-[24px] md:gap-[30px] lg:gap-[36px] capitalize">
             {posts.map((post) => (
               <div key={post.id}>
                 <div className="flex items-center gap-2 mb-4">
@@ -238,6 +238,9 @@ const RelatedContent = ({
                   </div>
                 </div>
                 <div>
+                  <Link
+                    href={`/${post.category_id}/${post.subcategory_id}/${post.id}`}
+                  >
                   <Image
                     src={getImageUrl(post.image1 ?? null)}
                     alt={post.heading || "Blog Image"}
@@ -246,6 +249,7 @@ const RelatedContent = ({
                     className="w-full h-[455px] object-cover "
                     priority
                   />
+                  </Link>
                 </div>
                 <Link
                   href={`/${post.category_id}/${post.subcategory_id}/${post.id}`}

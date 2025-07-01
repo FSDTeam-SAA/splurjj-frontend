@@ -269,6 +269,9 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {posts.map((post) => (
           <div key={post.id} className="relative">
+            <Link
+              href={`/${post.category_id}/${post.subcategory_id}/${post.id}`}
+            >
             <Image
               src={getImageUrl(post.image1)}
               alt={sanitizeHTML(post.heading)}
@@ -277,6 +280,7 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
               className="w-full h-[300px] object-cover "
               priority
             />
+            </Link>
             <div className="p-4">
               <div className="flex items-center gap-2">
                 <Link

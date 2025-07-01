@@ -242,8 +242,8 @@ const ContentBlogDetails = ({
     <div className="">
       <div className="container py-[30px] md:py-[50px] lg:py-[72px]">
         {/* First part */}
-        <div className="grid grid-cols-1 md:grid-cols-7 gap-[30px] md:gap-[50px] lg:gap-[72px]">
-          <div className="md:col-span-2 flex flex-col gap-[25px] md:gap-[32px] lg:gap-[40px]">
+        <div className="grid grid-cols-7 gap-[30px] md:gap-[50px] lg:gap-[72px]">
+          <div className="col-span-7 md:col-span-3 lg:col-span-2 flex flex-col gap-[25px] md:gap-[32px] lg:gap-[40px]">
             <div>
               <h2
                 dangerouslySetInnerHTML={{
@@ -277,7 +277,7 @@ const ContentBlogDetails = ({
               <Vertical />
             </div>
           </div>
-          <div className="md:col-span-5">
+          <div className="col-span-7 md:col-span-4 lg:col-span-5">
             <div>
               <p
                 dangerouslySetInnerHTML={{
@@ -311,7 +311,7 @@ const ContentBlogDetails = ({
             {/* Second part */}
             <div className="mt-[25px] md:mt-[37px] lg:mt-[51px]">
               {/* Posted in */}
-              <div className="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-7 gap-2">
+              <div className="w-full lg:w-3/5 grid grid-cols-1 md:grid-cols-7 gap-2">
                 <h4 className="md:col-span-2 text-lg md:text-xl text-secondary font-bold leading-[120%] tracking-[0%] uppercase">
                   Posted in
                 </h4>
@@ -332,7 +332,7 @@ const ContentBlogDetails = ({
               </div>
               {/* Tags */}
               {cleanedTags.length > 0 && (
-                <div className="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-7 gap-2 mt-4 md:mt-5 lg:mt-6">
+                <div className="w-full lg:w-3/5 grid grid-cols-1 md:grid-cols-7 gap-2 mt-4 md:mt-5 lg:mt-6">
                   <h4 className="md:col-span-2 text-lg md:text-xl text-secondary font-bold leading-[120%] tracking-[0%] uppercase">
                     Tags
                   </h4>
@@ -356,7 +356,7 @@ const ContentBlogDetails = ({
               )}
               {/* Author */}
               <div className="w-full md:w-3/5 grid grid-cols-1 md:grid-cols-7 mt-[25px] md:mt-[37px] lg:mt-[51px]">
-                <div className="md:col-span-2">
+                <div className="md:col-span-7">
                   <Image
                     src={
                       blogData.user?.profilePic
@@ -369,15 +369,15 @@ const ContentBlogDetails = ({
                     className="w-[180px] h-[180px] object-cover rounded-full border"
                   />
                 </div>
-                <div className="md:col-span-5 h-full flex flex-col justify-center mt-2 md:mt-0">
-                  <h4 className="text-lg font-semibold leading-[120%] tracking-[0%] uppercase text-secondary">
+                <div className="md:col-span-7 h-full flex flex-col justify-center mt-2 md:mt-0">
+                  <h4 className="text-lg font-semibold leading-[120%] tracking-[0%] uppercase text-secondary text-center lg:text-left mt-4">
                     {blogData.user?.first_name || blogData.author}
                   </h4>
-                  <p className="mt-4 text-base font-normal leading-[150%] tracking-[0%] text-secondary">
+                  <p className="mt-4 text-base font-normal leading-[150%] tracking-[0%] text-secondary line-clamp-2">
                     {blogData.user?.description || "No description available."}
                   </p>
-                  <div className="flex items-center justify-between">
-                    <div className="mt-4 flex items-center gap-2">
+                  <div className="flex items-center justify-between md:block">
+                    <div className="mt-4 flex items-center gap-2 md:mb-8">
                       {blogData.user?.instagram_link && (
                         <a
                           href={blogData.user.instagram_link}

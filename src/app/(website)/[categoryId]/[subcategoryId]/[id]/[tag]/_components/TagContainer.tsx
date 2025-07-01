@@ -2,7 +2,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   FaRegCommentDots,
   FaTwitter,
@@ -12,8 +12,7 @@ import {
 import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
 import Link from "next/link";
-import SplurjjPagination from "@/components/ui/SplurjjPagination";
-import TableSkeletonWrapper from "@/components/shared/TableSkeletonWrapper/TableSkeletonWrapper"; // Assuming you have this component
+import TableSkeletonWrapper from "@/components/shared/TableSkeletonWrapper/TableSkeletonWrapper";
 
 // Define the expected shape of a blog post from the API
 interface BlogPost {
@@ -28,7 +27,7 @@ interface BlogPost {
   category_name: string;
   sub_category_id: number;
   sub_category_name: string;
-  image1: string | null; // Allow null for consistency
+  image1: string | null;
   advertising_image: string | null;
   advertisingLink: string | null;
   imageLink: string | null;
@@ -59,7 +58,6 @@ interface BlogResponse {
   };
 }
 
-// Define props for TagContainer
 interface TagContainerProps {
   categoryId: string;
   subcategoryId: string;
@@ -76,12 +74,17 @@ const TagContainer: React.FC<TagContainerProps> = ({
   const [totalPages, setTotalPages] = useState(1);
   const [totalPosts, setTotalPosts] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showShareMenu, setShowShareMenu] = useState<number | null>(null);
   const limit = 10;
+  const observerRef = useRef<HTMLDivElement | null>(null);
+
+  console.log(totalPages, totalPosts);
 
   const getImageUrl = (path: string | null): string => {
-    if (!path) return "/fallback-image.jpg"; // Fallback image
+    if (!path) return "/fallback-image.jpg";
     if (path.startsWith("http")) return path;
     return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${path.replace(/^\/+/, "")}`;
   };
@@ -106,7 +109,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
       post.id
     );
     const shareData = {
-      title: post.heading.replace(/<[^>]+>/g, ""), // Strip HTML
+      title: post.heading.replace(/<[^>]+>/g, ""),
       text:
         post.sub_heading?.replace(/<[^>]+>/g, "") ||
         "Check out this blog post!",
@@ -149,17 +152,13 @@ const TagContainer: React.FC<TagContainerProps> = ({
     );
   };
 
-  // const isVideoContent = (body: string): boolean => {
-  //   // Simple check for video content (e.g., <video> tag or video URL)
-  //   return /<video|(\.mp4|\.webm|\.ogg)/i.test(body);
-  // };
-
   // Fetch tag-specific posts
-  const fetchPosts = async () => {
-    setIsLoading(true);
+  const fetchPosts = async (page: number = 1, append: boolean = false) => {
+    if (page === 1) setIsLoading(true);
+    else setLoadingMore(true);
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/show-tags/${tag}?page=${currentPage}&limit=${limit}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/show-tags/${tag}?page=${page}&limit=${limit}`,
         { cache: "no-store" }
       );
       if (!response.ok) {
@@ -169,21 +168,56 @@ const TagContainer: React.FC<TagContainerProps> = ({
       if (!data.success) {
         throw new Error("API request unsuccessful");
       }
-      setPosts(data.data.data);
+      setPosts((prevPosts) =>
+        append ? [...prevPosts, ...data.data.data] : data.data.data
+      );
       setTotalPages(data.data.last_page);
       setTotalPosts(data.data.total);
+      setHasMore(page < data.data.last_page);
       setIsLoading(false);
+      setLoadingMore(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load posts");
       setIsLoading(false);
+      setLoadingMore(false);
     }
   };
 
   useEffect(() => {
-    fetchPosts();
+    fetchPosts(currentPage);
   }, [tag, currentPage]);
 
-  if (isLoading) {
+  // Set up Intersection Observer for infinite scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const target = entries[0];
+        if (target.isIntersecting && hasMore && !isLoading && !loadingMore) {
+          const nextPage = currentPage + 1;
+          setCurrentPage(nextPage);
+          fetchPosts(nextPage, true);
+        }
+      },
+      {
+        root: null,
+        rootMargin: "100px",
+        threshold: 0.1,
+      }
+    );
+
+    const currentObserverRef = observerRef.current;
+    if (currentObserverRef) {
+      observer.observe(currentObserverRef);
+    }
+
+    return () => {
+      if (currentObserverRef) {
+        observer.unobserve(currentObserverRef);
+      }
+    };
+  }, [currentPage, hasMore, isLoading, loadingMore]);
+
+  if (isLoading && currentPage === 1) {
     return (
       <div className="container py-10">
         <TableSkeletonWrapper aria-label="Loading tag posts" />
@@ -199,8 +233,8 @@ const TagContainer: React.FC<TagContainerProps> = ({
           <button
             onClick={() => {
               setError(null);
-              setCurrentPage(1); // Reset to page 1 on retry
-              fetchPosts();
+              setCurrentPage(1);
+              fetchPosts(1);
             }}
             className="ml-4 py-2 px-4 bg-primary text-white rounded-[4px]"
             aria-label="Retry fetching posts"
@@ -222,10 +256,9 @@ const TagContainer: React.FC<TagContainerProps> = ({
     );
   }
 
-
   return (
     <div className="container py-10">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         {posts.map((post) => (
           <article
             key={post.id}
@@ -233,10 +266,10 @@ const TagContainer: React.FC<TagContainerProps> = ({
             aria-labelledby={`post-heading-${post.id}`}
           >
             <div className="space-y-2">
-              <Link href={`/${post.category_id}/${post.sub_category_id}/${post.id}#comment`}>
+              <Link href={`/${post.category_id}/${post.sub_category_id}/${post.id}`}>
                 <Image
                   src={getImageUrl(post.image1)}
-                  alt={post.heading.replace(/<[^>]+>/g, "")} // Strip HTML
+                  alt={post.heading.replace(/<[^>]+>/g, "")}
                   width={458}
                   height={346}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
@@ -247,34 +280,28 @@ const TagContainer: React.FC<TagContainerProps> = ({
               <div className="flex items-center gap-2">
                 <Link
                   href={`/blogs/${post.category_name}`}
-                  className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white"
-                  aria-label={`Watch video: ${post.heading.replace(
-                    /<[^>]+>/g,
-                    ""
-                  )}`}
+                  className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold leading-[120%] tracking-[0%] uppercase text-white"
+                  aria-label={`View category: ${post.category_name}`}
                 >
                   {post.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${categoryId}/${subcategoryId}`}
-                  className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold  leading-[120%] tracking-[0%] uppercase text-white"
-                  aria-label={`Watch video: ${post.heading.replace(
-                    /<[^>]+>/g,
-                    ""
-                  )}`}
+                  className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold leading-[120%] tracking-[0%] uppercase text-white"
+                  aria-label={`View subcategory: ${post.sub_category_name}`}
                 >
                   {post.sub_category_name || "Subcategory"}
                 </Link>
               </div>
               <Link
-                href={`/${post.category_id}/${post.sub_category_id}/${post.id}#comment`}
+                href={`/${post.category_id}/${post.sub_category_id}/${post.id}`}
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: post.heading }}
                   className="text-2xl font-medium line-clamp-2"
                 />
               </Link>
-              <p className="text-base font-semibold  leading-[120%] tracking-[0%] uppercase text-[#424242] mt-4 md:mt-5 lg:mt-6">
+              <p className="text-base font-semibold leading-[120%] tracking-[0%] uppercase text-[#424242] mt-4 md:mt-5 lg:mt-6">
                 {post.author} - {post.date}
               </p>
 
@@ -333,10 +360,9 @@ const TagContainer: React.FC<TagContainerProps> = ({
                     />
                   </div>
                 )}
-                
-                  <TbTargetArrow className="w-6 h-6 text-black" />
+                <TbTargetArrow className="w-6 h-6 text-black" />
                 <Link
-                   href={`/${post.category_id}/${post.sub_category_id}/${post.id}#comment`}
+                  href={`/${post.category_id}/${post.sub_category_id}/${post.id}#comment`}
                   aria-label={`Comment on post: ${post.heading.replace(
                     /<[^>]+>/g,
                     ""
@@ -348,27 +374,28 @@ const TagContainer: React.FC<TagContainerProps> = ({
 
               <p
                 dangerouslySetInnerHTML={{ __html: post.body1 }}
-                className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
+                className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
               />
             </div>
           </article>
         ))}
       </div>
 
-      {/* Pagination Controls */}
-      {totalPages > 1 && (
-        <div className="flex flex-col sm:flex-row justify-between items-center mt-8 gap-4">
-          <div className="text-sm text-muted-foreground" aria-live="polite">
-            Showing {posts.length} of {totalPosts} posts
-          </div>
-          <SplurjjPagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onPageChange={(page) => setCurrentPage(page)}
-            aria-label="Tag posts pagination"
-          />
+      {/* Sentinel element for Intersection Observer */}
+      {hasMore && (
+        <div ref={observerRef} className="h-10 flex justify-center items-center">
+          {loadingMore && (
+            <div className="text-center" aria-live="polite">
+              Loading more posts...
+            </div>
+          )}
         </div>
       )}
+
+      {/* Display total posts */}
+      {/* <div className="text-sm text-muted-foreground mt-8 text-center" aria-live="polite">
+        Showing {posts.length} of {totalPosts} posts
+      </div> */}
     </div>
   );
 };

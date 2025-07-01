@@ -107,7 +107,7 @@ const SecondContents: React.FC<SecondContentsProps> = ({ posts }) => {
           No content available.
         </p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {posts.map((post) => (
             <article
               key={post.id}

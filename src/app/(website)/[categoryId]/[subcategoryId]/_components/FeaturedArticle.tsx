@@ -124,7 +124,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
       {firstPost ? (
         <div className="mb-16 ">
           <div>
-            <div className="flex items-center gap-4 mb-4">
+            <div className="lg:flex block items-center gap-4 mb-4 space-y-4 md:space-y-0">
               <div className="flex items-center gap-2">
                 <Link
                   href={`/blogs/${firstPost.category_name}`}
@@ -197,15 +197,11 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
             </div>
             <div className="space-y-4">
               <Link
-                href={`/blogs/${firstPost.category_name
-                  .toLowerCase()
-                  .replace(/\s+/g, "-")}/${firstPost.sub_category_name
-                  .toLowerCase()
-                  .replace(/\s+/g, "-")}/${firstPost.id}`}
+                href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-5xl font-bold  text-[#131313]"
+                  className="text-3xl lg:text-5xl font-bold  text-[#131313]"
                 />
               </Link>
               <p
@@ -219,14 +215,14 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
           </div>
           <div className="mt-8">
             <Link
-              href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}#comment`}
+              href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
             >
               <Image
                 src={getImageUrl(firstPost.image1)}
                 alt={firstPost.heading.replace(/<[^>]+>/g, "")} // Strip HTML for alt text
                 width={1200}
                 height={600}
-                className="w-full object-cover h-[680px]"
+                className="w-full object-cover lg:h-[680px]"
               />
             </Link>
           </div>
@@ -331,7 +327,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
               </div>
               <div className="col-span-5 lg:col-span-3">
                 <Link
-                  href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}#comment`}
+                  href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
                 >
                 <Image
                   src={getImageUrl(secondPost.image1)}
@@ -351,7 +347,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
           {thirdPost && (
             <div className="relative">
               <Link
-                href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}#comment`}
+                href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
               >
               <Image
                 src={getImageUrl(thirdPost.image1)}
@@ -457,7 +453,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8">
           <div>
             {fourthPost && (
               <div className="space-y-2">
@@ -547,7 +543,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                   </p>
                 </div>
                 <Link
-                  href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}#comment`}
+                  href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
                 >
                 <Image
                   src={getImageUrl(fourthPost.image1)}
@@ -650,7 +646,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                   </p>
                 </div>
                 <Link
-                  href={`/${fivethPost.category_id}/${fivethPost.subcategory_id}/${fivethPost.id}#comment`}
+                  href={`/${fivethPost.category_id}/${fivethPost.subcategory_id}/${fivethPost.id}`}
                 >
                 <Image
                   src={getImageUrl(fivethPost.image1)}
