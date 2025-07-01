@@ -14,24 +14,81 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import QuillEditor from "@/components/ui/quill-editor";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+
+type PrivacyPolicyResponse = {
+  status: "success";
+  privacy_policy: string;
+};
 
 const formSchema = z.object({
-  body: z.string().min(2, {
+  privacy_policy: z.string().min(2, {
     message: "body must be at least 2 characters.",
   }),
 });
 
 const PrivacyPolicy = () => {
+  const queryClient = new QueryClient();
+  const session = useSession();
+  const token = (session?.data?.user as { token: string })?.token;
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      body: "",
+      privacy_policy: "",
+    },
+  });
+
+  // get api
+  const { data } = useQuery<PrivacyPolicyResponse>({
+    queryKey: ["privacy-policy"],
+    queryFn: () => {
+      return fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/privacy-policy`
+      ).then((res) => res.json());
+    },
+  });
+
+  console.log(data);
+
+  useEffect(() => {
+    if (data) {
+      form.reset({
+        privacy_policy: data?.privacy_policy,
+      });
+    }
+  }, [data, form]);
+
+  // post api
+  const { mutate } = useMutation({
+    mutationKey: ["update-privacy-policy"],
+    mutationFn: (values: z.infer<typeof formSchema>) =>
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/privacy-policy`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(values),
+      }).then((res) => res.json()),
+    onSuccess: (data) => {
+      if (!data?.status) {
+        toast.error(data?.message || "Something went wrong");
+        return;
+      }
+      toast.success(data?.message || "Privacy Policy updated successfully");
+      form.reset();
+      queryClient.invalidateQueries({ queryKey: ["privacy-policy"] });
     },
   });
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    mutate(values);
   }
   return (
     <div>
@@ -44,7 +101,7 @@ const PrivacyPolicy = () => {
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
                 control={form.control}
-                name="body"
+                name="privacy_policy"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base font-medium text-black tracking-normal leading-normal">

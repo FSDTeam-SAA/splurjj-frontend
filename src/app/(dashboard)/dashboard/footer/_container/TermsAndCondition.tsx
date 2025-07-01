@@ -14,24 +14,82 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import QuillEditor from "@/components/ui/quill-editor";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 const formSchema = z.object({
-  body: z.string().min(2, {
+  terms_conditions: z.string().min(2, {
     message: "body must be at least 2 characters.",
   }),
 });
 
+type TermsAndConditionResponse = {
+  status: "success";
+  terms_conditions: string;
+  message: string;
+};
+
 const TermsAndCondition = () => {
+  const queryClient = new QueryClient();
+  const session = useSession();
+  const token = (session?.data?.user as { token: string })?.token;
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      body: "",
+      terms_conditions: "",
+    },
+  });
+
+  // get api
+  const { data } = useQuery<TermsAndConditionResponse>({
+    queryKey: ["terms-and-condition"],
+    queryFn: () => {
+      return fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/terms-conditions`
+      ).then((res) => res.json());
+    },
+  });
+
+  console.log(data);
+
+  useEffect(() => {
+    if (data) {
+      form.reset({
+        terms_conditions: data?.terms_conditions,
+      });
+    }
+  }, [data, form]);
+
+  // post api
+  const { mutate } = useMutation({
+    mutationKey: ["update-terms-and-condition"],
+    mutationFn: (values: z.infer<typeof formSchema>) =>
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/terms-conditions`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(values),
+      }).then((res) => res.json()),
+    onSuccess: (data) => {
+      if (!data?.status) {
+        toast.error(data?.message || "Something went wrong");
+        return;
+      }
+      toast.success(data?.message || "Privacy Policy updated successfully");
+      form.reset();
+      queryClient.invalidateQueries({ queryKey: ["terms-and-condition"] });
     },
   });
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    mutate(values);
   }
   return (
     <div className="pb-10">
@@ -44,7 +102,7 @@ const TermsAndCondition = () => {
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
                 control={form.control}
-                name="body"
+                name="terms_conditions"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base font-medium text-black tracking-normal leading-normal">
