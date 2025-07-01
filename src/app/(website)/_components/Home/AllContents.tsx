@@ -261,7 +261,7 @@
 //               alt={firstPost.heading}
 //               width={1200}
 //               height={600}
-//               className="w-full h-[680px] object-cover rounded-lg  border-image"
+//               className="w-full h-[680px] object-cover rounded-lg  "
 //             />
 //           </div>
 //         </div>
