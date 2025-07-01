@@ -1,102 +1,105 @@
-"use client";
+"use client"
 
-import type React from "react";
-import { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
-import { useQuery } from "@tanstack/react-query";
-import { Search, ShoppingCart, User, ChevronDown, Menu, X } from "lucide-react";
-import { toast } from "react-toastify";
+import type React from "react"
+import { useState } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { signOut, useSession } from "next-auth/react"
+import { useQuery } from "@tanstack/react-query"
+import { Search, ShoppingCart, User, ChevronDown, Menu, X } from "lucide-react"
+import { toast } from "react-toastify"
+import { motion } from "framer-motion" // Import motion from framer-motion
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import ThemeToggle from "@/app/theme-toggle";
-import Image from "next/image";
+} from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import ThemeToggle from "@/app/theme-toggle"
+import Image from "next/image"
+import {
+  Accordion, // Import Accordion components
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 export type FooterData = {
-  success: boolean;
-  message: string;
+  success: boolean
+  message: string
   data: {
-    footer_links: string; // Adjust type if you have a structure for the links
-    facebook_link: string;
-    instagram_link: string;
-    linkedin_link: string;
-    twitter_link: string;
-    app_store_link: string;
-    google_play_link: string;
-    bg_color: string;
-    copyright: string;
-  };
-};
+    footer_links: string // Adjust type if you have a structure for the links
+    facebook_link: string
+    instagram_link: string
+    linkedin_link: string
+    twitter_link: string
+    app_store_link: string
+    google_play_link: string
+    bg_color: string
+    copyright: string
+  }
+}
 
 // Interfaces
 interface Subcategory {
-  id: number;
-  name: string;
+  id: number
+  name: string
 }
 
 interface Category {
-  category_id: number;
-  category_name: string;
-  subcategories: Subcategory[];
+  category_id: number
+  category_name: string
+  subcategories: Subcategory[]
 }
 
 interface ApiResponse {
-  success: boolean;
-  data: Category[];
+  success: boolean
+  data: Category[]
   pagination: {
-    current_page: number;
-    last_page: number;
-    per_page: number;
-    total: number;
-  };
+    current_page: number
+    last_page: number
+    per_page: number
+    total: number
+  }
 }
 
 interface ThemeHeader {
-  bg_color: string;
-  border_color: string;
-  logo: string;
-  menu_item_active_color: string;
-  menu_item_color: string;
+  bg_color: string
+  border_color: string
+  logo: string
+  menu_item_active_color: string
+  menu_item_color: string
 }
 
 // Fetch Functions
 const fetchCategories = async (): Promise<Category[]> => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/categories`
-  );
-  if (!response.ok) throw new Error("Failed to fetch categories");
-  const result: ApiResponse = await response.json();
-  return result.data;
-};
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/categories`)
+  if (!response.ok) throw new Error("Failed to fetch categories")
+  const result: ApiResponse = await response.json()
+  return result.data
+}
 
 const fetchHeader = async (): Promise<ThemeHeader> => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/header`
-  );
-  if (!response.ok) throw new Error("Failed to fetch header");
-  const result = await response.json();
-  return result.data;
-};
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/header`)
+  if (!response.ok) throw new Error("Failed to fetch header")
+  const result = await response.json()
+  return result.data
+}
 
 // Component
 export default function Header() {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const pathName = usePathname();
-  const session = useSession();
-  const token = (session?.data?.user as { token: string })?.token;
-  const role = session?.data?.user?.role;
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
+  const pathName = usePathname()
+  const session = useSession()
+  const token = (session?.data?.user as { token: string })?.token
+  const role = session?.data?.user?.role
 
   const {
     data: categories = [],
@@ -105,7 +108,8 @@ export default function Header() {
   } = useQuery({
     queryKey: ["categories"],
     queryFn: fetchCategories,
-  });
+  })
+
   const {
     data: header,
     isLoading: headerLoading,
@@ -113,36 +117,36 @@ export default function Header() {
   } = useQuery({
     queryKey: ["header"],
     queryFn: fetchHeader,
-  });
+  })
 
-  const staticMenuItems = [{ name: "LATEST", href: "/" }];
+  const staticMenuItems = [{ name: "LATEST", href: "/" }]
 
   const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     if (searchQuery.trim()) {
-      console.log("Searching for:", searchQuery);
-      setIsSearchOpen(false);
-      setSearchQuery("");
+      console.log("Searching for:", searchQuery)
+      setIsSearchOpen(false)
+      setSearchQuery("")
     }
-  };
+  }
 
   const getImageUrl = (path: string | null): string => {
-    if (!path) return "/assets/videos/blog1.jpg";
-    if (path.startsWith("http")) return path;
-    return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${path.replace(/^\/+/, "")}`;
-  };
+    if (!path) return "/assets/videos/blog1.jpg"
+    if (path.startsWith("http")) return path
+    return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${path.replace(/^\/+/, "")}`
+  }
 
   const handLogout = () => {
     try {
-      toast.success("Logout successful!");
+      toast.success("Logout successful!")
       setTimeout(async () => {
-        await signOut({ callbackUrl: "/" });
-      }, 1000);
+        await signOut({ callbackUrl: "/" })
+      }, 1000)
     } catch (error) {
-      console.error("Logout failed:", error);
-      toast.error("Logout failed. Please try again.");
+      console.error("Logout failed:", error)
+      toast.error("Logout failed. Please try again.")
     }
-  };
+  }
 
   const isCategoryActive = (categoryId: number) => {
     return (
@@ -150,33 +154,28 @@ export default function Header() {
       categories
         .find((cat) => cat.category_id === categoryId)
         ?.subcategories.some((sub) => pathName === `/${categoryId}/${sub.id}`)
-    );
-  };
+    )
+  }
 
   // footer api integration
   const { data } = useQuery<FooterData>({
     queryKey: ["footerData"],
-    queryFn: () =>
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/footer`).then((res) =>
-        res.json()
-      ),
-  });
+    queryFn: () => fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/footer`).then((res) => res.json()),
+  })
 
-  console.log(data?.data?.bg_color);
+  console.log(data?.data?.bg_color)
 
   // Skeleton Loader Component
   const SkeletonLoader = () => (
     <div className="animate-pulse">
       {/* Top Border */}
       <div className="h-[16px] bg-gray-300" />
-
       {/* Header */}
       <header className="w-full border-b bg-white">
         <div className="container">
           <div className="flex h-[80px] items-center justify-between">
             {/* Logo */}
             <div className="bg-gray-300 h-[55px] w-[90px] rounded"></div>
-
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-8">
               {/* Static Menu Item (LATEST) */}
@@ -189,7 +188,6 @@ export default function Header() {
                 </div>
               ))}
             </nav>
-
             {/* Right Actions */}
             <div className="flex items-center space-x-2">
               {/* Search Button */}
@@ -207,31 +205,27 @@ export default function Header() {
         </div>
       </header>
     </div>
-  );
+  )
 
   // Check loading or error states
-  if (categoriesLoading || headerLoading) return <SkeletonLoader />;
+  if (categoriesLoading || headerLoading) return <SkeletonLoader />
   if (categoriesError || headerError)
     return (
       <div className="text-center py-8 text-red-500">
-        Error:{" "}
-        {(categoriesError || headerError)?.message || "Failed to load header"}
+        Error: {(categoriesError || headerError)?.message || "Failed to load header"}
       </div>
-    );
+    )
 
   return (
     <>
-      <div
-        className="h-[16px] sticky top-0 z-50"
-        style={{ backgroundColor: data?.data?.bg_color || "#000000" }}
-      />
+      <div className="h-[16px] sticky top-0 z-50" style={{ backgroundColor: data?.data?.bg_color || "#000000" }} />
       <header
         className="sticky top-0 z-50 w-full border-b bg-white backdrop-blur supports-[backdrop-filter]:bg-background/60"
         style={{ backgroundColor: header?.bg_color || "#ffffff" }}
       >
         <div className="container">
           <div className="flex h-[65px] md:h-[80px] items-center justify-between">
-            <div className="flex items-center justify.must-start">
+            <div className="flex items-center justify-start">
               {/* Logo */}
               <Link href="/" className="flex items-center space-x-2">
                 <Image
@@ -242,7 +236,6 @@ export default function Header() {
                   className="h-[40px] md:h-[55px] w-[70px] md:w-[90px]"
                 />
               </Link>
-
               {/* Desktop Navigation */}
               <nav className="hidden lg:flex items-start space-x-8">
                 {staticMenuItems.map((item) => (
@@ -261,7 +254,7 @@ export default function Header() {
                   </Link>
                 ))}
                 {categories.map((category) => {
-                  const isActive = isCategoryActive(category.category_id);
+                  const isActive = isCategoryActive(category.category_id)
                   if (category.subcategories.length === 0) {
                     return (
                       <Link
@@ -271,13 +264,12 @@ export default function Header() {
                         style={{
                           color: isActive
                             ? header?.menu_item_active_color || "#0253F7"
-                            : header?.menu_item_color ||
-                              "text-muted-foreground",
+                            : header?.menu_item_color || "text-muted-foreground",
                         }}
                       >
                         {category.category_name.toUpperCase()}
                       </Link>
-                    );
+                    )
                   }
                   return (
                     <DropdownMenu key={category.category_id}>
@@ -286,8 +278,7 @@ export default function Header() {
                         style={{
                           color: isActive
                             ? header?.menu_item_active_color || "#0253F7"
-                            : header?.menu_item_color ||
-                              "text-muted-foreground",
+                            : header?.menu_item_color || "text-muted-foreground",
                         }}
                       >
                         <span>{category.category_name.toUpperCase()}</span>
@@ -301,12 +292,9 @@ export default function Header() {
                               className="cursor-pointer"
                               style={{
                                 color:
-                                  pathName ===
-                                  `/${category.category_id}/${subcategory.id}`
-                                    ? header?.menu_item_active_color ||
-                                      "#0253F7"
-                                    : header?.menu_item_color ||
-                                      "text-muted-foreground",
+                                  pathName === `/${category.category_id}/${subcategory.id}`
+                                    ? header?.menu_item_active_color || "#0253F7"
+                                    : header?.menu_item_color || "text-muted-foreground",
                               }}
                             >
                               {subcategory.name}
@@ -315,11 +303,10 @@ export default function Header() {
                         ))}
                       </DropdownMenuContent>
                     </DropdownMenu>
-                  );
+                  )
                 })}
               </nav>
             </div>
-
             {/* Right Actions */}
             <div className="flex items-center space-x-2">
               {/* Search */}
@@ -350,15 +337,8 @@ export default function Header() {
                   </Button>
                 )}
               </div>
-
               {/* Cart (Hidden on sm) */}
-              {token && role !== "admin" && (
-                <ShoppingCart
-                  className="text-black hidden sm:block"
-                  size={30}
-                />
-              )}
-
+              {token && role !== "admin" && <ShoppingCart className="text-black hidden sm:block" size={30} />}
               {/* User Menu (Hidden on sm) */}
               <div className="hidden sm:block">
                 {token ? (
@@ -372,9 +352,7 @@ export default function Header() {
                           <DropdownMenuLabel
                             style={{
                               color:
-                                pathName === "/dashboard"
-                                  ? header?.menu_item_active_color
-                                  : header?.menu_item_color,
+                                pathName === "/dashboard" ? header?.menu_item_active_color : header?.menu_item_color,
                             }}
                           >
                             Dashboard
@@ -385,9 +363,7 @@ export default function Header() {
                           <DropdownMenuLabel
                             style={{
                               color:
-                                pathName === "/accounts"
-                                  ? header?.menu_item_active_color
-                                  : header?.menu_item_color,
+                                pathName === "/accounts" ? header?.menu_item_active_color : header?.menu_item_color,
                             }}
                           >
                             My Account
@@ -403,25 +379,18 @@ export default function Header() {
                     </DropdownMenuContent>
                   </DropdownMenu>
                 ) : (
-                  <Link
-                    href="/sign-up"
-                    className="p-1 rounded text-white px-4 py-2 bg-[#0253F7] hover:bg-[#0253F7]"
-                  >
+                  <Link href="/sign-up" className="p-1 rounded text-white px-4 py-2 bg-[#0253F7] hover:bg-[#0253F7]">
                     Sign In
                   </Link>
                 )}
               </div>
-
               <ThemeToggle />
-
               {/* Mobile Menu Button */}
               <Button
                 variant="ghost"
                 size="lg"
                 className="lg:hidden"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                aria-expanded={isMobileMenuOpen}
-                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
               >
                 {isMobileMenuOpen ? (
                   <X className="h-6 w-6 dark:text-black" size={40} />
@@ -431,72 +400,93 @@ export default function Header() {
               </Button>
             </div>
           </div>
-
           {/* Mobile Nav */}
           {isMobileMenuOpen && (
-            <div
-              className="lg:hidden border-t py-4 overflow-y-auto"
-              style={{ maxHeight: "calc(100vh - 65px)" }}
-            >
-              <nav className="flex flex-col space-y-4 px-4">
+            <div className="lg:hidden border-t py-4">
+              <nav className="flex flex-col space-y-4">
                 {staticMenuItems.map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="text-sm font-medium"
+                    className="text-sm font-medium py-2"
                     style={{
-                      color:
-                        pathName === item.href
-                          ? header?.menu_item_active_color
-                          : header?.menu_item_color,
+                      color: pathName === item.href ? header?.menu_item_active_color : header?.menu_item_color,
                     }}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {item.name}
                   </Link>
                 ))}
-
-                {categories.map((category) => {
-                  const isActive = isCategoryActive(category.category_id);
-                  return (
-                    <div key={category.category_id} className="space-y-2">
-                      <span
-                        className="text-sm font-medium"
-                        style={{
-                          color: isActive
-                            ? header?.menu_item_active_color
-                            : header?.menu_item_color,
-                        }}
-                      >
-                        {category.category_name.toUpperCase()}
-                      </span>
-                      {category.subcategories.map((sub) => (
+                {/* Categories with Accordion for Subcategories */}
+                <Accordion type="single" collapsible className="w-full">
+                  {categories.map((category) => {
+                    const isActive = isCategoryActive(category.category_id)
+                    if (category.subcategories.length === 0) {
+                      return (
                         <Link
-                          key={sub.id}
-                          href={`/${category.category_id}/${sub.id}`}
-                          className="block pl-4 text-sm"
+                          key={category.category_id}
+                          href={`/${category.category_id}`}
+                          className="text-sm font-medium py-2"
                           style={{
-                            color:
-                              pathName === `/${category.category_id}/${sub.id}`
-                                ? header?.menu_item_active_color
-                                : header?.menu_item_color,
+                            color: isActive ? header?.menu_item_active_color : header?.menu_item_color,
                           }}
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
-                          {sub.name}
+                          {category.category_name.toUpperCase()}
                         </Link>
-                      ))}
-                    </div>
-                  );
-                })}
-
+                      )
+                    }
+                    return (
+                      <AccordionItem
+                        value={`item-${category.category_id}`}
+                        key={category.category_id}
+                        className="border-b-0" // Remove default border
+                      >
+                        <AccordionTrigger
+                          className="text-sm font-medium py-2 hover:no-underline" // Prevent underline on hover
+                          style={{
+                            color: isActive ? header?.menu_item_active_color : header?.menu_item_color,
+                          }}
+                        >
+                          {category.category_name.toUpperCase()}
+                        </AccordionTrigger>
+                        <AccordionContent>
+                          {/* Framer Motion animation for content */}
+                          <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.2 }}
+                            className="flex flex-col space-y-2 pl-4 py-2"
+                          >
+                            {category.subcategories.map((sub) => (
+                              <Link
+                                key={sub.id}
+                                href={`/${category.category_id}/${sub.id}`}
+                                className="block text-sm"
+                                style={{
+                                  color:
+                                    pathName === `/${category.category_id}/${sub.id}`
+                                      ? header?.menu_item_active_color
+                                      : header?.menu_item_color,
+                                }}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                {sub.name}
+                              </Link>
+                            ))}
+                          </motion.div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    )
+                  })}
+                </Accordion>
                 {/* Mobile Shopping Cart and User Menu */}
                 {token && role !== "admin" && (
                   <div className="flex items-center space-x-4 mt-4 sm:hidden">
                     <ShoppingCart className="text-black" size={30} />
                   </div>
                 )}
-
                 <div className="mt-2 sm:hidden">
                   {token ? (
                     <div className="flex flex-col space-y-2">
@@ -504,6 +494,7 @@ export default function Header() {
                         <Link
                           href="/dashboard"
                           className="text-base font-semibold"
+                          onClick={() => setIsMobileMenuOpen(false)}
                         >
                           Dashboard
                         </Link>
@@ -511,12 +502,16 @@ export default function Header() {
                         <Link
                           href="/accounts"
                           className="text-base font-semibold"
+                          onClick={() => setIsMobileMenuOpen(false)}
                         >
                           My Account
                         </Link>
                       ) : null}
                       <button
-                        onClick={() => setLogoutModalOpen(true)}
+                        onClick={() => {
+                          setLogoutModalOpen(true)
+                          setIsMobileMenuOpen(false) // Close mobile menu when opening logout modal
+                        }}
                         className="text-[#DB0000] font-semibold text-base text-left"
                       >
                         Log Out
@@ -526,6 +521,7 @@ export default function Header() {
                     <Link
                       href="/sign-up"
                       className="block p-2 rounded text-white bg-[#0253F7] text-center mt-2"
+                      onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Sign In
                     </Link>
@@ -533,31 +529,24 @@ export default function Header() {
                 </div>
               </nav>
             </div>
-        )}
+          )}
         </div>
       </header>
-
       {/* Logout Modal */}
       {logoutModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg max-w-sm w-full mx-4">
             <h3 className="text-lg font-semibold mb-4">Confirm Logout</h3>
-            <p className="text-gray-600 mb-6">
-              Are you sure you want to log out?
-            </p>
+            <p className="text-gray-600 mb-6">Are you sure you want to log out?</p>
             <div className="flex space-x-4">
-              <Button
-                variant="outline"
-                onClick={() => setLogoutModalOpen(false)}
-                className="flex-1"
-              >
+              <Button variant="outline" onClick={() => setLogoutModalOpen(false)} className="flex-1">
                 Cancel
               </Button>
               <Button
                 variant="destructive"
                 onClick={() => {
-                  setLogoutModalOpen(false);
-                  handLogout();
+                  setLogoutModalOpen(false)
+                  handLogout()
                 }}
                 className="flex-1"
               >
@@ -568,5 +557,5 @@ export default function Header() {
         </div>
       )}
     </>
-  );
+  )
 }
