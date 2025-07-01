@@ -54,7 +54,7 @@ const CookiesPolicy = () => {
     },
   });
 
-  console.log(data);
+  // console.log(data);
 
   useEffect(() => {
     if (data) {

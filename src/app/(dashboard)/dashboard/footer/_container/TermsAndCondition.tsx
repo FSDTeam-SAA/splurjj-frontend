@@ -53,7 +53,7 @@ const TermsAndCondition = () => {
     },
   });
 
-  console.log(data);
+  // console.log(data);
 
   useEffect(() => {
     if (data) {
