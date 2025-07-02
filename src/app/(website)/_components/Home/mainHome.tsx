@@ -57,12 +57,12 @@ function MainHome() {
       <div className="container">
         <div className="grid grid-cols-8 gap-4 pt-16">
           {/* Main content */}
-          <div className="col-span-8 md:col-span-6 pb-32">
+          <div className="col-span-8 md:col-span-6 pb-8 md:mb-14 lg:pb-32">
             <AllContents />
           </div>
 
           {/* Sticky sidebar */}
-          <div className="col-span-8 md:col-span-2">
+          <div className=" col-span-8 md:col-span-2">
             <div className="sticky top-[120px] mb-2">
               <Vertical />
             </div>
@@ -72,9 +72,9 @@ function MainHome() {
 
       <Horizontal />
       <div className="container">
-        <div className="grid grid-cols-8 gap-4 pt-16">
+        <div className="grid grid-cols-8 gap-4 pt-8 md:pt-12 lg:pt-16">
           {/* Main content */}
-          <div className="col-span-8 md:col-span-6 pb-16">
+          <div className="col-span-8 md:col-span-6 pb-8 md:pb-12 lg:pb-16">
             <ArtCulture categoryName={{ categoryName: firstCategory }} />
             <Gear categoryName={{ categoryName: secoundCategory }} />
           </div>
@@ -89,9 +89,9 @@ function MainHome() {
       </div>
       <Horizontal />
       <div className="container">
-        <div className="grid grid-cols-8 gap-4 pt-16">
+        <div className="grid grid-cols-8 gap-4 pt-8 md:pt-12 lg:pt-16">
           {/* Main content */}
-          <div className="col-span-8 md:col-span-6 pb-16">
+          <div className="col-span-8 md:col-span-6 pb-8 md:pb-12 lg:pb-16">
             <Music categoryName={{ categoryName: thirdPost }} />
             <Ride categoryName={{ categoryName: forthPost }} />
           </div>
@@ -106,9 +106,9 @@ function MainHome() {
       </div>
       <Horizontal />
       <div className="container">
-        <div className="grid grid-cols-8 gap-4 pt-16">
+        <div className="grid grid-cols-8 gap-4 pt-8 md:pt-12 lg:pt-16">
           {/* Main content */}
-          <div className="col-span-8 md:col-span-6 pb-16">
+          <div className="col-span-8 md:col-span-6 pb-8 md:pb-12 lg:pb-16">
             <Video categoryName={{ categoryName: fifthPost }} />
           </div>
 
@@ -122,9 +122,9 @@ function MainHome() {
       </div>
       <Horizontal />
       <div className="container">
-        <div className="grid grid-cols-8 gap-4 pt-16">
+        <div className="grid grid-cols-8 gap-4 pt-8 md:pt-12 lg:pt-16">
           {/* Main content */}
-          <div className="col-span-8 md:col-span-6 pb-16">
+          <div className="col-span-8 md:col-span-6 pb-8 md:pb-12 lg:pb-16">
             <QuitCalm categoryName={{ categoryName: sixthPost }} />
           </div>
 

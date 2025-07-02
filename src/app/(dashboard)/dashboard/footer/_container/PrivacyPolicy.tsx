@@ -44,7 +44,7 @@ const PrivacyPolicy = () => {
 
   // get api
   const { data } = useQuery<PrivacyPolicyResponse>({
-    queryKey: ["privacy-policy"],
+    queryKey: ["get-privacy-policy"],
     queryFn: () => {
       return fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/privacy-policy`
@@ -81,7 +81,7 @@ const PrivacyPolicy = () => {
       }
       toast.success(data?.message || "Privacy Policy updated successfully");
       form.reset();
-      queryClient.invalidateQueries({ queryKey: ["privacy-policy"] });
+      queryClient.invalidateQueries({ queryKey: ["get-privacy-policy"] });
     },
   });
 

@@ -168,7 +168,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-[#DDD618] max-h-[455px] flex items-center justify-center rounded-l-md p-4">
+          <div className="bg-white shadow-lg max-h-[455px] flex items-center justify-center rounded-l-md p-4">
             <div className="bg-gray-300 h-12 w-3/4 rounded"></div>
           </div>
           <div>
@@ -305,14 +305,14 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 rounded">
-            <div className="bg-[#DDD618] max-h-[455px] flex items-center justify-center p-4 ">
+            <div className="bg-[#DDD618] h-[300px] md:max-h-[455px] flex items-center justify-center p-4 ">
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
                 className="text-2xl font-medium text-[#131313] hover:underline"
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-4xl font-bold text-[#131313]"
+                  className="text-3xl md:text-4xl font-bold text-[#131313]"
                 />
               </Link>
             </div>

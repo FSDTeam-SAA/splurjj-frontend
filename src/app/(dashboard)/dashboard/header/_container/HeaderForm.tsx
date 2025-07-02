@@ -25,9 +25,9 @@ const formSchema = z.object({
   color: z.string().min(6, {
     message: "Please pick a background color.",
   }),
-  border_color: z.string().min(6, {
-    message: "Please pick a border color.",
-  }),
+  // border_color: z.string().min(6, {
+  //   message: "Please pick a border color.",
+  // }),
   menu_item_color: z.string().min(6, {
     message: "Please pick a menu color.",
   }),
@@ -41,7 +41,7 @@ export type HeaderResponse = {
   message: string;
   data: {
     logo: string | null;
-    border_color: string | null;
+    // border_color: string | null;
     bg_color: string | null;
     menu_item_color: string | null;
     menu_item_active_color: string | null;
@@ -68,7 +68,7 @@ export function HeaderForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       color: "#000000",
-      border_color: "#000000",
+      // border_color: "#000000",
       menu_item_color: "#000000",
       menu_item_active_color: "#000000",
     },
@@ -78,7 +78,7 @@ export function HeaderForm() {
     if (data?.data) {
       form.reset({
         color: data?.data?.bg_color || "#000000",
-        border_color: data?.data?.border_color || "#000000",
+        // border_color: data?.data?.border_color || "#000000",
         menu_item_color: data?.data?.menu_item_color || "#000000",
         menu_item_active_color: data?.data?.menu_item_active_color || "#000000",
       });
@@ -110,7 +110,7 @@ export function HeaderForm() {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const formData = new FormData();
     formData.append("color", values?.color);
-    formData.append("border_color", values?.border_color);
+    // formData.append("border_color", values?.border_color);
     formData.append("menu_item_color", values?.menu_item_color);
     formData.append("menu_item_active_color", values?.menu_item_active_color);
     if (logo) {
@@ -124,7 +124,7 @@ export function HeaderForm() {
     <div className="p-8 bg-white rounded-lg shadow-lg">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-[20px]">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[20px]">
             {/* logo  */}
             <div>
               <FileUpload
@@ -161,8 +161,7 @@ export function HeaderForm() {
                 )}
               />
             </div>
-            <div>
-              {/* Color Picker */}
+            {/* <div>
               <FormField
                 control={form.control}
                 name="border_color"
@@ -182,7 +181,7 @@ export function HeaderForm() {
                   </FormItem>
                 )}
               />
-            </div>
+            </div> */}
             <div>
               {/* Color Picker */}
               <FormField

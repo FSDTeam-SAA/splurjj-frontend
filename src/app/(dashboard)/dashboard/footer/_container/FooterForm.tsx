@@ -70,6 +70,9 @@ const formSchema = z.object({
   text_color: z.string().min(6, {
     message: "Please pick a text color.",
   }),
+  active_text_color: z.string().min(6, {
+    message: "Please pick a active text color.",
+  }),
 });
 
 export type FooterLink = {
@@ -90,6 +93,7 @@ export type FooterApiResponse = {
     google_play_link: string;
     bg_color: string;
     text_color: string;
+    active_text_color: string;
     copyright: string;
   };
 };
@@ -123,6 +127,7 @@ export function FooterForm() {
       copyright: "",
       bg_color: "#000000",
       text_color: "#000000",
+      active_text_color: "#000000",
     },
   });
 
@@ -138,6 +143,7 @@ export function FooterForm() {
         copyright: data?.data?.copyright || "",
         bg_color: data?.data?.bg_color || "#000000",
         text_color: data?.data?.text_color || "#000000",
+        active_text_color: data?.data?.active_text_color || "#000000",
 
       });
     }
@@ -204,6 +210,28 @@ export function FooterForm() {
                 <FormItem>
                   <FormLabel className="text-base font-bold text-black">
                     Add Text Color
+                  </FormLabel>
+                  <FormControl>
+                    <ColorPicker
+                      selectedColor={field.value ?? "#FFFFFF"}
+                      onColorChange={field.onChange}
+                      previousColor={"#000000"}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500 text-sm font-medium" />
+                </FormItem>
+              )}
+            />
+          </div>
+          {/*add active text Color */}
+          <div>
+            <FormField
+              control={form.control}
+              name="active_text_color"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-base font-bold text-black">
+                    Add Active Text Color
                   </FormLabel>
                   <FormControl>
                     <ColorPicker
