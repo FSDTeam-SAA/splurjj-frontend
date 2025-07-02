@@ -332,7 +332,7 @@ const Ride: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 alt={firstPost.heading || "Blog Image"}
                 width={300}
                 height={200}
-                className="w-full h-[467px] object-cover"
+                className="w-full h-[400px] md:h-[467px] object-cover"
               /></Link>
              
             </div>
@@ -351,7 +351,7 @@ const Ride: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 alt={secondPost.heading || "Blog Image"}
                 width={300}
                 height={200}
-                className="w-full h-[467px] object-cover"
+                className="w-full h-[400px] md:h-[467px] object-cover"
               /></Link>
               
             </div>

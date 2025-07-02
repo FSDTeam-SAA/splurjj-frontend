@@ -227,11 +227,11 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-4xl font-bold text-[#131313] px-4 hover:underline"
+                  className="text-3xl md:text-4xl font-bold text-[#131313] px-4 hover:underline"
                 />
               </Link>
             </div>
-            <div>
+            <div className="">
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
               >
@@ -240,7 +240,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={firstPost.heading || "Blog Image"}
                   width={600}
                   height={455}
-                  className="w-full h-[455px] object-cover"
+                  className="w-full h-[400px] md:h-[455px] object-cover"
                   priority
                 />
               </Link>
@@ -359,7 +359,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={thirdPost.heading || "Blog Image"}
                     width={400}
                     height={455}
-                    className="w-full h-[455px] object-cover"
+                    className="w-full h-[400px] md:h-[455px] object-cover"
                     priority
                   />
                 </Link>
@@ -465,7 +465,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={fourthPost.heading || "Blog Image"}
                     width={400}
                     height={455}
-                    className="w-full h-[455px] object-cover"
+                    className="w-full h-[400px] md:h-[455px] object-cover"
                     priority
                   />
                 </Link>
@@ -570,7 +570,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={fifthPost.heading || "Blog Image"}
                   width={400}
                   height={455}
-                  className="w-full h-[455px] object-cover"
+                  className="w-full h-[400px] md:h-[455px] object-cover"
                   priority
                 />
               </Link>

@@ -20,18 +20,18 @@ import { toast } from "react-toastify";
 import { useEffect } from "react";
 
 const formSchema = z.object({
-  terms_conditions: z.string().min(2, {
+  investment_disclaimer: z.string().min(2, {
     message: "body must be at least 2 characters.",
   }),
 });
 
-type TermsAndConditionResponse = {
+type InvestmentPolicyResponse = {
   status: "success";
-  terms_conditions: string;
+  investment_disclaimer: string;
   message: string;
 };
 
-const TermsAndCondition = () => {
+const InvestmentDisclaimer = () => {
   const queryClient = new QueryClient();
   const session = useSession();
   const token = (session?.data?.user as { token: string })?.token;
@@ -39,16 +39,16 @@ const TermsAndCondition = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      terms_conditions: "",
+      investment_disclaimer: "",
     },
   });
 
   // get api
-  const { data } = useQuery<TermsAndConditionResponse>({
-    queryKey: ["get-terms-and-condition"],
+  const { data } = useQuery<InvestmentPolicyResponse>({
+    queryKey: ["get-investment-disclaimer"],
     queryFn: () => {
       return fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/terms-conditions`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/investment-disclaimer`
       ).then((res) => res.json());
     },
   });
@@ -58,16 +58,16 @@ const TermsAndCondition = () => {
   useEffect(() => {
     if (data) {
       form.reset({
-        terms_conditions: data?.terms_conditions,
+        investment_disclaimer: data?.investment_disclaimer,
       });
     }
   }, [data, form]);
 
   // post api
   const { mutate } = useMutation({
-    mutationKey: ["update-terms-and-condition"],
+    mutationKey: ["update-investment-disclaimer"],
     mutationFn: (values: z.infer<typeof formSchema>) =>
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/terms-conditions`, {
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/investment-disclaimer`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -80,11 +80,9 @@ const TermsAndCondition = () => {
         toast.error(data?.message || "Something went wrong");
         return;
       }
-      toast.success(
-        data?.message || "Terms And Condition updated successfully"
-      );
+      toast.success(data?.message || "Investment Disclaimer updated successfully");
       form.reset();
-      queryClient.invalidateQueries({ queryKey: ["get-terms-and-condition"] });
+      queryClient.invalidateQueries({ queryKey: ["get-investment-disclaimer"] });
     },
   });
 
@@ -97,14 +95,14 @@ const TermsAndCondition = () => {
     <div className="pb-10">
       <div className="bg-white shadow-lg rounded-[12px] p-5 border">
         <h2 className="text-3xl font-bold text-black leading-normal text-center">
-          Terms And Condition
+          Investment Disclaimer
         </h2>
         <div className="pb-2">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
                 control={form.control}
-                name="terms_conditions"
+                name="investment_disclaimer"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-base font-medium text-black tracking-normal leading-normal">
@@ -137,4 +135,4 @@ const TermsAndCondition = () => {
   );
 };
 
-export default TermsAndCondition;
+export default InvestmentDisclaimer;

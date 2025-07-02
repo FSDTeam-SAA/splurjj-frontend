@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
 interface Category {
+  id: number;
   category_id: number;
   category_name: string;
 }
@@ -35,7 +36,7 @@ interface Footer {
   instagram_link: string;
   linkedin_link: string;
   twitter_link: string;
-  footer_links: string; // Adjust type based on actual footer_links structure if known
+  footer_links: string;
 }
 
 interface FooterResponse {
@@ -62,7 +63,7 @@ const Footer = () => {
   const shopData = [
     { id: 1, shop: "Latest" },
     { id: 2, shop: "Men" },
-    { Licensing: 3, shop: "Women" },
+    { id: 3, shop: "Women" },
     { id: 4, shop: "Lifestyle" },
     { id: 5, shop: "Tech" },
     { id: 6, shop: "Sale" },
@@ -110,7 +111,7 @@ const Footer = () => {
             </div>
             <ul>
               {categories?.map((item) => (
-                <div key={item.category_id}>
+                <li key={`category-${item.id}`}>
                   <Link
                     href={`/blogs/${item.category_name}`}
                     style={{ color: footer?.text_color || "#D93232" }}
@@ -118,7 +119,7 @@ const Footer = () => {
                   >
                     {item.category_name}
                   </Link>
-                </div>
+                </li>
               ))}
             </ul>
           </div>
@@ -133,7 +134,7 @@ const Footer = () => {
             <ul>
               {shopData.map((item) => (
                 <li
-                  key={item.id}
+                  key={`shop-${item.id}`}
                   className="text-sm font-semibold cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2"
                   style={{ color: footer?.text_color || "#D93232" }}
                 >
@@ -153,7 +154,7 @@ const Footer = () => {
             <ul>
               {otherData.map((item) => (
                 <li
-                  key={item.id}
+                  key={`other-${item.id}`}
                   className="text-sm font-semibold cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2"
                   style={{ color: footer?.text_color || "#D93232" }}
                 >
@@ -173,7 +174,7 @@ const Footer = () => {
             <ul>
               {aboutData.map((item) => (
                 <li
-                  key={item.id}
+                  key={`about-${item.id}`}
                   className="text-sm font-semibold cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2"
                   style={{ color: footer?.text_color || "#D93232" }}
                 >
@@ -278,19 +279,25 @@ const Footer = () => {
         <div className="border-b border-[#D9D9D9] mt-4" />
         <div className="w-full h-[1px]" />
         <div
-          className="w-full flex flex-col md:flex-row items-center justify-center pt-4 text-base font-medium leading-[120%] tracking-[0%] text-black"
+          className="w-full flex flex-col md:flex-row items-center justify-center pt-4 pb-3 md:pb-1 text-base font-medium leading-[120%] tracking-[0%] text-black"
           style={{ color: footer?.text_color || "#D93232" }}
         >
           {footer?.copyright ||
             "Copyright © 2025 SPLURJJ. All Rights Reserved."}
           <Tally1 className="text-black w-[5px] h-auto" />
-          <Link className="hover:underline" href="/terms-and-conditions">Terms & Conditions</Link>
+          <Link className="hover:underline" href="/terms-and-conditions">
+            Terms & Conditions
+          </Link>
           <span className="px-2" />
-          <Link className="hover:underline" href="/privacy-policy">Privacy Policy</Link>
+          <Link className="hover:underline" href="/privacy-policy">
+            Privacy Policy
+          </Link>
           <span className="px-2" />
-          <Link className="hover:underline" href="/cookies-policy">Cookie Policy</Link>
+          <Link className="hover:underline" href="/cookies-policy">
+            Cookie Policy
+          </Link>
           <span className="px-2" />
-          Investment Disclaimer
+          <Link className="hover:underline" href="/investment-disclaimer">Investment Disclaimer</Link>
         </div>
       </div>
     </div>

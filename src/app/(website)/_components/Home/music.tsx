@@ -301,16 +301,16 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 backgroundPosition: "center",
                 backgroundSize: "cover",
               }}
-              className="flex items-center justify-center"
+              className="flex items-center justify-center h-[400px] md:h-[433px]"
             >
-              <div className="">
+              <div className=" w-2/3">
                 <div
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="font-medium white-text hover:underline text-4xl lg:text-5xl text-center text-white"
+                  className="font-medium white-text hover:underline text-4xl lg:text-5xl text-center text-white line-clamp-3"
                 />
                 <div
                   dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
-                  className="text-lg font-medium white-text hover:underline text-center"
+                  className="text-lg font-medium white-text hover:underline text-center line-clamp-4"
                 />
               </div>
             </div>

@@ -51,16 +51,16 @@ function Vertical() {
   return (
     <div className="">
       {adData?.code ? (
-        <div dangerouslySetInnerHTML={{ __html: adData.code }} className="vertical-adds h-[600px]" />
+        <div dangerouslySetInnerHTML={{ __html: adData.code }} className="vertical-adds h-[400px] md:h-[500px] lg:h-[600px]" />
       ) : adData?.image && adData?.link ? (
-        <a href={adData.link} target="_blank" rel="noopener noreferrer" className='w-[2600px] h-[600px] '>
+        <a href={adData.link} target="_blank" rel="noopener noreferrer" className='w-[2600px] h-[400px] md:h-[500px] lg:h-[600px] '>
           <Image
             src={adData.image}
             alt="Advertisement"
             width={2600}
             height={600}
             style={{ maxWidth: '100%' }}
-            className="w-full h-[600px] " />
+            className="w-full h-[400px] md:h-[500px] lg:h-[600px] " />
         </a>
       ) : (
         <div>No advertisement available</div>

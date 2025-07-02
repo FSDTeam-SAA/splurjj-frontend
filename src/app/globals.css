@@ -15,6 +15,15 @@ body {
 .container{
   max-width: 98%;
   margin: 0 auto;
+
+}
+
+@media screen and (max-width: 640px) {
+  .container{
+    max-width: 95%;
+    margin: 0 auto;
+  }
+  
 }
 
 @layer base {

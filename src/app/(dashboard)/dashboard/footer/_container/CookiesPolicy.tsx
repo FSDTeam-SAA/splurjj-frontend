@@ -32,10 +32,9 @@ type CookiesPolicyResponse = {
 };
 
 const CookiesPolicy = () => {
-   const queryClient = new QueryClient();
+  const queryClient = new QueryClient();
   const session = useSession();
   const token = (session?.data?.user as { token: string })?.token;
-
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -46,7 +45,7 @@ const CookiesPolicy = () => {
 
   // get api
   const { data } = useQuery<CookiesPolicyResponse>({
-    queryKey: ["cookies-policy"],
+    queryKey: ["get-cookies-policy"],
     queryFn: () => {
       return fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cookies-policy`
@@ -81,13 +80,11 @@ const CookiesPolicy = () => {
         toast.error(data?.message || "Something went wrong");
         return;
       }
-      toast.success(data?.message || "Privacy Policy updated successfully");
+      toast.success(data?.message || "Cookies Policy updated successfully");
       form.reset();
-      queryClient.invalidateQueries({ queryKey: ["cookies-policy"] });
+      queryClient.invalidateQueries({ queryKey: ["get-cookies-policy"] });
     },
   });
-
-
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -139,4 +136,3 @@ const CookiesPolicy = () => {
 };
 
 export default CookiesPolicy;
-

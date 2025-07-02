@@ -227,7 +227,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-4xl font-bold text-[#131313] px-4 hover:underline"
+                  className="text-3xl md:text-4xl text-center md:text-left font-bold text-[#131313] px-4 hover:underline"
                 />
               </Link>
             </div>
@@ -240,7 +240,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={firstPost.heading || "Blog Image"}
                   width={600}
                   height={455}
-                  className="w-full h-[455px] object-cover"
+                  className="w-full h-[400px] md:h-[455px] object-cover"
                   priority
                 />
               </Link>
@@ -359,7 +359,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={thirdPost.heading || "Blog Image"}
                     width={400}
                     height={455}
-                    className="w-full h-[455px] object-cover"
+                    className="w-full h-[400px] md:h-[455px] object-cover"
                     priority
                   />
                 </Link>
@@ -465,7 +465,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={fourthPost.heading || "Blog Image"}
                     width={400}
                     height={455}
-                    className="w-full h-[455px] object-cover"
+                    className="w-full h-[400px] md:h-[455px] object-cover"
                     priority
                   />
                 </Link>
@@ -571,7 +571,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={fifthPost.heading || "Blog Image"}
                   width={400}
                   height={455}
-                  className="w-full h-[455px] object-cover"
+                  className="w-full h-[400px] md:h-[455px] object-cover"
                   priority
                 />
               </Link>

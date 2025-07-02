@@ -804,7 +804,7 @@ const AllContents: React.FC = () => {
   return (
     <div className="">
       {firstPost && (
-        <div className="mb-16">
+        <div className="mb-6 md:mb-12 lg:mb-16">
           <div>
             <div className="flex items-center gap-4 mb-4">
               <div className="flex items-center gap-2">
@@ -904,7 +904,7 @@ const AllContents: React.FC = () => {
                 alt={firstPost.heading}
                 width={1200}
                 height={600}
-                className="w-full h-[680px] object-cover"
+                className="w-full h-[400px] md:h-[550px] lg:h-[680px] object-cover"
               />
             </Link>
           </div>
