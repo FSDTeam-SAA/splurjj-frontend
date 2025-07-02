@@ -421,17 +421,19 @@ export default function Header() {
                 <ThemeToggle />
               </div>
               {/* Mobile Menu Button */}
-              <div className="w-full flex items-center !justify-end">
-                <button
-                  className="lg:hidden !inline-flex !items-center !justify-end"
-                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                >
-                  {isMobileMenuOpen ? (
-                    <X className="!h-9 !w-9 dark:text-black" size={48} />
-                  ) : (
-                    <Menu className="dark:text-black !w-9 !h-9" size={48} />
-                  )}
-                </button>
+              <div className="block md:hidden ">
+                <div className="w-full flex items-center !justify-end">
+                  <button
+                    className="lg:hidden !inline-flex !items-center !justify-end"
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  >
+                    {isMobileMenuOpen ? (
+                      <X className="!h-9 !w-9 dark:text-black" size={48} />
+                    ) : (
+                      <Menu className="dark:text-black !w-9 !h-9" size={48} />
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
