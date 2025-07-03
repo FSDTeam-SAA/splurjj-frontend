@@ -16,7 +16,7 @@ export default function SettingsMenu({ onSectionSelect }: SettingsMenuProps) {
         {/* Header */}
         <div className="mb-10">
           <h1 className="text-3xl md:text-[35px] lg:text-10  font-semibold text-[#212121] leading-[120%] mb-2">
-            Settings
+            Accounts
           </h1>
           <div className="flex items-center gap-1">
             <Link
@@ -29,10 +29,16 @@ export default function SettingsMenu({ onSectionSelect }: SettingsMenuProps) {
               <ChevronRight className="text-[#595959] w-6 h-6" />
             </span>
             <Link href="/dashboard/settings">
-            <span className="text-xl font-normal  leading-[120%] tracking-[0%] text-[#595959]">
-              Settings
-            </span>
+              <span className="text-xl font-normal  leading-[120%] tracking-[0%] text-[#595959]">
+                Settings
+              </span>
             </Link>
+            <span>
+              <ChevronRight className="text-[#595959] w-6 h-6" />
+            </span>
+            <span className="text-xl font-normal  leading-[120%] tracking-[0%] text-[#595959]">
+              Accounts
+            </span>
           </div>
         </div>
 

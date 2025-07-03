@@ -13,7 +13,7 @@ export default function ChangePasswordForm() {
         <div className="flex justify-between items-start mb-8">
           <div>
             <h1 className="text-3xl md:text-[35px] lg:text-10  font-semibold text-[#212121] leading-[120%] mb-2">
-              Settings
+              Accounts
             </h1>
             <div className="flex items-center gap-1">
               <Link
