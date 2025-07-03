@@ -1271,6 +1271,23 @@ export default function Sidebar() {
           )}
 
           {!isAuthor && (
+            <div className="px-2 ">
+              <Link href="/dashboard/all-pages">
+                <Button
+                  variant="ghost"
+                  className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
+                    isRouteActive("/dashboard/all-pages")
+                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                      : "text-black/70 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                  }`}
+                >
+                  All Pages
+                </Button>
+              </Link>
+            </div>
+          )}
+
+          {!isAuthor && (
             <div className="px-2">
               <Link href="/dashboard/header">
                 <Button

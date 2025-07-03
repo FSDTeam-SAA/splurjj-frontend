@@ -72,19 +72,19 @@ export default function DashboardHeader() {
         <div className="flex items-center">
           <div className="">
             <Link href="/">
-            {headerData?.data?.logo ? (
-              <Image
-                src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${headerData.data.logo}`}
-                alt="logo"
-                width={90}
-                height={55}
-                className="w-[90px] h-[55px] object-contain"
-              />
-            ) : (
-              <h2 className="text-2xl text-black font-bold leading-normal">
-                LOGO
-              </h2>
-            )}
+              {headerData?.data?.logo ? (
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${headerData.data.logo}`}
+                  alt="logo"
+                  width={90}
+                  height={55}
+                  className="w-[90px] h-[55px] object-contain"
+                />
+              ) : (
+                <h2 className="text-2xl text-black font-bold leading-normal">
+                  LOGO
+                </h2>
+              )}
             </Link>
           </div>
         </div>
@@ -97,11 +97,13 @@ export default function DashboardHeader() {
           <div className="flex items-center gap-3">
             <div>
               <Avatar>
-                <AvatarImage
-                  src={
-                    data?.data?.profile_pic || "https://github.com/shadcn.png"
-                  }
-                />
+                <Link href="/dashboard/settings">
+                  <AvatarImage
+                    src={
+                      data?.data?.profile_pic || "https://github.com/shadcn.png"
+                    }
+                  />
+                </Link>
                 <AvatarFallback className="text-base font-bold leading-normal text-black">
                   {data?.data?.first_name?.charAt(0) || ""}
                   {data?.data?.last_name?.charAt(0) || ""}
