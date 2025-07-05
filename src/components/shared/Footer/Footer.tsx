@@ -8,11 +8,21 @@ import Image from "next/image";
 import { Linkedin, Tally1, Twitter } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+// import page from "@/app/(website)/homeAllContent/page";
 
 interface Category {
   id: number;
   category_id: number;
   category_name: string;
+}
+
+interface Page {
+  id: number;
+  name: string;
+  body: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
 }
 
 interface ApiResponse {
@@ -59,6 +69,25 @@ const Footer = () => {
     queryKey: ["categories"],
     queryFn: fetchCategories,
   });
+
+  const fetchPages = async (): Promise<Page[]> => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/pages`
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch pages");
+    }
+    const result = await response.json();
+    console.log(result);
+    return result;
+  };
+
+  const { data: pages = [] } = useQuery<Page[]>({
+    queryKey: ["pages"],
+    queryFn: fetchPages,
+  });
+
+  console.log("PPPPPPPPPPPPPPPPP", pages);
 
   const shopData = [
     { id: 1, shop: "Latest" },
@@ -285,19 +314,19 @@ const Footer = () => {
           {footer?.copyright ||
             "Copyright © 2025 SPLURJJ. All Rights Reserved."}
           <Tally1 className="text-black w-[5px] h-auto" />
-          <Link className="hover:underline" href="/terms-and-conditions">
-            Terms & Conditions
-          </Link>
-          <span className="px-2" />
-          <Link className="hover:underline" href="/privacy-policy">
-            Privacy Policy
-          </Link>
-          <span className="px-2" />
-          <Link className="hover:underline" href="/cookies-policy">
-            Cookie Policy
-          </Link>
-          <span className="px-2" />
-          <Link className="hover:underline" href="/investment-disclaimer">Investment Disclaimer</Link>
+
+          <div className="flex items-center gap-4">
+            {pages.map((page) => (
+              <Link
+                key={page.id}
+                href={`/page/${page.id}`}
+                className=""
+                style={{ color: footer?.text_color || "#D93232" }}
+              >
+                {page.name}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </div>

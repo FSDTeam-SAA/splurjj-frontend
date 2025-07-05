@@ -345,7 +345,7 @@ const ContentBlogDetails = ({
                           )}`}
                           key={index}
                         >
-                          <button className="bg-secondary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold leading-[120%] tracking-[0%] uppercase text-white">
+                          <button className="bg-secondary hover:bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold leading-[120%] tracking-[0%] uppercase text-white">
                             {tag}
                           </button>
                         </Link>

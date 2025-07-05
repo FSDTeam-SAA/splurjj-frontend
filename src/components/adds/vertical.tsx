@@ -1,6 +1,7 @@
 "use client";
 
 import Image from 'next/image';
+import Link from 'next/link';
 // import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
@@ -51,17 +52,17 @@ function Vertical() {
   return (
     <div className="">
       {adData?.code ? (
-        <div dangerouslySetInnerHTML={{ __html: adData.code }} className="vertical-adds h-[400px] md:h-[500px] lg:h-[600px]" />
+        <div dangerouslySetInnerHTML={{ __html: adData.code }} className="vertical-adds w-[200px] md:w-[160px] lg:w-[300px] h-[200px] md:h-[600px] lg:h-[600px] " />
       ) : adData?.image && adData?.link ? (
-        <a href={adData.link} target="_blank" rel="noopener noreferrer" className='w-[2600px] h-[400px] md:h-[500px] lg:h-[600px] '>
+        <Link href={adData.link} target="_blank" rel="noopener noreferrer" className='w-[200px] md:w-[160px] lg:w-[300px] h-[200px] md:h-[600px] lg:h-[600px] '>
           <Image
             src={adData.image}
             alt="Advertisement"
             width={2600}
             height={600}
             style={{ maxWidth: '100%' }}
-            className="w-full h-[400px] md:h-[500px] lg:h-[600px] " />
-        </a>
+            className="w-[200px] md:w-[160px] lg:w-[300px] h-[200px] md:h-[600px] lg:h-[600px] " />
+        </Link>
       ) : (
         <div>No advertisement available</div>
       )}
