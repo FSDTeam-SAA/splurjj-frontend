@@ -1,126 +1,193 @@
-import React, { useEffect } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
-import QuillEditor from "@/components/ui/quill-editor";
-import { PageData } from "./AllPagesContainer";
+"use client"
+import type React from "react"
+import { useState, useEffect } from "react"
+import { useSession } from "next-auth/react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
+import { Button } from "@/components/ui/button"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import QuillEditor from "@/components/ui/quill-editor"
+import type { PageData } from "./AllPagesContainer"
 
 const formSchema = z.object({
-  pageName: z.string().min(2, {
-    message: "Page name must be at least 2 characters.",
-  }),
-  body: z.string().min(2, {
-    message: "Body must be at least 2 characters.",
-  }),
-});
+  pageName: z.string().min(1, "Page name is required"),
+  body: z.string().min(1, "Content is required"),
+  status: z.enum(["Draft", "Published"]),
+})
+
+type FormData = z.infer<typeof formSchema>
 
 interface AddNewPageProps {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
-  initialData?: PageData | null;
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
+  initialData?: PageData | null
+  onSuccess: () => void
 }
 
-const AddNewPage: React.FC<AddNewPageProps> = ({
-  isOpen,
-  setIsOpen,
-  initialData,
-}) => {
-  const form = useForm<z.infer<typeof formSchema>>({
+const AddNewPage: React.FC<AddNewPageProps> = ({ isOpen, setIsOpen, initialData, onSuccess }) => {
+  const { data: session, status } = useSession()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const token = session?.user?.token
+  const isUnauthenticated = status === "unauthenticated"
+
+  const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       pageName: "",
       body: "",
+      status: "Draft",
     },
-  });
+  })
 
-useEffect(() => {
-  if (isOpen) {
+  // Set form values when editing
+  useEffect(() => {
     if (initialData) {
       form.reset({
         pageName: initialData.name,
-        body: initialData.body
-      });
+        body: initialData.body,
+        status: (initialData.status as "Draft" | "Published") || "Draft",
+      })
     } else {
       form.reset({
         pageName: "",
-        body: ""
-      });
+        body: "",
+        status: "Draft",
+      })
+    }
+  }, [initialData, form])
+
+  const onSubmit = async (data: FormData) => {
+    if (!token) {
+      alert("You must be authenticated to perform this action")
+      return
+    }
+
+    try {
+      setIsSubmitting(true)
+
+      const url = initialData
+        ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/pages/${initialData.id}`
+        : `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/pages`
+
+      const method = initialData ? "PUT" : "POST"
+
+      const response = await fetch(url, {
+        method,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: data.pageName,
+          body: data.body,
+          status: data.status,
+        }),
+      })
+
+      if (response.ok) {
+        onSuccess()
+        form.reset()
+      } else {
+        const errorData = await response.json()
+        console.error("Failed to save page:", errorData)
+        alert(`Failed to save page: ${errorData.message || "Unknown error"}`)
+      }
+    } catch (error) {
+      console.error("Error saving page:", error)
+      alert("Error saving page. Please try again.")
+    } finally {
+      setIsSubmitting(false)
     }
   }
-}, [isOpen, initialData, form]);
-
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log("Form submitted:", values);
-  };
 
   return (
-    <div className="h-[600px]">
-        <Dialog open={isOpen} onOpenChange={setIsOpen} >
-      <DialogContent className="max-w-4xl md:max-w-7xl lg:max-w-8xl bg-white">
-        <DialogHeader className="text-2xl font-bold">
-          {initialData ? "Edit" : "Add"} New Page
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogContent className="max-w-4xl md:max-w-7xl lg:max-w-8xl bg-white max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="text-2xl font-bold">{initialData ? "Edit Page" : "Add New Page"}</DialogTitle>
         </DialogHeader>
+
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="pageName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Page Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter your page name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="pageName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Page Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter page name" {...field} disabled={isSubmitting} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="status"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Status</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger disabled={isSubmitting}>
+                          <SelectValue placeholder="Select status" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Draft">Draft</SelectItem>
+                        <SelectItem value="Published">Published</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
             <FormField
               control={form.control}
               name="body"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-lg font-bold text-black leading-[120%] tracking-[0%]">
-                    Body
-                  </FormLabel>
+                  <FormLabel className="text-lg font-bold text-black">Content</FormLabel>
                   <FormControl>
-                    <QuillEditor
-                      id="body"
-                      value={field.value}
-                      onChange={field.onChange}
-                    />
+                    <QuillEditor id="body" value={field.value} onChange={field.onChange} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <div className="flex justify-center items-center">
-              <Button
-                className="bg-primary text-white py-2 px-4 rounded-lg"
-                type="submit"
-              >
-                Submit
+
+            <div className="flex justify-end gap-4 pt-4">
+              <Button type="button" variant="outline" onClick={() => setIsOpen(false)} disabled={isSubmitting}>
+                Cancel
+              </Button>
+              <Button type="submit" disabled={isSubmitting || isUnauthenticated} className="text-white">
+                {isSubmitting ? (
+                  <div className="flex items-center gap-2">
+                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent text-white" />
+                    Processing...
+                  </div>
+                ) : initialData ? (
+                  "Update Page"
+                ) : (
+                  "Create Page"
+                )}
               </Button>
             </div>
           </form>
         </Form>
       </DialogContent>
     </Dialog>
-    </div>
-  );
-};
+  )
+}
 
-export default AddNewPage;
-
+export default AddNewPage
