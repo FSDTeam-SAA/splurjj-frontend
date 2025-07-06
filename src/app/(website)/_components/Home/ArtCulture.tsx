@@ -305,7 +305,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 rounded">
-            <div className="bg-[#DDD618] h-[300px] md:max-h-[455px] flex items-center justify-center p-4 ">
+            <div className="bg-[#DDD618] h-full md:max-h-[455px] flex items-center justify-center p-4 ">
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
                 className="text-2xl font-medium text-[#131313] hover:underline"
