@@ -127,14 +127,14 @@ const Footer = () => {
   return (
     <div
       className="h-full lg:h-[533px] w-full pt-24"
-      style={{ backgroundColor: footer?.bg_color || "#2D416E" }}
+      style={{ backgroundColor: footer?.bg_color || "" }}
     >
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-10 gap-5 pb-3 md:pb-4">
           <div className="lg:col-span-2">
             <div
               className="text-xl font-bold text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6"
-              style={{ color: footer?.text_color || "#D93232" }}
+              style={{ color: footer?.text_color || "" }}
             >
               CATEGORIES
             </div>
@@ -143,7 +143,7 @@ const Footer = () => {
                 <li key={`category-${item.id}`}>
                   <Link
                     href={`/blogs/${item.category_name}`}
-                    style={{ color: footer?.text_color || "#D93232" }}
+                    style={{ color: footer?.text_color || "" }}
                     className="text-sm font-semibold cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2"
                   >
                     {item.category_name}
@@ -156,7 +156,7 @@ const Footer = () => {
           <div className="lg:col-span-1">
             <div
               className="text-xl font-bold text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6"
-              style={{ color: footer?.text_color || "#D93232" }}
+              style={{ color: footer?.text_color || "" }}
             >
               SHOP
             </div>
@@ -165,7 +165,7 @@ const Footer = () => {
                 <li
                   key={`shop-${item.id}`}
                   className="text-sm font-semibold cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2"
-                  style={{ color: footer?.text_color || "#D93232" }}
+                  style={{ color: footer?.text_color || "" }}
                 >
                   {item.shop}
                 </li>
@@ -176,7 +176,7 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <div
               className="text-xl font-bold text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6"
-              style={{ color: footer?.text_color || "#D93232" }}
+              style={{ color: footer?.text_color || "" }}
             >
               OTHER
             </div>
@@ -185,7 +185,7 @@ const Footer = () => {
                 <li
                   key={`other-${item.id}`}
                   className="text-sm font-semibold cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2"
-                  style={{ color: footer?.text_color || "#D93232" }}
+                  style={{ color: footer?.text_color || "" }}
                 >
                   {item.other}
                 </li>
@@ -196,7 +196,7 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <div
               className="text-xl font-bold text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6"
-              style={{ color: footer?.text_color || "#D93232" }}
+              style={{ color: footer?.text_color || "" }}
             >
               ABOUT US
             </div>
@@ -205,7 +205,7 @@ const Footer = () => {
                 <li
                   key={`about-${item.id}`}
                   className="text-sm font-semibold cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2"
-                  style={{ color: footer?.text_color || "#D93232" }}
+                  style={{ color: footer?.text_color || "" }}
                 >
                   {item.about}
                 </li>
@@ -216,7 +216,7 @@ const Footer = () => {
           <div className="lg:col-span-3">
             <div
               className="text-xl font-bold tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6"
-              style={{ color: footer?.text_color || "#D93232" }}
+              style={{ color: footer?.text_color || "" }}
             >
               FOLLOW US
             </div>
@@ -258,7 +258,7 @@ const Footer = () => {
             </div>
             <div
               className="py-3 md:py-4 text-sm font-semibold tracking-[0%] leading-[150%]"
-              style={{ color: footer?.text_color || "#D93232" }}
+              style={{ color: footer?.text_color || "" }}
             >
               Don&apos;t miss out on the latest news by signing up <br /> for
               our newsletters.
@@ -270,7 +270,7 @@ const Footer = () => {
 
             <div
               className="text-lg md:text-xl font-semibold leading-[120%] tracking-[0%] pt-3 md:pt-4"
-              style={{ color: footer?.text_color || "#D93232" }}
+              style={{ color: footer?.text_color || "" }}
             >
               Download our App
             </div>
@@ -309,7 +309,7 @@ const Footer = () => {
         <div className="w-full h-[1px]" />
         <div
           className="w-full flex flex-col md:flex-row items-center justify-center pt-4 pb-3 md:pb-1 text-base font-medium leading-[120%] tracking-[0%] text-black"
-          style={{ color: footer?.text_color || "#D93232" }}
+          style={{ color: footer?.text_color || "" }}
         >
           {footer?.copyright ||
             "Copyright © 2025 SPLURJJ. All Rights Reserved."}
@@ -319,9 +319,9 @@ const Footer = () => {
             {pages.map((page) => (
               <Link
                 key={page.id}
-                href={`/page/${page.id}`}
+                href={`/pages/${page.name}`}
                 className=""
-                style={{ color: footer?.text_color || "#D93232" }}
+                style={{ color: footer?.text_color || "" }}
               >
                 {page.name}
               </Link>

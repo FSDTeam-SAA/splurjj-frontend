@@ -113,7 +113,7 @@ export function FooterForm() {
       }).then((res) => res.json()),
   });
 
-  console.log(data?.data?.app_store_link)
+  console.log(data?.data?.app_store_link);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -131,7 +131,7 @@ export function FooterForm() {
     },
   });
 
-   useEffect(() => {
+  useEffect(() => {
     if (data?.data) {
       form.reset({
         facebook_link: data?.data?.facebook_link || "",
@@ -144,7 +144,6 @@ export function FooterForm() {
         bg_color: data?.data?.bg_color || "#000000",
         text_color: data?.data?.text_color || "#000000",
         active_text_color: data?.data?.active_text_color || "#000000",
-
       });
     }
   }, [data, form]);
@@ -178,240 +177,292 @@ export function FooterForm() {
     <div className="p-8 bg-white rounded-lg shadow-lg">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-           <div className="w-full flex items-center justify-start gap-10 md:gap-14">
-             {/*add background Color */}
-          <div>
-            <FormField
-              control={form.control}
-              name="bg_color"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-base font-bold text-black">
-                    Add Backgorund Color
-                  </FormLabel>
-                  <FormControl>
-                    <ColorPicker
-                      selectedColor={field.value ?? "#FFFFFF"}
-                      onColorChange={field.onChange}
-                      previousColor={"#000000"}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-500 text-sm font-medium" />
-                </FormItem>
-              )}
-            />
+          <div className="w-full flex items-center justify-between gap-10 md:gap-14">
+            <div className="flex gap-4">
+              {/*add background Color */}
+              <div>
+                <FormField
+                  control={form.control}
+                  name="bg_color"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-base font-bold text-black">
+                        Add Backgorund Color
+                      </FormLabel>
+                      <FormControl>
+                        <ColorPicker
+                          selectedColor={field.value ?? "#FFFFFF"}
+                          onColorChange={field.onChange}
+                          previousColor={"#000000"}
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-500 text-sm font-medium" />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              {/*add text Color */}
+              <div>
+                <FormField
+                  control={form.control}
+                  name="text_color"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-base font-bold text-black">
+                        Add Text Color
+                      </FormLabel>
+                      <FormControl>
+                        <ColorPicker
+                          selectedColor={field.value ?? "#FFFFFF"}
+                          onColorChange={field.onChange}
+                          previousColor={"#000000"}
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-500 text-sm font-medium" />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              {/*add active text Color */}
+              <div>
+                <FormField
+                  control={form.control}
+                  name="active_text_color"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-base font-bold text-black">
+                        Add Active Text Color
+                      </FormLabel>
+                      <FormControl>
+                        <ColorPicker
+                          selectedColor={field.value ?? "#FFFFFF"}
+                          onColorChange={field.onChange}
+                          previousColor={"#000000"}
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-500 text-sm font-medium" />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+            <div className="flex justify-center items-center">
+              <Button
+                size={"lg"}
+                disabled={isPending}
+                type="submit"
+                className="py-3 px-10 rounded-lg bg-primary text-white font-semibold leading-normal text-lg"
+              >
+                {isPending ? "Sending..." : "Submit"}
+              </Button>
+            </div>
           </div>
-           {/*add text Color */}
-          <div>
-            <FormField
-              control={form.control}
-              name="text_color"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-base font-bold text-black">
-                    Add Text Color
-                  </FormLabel>
-                  <FormControl>
-                    <ColorPicker
-                      selectedColor={field.value ?? "#FFFFFF"}
-                      onColorChange={field.onChange}
-                      previousColor={"#000000"}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-500 text-sm font-medium" />
-                </FormItem>
-              )}
-            />
-          </div>
-          {/*add active text Color */}
-          <div>
-            <FormField
-              control={form.control}
-              name="active_text_color"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-base font-bold text-black">
-                    Add Active Text Color
-                  </FormLabel>
-                  <FormControl>
-                    <ColorPicker
-                      selectedColor={field.value ?? "#FFFFFF"}
-                      onColorChange={field.onChange}
-                      previousColor={"#000000"}
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-500 text-sm font-medium" />
-                </FormItem>
-              )}
-            />
-          </div>
-           </div>
           {/* social url input field  */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
-            <div className="">
-              <FormField
-                control={form.control}
-                name="facebook_link"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
-                      Facebook Url Link
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
-                        placeholder="https://www.facebook.com/your-profile"
-                        type="url"
-                      />
-                    </FormControl>
-                    <FormMessage className="text-red-500 text-sm font-medium" />
-                  </FormItem>
-                )}
-              />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-white rounded-lg shadow-lg p-4">
+              <div className="flex items-center justify-between border border-gray-200 p-2 rounded-lg">
+                <div>
+                  <h1 className="text-[20px] font-bold">About Us</h1>
+                </div>
+                <div>
+                  <Button className="text-white">Add Pages</Button>
+                </div>
+              </div>
+              <div></div>
             </div>
-            <div className="">
-              <FormField
-                control={form.control}
-                name="instagram_link"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
-                      Instagram Url Link
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
-                        placeholder="https://www.instagram.com/your-profile"
-                        type="url"
-                      />
-                    </FormControl>
-                    <FormMessage className="text-red-500 text-sm font-medium" />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="">
-              <FormField
-                control={form.control}
-                name="linkedin_link"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
-                      Linkedin Url Link
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
-                        placeholder="https://www.youtube.com/your-channel"
-                        type="url"
-                      />
-                    </FormControl>
-                    <FormMessage className="text-red-500 text-sm font-medium" />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div>
-              <FormField
-                control={form.control}
-                name="twitter_link"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
-                      Twitter Url Link
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
-                        placeholder="https://www.twitter.com/your-profile"
-                        type="url"
-                      />
-                    </FormControl>
-                    <FormMessage className="text-red-500 text-sm font-medium" />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="">
-              <FormField
-                control={form.control}
-                name="app_store_link"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
-                      App Store Url Link
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
-                        placeholder="https://www.apple.com/app-store/your-app"
-                        type="url"
-                      />
-                    </FormControl>
-                    <FormMessage className="text-red-500 text-sm font-medium" />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div>
-              <FormField
-                control={form.control}
-                name="google_play_link"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
-                      Google Play Url Link
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
-                        placeholder="https://play.google.com/store/your-apps"
-                        type="url"
-                      />
-                    </FormControl>
-                    <FormMessage className="text-red-500 text-sm font-medium" />
-                  </FormItem>
-                )}
-              />
+            <div className="space-y-4 bg-white rounded-lg shadow-lg p-4">
+              <div>
+                <h1 className="text-[20px] font-bold">Social Links</h1>
+              </div>
+              <div className="">
+                <FormField
+                  control={form.control}
+                  name="facebook_link"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold  leading-[120%] tracking-[0%] text-[#212121]">
+                        Facebook Url Link
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
+                          placeholder="https://www.facebook.com/your-profile"
+                          type="url"
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-500 text-sm font-medium" />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="">
+                <FormField
+                  control={form.control}
+                  name="instagram_link"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="ttext-sm font-semibold  leading-[120%] tracking-[0%] text-[#212121]">
+                        Instagram Url Link
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
+                          placeholder="https://www.instagram.com/your-profile"
+                          type="url"
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-500 text-sm font-medium" />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="">
+                <FormField
+                  control={form.control}
+                  name="linkedin_link"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold leading-[120%] tracking-[0%] text-[#212121]">
+                        Linkedin Url Link
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
+                          placeholder="https://www.youtube.com/your-channel"
+                          type="url"
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-500 text-sm font-medium" />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={form.control}
+                  name="twitter_link"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold  leading-[120%] tracking-[0%] text-[#212121]">
+                        Twitter Url Link
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
+                          placeholder="https://www.twitter.com/your-profile"
+                          type="url"
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-500 text-sm font-medium" />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="">
+                <FormField
+                  control={form.control}
+                  name="app_store_link"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold  leading-[120%] tracking-[0%] text-[#212121]">
+                        App Store Url Link
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
+                          placeholder="https://www.apple.com/app-store/your-app"
+                          type="url"
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-500 text-sm font-medium" />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div>
+                <FormField
+                  control={form.control}
+                  name="google_play_link"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-semibold leading-[120%] tracking-[0%] text-[#212121]">
+                        Google Play Url Link
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
+                          placeholder="https://play.google.com/store/your-apps"
+                          type="url"
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-500 text-sm font-medium" />
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
           </div>
-          <div className="">
-            <FormField
-              control={form.control}
-              name="copyright"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
-                    Copyright
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
-                      placeholder="Copyright © 2025 Your Company. All rights reserved."
-                      type="text"
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-500 text-sm font-medium" />
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="flex justify-center items-center pt-5">
-            <Button
-              size={"lg"}
-              disabled={isPending}
-              type="submit"
-              className="py-3 px-10 rounded-lg bg-primary text-white font-semibold leading-normal text-lg"
-            >
-              {isPending ? "Sending..." : "Submit"}
-            </Button>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white rounded-lg shadow-lg p-4">
+            <div className="bg-white rounded-lg shadow-lg p-4">
+              <div className="">
+                <div className="flex items-center justify-between border border-gray-200 p-2 rounded-lg">
+                  <div>
+                    <h1 className="text-[20px] font-bold">
+                      Footer Bottom page
+                    </h1>
+                  </div>
+                  <div>
+                    <Button className="text-white">Add Pages</Button>
+                  </div>
+                </div>
+                <div></div>
+              </div>
+            </div>
+            <div className="bg-white rounded-lg shadow-lg p-4 space-y-4">
+              <div className="">
+                <FormField
+                  control={form.control}
+                  name="copyright"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-lg font-normal  leading-[120%] tracking-[0%] text-[#212121]">
+                        Copyright
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          className="h-[51px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
+                          placeholder="Copyright © 2025 Your Company. All rights reserved."
+                          type="text"
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-500 text-sm font-medium" />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="">
+                <div className="flex items-center justify-between border border-gray-200 p-2 rounded-lg">
+                  <div>
+                    <h1 className="text-[20px] font-bold">
+                      Footer Bottom page
+                    </h1>
+                  </div>
+                  <div>
+                    <Button className="text-white">Add Pages</Button>
+                  </div>
+                </div>
+                <div></div>
+              </div>
+            </div>
           </div>
         </form>
       </Form>
