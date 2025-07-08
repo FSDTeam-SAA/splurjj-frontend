@@ -19,7 +19,7 @@ interface FooterSection {
   updated_at: string
 }
 
-function AboutUSPages() {
+function FooterBottomPage() {
   const session = useSession()
   const token = session.data?.user?.token
   const queryClient = useQueryClient()
@@ -38,7 +38,7 @@ function AboutUSPages() {
       })
       return response.data
     },
-    enabled: !!token, // Only run query when token is available
+    enabled: !!token,
   })
 
   // Define the query to fetch footer sections
@@ -55,23 +55,24 @@ function AboutUSPages() {
       })
       return response.data
     },
-    enabled: !!token, // Only run query when token is available
+    enabled: !!token,
   })
 
-  // Find the "About us" section
-  const aboutUsSection = footerData?.find((section: FooterSection) => section.title === "About us")
-
-  console.log(aboutUsSection)
+  // Find the "Footer Bottom" section (adjust the title as needed)
+  const footerBottomSection = footerData?.find(
+    (section: FooterSection) =>
+      section.title.toLowerCase().includes("footer") || section.title.toLowerCase().includes("bottom"),
+  )
 
   // State for controlled checkboxes
   const [checkedPages, setCheckedPages] = useState<string[]>([])
 
-  // Update checkedPages when aboutUsSection data is loaded
+  // Update checkedPages when footerBottomSection data is loaded
   useEffect(() => {
-    if (aboutUsSection?.pages) {
-      setCheckedPages(aboutUsSection.pages)
+    if (footerBottomSection?.pages) {
+      setCheckedPages(footerBottomSection.pages)
     }
-  }, [aboutUsSection])
+  }, [footerBottomSection])
 
   // Normalize page names for comparison
   const isPageChecked = (pageName: string) => {
@@ -84,17 +85,23 @@ function AboutUSPages() {
       if (!token) {
         throw new Error("Authentication token is missing")
       }
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/footer-sections/13`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+      if (!footerBottomSection) {
+        throw new Error("Footer bottom section not found")
+      }
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/footer-sections/14`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: footerBottomSection.title,
+            pages,
+          }),
         },
-        body: JSON.stringify({
-          title: "About us",
-          pages,
-        }),
-      })
+      )
       if (!response.ok) {
         throw new Error(`Failed to update footer section: ${response.statusText}`)
       }
@@ -126,10 +133,14 @@ function AboutUSPages() {
     <div className="bg-white rounded-lg shadow-lg p-4">
       <div className="flex items-center justify-between border border-gray-200 p-2 rounded-lg">
         <div>
-          <h1 className="text-[20px] font-bold">About Us</h1>
+          <h1 className="text-[20px] font-bold">Footer Bottom Page</h1>
         </div>
         <div>
-          <Button className="text-white" onClick={handleAddPages} disabled={mutation.isPending || !token}>
+          <Button
+            className="text-white"
+            onClick={handleAddPages}
+            disabled={mutation.isPending || !token || !footerBottomSection}
+          >
             {mutation.isPending ? "Saving..." : "Add Pages"}
           </Button>
         </div>
@@ -142,18 +153,20 @@ function AboutUSPages() {
           <p>Error: {pagesError?.message || footerError?.message}</p>
         ) : !pagesData || !footerData ? (
           <p>No data available</p>
+        ) : !footerBottomSection ? (
+          <p>Footer bottom section not found</p>
         ) : (
           <ul className="space-y-2">
             {pagesData?.map((page: Page) => (
               <li key={page.id} className="flex items-center gap-2">
                 <input
                   type="checkbox"
-                  id={`page-${page.id}`}
+                  id={`footer-page-${page.id}`}
                   className="h-4 w-4 rounded border-gray-300"
                   checked={isPageChecked(page.name)}
                   onChange={(e) => handleCheckboxChange(page.name, e.target.checked)}
                 />
-                <label htmlFor={`page-${page.id}`} className="cursor-pointer">
+                <label htmlFor={`footer-page-${page.id}`} className="cursor-pointer">
                   {page.name}
                 </label>
               </li>
@@ -165,4 +178,4 @@ function AboutUSPages() {
   )
 }
 
-export default AboutUSPages
+export default FooterBottomPage
