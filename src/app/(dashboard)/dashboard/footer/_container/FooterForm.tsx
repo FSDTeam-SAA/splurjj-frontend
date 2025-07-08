@@ -19,6 +19,9 @@ import { useSession } from "next-auth/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
+import AboutUSPages from "./aboutUSPages";
+import OtherPages from "./otherPages";
+import FooterBottomPage from "./footerbottompage";
 
 const formSchema = z.object({
   facebook_link: z
@@ -260,16 +263,8 @@ export function FooterForm() {
           {/* social url input field  */}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-white rounded-lg shadow-lg p-4">
-              <div className="flex items-center justify-between border border-gray-200 p-2 rounded-lg">
-                <div>
-                  <h1 className="text-[20px] font-bold">About Us</h1>
-                </div>
-                <div>
-                  <Button className="text-white">Add Pages</Button>
-                </div>
-              </div>
-              <div></div>
+            <div>
+              <AboutUSPages />
             </div>
             <div className="space-y-4 bg-white rounded-lg shadow-lg p-4">
               <div>
@@ -411,20 +406,8 @@ export function FooterForm() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white rounded-lg shadow-lg p-4">
-            <div className="bg-white rounded-lg shadow-lg p-4">
-              <div className="">
-                <div className="flex items-center justify-between border border-gray-200 p-2 rounded-lg">
-                  <div>
-                    <h1 className="text-[20px] font-bold">
-                      Footer Bottom page
-                    </h1>
-                  </div>
-                  <div>
-                    <Button className="text-white">Add Pages</Button>
-                  </div>
-                </div>
-                <div></div>
-              </div>
+            <div>
+              <OtherPages />
             </div>
             <div className="bg-white rounded-lg shadow-lg p-4 space-y-4">
               <div className="">
@@ -449,18 +432,8 @@ export function FooterForm() {
                   )}
                 />
               </div>
-              <div className="">
-                <div className="flex items-center justify-between border border-gray-200 p-2 rounded-lg">
-                  <div>
-                    <h1 className="text-[20px] font-bold">
-                      Footer Bottom page
-                    </h1>
-                  </div>
-                  <div>
-                    <Button className="text-white">Add Pages</Button>
-                  </div>
-                </div>
-                <div></div>
+              <div>
+                <FooterBottomPage />
               </div>
             </div>
           </div>
