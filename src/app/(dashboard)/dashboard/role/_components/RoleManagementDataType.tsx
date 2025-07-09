@@ -10,4 +10,10 @@ export type RoleAllResponse = {
   success: boolean;
   message: string;
   data: Role[];
+  meta: {
+    current_page: number;
+    per_page: number;
+    total: number;
+    last_page: number;
+  };
 };

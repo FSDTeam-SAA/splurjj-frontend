@@ -3,15 +3,15 @@
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
 const RoleManagementContainer = () => {
-  //   const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
   const session = useSession();
   const token = (session?.data?.user as { token: string })?.token;
   // console.log("TTTTTTTTTTTT",token);
 
   const { data, isLoading, isError, error } = useQuery<RoleAllResponse>({
-    queryKey: ["role"],
+    queryKey: ["role", currentPage],
     queryFn: () =>
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/roles`, {
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/roles?page=${currentPage}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -53,26 +53,28 @@ const RoleManagementContainer = () => {
       </div>
     );
   }
+
+  console.log(data)
   return (
     <section className="w-full">
-      <div className="w-full shadow-lg h-auto  rounded-[24px] bg-white mb-20 ">
+      <div className="w-full shadow-lg h-auto  rounded-[24px] bg-white mb-10 ">
         {content}
       </div>
       <div>
-        {/* {data && data?.meta && data?.meta.totalPages > 1 && (
+        {data && data?.meta && data?.meta.last_page > 1 && (
           <div className="mt-[30px]  w-full pb-[208px]  flex justify-between">
             <p className="font-normal text-[16px] leading-[19.2px] text-[#444444]">
-              Showing {currentPage} to {data?.meta?.totalPages} in first entries
+              Showing {currentPage} to {data?.meta?.last_page} in first entries
             </p>
             <div>
               <SplurjjPagination
                 currentPage={currentPage}
-                totalPages={data?.meta.totalPages}
+                totalPages={data?.meta.last_page}
                 onPageChange={(page) => setCurrentPage(page)}
               />
             </div>
           </div>
-        )} */}
+        )}
       </div>
     </section>
   );
@@ -81,12 +83,11 @@ const RoleManagementContainer = () => {
 export default RoleManagementContainer;
 import { DataTable } from "@/components/ui/data-table";
 import { ColumnDef } from "@tanstack/react-table";
-// import { useState } from "react";
+import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
-// import { Newsletter, NewsletterResponse } from "@/types/newsLetterDataType";
 
-// import SplurjjPagination from "@/components/ui/SplurjjPagination";
+import SplurjjPagination from "@/components/ui/SplurjjPagination";
 import { RoleManagementColumn } from "./RoleManagementColumn";
 import { Role, RoleAllResponse } from "./RoleManagementDataType";
 import ErrorContainer from "@/components/shared/ErrorContainer/ErrorContainer";

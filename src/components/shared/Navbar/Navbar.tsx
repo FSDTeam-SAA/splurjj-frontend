@@ -599,7 +599,7 @@ export default function Header() {
                   setLogoutModalOpen(false);
                   handLogout();
                 }}
-                className="flex-1"
+                className="flex-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white font-semibold"
               >
                 Log Out
               </Button>

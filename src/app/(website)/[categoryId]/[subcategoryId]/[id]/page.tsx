@@ -315,7 +315,7 @@ const ContentBlogDetails = ({
                 <h4 className="md:col-span-2 text-lg md:text-xl text-secondary font-bold leading-[120%] tracking-[0%] uppercase">
                   Posted in
                 </h4>
-                <div className="flex items-center gap-2">
+                <div className="md:col-span-5 w-full flex items-center gap-2">
                   <Link
                     href={`/blogs/${blogData.category_name}`}
                     className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"

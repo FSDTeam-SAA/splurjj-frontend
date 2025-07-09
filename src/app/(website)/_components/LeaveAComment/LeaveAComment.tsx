@@ -100,7 +100,7 @@ export function LeaveAComment({ UserEmail, blogId }: LeaveACommentProps) {
 
   return (
     <div className="container w-full flex flex-col items-center justify-center">
-      <div className="w-full md:w-2/3">
+      <div className="w-full">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <FormField

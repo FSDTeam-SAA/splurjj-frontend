@@ -153,7 +153,7 @@ export function HeaderForm() {
                       <ColorPicker
                         selectedColor={field.value ?? "#FFFFFF"}
                         onColorChange={field.onChange}
-                        previousColor={"#000000"}
+                        // previousColor={"#000000"}
                       />
                     </FormControl>
                     <FormMessage className="text-red-500 text-sm font-medium" />
@@ -196,7 +196,7 @@ export function HeaderForm() {
                       <ColorPicker
                         selectedColor={field.value ?? "#FFFFFF"}
                         onColorChange={field.onChange}
-                        previousColor={"#000000"}
+                        // previousColor={"#000000"}
                       />
                     </FormControl>
                     <FormMessage className="text-red-500 text-sm font-medium" />
@@ -218,7 +218,7 @@ export function HeaderForm() {
                       <ColorPicker
                         selectedColor={field.value ?? "#FFFFFF"}
                         onColorChange={field.onChange}
-                        previousColor={"#000000"}
+                        // previousColor={"#000000"}
                       />
                     </FormControl>
                     <FormMessage className="text-red-500 text-sm font-medium" />

@@ -10,7 +10,7 @@ import { Palette, History } from "lucide-react"
 interface ColorPickerProps {
   selectedColor: string
   onColorChange: (color: string) => void
-  previousColor: string | null
+  // previousColor: string | null
 }
 
 interface HSVColor {
@@ -19,7 +19,7 @@ interface HSVColor {
   v: number
 }
 
-export function ColorPicker({ selectedColor, onColorChange, previousColor }: ColorPickerProps) {
+export function ColorPicker({ selectedColor, onColorChange }: ColorPickerProps) {
   const [previousColors, setPreviousColors] = useState<string[]>([])
   const [showColorPicker, setShowColorPicker] = useState(false)
   const [hsvColor, setHsvColor] = useState<HSVColor>({ h: 0, s: 100, v: 100 })
@@ -228,12 +228,12 @@ export function ColorPicker({ selectedColor, onColorChange, previousColor }: Col
           </div>
 
           {/* Previous color section */}
-          {previousColor && (
+          {/* {previousColor && (
             <div className="flex items-center gap-2 mt-2">
               <div className="w-6 h-6 rounded-sm border border-gray-300" style={{ backgroundColor: previousColor }} />
               <span className="text-xs text-gray-500 dark:text-black">Previous: {previousColor}</span>
             </div>
-          )}
+          )} */}
         </div>
       </div>
 
