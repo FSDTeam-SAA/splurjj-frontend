@@ -3,7 +3,7 @@
 import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
 const RoleManagementContainer = () => {
-    const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const session = useSession();
   const token = (session?.data?.user as { token: string })?.token;
   // console.log("TTTTTTTTTTTT",token);
@@ -11,13 +11,16 @@ const RoleManagementContainer = () => {
   const { data, isLoading, isError, error } = useQuery<RoleAllResponse>({
     queryKey: ["role", currentPage],
     queryFn: () =>
-      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/roles?page=${currentPage}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }).then((res) => res.json()),
+      fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/roles?page=${currentPage}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      ).then((res) => res.json()),
   });
 
   console.log({ data });
@@ -29,7 +32,7 @@ const RoleManagementContainer = () => {
         <TableSkeletonWrapper
           count={8}
           width="100%"
-          height="70px" 
+          height="70px"
           className="bg-[#E6EEF6] rounded-[8px]"
         />
       </div>
@@ -54,7 +57,7 @@ const RoleManagementContainer = () => {
     );
   }
 
-  console.log(data)
+  console.log(data);
   return (
     <section className="w-full">
       <div className="w-full shadow-lg h-auto  rounded-[24px] bg-white mb-10 ">
@@ -63,8 +66,13 @@ const RoleManagementContainer = () => {
       <div>
         {data && data?.meta && data?.meta.last_page > 1 && (
           <div className="mt-[30px]  w-full pb-[208px]  flex justify-between">
+            {/* <p className="font-normal text-[16px] leading-[19.2px] text-[#444444]">
+              Showing(currentPage - 1) * perPage + 1 to Math.min(currentPage * perPage, totalItems) of {data?.meta?.total} results
+            </p> */}
             <p className="font-normal text-[16px] leading-[19.2px] text-[#444444]">
-              Showing {currentPage} to {data?.meta?.per_page} of {data?.meta?.last_page} results
+              Showing {(currentPage - 1) * data?.meta?.per_page + 1} to{" "}
+              {Math.min(currentPage * data?.meta?.per_page, data?.meta?.total)} of{" "}
+              {data?.meta?.total} results
             </p>
             <div>
               <SplurjjPagination
