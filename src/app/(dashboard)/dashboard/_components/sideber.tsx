@@ -925,10 +925,10 @@ export default function Sidebar() {
             <Link href="/dashboard">
               <Button
                 variant="ghost"
-                className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
+                className={`w-full justify-start transition-colors text-lg font-semibold leading-[120%] tracking-[0%]  ${
                   isRouteActive("/dashboard")
-                    ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
-                    : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
+                    ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 font-bold"
+                    : "text-[#424242] dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20 font-semibold"
                 }`}
               >
                 <LayoutDashboard className="w-5 h-5" /> Dashboard
@@ -936,9 +936,9 @@ export default function Sidebar() {
             </Link>
           </div>
           <div className="space-y-[0.5px]">
-            <h5 className="text-lg font-semibold text-[#131313] leading-[120%] uppercase tracking-[0%] ">
+            <p className="text-lg font-semibold text-[#131313] dark:white-text leading-[120%] uppercase tracking-[0%] pb-3">
               Content Management
-            </h5>
+            </p>
             {(isAdmin || isEditor || isAuthor) && (
               <div>
                 <Link href="/dashboard/add-category">
@@ -989,10 +989,10 @@ export default function Sidebar() {
                   >
                     <div className="w-full flex items-center justify-between">
                       <span
-                        className={`text-base font-normal leading-[120%] tracking-[0%] transition-colors ${
+                        className={`text-base font-semibold leading-[120%] tracking-[0%] transition-colors ${
                           categoryActive
-                            ? "text-white font-medium "
-                            : "text-black/70 dark:text-white"
+                            ? "text-white font-bold "
+                            : "text-black/70 dark:text-white font-semibold"
                         }`}
                       >
                         {category.category_name}
@@ -1198,17 +1198,17 @@ export default function Sidebar() {
 
           {!isAuthor && (
             <>
-              <h5 className="text-lg font-semibold text-[#131313] leading-[120%] uppercase tracking-[0%] font-marnrope pt-2 pb-3">
+              <p className="text-lg font-semibold text-[#131313] dark:white-text leading-[120%] uppercase tracking-[0%] font-marnrope pt-2 pb-3">
                 Advertising
-              </h5>
+              </p>
               <div>
                 <div className="px-2">
                   <Link href="/dashboard/horizontal-advertising">
                     <Button
                       variant="ghost"
-                      className={`w-full justify-start transition-colors text-lg font-normal leading-[120%] tracking-[0%]  ${
+                      className={`w-full justify-start transition-colors text-lg font-semibold leading-[120%] tracking-[0%]  ${
                         isRouteActive("/dashboard/horizontal-advertising")
-                          ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                          ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 font-bold"
                           : "text-black/70 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
                       }`}
                     >
@@ -1220,9 +1220,9 @@ export default function Sidebar() {
                   <Link href="/dashboard/vertical-advertising">
                     <Button
                       variant="ghost"
-                      className={`w-full justify-start transition-colors text-lg font-normal leading-[120%] tracking-[0%]  ${
+                      className={`w-full justify-start transition-colors text-lg font-semibold leading-[120%] tracking-[0%]  ${
                         isRouteActive("/dashboard/vertical-advertising")
-                          ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                          ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 font-bold"
                           : "text-black/70 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
                       }`}
                     >
@@ -1234,17 +1234,17 @@ export default function Sidebar() {
             </>
           )}
 
-          <h5 className="text-lg font-semibold text-[#131313] leading-[120%] uppercase tracking-[0%] font-marnrope pt-2 pb-3">
+          <p className="text-lg font-semibold text-[#131313] dark:white-text leading-[120%] uppercase tracking-[0%] font-marnrope pt-2 pb-3">
             Settings
-          </h5>
+          </p>
           {isAdmin && (
             <div className="px-2">
               <Link href="/dashboard/role">
                 <Button
                   variant="ghost"
-                  className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
+                  className={`w-full justify-start transition-colors text-lg font-semibold leading-[120%] tracking-[0%]  ${
                     isRouteActive("/dashboard/role")
-                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 font-bold"
                       : "text-black/70 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
                   }`}
                 >
@@ -1258,9 +1258,9 @@ export default function Sidebar() {
               <Link href="/dashboard/subscriber">
                 <Button
                   variant="ghost"
-                  className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
+                  className={`w-full justify-start transition-colors text-lg font-semibold leading-[120%] tracking-[0%]  ${
                     isRouteActive("/dashboard/subscriber")
-                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 font-bold"
                       : "text-black/70 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
                   }`}
                 >
@@ -1275,9 +1275,9 @@ export default function Sidebar() {
               <Link href="/dashboard/all-pages">
                 <Button
                   variant="ghost"
-                  className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
+                  className={`w-full justify-start transition-colors text-lg font-semibold leading-[120%] tracking-[0%]  ${
                     isRouteActive("/dashboard/all-pages")
-                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 font-bold"
                       : "text-black/70 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
                   }`}
                 >
@@ -1292,9 +1292,9 @@ export default function Sidebar() {
               <Link href="/dashboard/header">
                 <Button
                   variant="ghost"
-                  className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
+                  className={`w-full justify-start transition-colors text-lg font-semibold leading-[120%] tracking-[0%]  ${
                     isRouteActive("/dashboard/header")
-                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 font-bold"
                       : "text-black/70 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
                   }`}
                 >
@@ -1309,9 +1309,9 @@ export default function Sidebar() {
               <Link href="/dashboard/footer">
                 <Button
                   variant="ghost"
-                  className={`w-full justify-start transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
+                  className={`w-full justify-start transition-colors text-lg font-semibold leading-[120%] tracking-[0%]  ${
                     isRouteActive("/dashboard/footer")
-                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                      ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 font-bold"
                       : "text-black/70 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
                   }`}
                 >
@@ -1325,9 +1325,9 @@ export default function Sidebar() {
             <Link href="/dashboard/settings">
               <Button
                 variant="ghost"
-                className={`w-full justify-start items-center gap-3 transition-colors text-lg font-medium leading-[120%] tracking-[0%]  ${
+                className={`w-full justify-start items-center gap-3 transition-colors text-lg font-semibold leading-[120%] tracking-[0%]  ${
                   isRouteActive("/dashboard/settings")
-                    ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                    ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 font-bold"
                     : "text-black/70 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-900/20"
                 }`}
               >

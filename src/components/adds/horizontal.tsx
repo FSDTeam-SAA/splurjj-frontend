@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+// import Link from "next/link";
 // import Image from 'next/image';
 import React, { useEffect, useState } from "react";
 // import { toast } from 'react-toastify';
@@ -51,6 +51,32 @@ function Horizontal() {
   if (error) return <div>{error}</div>;
 
   return (
+    // <div className="w-full h-full ">
+    //   {adData?.code ? (
+    //     <div
+    //       dangerouslySetInnerHTML={{ __html: adData.code }}
+    //       className="w-full h-[300px] object-cover"
+    //     />
+    //   ) : adData?.image && adData?.link ? (
+    //     <Link
+    //       href={adData.link}
+    //       target="_blank"
+    //       rel="noopener noreferrer"
+    //       className="w-full h-[300px]"
+    //     >
+    //       <Image
+    //         src={adData.image}
+    //         alt="Advertisement"
+    //         className="w-full h-[60px] md:h-[90px] object-cover"
+    //         width={2600}
+    //         height={300}
+    //       />
+    //     </Link>
+    //   ) : (
+    //     <div>No advertisement available</div>
+    //   )}
+    // </div>
+
     <div className="w-full h-full ">
       {adData?.code ? (
         <div
@@ -58,7 +84,7 @@ function Horizontal() {
           className="w-full h-[300px] object-cover"
         />
       ) : adData?.image && adData?.link ? (
-        <Link
+        <a
           href={adData.link}
           target="_blank"
           rel="noopener noreferrer"
@@ -67,11 +93,11 @@ function Horizontal() {
           <Image
             src={adData.image}
             alt="Advertisement"
-            className="w-full h-[60px] md:h-[90px] object-cover"
+            className="w-full h-[300px]"
             width={2600}
             height={300}
           />
-        </Link>
+        </a>
       ) : (
         <div>No advertisement available</div>
       )}

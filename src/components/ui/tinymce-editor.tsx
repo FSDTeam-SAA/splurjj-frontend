@@ -15,7 +15,7 @@ interface TinyMCEEditorProps {
 export default function TinyMCEEditor({
   value = "",
   onEditorChange,
-  height = 500,
+  height = 900,
   placeholder = "Write your content here...",
   disabled = false,
 }: TinyMCEEditorProps) {
@@ -67,7 +67,7 @@ export default function TinyMCEEditor({
       )}
 
       <Editor
-        apiKey="05dya1uu1pfcwfx39h8dlrx72jqywg9k0oc5016oayowiook" // Replace with your actual TinyMCE API key
+        apiKey="05dya1uu1pfcwfx39h8dlrx72jqywg9k0oc5016oayowiook"
         onInit={(_evt: unknown, editor: Editor) => (editorRef.current = editor)}
         value={value}
         onEditorChange={handleEditorChange}

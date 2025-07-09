@@ -120,9 +120,9 @@ const AddNewPage: React.FC<AddNewPageProps> = ({ isOpen, setIsOpen, initialData,
                 name="pageName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Page Name</FormLabel>
+                    <FormLabel className="text-lg font-medium text-black leading-normal">Page Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter page name" {...field} disabled={isSubmitting} />
+                      <Input className="text-black text-base font-normal leading-normal" placeholder="Enter page name" {...field} disabled={isSubmitting} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -134,16 +134,16 @@ const AddNewPage: React.FC<AddNewPageProps> = ({ isOpen, setIsOpen, initialData,
                 name="status"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Status</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger disabled={isSubmitting}>
-                          <SelectValue placeholder="Select status" />
+                    <FormLabel className="text-lg font-medium text-black leading-normal">Status</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value} >
+                      <FormControl className="text-black text-base font-normal leading-normal">
+                        <SelectTrigger className="text-black dark:text-black text-base font-normal leading-normal" disabled={isSubmitting}>
+                          <SelectValue className="text-black dark:text-black text-base font-normal leading-normal" placeholder="Select status" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value="Draft">Draft</SelectItem>
-                        <SelectItem value="Published">Published</SelectItem>
+                      <SelectContent className="bg-white">
+                        <SelectItem className="text-black text-base font-normal leading-normal" value="Draft">Draft</SelectItem>
+                        <SelectItem className="text-black text-base font-normal leading-normal" value="Published">Published</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -157,7 +157,7 @@ const AddNewPage: React.FC<AddNewPageProps> = ({ isOpen, setIsOpen, initialData,
               name="body"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-lg font-bold text-black">Content</FormLabel>
+                  <FormLabel className="text-lg font-medium text-black leading-normal">Content</FormLabel>
                   <FormControl>
                     <QuillEditor id="body" value={field.value} onChange={field.onChange} />
                   </FormControl>
@@ -167,7 +167,7 @@ const AddNewPage: React.FC<AddNewPageProps> = ({ isOpen, setIsOpen, initialData,
             />
 
             <div className="flex justify-end gap-4 pt-4">
-              <Button type="button" variant="outline" onClick={() => setIsOpen(false)} disabled={isSubmitting}>
+              <Button className="text-black dark:text-black border" type="button" variant="outline" onClick={() => setIsOpen(false)} disabled={isSubmitting}>
                 Cancel
               </Button>
               <Button type="submit" disabled={isSubmitting || isUnauthenticated} className="text-white">

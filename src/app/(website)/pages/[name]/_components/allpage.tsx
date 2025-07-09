@@ -46,8 +46,8 @@ function Allpage({ pagesName }: AllpageProps) {
   if (!pageData) return <div>No page data found</div>;
 
   return (
-    <div>
-      <div className="text-center text-[40px] py-24">
+    <div className="h-screen">
+      <div className="text-center text-[40px] py-10">
         <h1>{pageData.name}</h1>
       </div>
       <div className="pb-24 max-w-7xl mx-auto">
