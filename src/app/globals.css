@@ -248,7 +248,9 @@ Textarea{
 .white-text h2,
 .white-text h3,
 .white-text h4,
-.white-text h5 {
+.white-text h5,
+.white-text h6,
+.white-text span {
   color: #fff !important;
 }
 

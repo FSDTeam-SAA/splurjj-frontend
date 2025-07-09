@@ -219,7 +219,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
   return (
     <div className="">
       {firstPost && (
-        <div className="py-8">
+        <div className="">
           <div className="grid grid-cols-1 md:grid-cols-2 ">
             <div className="bg-[#DDD618] h-[455px] flex items-center justify-center">
               <Link

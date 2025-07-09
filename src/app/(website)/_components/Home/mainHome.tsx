@@ -122,9 +122,9 @@ function MainHome() {
       </div>
       <Horizontal />
       <div className="container">
-        <div className="grid grid-cols-8 gap-4 pt-8 md:pt-12 lg:pt-16">
+        <div className="grid grid-cols-8 gap-4 pt-4">
           {/* Main content */}
-          <div className="col-span-8 md:col-span-6 pb-8 md:pb-12 lg:pb-16">
+          <div className="col-span-8 md:col-span-6 pb-2">
             <QuitCalm categoryName={{ categoryName: sixthPost }} />
           </div>
 
