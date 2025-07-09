@@ -34,7 +34,7 @@ export function DataTable<TData, TValue>({
       <div
         className={cn(
           titleClass,
-          "bg-gradient-to-r from-[#539ed8] to-[#dddefa] px-[32px] font-semibold py-3  rounded-t-[8px] text-white text-[28px]"
+          "bg-gradient-to-r from-[#539ed8] to-[#dddefa] px-[32px] font-semibold py-3  rounded-t-[8px] text-white text-[28px] text-center"
         )}
       >
         {title}
@@ -50,7 +50,7 @@ export function DataTable<TData, TValue>({
             >
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id} className="text-center font-bold text-xl leading-bold text-black">
+                  <TableHead key={header.id} className="text-left font-bold text-xl leading-bold text-black">
                     {header.isPlaceholder
                       ? null
                       : flexRender(

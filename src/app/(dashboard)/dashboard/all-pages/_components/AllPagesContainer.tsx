@@ -108,15 +108,15 @@ const AllPagesContainer = () => {
   }
 
   return (
-    <div className="p-6">
+    <div className="px-6 pt-6 pb-20">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">All Pages</h2>
+        <p className="text-2xl font-bold text-black dark:text-white">All Pages</p>
         <Button
           onClick={() => {
             setAddNewPageOpen(true);
             setSelectedPage(null);
           }}
-          className="flex items-center gap-2 text-white"
+          className="flex items-center gap-2 text-white "
         >
           <Plus className="h-4 w-4" />
           Add New Page
@@ -127,21 +127,21 @@ const AllPagesContainer = () => {
         <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
           <thead className="bg-gray-100 text-left text-sm font-semibold text-gray-700">
             <tr>
-              <th className="py-3 px-4 border-b">ID</th>
-              <th className="py-3 px-4 border-b">Page Name</th>
-              <th className="py-3 px-4 border-b">Body</th>
-              <th className="py-3 px-4 border-b">Status</th>
-              <th className="py-3 px-4 border-b">Actions</th>
+              {/* <th className="py-3 px-4 border-b">ID</th> */}
+              <th className="py-3 px-4 border-b font-bold text-black text-lg leading-normal">Page Name</th>
+              <th className="py-3 px-4 border-b font-bold text-black text-lg leading-normal">Body</th>
+              <th className="py-3 px-4 border-b font-bold text-black text-lg leading-normal">Status</th>
+              <th className="py-3 px-4 border-b font-bold text-black text-lg leading-normal">Actions</th>
             </tr>
           </thead>
           <tbody className="text-sm text-gray-700">
             {allPagesData?.map((item) => (
               <tr key={item.id} className="hover:bg-gray-50">
-                <td className="py-2 px-4 border-b">{item.id}</td>
+                {/* <td className="py-2 px-4 border-b">{item.id}</td> */}
                 <td className="py-2 px-4 border-b font-medium">{item.name}</td>
                 <td className="py-2 px-4 border-b max-w-xs">
                   <div
-                    className="truncate"
+                    className="truncate black-text"
                     dangerouslySetInnerHTML={{
                       __html:
                         item.body.substring(0, 100) +
@@ -171,7 +171,7 @@ const AllPagesContainer = () => {
                       }}
                       className="text-blue-600 hover:text-blue-800"
                     >
-                      <Edit className="h-4 w-4" />
+                      <Edit className="h-4 w-4 text-blue-600 hover:text-blue-800" />
                     </Button>
                     <Button
                       variant="ghost"
@@ -183,7 +183,7 @@ const AllPagesContainer = () => {
                       {deleteLoading === item.id ? (
                         <div className="h-4 w-4 animate-spin rounded-full border-2 border-red-600 border-t-transparent" />
                       ) : (
-                        <Trash2 className="h-4 w-4" />
+                        <Trash2 className="h-4 w-4 text-red-600 hover:text-red-800" />
                       )}
                     </Button>
                   </div>
