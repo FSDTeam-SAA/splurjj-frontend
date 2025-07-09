@@ -64,7 +64,7 @@ const RoleManagementContainer = () => {
         {data && data?.meta && data?.meta.last_page > 1 && (
           <div className="mt-[30px]  w-full pb-[208px]  flex justify-between">
             <p className="font-normal text-[16px] leading-[19.2px] text-[#444444]">
-              Showing {currentPage} to {data?.meta?.last_page} in first entries
+              Showing {currentPage} to {data?.meta?.per_page} of {data?.meta?.last_page} results
             </p>
             <div>
               <SplurjjPagination
