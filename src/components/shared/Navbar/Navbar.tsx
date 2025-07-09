@@ -32,7 +32,7 @@ export type FooterData = {
   success: boolean;
   message: string;
   data: {
-    footer_links: string; // Adjust type if you have a structure for the links
+    footer_links: string; 
     facebook_link: string;
     instagram_link: string;
     linkedin_link: string;
