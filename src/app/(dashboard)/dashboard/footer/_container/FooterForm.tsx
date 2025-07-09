@@ -116,7 +116,7 @@ export function FooterForm() {
       }).then((res) => res.json()),
   });
 
-  console.log(data?.data?.app_store_link);
+  // console.log(data?.data?.app_store_link);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -172,7 +172,7 @@ export function FooterForm() {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log("Submitted Values:", values);
+    // console.log("Submitted Values:", values);
     mutate(values);
   };
 
