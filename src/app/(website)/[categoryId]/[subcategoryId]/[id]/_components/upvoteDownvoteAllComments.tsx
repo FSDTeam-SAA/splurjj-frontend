@@ -135,9 +135,9 @@ function ContentComments({ blogId }: ContentCommentsProps) {
   const comment = data.data[currentIndex];
 
   return (
-    <div className="container w-full flex flex-col items-center justify-center">
+    <div className="w-full flex flex-col items-center justify-center">
       <Toaster position="top-right" reverseOrder={false} /> {/* Add Toaster component */}
-      <div className="w-full md:w-2/3">
+      <div className="w-full">
         <h4 className="text-lg md:text-xl font-semibold  leading-[120%] tracking-[0%] text-black uppercase text-left pb-3 md:pb-4">
           Comments
         </h4>

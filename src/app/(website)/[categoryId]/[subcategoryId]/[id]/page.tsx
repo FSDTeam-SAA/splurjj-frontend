@@ -376,7 +376,7 @@ const ContentBlogDetails = ({
                   <p className="mt-4 text-base font-normal leading-[150%] tracking-[0%] text-secondary line-clamp-2">
                     {blogData.user?.description || "No description available."}
                   </p>
-                  <div className="flex items-center justify-between md:block">
+                  <div className="flex items-center justify-between">
                     <div className="mt-4 flex items-center gap-2 md:mb-8">
                       {blogData.user?.instagram_link && (
                         <a
@@ -415,24 +415,41 @@ const ContentBlogDetails = ({
                         </a>
                       )}
                     </div>
-                    <Link
-                      href={`/viewpost/${blogData.user?.id}`}
-                      className="text-lg font-extrabold leading-[120%] tracking-[0%] text-secondary dark:text-white"
-                    >
-                      View posts
-                    </Link>
+                    <div>
+                      <Link
+                        href={`/viewpost/${blogData.user?.id}`}
+                        className="text-lg font-extrabold leading-[120%] tracking-[0%] text-secondary dark:text-white"
+                      >
+                        View posts
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             {/* Leave a comment */}
-            {commentAccess && (
-              <div>
-                <section id="comment" className="py-10">
-                  <LeaveAComment UserEmail={userEmail} blogId={id} />
-                </section>
-              </div>
-            )}
+            <div>
+              {!commentAccess && (
+                <div id="comment" className="pt-[90px]">
+                  <p className="font-base text-black font-normal leading-normal">
+                    You must be{" "}
+                    <Link  href="/login" className="underline font-bold">
+                      logged in
+                    </Link>{" "}
+                    to post
+                  </p>
+                </div>
+              )}
+
+              {commentAccess && (
+                <div className="">
+                  <section id="comment" className="py-5">
+                    <LeaveAComment UserEmail={userEmail} blogId={id} />
+                  </section>
+                </div>
+              )}
+            </div>
+
             <div>
               <ContentComments blogId={id} />
             </div>

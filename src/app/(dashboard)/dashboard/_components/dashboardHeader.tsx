@@ -111,12 +111,16 @@ export default function DashboardHeader() {
               </Avatar>
             </div>
             <div>
-              <h4 className="text-base font-medium text-[#131313] dark:text-black leading-[120%] tracking-[0%] ">
-                {data?.data?.first_name}
-              </h4>
-              <p className="text-xs font-normal text-[#424242] dark:text-black leading-[120%] tracking-[0%]  pt-[2px]">
-                {role}
-              </p>
+              <Link href="/dashboard/settings">
+                <h4 className="text-base font-medium text-[#131313] dark:text-black leading-[120%] tracking-[0%] ">
+                  {data?.data?.first_name}
+                </h4>
+              </Link>
+              <Link href="/dashboard/settings">
+                <p className="text-xs font-normal text-[#424242] dark:text-black leading-[120%] tracking-[0%]  pt-[2px]">
+                  {role}
+                </p>
+              </Link>
             </div>
           </div>
         </div>

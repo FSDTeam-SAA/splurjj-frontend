@@ -57,7 +57,7 @@ function MainHome() {
       <div className="container">
         <div className="grid grid-cols-8 gap-4 pt-16">
           {/* Main content */}
-          <div className="col-span-8 md:col-span-6 pb-8 md:mb-14 lg:pb-32">
+          <div className="col-span-8 md:col-span-6 pb-8 md:pb-14 lg:pb-16">
             <AllContents />
           </div>
 
@@ -74,7 +74,7 @@ function MainHome() {
       <div className="container">
         <div className="grid grid-cols-8 gap-4 pt-8 md:pt-12 lg:pt-16">
           {/* Main content */}
-          <div className="col-span-8 md:col-span-6 pb-8 md:pb-12 lg:pb-16">
+          <div className="col-span-8 md:col-span-6 pb-8 md:pb-12 lg:pb-5">
             <ArtCulture categoryName={{ categoryName: firstCategory }} />
             <Gear categoryName={{ categoryName: secoundCategory }} />
           </div>
@@ -91,7 +91,7 @@ function MainHome() {
       <div className="container">
         <div className="grid grid-cols-8 gap-4 pt-8 md:pt-12 lg:pt-16">
           {/* Main content */}
-          <div className="col-span-8 md:col-span-6 pb-8 md:pb-12 lg:pb-16">
+          <div className="col-span-8 md:col-span-6 pb-8 md:pb-12 lg:pb-10">
             <Music categoryName={{ categoryName: thirdPost }} />
             <Ride categoryName={{ categoryName: forthPost }} />
           </div>
@@ -108,7 +108,7 @@ function MainHome() {
       <div className="container">
         <div className="grid grid-cols-8 gap-4 pt-8 md:pt-12 lg:pt-16">
           {/* Main content */}
-          <div className="col-span-8 md:col-span-6 pb-8 md:pb-12 lg:pb-16">
+          <div className="col-span-8 md:col-span-6 pb-8 md:pb-12 lg:pb-10">
             <Video categoryName={{ categoryName: fifthPost }} />
           </div>
 

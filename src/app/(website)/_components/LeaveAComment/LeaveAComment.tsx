@@ -18,7 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import Link from "next/link";
+// import Link from "next/link";
 
 const FormSchema = z.object({
   comment: z.string().min(2, {
@@ -67,18 +67,17 @@ export function LeaveAComment({ UserEmail, blogId }: LeaveACommentProps) {
       return response.data;
     },
     onSuccess: (data) => {
-      if(!data?.success) {
+      if (!data?.success) {
         toast.error(data?.message || "Something went wrong");
         return;
       }
       toast.success("Comment submitted successfully!");
       queryClient.invalidateQueries({
-        queryKey: ["comments"], 
+        queryKey: ["comments"],
       });
-      form.reset(); 
+      form.reset();
+      window.location.reload();
     },
-
-    
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -99,7 +98,7 @@ export function LeaveAComment({ UserEmail, blogId }: LeaveACommentProps) {
   }
 
   return (
-    <div className="container w-full flex flex-col items-center justify-center">
+    <div className="w-full flex flex-col items-center justify-center">
       <div className="w-full">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -109,21 +108,21 @@ export function LeaveAComment({ UserEmail, blogId }: LeaveACommentProps) {
               render={({ field }) => (
                 <FormItem>
                   <h4 className="text-lg md:text-xl font-semibold  leading-[120%] tracking-[0%] text-black uppercase text-left pb-3 md:pb-4">
-                    Leave A Comment 
+                    Leave A Comment
                   </h4>
                   <FormLabel className="text-lg md:text-xl font-semibold  leading-[120%] tracking-[0%] text-secondary">
-                    <p>
+                    {/* <p>
                       You must be{" "}
                       <Link href="/login" className="underline">
                         logged in
                       </Link>{" "}
                       to post
-                    </p>
+                    </p> */}
                   </FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Write Comments"
-                      className="h-[150px] text-lg md:text-xl font-semibold  leading-[120%] tracking-[0%] text-black placeholder:text-[#929292] capitalize border-[1.5px] border-secondary rounded-[8px]"
+                      className="h-[150px] text-lg md:text-xl font-semibold  leading-[120%] tracking-[0%] text-black placeholder:text-[#929292] border-[1.5px] border-secondary rounded-[8px]"
                       disabled={mutation.isPending} // Disable textarea during submission
                       {...field}
                     />
@@ -136,7 +135,7 @@ export function LeaveAComment({ UserEmail, blogId }: LeaveACommentProps) {
               <Button
                 className="text-white py-3 px-6 text-base font-bold  leading-[120%] tracking-[0%] bg-primary"
                 type="submit"
-                disabled={mutation.isPending} // Disable button during submission
+                disabled={mutation.isPending}
               >
                 {mutation.isPending ? "Submitting..." : "Submit"}
               </Button>
