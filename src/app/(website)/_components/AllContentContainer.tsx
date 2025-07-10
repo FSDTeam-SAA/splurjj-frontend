@@ -1,3 +1,4 @@
+
 "use client";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -51,7 +52,7 @@ const AllContentContainer = ({
     queryKey: ["all-content", categoryId, subcategoryId, currentPage],
     queryFn: async () => {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${categoryId}/${subcategoryId}?paginate_count=10&page=${currentPage}`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${categoryId}/${subcategoryId}?paginate_count=18&page=${currentPage}`
       );
       if (!response.ok) {
         throw new Error(`Failed to fetch content: ${response.statusText}`);
@@ -87,7 +88,7 @@ const AllContentContainer = ({
   const totalPages = pagination?.total_pages ?? 1;
   const totalItems = pagination?.total ?? 0;
   const firstContents = posts.slice(0, 5); // First 4 posts for FirstContents
-  const secondContents = posts.slice(5, 8); // Next 4 posts for SecondContents
+  const secondContents = posts.slice(5); // Next 4 posts for SecondContents
 
   return (
     <div className="">
