@@ -77,7 +77,7 @@ const SplurjjPagination: React.FC<PaginationProps> = ({
             )}
           >
             <ChevronLeft
-              className={cn("h-4 w-4", currentPage === 1 && "text-white")}
+              className={cn("h-4 w-4 dark:text-white", currentPage === 1 && "text-white ")}
             />
           </PaginationLink>
         </PaginationItem>
@@ -87,7 +87,7 @@ const SplurjjPagination: React.FC<PaginationProps> = ({
             <PaginationLink
               onClick={() => handlePageClick(page)}
               className={cn(
-                "border cursor-pointer border-[#4857BD] hover:bg-blue-800 hover:text-white",
+                "border cursor-pointer border-[#4857BD] hover:bg-blue-800 hover:text-white dark:text-white",
                 page === currentPage
                   ? "bg-[#0253F7] text-white"
                   : "hover:bg-blue-800 hover:text-white"
@@ -113,7 +113,7 @@ const SplurjjPagination: React.FC<PaginationProps> = ({
                 "cursor-not-allowed bg-[#E3E3E3] border-0  pointer-events-none"
             )}
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4 dark:text-white" />
           </PaginationLink>
         </PaginationItem>
       </PaginationContent>
