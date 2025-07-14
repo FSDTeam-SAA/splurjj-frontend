@@ -243,7 +243,7 @@ export default function PersonalInfoForm() {
                       <FormControl>
                         <Textarea
                           {...field}
-                          className="w-full h-[100px] border border-[#595959] placeholder:text-[#595959] text-[#212121]  font-normal text-base tracking-[0%] rounded-[8px]"
+                          className="w-full h-[100px] border border-[#595959] placeholder:text-[#595959] text-[#212121] dark:text-[#212121] font-normal text-base tracking-[0%] rounded-[8px]"
                           placeholder="Tell us about yourself"
                         />
                       </FormControl>

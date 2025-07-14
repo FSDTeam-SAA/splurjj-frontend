@@ -222,7 +222,7 @@ export function ColorPicker({ selectedColor, onColorChange }: ColorPickerProps) 
               onChange={(e) => handleColorChange(e.target.value)}
               className="w-24 text-black"
             />
-            <Button variant="outline" className="h-10 px-4 text-black" onClick={handleClearColor}>
+            <Button variant="outline" className="h-10 px-4 dark:text-black" onClick={handleClearColor}>
               Clear
             </Button>
           </div>
