@@ -27,9 +27,9 @@ import type { Content } from "./ContentDataType";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
-import TinyMCEEditor from "@/components/ui/tinymce-editor";
 import { FaArrowLeft } from "react-icons/fa6";
-import QuillEditor from "@/components/ui/quill-editor";
+// import QuillEditor from "@/components/ui/quill-editor";
+import { RichTextEditor } from "@/components/ui/rich-text-editor";
 
 // Zod Schema
 const formSchema = z
@@ -236,6 +236,14 @@ export default function ContentAddEditForm({
     },
   });
 
+  if(isPending){
+    return (
+      <div className="h-screen w-full flex items-center justify-center">
+        <Loader2 className="h-10 w-10 animate-spin text-primary" />
+      </div>
+    );
+  }
+
   const onSubmit = (data: FormData) => {
     const formData = new FormData();
     formData.append("category_id", categoryId.toString());
@@ -267,7 +275,7 @@ export default function ContentAddEditForm({
           onClick={handleCloseForm}
           className="bg-white text-[#0253F7] dark:text-[#0253F7] text-lg font-bold leading-normal border-2 border-[#0253F7]"
         >
-          <FaArrowLeft className="dark:text-[#0253F7]"/> Back to List
+          <FaArrowLeft className="dark:text-[#0253F7]" /> Back to List
         </Button>
       </div>
       <Form {...form}>
@@ -289,11 +297,17 @@ export default function ContentAddEditForm({
                       height={500}
                       placeholder="Write your blog post content here..."
                     /> */}
-                    <QuillEditor
+                    <RichTextEditor
+                      content={field.value}
+                      onChange={field.onChange}
+                      placeholder="Heading ...."
+                      // height="50px"
+                    />
+                    {/* <QuillEditor
                       id="heading"
                       value={field.value}
                       onChange={field.onChange}
-                    />
+                    /> */}
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -311,10 +325,16 @@ export default function ContentAddEditForm({
                     Write Sub Heading
                   </FormLabel>
                   <FormControl>
-                    <QuillEditor
+                    {/* <QuillEditor
                       id="sub_heading"
                       value={field.value}
                       onChange={field.onChange}
+                    /> */}
+                    <RichTextEditor
+                      content={field.value}
+                      onChange={field.onChange}
+                      placeholder="Sub Heading ...."
+                      height="50px"
                     />
                     {/* <TinyMCEEditor
                       value={field.value}
@@ -486,18 +506,19 @@ export default function ContentAddEditForm({
                     Write Body Text
                   </FormLabel>
                   <FormControl>
-                    {/* <QuillEditor
-                          id="body1"
-                          value={field.value}
-                          onChange={field.onChange}
-                        /> */}
+                    <RichTextEditor
+                      content={field.value}
+                      onChange={field.onChange}
+                      placeholder="Description...."
+                      height="50px"
+                    />
 
-                    <TinyMCEEditor
+                    {/* <TinyMCEEditor
                       value={field.value}
                       onEditorChange={field.onChange}
                       height={500}
                       placeholder="Write your blog post content here..."
-                    />
+                    /> */}
                   </FormControl>
                   <FormMessage />
                 </FormItem>
