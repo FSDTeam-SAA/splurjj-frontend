@@ -3,15 +3,11 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { RiShareForwardLine } from "react-icons/ri";
-import {
-  FaFacebook,
-  FaLinkedin,
-  FaRegCommentDots,
-  FaTwitter,
-} from "react-icons/fa";
+import { FaFacebook, FaLinkedin, FaRegCommentDots, FaTwitter } from "react-icons/fa";
 import { TbTargetArrow } from "react-icons/tb";
+import FirstContentsSkeleton from "./FirstContentsSkeleton";
 
-// Define the Post interface to match the data structure from AllContentContainer
+// Define the Post interface
 interface Post {
   id: number;
   heading: string;
@@ -31,45 +27,33 @@ interface Post {
   tags: string[];
 }
 
-// Define the props for FirstContents to accept an array of Post objects
+// Define the props
 interface FirstContentsProps {
   posts: Post[];
+  loading?: boolean;
 }
 
-const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
+const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false }) => {
   const [showShareMenu, setShowShareMenu] = useState<number | null>(null);
 
   const getImageUrl = (path: string | null): string => {
-    if (!path) return "/fallback-image.jpg"; // Fallback image
+    if (!path) return "/fallback-image.jpg";
     if (path.startsWith("http")) return path;
     return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${path.replace(/^\/+/, "")}`;
   };
 
-  const getShareUrl = (
-    categoryName: string,
-    subCategoryName: string,
-    postId: number
-  ): string => {
+  const getShareUrl = (categoryName: string, subCategoryName: string, postId: number): string => {
     const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
-    // Normalize category and subcategory names for URL (e.g., replace spaces with hyphens)
     const normalizedCategory = categoryName.toLowerCase().replace(/\s+/g, "-");
-    const normalizedSubCategory = subCategoryName
-      .toLowerCase()
-      .replace(/\s+/g, "-");
+    const normalizedSubCategory = subCategoryName.toLowerCase().replace(/\s+/g, "-");
     return `${baseUrl}/blogs/${normalizedCategory}/${normalizedSubCategory}/${postId}`;
   };
 
   const handleShare = async (post: Post) => {
-    const shareUrl = getShareUrl(
-      post.category_name,
-      post.sub_category_name,
-      post.id
-    );
+    const shareUrl = getShareUrl(post.category_name, post.sub_category_name, post.id);
     const shareData = {
-      title: post.heading.replace(/<[^>]+>/g, ""), // Strip HTML for sharing
-      text:
-        post.sub_heading?.replace(/<[^>]+>/g, "") ||
-        "Check out this blog post!",
+      title: post.heading.replace(/<[^>]+>/g, ""),
+      text: post.sub_heading?.replace(/<[^>]+>/g, "") || "Check out this blog post!",
       url: shareUrl,
     };
 
@@ -86,9 +70,9 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
 
   const shareToTwitter = (url: string, text: string) => {
     window.open(
-      `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-        url
-      )}&text=${encodeURIComponent(text)}`,
+      `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(
+        text.replace(/<[^>]+>/g, "")
+      )}`,
       "_blank"
     );
   };
@@ -104,57 +88,325 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
     window.open(
       `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
         url
-      )}&title=${encodeURIComponent(title)}`,
+      )}&title=${encodeURIComponent(title.replace(/<[^>]+>/g, ""))}`,
       "_blank"
     );
   };
 
-  console.log("Posts received in FirstContents:", posts);
+  if (loading) {
+    return <FirstContentsSkeleton />;
+  }
 
   const firstPost = posts[0];
-  console.log(firstPost);
   const secondPost = posts[1];
   const thirdPost = posts[2];
   const fourthPost = posts[3];
-  const fivethPost = posts[4];
+  const fifthPost = posts[4];
 
   return (
-    <div className="">
+    <div className="container mx-auto px-4">
       {firstPost ? (
-        <div className="mb-16 ">
-          <div>
-            <div className="lg:flex block items-center gap-4 mb-4 space-y-4 md:space-y-0">
+        <div className="mb-16">
+          <div className="lg:flex items-center gap-4 mb-4 space-y-4 md:space-y-0">
+            <div className="flex items-center gap-2">
+              <Link
+                href={`/blogs/${firstPost.category_name.toLowerCase().replace(/\s+/g, "-")}`}
+                className="bg-primary py-2 px-4 rounded text-base font-extrabold uppercase text-white"
+              >
+                {firstPost.category_name || "Category"}
+              </Link>
+              <Link
+                href={`/${firstPost.category_id}/${firstPost.subcategory_id}`}
+                className="bg-primary py-2 px-4 rounded text-base font-extrabold uppercase text-white"
+              >
+                {firstPost.sub_category_name || "Subcategory"}
+              </Link>
+            </div>
+            <div className="flex items-center gap-3 relative">
+              <RiShareForwardLine
+                className="w-6 h-6 cursor-pointer"
+                onClick={() => handleShare(firstPost)}
+              />
+              {showShareMenu === firstPost.id && (
+                <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
+                  <FaTwitter
+                    className="w-6 h-6 cursor-pointer text-blue-500"
+                    onClick={() =>
+                      shareToTwitter(
+                        getShareUrl(firstPost.category_name, firstPost.sub_category_name, firstPost.id),
+                        firstPost.heading
+                      )
+                    }
+                  />
+                  <FaFacebook
+                    className="w-6 h-6 cursor-pointer text-blue-700"
+                    onClick={() =>
+                      shareToFacebook(
+                        getShareUrl(firstPost.category_name, firstPost.sub_category_name, firstPost.id)
+                      )
+                    }
+                  />
+                  <FaLinkedin
+                    className="w-6 h-6 cursor-pointer text-blue-600"
+                    onClick={() =>
+                      shareToLinkedIn(
+                        getShareUrl(firstPost.category_name, firstPost.sub_category_name, firstPost.id),
+                        firstPost.heading
+                      )
+                    }
+                  />
+                </div>
+              )}
+              <TbTargetArrow className="w-6 h-6" />
+              <Link
+                href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}#comment`}
+                className="cursor-pointer"
+              >
+                <FaRegCommentDots className="w-6 h-6" />
+              </Link>
+            </div>
+          </div>
+          <div className="space-y-4">
+            <Link href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}>
+              <p
+                dangerouslySetInnerHTML={{ __html: firstPost.heading }}
+                className="text-3xl lg:text-5xl font-bold text-[#131313]"
+              />
+            </Link>
+            <p
+              dangerouslySetInnerHTML={{ __html: firstPost.body1 }}
+              className="text-[16px] font-extralight font-helvetica text-[#424242] line-clamp-3"
+            />
+            <p className="text-base font-semibold uppercase text-[#424242]">
+              {firstPost.author} - {firstPost.date}
+            </p>
+          </div>
+          <div className="mt-8">
+            <Link href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}>
+              <Image
+                src={getImageUrl(firstPost.image1)}
+                alt={firstPost.heading.replace(/<[^>]+>/g, "")}
+                width={1200}
+                height={600}
+                className="w-full object-cover lg:h-[680px]"
+                priority
+              />
+            </Link>
+          </div>
+        </div>
+      ) : (
+        <p className="text-center text-muted-foreground">No featured article available.</p>
+      )}
+
+      {secondPost && (
+        <div className="grid grid-cols-5 gap-4 mb-8">
+          <div className="col-span-5 lg:col-span-2">
+            <div className="flex items-center gap-2 mb-2">
+              <Link
+                href={`/blogs/${secondPost.category_name.toLowerCase().replace(/\s+/g, "-")}`}
+                className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+              >
+                {secondPost.category_name || "Category"}
+              </Link>
+              <Link
+                href={`/${secondPost.category_id}/${secondPost.subcategory_id}`}
+                className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+              >
+                {secondPost.sub_category_name || "Subcategory"}
+              </Link>
+            </div>
+            <Link href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}>
+              <p
+                dangerouslySetInnerHTML={{ __html: secondPost.heading }}
+                className="text-2xl font-medium"
+              />
+            </Link>
+            <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
+              {secondPost.author} - {secondPost.date}
+            </p>
+            <div className="flex items-center gap-3 mt-2 relative">
+              <RiShareForwardLine
+                className="w-6 h-6 cursor-pointer"
+                onClick={() => handleShare(secondPost)}
+              />
+              {showShareMenu === secondPost.id && (
+                <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
+                  <FaTwitter
+                    className="w-6 h-6 cursor-pointer text-blue-500"
+                    onClick={() =>
+                      shareToTwitter(
+                        getShareUrl(secondPost.category_name, secondPost.sub_category_name, secondPost.id),
+                        secondPost.heading.replace(/<[^>]+>/g, "")
+                      )
+                    }
+                  />
+                  <FaFacebook
+                    className="w-6 h-6 cursor-pointer text-blue-700"
+                    onClick={() =>
+                      shareToFacebook(
+                        getShareUrl(secondPost.category_name, secondPost.sub_category_name, secondPost.id)
+                      )
+                    }
+                  />
+                  <FaLinkedin
+                    className="w-6 h-6 cursor-pointer text-blue-600"
+                    onClick={() =>
+                      shareToLinkedIn(
+                        getShareUrl(secondPost.category_name, secondPost.sub_category_name, secondPost.id),
+                        secondPost.heading.replace(/<[^>]+>/g, "")
+                      )
+                    }
+                  />
+                </div>
+              )}
+              <TbTargetArrow className="w-6 h-6" />
+              <Link
+                href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}#comment`}
+                className="cursor-pointer"
+              >
+                <FaRegCommentDots className="w-6 h-6" />
+              </Link>
+            </div>
+            <p
+              dangerouslySetInnerHTML={{ __html: secondPost.body1 }}
+              className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
+            />
+          </div>
+          <div className="col-span-5 lg:col-span-3">
+            <Link href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}>
+              <Image
+                src={getImageUrl(secondPost.image1)}
+                alt={secondPost.heading.replace(/<[^>]+>/g, "")}
+                width={400}
+                height={315}
+                className="w-full h-[315px] object-cover"
+                priority
+              />
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {thirdPost && (
+        <div className="mb-8">
+          <Link href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}>
+            <Image
+              src={getImageUrl(thirdPost.image1)}
+              alt={thirdPost.heading.replace(/<[^>]+>/g, "")}
+              width={400}
+              height={443}
+              className="w-full h-[443px] object-cover"
+              priority
+            />
+          </Link>
+          <div className="py-4">
+            <div className="md:flex items-center justify-between gap-4 mb-2">
               <div className="flex items-center gap-2">
                 <Link
-                  href={`/blogs/${firstPost.category_name}`}
-                  className="bg-primary py-2 px-4 rounded text-base font-extrabold  uppercase text-white"
+                  href={`/blogs/${thirdPost.category_name.toLowerCase().replace(/\s+/g, "-")}`}
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
-                  {firstPost.category_name || "Category"}
+                  {thirdPost.category_name || "Category"}
                 </Link>
                 <Link
-                  href={`/${firstPost.category_id}/${firstPost.subcategory_id}`}
-                  className="bg-primary py-2 px-4 rounded text-base font-extrabold  uppercase text-white"
+                  href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}`}
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
-                  {firstPost.sub_category_name || "Subcategory"}
+                  {thirdPost.sub_category_name || "Subcategory"}
+                </Link>
+              </div>
+              <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
+                {thirdPost.author} - {thirdPost.date}
+              </p>
+            </div>
+            <Link href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}>
+              <p
+                dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
+                className="text-2xl font-medium"
+              />
+            </Link>
+            <div className="flex items-center gap-3 mt-2 relative">
+              <RiShareForwardLine
+                className="w-6 h-6 cursor-pointer"
+                onClick={() => handleShare(thirdPost)}
+              />
+              {showShareMenu === thirdPost.id && (
+                <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
+                  <FaTwitter
+                    className="w-6 h-6 cursor-pointer text-blue-500"
+                    onClick={() =>
+                      shareToTwitter(
+                        getShareUrl(thirdPost.category_name, thirdPost.sub_category_name, thirdPost.id),
+                        thirdPost.heading.replace(/<[^>]+>/g, "")
+                      )
+                    }
+                  />
+                  <FaFacebook
+                    className="w-6 h-6 cursor-pointer text-blue-700"
+                    onClick={() =>
+                      shareToFacebook(
+                        getShareUrl(thirdPost.category_name, thirdPost.sub_category_name, thirdPost.id)
+                      )
+                    }
+                  />
+                  <FaLinkedin
+                    className="w-6 h-6 cursor-pointer text-blue-600"
+                    onClick={() =>
+                      shareToLinkedIn(
+                        getShareUrl(thirdPost.category_name, thirdPost.sub_category_name, thirdPost.id),
+                        thirdPost.heading.replace(/<[^>]+>/g, "")
+                      )
+                    }
+                  />
+                </div>
+              )}
+              <TbTargetArrow className="w-6 h-6" />
+              <Link
+                href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}#comment`}
+                className="cursor-pointer"
+              >
+                <FaRegCommentDots className="w-6 h-6" />
+              </Link>
+            </div>
+            <p
+              dangerouslySetInnerHTML={{ __html: thirdPost.body1 }}
+              className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
+            />
+          </div>
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {fourthPost && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <Link
+                  href={`/blogs/${fourthPost.category_name.toLowerCase().replace(/\s+/g, "-")}`}
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                >
+                  {fourthPost.category_name || "Category"}
+                </Link>
+                <Link
+                  href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}`}
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                >
+                  {fourthPost.sub_category_name || "Subcategory"}
                 </Link>
               </div>
               <div className="flex items-center gap-3 relative">
                 <RiShareForwardLine
                   className="w-6 h-6 cursor-pointer"
-                  onClick={() => handleShare(firstPost)}
+                  onClick={() => handleShare(fourthPost)}
                 />
-                {showShareMenu === firstPost.id && (
+                {showShareMenu === fourthPost.id && (
                   <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
                     <FaTwitter
                       className="w-6 h-6 cursor-pointer text-blue-500"
                       onClick={() =>
                         shareToTwitter(
-                          getShareUrl(
-                            firstPost.category_name,
-                            firstPost.sub_category_name,
-                            firstPost.id
-                          ),
-                          firstPost.heading.replace(/<[^>]+>/g, "")
+                          getShareUrl(fourthPost.category_name, fourthPost.sub_category_name, fourthPost.id),
+                          fourthPost.heading.replace(/<[^>]+>/g, "")
                         )
                       }
                     />
@@ -162,11 +414,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                       className="w-6 h-6 cursor-pointer text-blue-700"
                       onClick={() =>
                         shareToFacebook(
-                          getShareUrl(
-                            firstPost.category_name,
-                            firstPost.sub_category_name,
-                            firstPost.id
-                          )
+                          getShareUrl(fourthPost.category_name, fourthPost.sub_category_name, fourthPost.id)
                         )
                       }
                     />
@@ -174,12 +422,8 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                       className="w-6 h-6 cursor-pointer text-blue-600"
                       onClick={() =>
                         shareToLinkedIn(
-                          getShareUrl(
-                            firstPost.category_name,
-                            firstPost.sub_category_name,
-                            firstPost.id
-                          ),
-                          firstPost.heading.replace(/<[^>]+>/g, "")
+                          getShareUrl(fourthPost.category_name, fourthPost.sub_category_name, fourthPost.id),
+                          fourthPost.heading.replace(/<[^>]+>/g, "")
                         )
                       }
                     />
@@ -187,479 +431,116 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts }) => {
                 )}
                 <TbTargetArrow className="w-6 h-6" />
                 <Link
-                  href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}#comment`}
+                  href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}#comment`}
                   className="cursor-pointer"
                 >
                   <FaRegCommentDots className="w-6 h-6" />
                 </Link>
               </div>
             </div>
-            <div className="space-y-4">
-              <Link
-                href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
-              >
-                <p
-                  dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-3xl lg:text-5xl font-bold  text-[#131313]"
-                />
-              </Link>
+            <Link href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}>
               <p
-                dangerouslySetInnerHTML={{ __html: (firstPost.body1)  }}
-                className="text-[16px] font-extralight font-helvetica text-[#424242] line-clamp-3 "
+                dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
+                className="text-2xl font-medium"
               />
-              <p className="text-base font-semibold  uppercase text-[#424242]">
-                {firstPost.author} - {firstPost.date}
-              </p>
-            </div>
-          </div>
-          <div className="mt-8">
-            <Link
-              href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
-            >
+            </Link>
+            <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
+              {fourthPost.author} - {fourthPost.date}
+            </p>
+            <Link href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}>
               <Image
-                src={getImageUrl(firstPost.image1)}
-                alt={firstPost.heading.replace(/<[^>]+>/g, "")} // Strip HTML for alt text
-                width={1200}
-                height={600}
-                className="w-full object-cover lg:h-[680px]"
+                src={getImageUrl(fourthPost.image1)}
+                alt={fourthPost.heading.replace(/<[^>]+>/g, "")}
+                width={400}
+                height={300}
+                className="w-full h-[300px] object-cover"
+                priority
               />
             </Link>
           </div>
-        </div>
-      ) : (
-        <p className="text-center text-muted-foreground">
-          No featured article available.
-        </p>
-      )}
-      <div className="">
-        <div>
-          {secondPost && (
-            <div className="grid grid-cols-5 gap-4">
-              <div className="col-span-5 lg:col-span-2">
-                <div className="flex items-center gap-2 mb-2">
-                  <Link
-                    href={`/blogs/${secondPost.category_name}`}
-                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
-                  >
-                    {secondPost.category_name || "Category"}
-                  </Link>
-                  <Link
-                    href={`/${secondPost.category_id}/${secondPost.subcategory_id}`}
-                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
-                  >
-                    {secondPost.sub_category_name || "Subcategory"}
-                  </Link>
-                </div>
-
-                <div className="">
-                  <Link
-                    href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
-                  >
-                    <p
-                      dangerouslySetInnerHTML={{ __html: secondPost.heading }}
-                      className="text-2xl font-medium"
-                    />
-                  </Link>
-                  <p className="text-sm font-semibold  uppercase text-[#424242] mt-2">
-                    {secondPost.author} - {secondPost.date}
-                  </p>
-                  <div className="flex items-center gap-3 mt-2 relative">
-                    <RiShareForwardLine
-                      className="w-6 h-6 cursor-pointer"
-                      onClick={() => handleShare(secondPost)}
-                    />
-                    {showShareMenu === secondPost.id && (
-                      <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
-                        <FaTwitter
-                          className="w-6 h-6 cursor-pointer text-blue-500"
-                          onClick={() =>
-                            shareToTwitter(
-                              getShareUrl(
-                                secondPost.category_name,
-                                secondPost.sub_category_name,
-                                secondPost.id
-                              ),
-                              secondPost.heading
-                            )
-                          }
-                        />
-                        <FaFacebook
-                          className="w-6 h-6 cursor-pointer text-blue-700"
-                          onClick={() =>
-                            shareToFacebook(
-                              getShareUrl(
-                                secondPost.category_name,
-                                secondPost.sub_category_name,
-                                secondPost.id
-                              )
-                            )
-                          }
-                        />
-                        <FaLinkedin
-                          className="w-6 h-6 cursor-pointer text-blue-600"
-                          onClick={() =>
-                            shareToLinkedIn(
-                              getShareUrl(
-                                secondPost.category_name,
-                                secondPost.sub_category_name,
-                                secondPost.id
-                              ),
-                              secondPost.heading
-                            )
-                          }
-                        />
-                      </div>
-                    )}
-                    <TbTargetArrow className="w-6 h-6" />
-                    <Link
-                      href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}#comment`}
-                      className="cursor-pointer"
-                    >
-                      <FaRegCommentDots className="w-6 h-6" />
-                    </Link>
-                  </div>
-                  <p
-                    dangerouslySetInnerHTML={{ __html: secondPost.body1 }}
-                    className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
-                  />
-                </div>
-              </div>
-              <div className="col-span-5 lg:col-span-3">
+        )}
+        {fifthPost && (
+          <div className="space-y-2">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
                 <Link
-                  href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
+                  href={`/blogs/${fifthPost.category_name.toLowerCase().replace(/\s+/g, "-")}`}
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
-                <Image
-                  src={getImageUrl(secondPost.image1)}
-                  alt={secondPost.heading}
-                  width={400}
-                  height={315}
-                  className="w-full h-[315px] object-cover"
-                  priority
+                  {fifthPost.category_name || "Category"}
+                </Link>
+                <Link
+                  href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}`}
+                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                >
+                  {fifthPost.sub_category_name || "Subcategory"}
+                </Link>
+              </div>
+              <div className="flex items-center gap-3 relative">
+                <RiShareForwardLine
+                  className="w-6 h-6 cursor-pointer"
+                  onClick={() => handleShare(fifthPost)}
                 />
+                {showShareMenu === fifthPost.id && (
+                  <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
+                    <FaTwitter
+                      className="w-6 h-6 cursor-pointer text-blue-500"
+                      onClick={() =>
+                        shareToTwitter(
+                          getShareUrl(fifthPost.category_name, fifthPost.sub_category_name, fifthPost.id),
+                          fifthPost.heading.replace(/<[^>]+>/g, "")
+                        )
+                      }
+                    />
+                    <FaFacebook
+                      className="w-6 h-6 cursor-pointer text-blue-700"
+                      onClick={() =>
+                        shareToFacebook(
+                          getShareUrl(fifthPost.category_name, fifthPost.sub_category_name, fifthPost.id)
+                        )
+                      }
+                    />
+                    <FaLinkedin
+                      className="w-6 h-6 cursor-pointer text-blue-600"
+                      onClick={() =>
+                        shareToLinkedIn(
+                          getShareUrl(fifthPost.category_name, fifthPost.sub_category_name, fifthPost.id),
+                          fifthPost.heading.replace(/<[^>]+>/g, "")
+                        )
+                      }
+                    />
+                  </div>
+                )}
+                <TbTargetArrow className="w-6 h-6" />
+                <Link
+                  href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}#comment`}
+                  className="cursor-pointer"
+                >
+                  <FaRegCommentDots className="w-6 h-6" />
                 </Link>
               </div>
             </div>
-          )}
-        </div>
-
-        <div className="mt-8">
-          {thirdPost && (
-            <div className="relative">
-              <Link
-                href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
-              >
+            <Link href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}>
+              <p
+                dangerouslySetInnerHTML={{ __html: fifthPost.heading }}
+                className="text-2xl font-medium"
+              />
+            </Link>
+            <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
+              {fifthPost.author} - {fifthPost.date}
+            </p>
+            <Link href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}>
               <Image
-                src={getImageUrl(thirdPost.image1)}
-                alt={thirdPost.heading}
+                src={getImageUrl(fifthPost.image1)}
+                alt={fifthPost.heading.replace(/<[^>]+>/g, "")}
                 width={400}
-                height={443}
-                className="w-full h-[443px] object-cover"
+                height={300}
+                className="w-full h-[300px] object-cover"
                 priority
               />
-              </Link>
-              <div className="py-4">
-                <div className="md:flex items-center justify-between gap-4 mb-2">
-                  <div className="flex items-center gap-2">
-                    <Link
-                      href={`/blogs/${thirdPost.category_name}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
-                    >
-                      {thirdPost.category_name || "Category"}
-                    </Link>
-                    <Link
-                      href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
-                    >
-                      {thirdPost.sub_category_name || "Subcategory"}
-                    </Link>
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold  uppercase text-[#424242] mt-2">
-                      {thirdPost.author} - {thirdPost.date}
-                    </p>
-                  </div>
-                </div>
-                <Link
-                  href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
-                >
-                  <p
-                    dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
-                    className="text-2xl font-medium"
-                  />
-                </Link>
-
-                <div className="flex items-center gap-3 mt-2 relative">
-                  <RiShareForwardLine
-                    className="w-6 h-6 cursor-pointer"
-                    onClick={() => handleShare(thirdPost)}
-                  />
-                  {showShareMenu === thirdPost.id && (
-                    <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
-                      <FaTwitter
-                        className="w-6 h-6 cursor-pointer text-blue-500"
-                        onClick={() =>
-                          shareToTwitter(
-                            getShareUrl(
-                              thirdPost.category_name,
-                              thirdPost.sub_category_name,
-                              thirdPost.id
-                            ),
-                            thirdPost.heading
-                          )
-                        }
-                      />
-                      <FaFacebook
-                        className="w-6 h-6 cursor-pointer text-blue-700"
-                        onClick={() =>
-                          shareToFacebook(
-                            getShareUrl(
-                              thirdPost.category_name,
-                              thirdPost.sub_category_name,
-                              thirdPost.id
-                            )
-                          )
-                        }
-                      />
-                      <FaLinkedin
-                        className="w-6 h-6 cursor-pointer text-blue-600"
-                        onClick={() =>
-                          shareToLinkedIn(
-                            getShareUrl(
-                              thirdPost.category_name,
-                              thirdPost.sub_category_name,
-                              thirdPost.id
-                            ),
-                            thirdPost.heading
-                          )
-                        }
-                      />
-                    </div>
-                  )}
-                  <TbTargetArrow className="w-6 h-6" />
-                  <Link
-                    href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}#comment`}
-                    className="cursor-pointer"
-                  >
-                    <FaRegCommentDots className="w-6 h-6" />
-                  </Link>
-                </div>
-                <p
-                  dangerouslySetInnerHTML={{ __html: thirdPost.body1 }}
-                  className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
-                />
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8">
-          <div>
-            {fourthPost && (
-              <div className="space-y-2">
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2 ">
-                    <Link
-                      href={`/blogs/${fourthPost.category_name}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
-                    >
-                      {fourthPost.category_name || "Category"}
-                    </Link>
-                    <Link
-                      href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
-                    >
-                      {fourthPost.sub_category_name || "Subcategory"}
-                    </Link>
-                  </div>
-                  <div className="flex items-center gap-3 mt-2 relative">
-                    <RiShareForwardLine
-                      className="w-6 h-6 cursor-pointer"
-                      onClick={() => handleShare(fourthPost)}
-                    />
-                    {showShareMenu === fourthPost.id && (
-                      <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
-                        <FaTwitter
-                          className="w-6 h-6 cursor-pointer text-blue-500"
-                          onClick={() =>
-                            shareToTwitter(
-                              getShareUrl(
-                                fourthPost.category_name,
-                                fourthPost.sub_category_name,
-                                fourthPost.id
-                              ),
-                              fourthPost.heading
-                            )
-                          }
-                        />
-                        <FaFacebook
-                          className="w-6 h-6 cursor-pointer text-blue-700"
-                          onClick={() =>
-                            shareToFacebook(
-                              getShareUrl(
-                                fourthPost.category_name,
-                                fourthPost.sub_category_name,
-                                fourthPost.id
-                              )
-                            )
-                          }
-                        />
-                        <FaLinkedin
-                          className="w-6 h-6 cursor-pointer text-blue-600"
-                          onClick={() =>
-                            shareToLinkedIn(
-                              getShareUrl(
-                                fourthPost.category_name,
-                                fourthPost.sub_category_name,
-                                fourthPost.id
-                              ),
-                              fourthPost.heading
-                            )
-                          }
-                        />
-                      </div>
-                    )}
-                    <TbTargetArrow className="w-6 h-6" />
-                    <Link
-                      href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}#comment`}
-                      className="cursor-pointer"
-                    >
-                      <FaRegCommentDots className="w-6 h-6" />
-                    </Link>
-                  </div>
-                </div>
-
-                <div className="">
-                  <Link
-                    href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
-                  >
-                    <p
-                      dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
-                      className="text-2xl font-medium"
-                    />
-                  </Link>
-                  <p className="text-sm font-semibold  uppercase text-[#424242] mt-2">
-                    {fourthPost.author} - {fourthPost.date}
-                  </p>
-                </div>
-                <Link
-                  href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
-                >
-                <Image
-                  src={getImageUrl(fourthPost.image1)}
-                  alt={fourthPost.heading}
-                  width={400}
-                  height={300}
-                  className="w-full h-[300px] object-cover"
-                  priority
-                />
-                </Link>
-              </div>
-            )}
+            </Link>
           </div>
-          <div>
-            {fivethPost && (
-              <div className="space-y-2">
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <Link
-                      href={`/blogs/${fivethPost.category_name}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
-                    >
-                      {fivethPost.category_name || "Category"}
-                    </Link>
-                    <Link
-                      href={`/${fivethPost.category_id}/${fivethPost.subcategory_id}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
-                    >
-                      {fivethPost.sub_category_name || "Subcategory"}
-                    </Link>
-                  </div>
-                  <div className="flex items-center gap-3 mt-2 relative">
-                    <RiShareForwardLine
-                      className="w-6 h-6 cursor-pointer"
-                      onClick={() => handleShare(fivethPost)}
-                    />
-                    {showShareMenu === fivethPost.id && (
-                      <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
-                        <FaTwitter
-                          className="w-6 h-6 cursor-pointer text-blue-500"
-                          onClick={() =>
-                            shareToTwitter(
-                              getShareUrl(
-                                fivethPost.category_name,
-                                fivethPost.sub_category_name,
-                                fivethPost.id
-                              ),
-                              fivethPost.heading
-                            )
-                          }
-                        />
-                        <FaFacebook
-                          className="w-6 h-6 cursor-pointer text-blue-700"
-                          onClick={() =>
-                            shareToFacebook(
-                              getShareUrl(
-                                fivethPost.category_name,
-                                fivethPost.sub_category_name,
-                                fivethPost.id
-                              )
-                            )
-                          }
-                        />
-                        <FaLinkedin
-                          className="w-6 h-6 cursor-pointer text-blue-600"
-                          onClick={() =>
-                            shareToLinkedIn(
-                              getShareUrl(
-                                fivethPost.category_name,
-                                fivethPost.sub_category_name,
-                                fivethPost.id
-                              ),
-                              fivethPost.heading
-                            )
-                          }
-                        />
-                      </div>
-                    )}
-                    <TbTargetArrow className="w-6 h-6" />
-                    <Link
-                      href={`/${fivethPost.category_id}/${fivethPost.subcategory_id}/${fivethPost.id}#comment`}
-                      className="cursor-pointer"
-                    >
-                      <FaRegCommentDots className="w-6 h-6" />
-                    </Link>
-                  </div>
-                </div>
-
-                <div className="">
-                  <Link
-                    href={`/${fivethPost.category_id}/${fivethPost.subcategory_id}/${fivethPost.id}`}
-                  >
-                    <p
-                      dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
-                      className="text-2xl font-medium"
-                    />
-                  </Link>
-                  <p className="text-sm font-semibold  uppercase text-[#424242] mt-2">
-                    {fivethPost.author} - {fivethPost.date}
-                  </p>
-                </div>
-                <Link
-                  href={`/${fivethPost.category_id}/${fivethPost.subcategory_id}/${fivethPost.id}`}
-                >
-                <Image
-                  src={getImageUrl(fivethPost.image1)}
-                  alt={fivethPost.heading}
-                  width={400}
-                  height={300}
-                  className="w-full h-[300px] object-cover"
-                  priority
-                />
-                </Link>
-              </div>
-            )}
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

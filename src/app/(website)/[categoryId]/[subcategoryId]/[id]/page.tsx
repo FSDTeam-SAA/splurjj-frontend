@@ -370,7 +370,7 @@ const ContentBlogDetails = ({
                   />
                 </div>
                 <div className="md:col-span-7 h-full flex flex-col justify-center mt-2 md:mt-0">
-                  <h4 className="text-lg font-semibold leading-[120%] tracking-[0%] uppercase text-secondary text-center lg:text-left mt-4">
+                  <h4 className="text-lg font-semibold leading-[120%] tracking-[0%] uppercase text-secondary dark:text-white text-center lg:text-left mt-4">
                     {blogData.user?.first_name || blogData.author}
                   </h4>
                   <p className="mt-4 text-base font-normal leading-[150%] tracking-[0%] text-secondary line-clamp-2">
