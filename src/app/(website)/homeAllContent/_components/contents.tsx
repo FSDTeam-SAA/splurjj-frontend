@@ -1,5 +1,4 @@
 "use client"
-
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState, useRef, useCallback } from "react"
@@ -8,7 +7,7 @@ import { RiShareForwardLine } from "react-icons/ri"
 import { TbTargetArrow } from "react-icons/tb"
 import { Loader2 } from "lucide-react"
 
-// Interface for ContentItem
+// Interface for ContentItem (assuming SearchResult is compatible)
 interface ContentItem {
   id: number
   category_id: number
@@ -31,7 +30,7 @@ interface ContentItem {
   status: string
 }
 
-// Interface for API Response
+// Interface for API Response (can be used for both home and search if data structure is similar)
 interface ApiResponse {
   success: boolean
   message: string
@@ -44,7 +43,11 @@ interface ApiResponse {
   }
 }
 
-function Contents() {
+interface ContentsProps {
+  initialSearchQuery?: string
+}
+
+function Contents({ initialSearchQuery }: ContentsProps) {
   const [contents, setContents] = useState<ContentItem[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [loadingMore, setLoadingMore] = useState<boolean>(false)
@@ -53,60 +56,69 @@ function Contents() {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [hasMore, setHasMore] = useState<boolean>(true)
   const [totalItems, setTotalItems] = useState<number>(0)
-
   const observerRef = useRef<HTMLDivElement>(null)
   const limit = 9
 
 
   console.log(totalItems)
 
-const fetchData = useCallback(
-  async (page: number, isLoadMore = false) => {
-    try {
-      if (isLoadMore) {
-        setLoadingMore(true)
-      } else {
-        setLoading(true)
+  const fetchData = useCallback(
+    async (page: number, isLoadMore = false) => {
+      try {
+        if (isLoadMore) {
+          setLoadingMore(true)
+        } else {
+          setLoading(true)
+          setContents([]) // Clear contents on initial fetch or new search
+          setCurrentPage(1) // Reset page for new search
+        }
+
+        let url = ""
+        if (initialSearchQuery) {
+          url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/search?q=${encodeURIComponent(
+            initialSearchQuery,
+          )}&page=${page}&limit=${limit}`
+        } else {
+          url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home?page=${page}&limit=${limit}`
+        }
+
+        const response = await fetch(url)
+        if (!response.ok) {
+          throw new Error(`Failed to fetch data: ${response.statusText}`)
+        }
+        const data: ApiResponse = await response.json()
+
+        if (isLoadMore) {
+          setContents((prev) => [...prev, ...data.data])
+        } else {
+          setContents(data.data)
+        }
+
+        if (data.meta) {
+          setTotalItems(data.meta.total)
+          setHasMore(page < data.meta.last_page)
+        } else {
+          console.warn("Meta object is missing in API response")
+          setTotalItems(data.data.length)
+          setHasMore(data.data.length === limit)
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An unknown error occurred")
+      } finally {
+        setLoading(false)
+        setLoadingMore(false)
       }
-
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home?page=${page}&limit=${limit}`)
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch data: ${response.statusText}`)
-      }
-
-      const data: ApiResponse = await response.json()
-      console.log("API Response:", data) // Debug the response
-
-      if (isLoadMore) {
-        setContents((prev) => [...prev, ...data.data])
-      } else {
-        setContents(data.data)
-      }
-
-      // Handle pagination metadata
-      if (data.meta) {
-        setTotalItems(data.meta.total)
-        setHasMore(page < data.meta.last_page)
-      } else {
-        console.warn("Meta object is missing in API response")
-        setTotalItems(data.data.length)
-        setHasMore(data.data.length === limit) // Assume more data if full limit is returned
-      }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "An unknown error occurred")
-    } finally {
-      setLoading(false)
-      setLoadingMore(false)
-    }
-  },
-  [limit],
-)
-
+    },
+    [limit, initialSearchQuery], // Depend on initialSearchQuery
+  )
 
   useEffect(() => {
+    // Reset and fetch data when initialSearchQuery changes
+    setContents([])
+    setCurrentPage(1)
+    setHasMore(true)
     fetchData(1)
-  }, [fetchData])
+  }, [initialSearchQuery, fetchData]) // Re-fetch when search query changes
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -124,12 +136,10 @@ const fetchData = useCallback(
         threshold: 0.1,
       },
     )
-
     const currentObserverRef = observerRef.current
     if (currentObserverRef) {
       observer.observe(currentObserverRef)
     }
-
     return () => {
       if (currentObserverRef) {
         observer.unobserve(currentObserverRef)
@@ -138,7 +148,7 @@ const fetchData = useCallback(
   }, [currentPage, hasMore, loadingMore, loading, fetchData])
 
   const getImageUrl = (path: string | null): string => {
-    if (!path) return "/fallback-image.jpg" // Fallback image
+    if (!path) return "/placeholder.svg" // Fallback image
     if (path.startsWith("http")) return path
     return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${path.replace(/^\/+/, "")}`
   }
@@ -155,7 +165,6 @@ const fetchData = useCallback(
       text: post.sub_heading || "Check out this blog post!",
       url: shareUrl,
     }
-
     if (navigator.share) {
       try {
         await navigator.share(shareData)
@@ -195,7 +204,6 @@ const fetchData = useCallback(
           <div key={index} className="relative">
             {/* Image */}
             <div className="bg-gray-300 w-full h-[300px] rounded-t-lg"></div>
-
             {/* Content */}
             <div className="p-4">
               <div className="flex items-center gap-2">
@@ -236,7 +244,6 @@ const fetchData = useCallback(
               className="w-full h-[300px] object-cover"
               priority
             />
-
             <div className="p-4">
               <div className="flex items-center gap-2">
                 <Link
@@ -296,7 +303,6 @@ const fetchData = useCallback(
           </div>
         ))}
       </div>
-
       {/* Loading indicator for infinite scroll */}
       {loadingMore && (
         <div className="flex justify-center items-center py-8">
@@ -304,14 +310,12 @@ const fetchData = useCallback(
           <span className="ml-2 text-muted-foreground">Loading more content...</span>
         </div>
       )}
-
       {/* End of content indicator */}
       {/* {!hasMore && contents.length > 0 && (
         <div className="text-center py-8 text-muted-foreground">
           <p>You&apos;ve reached the end! Showing all {totalItems} items.</p>
         </div>
       )} */}
-
       {/* Intersection observer target */}
       <div ref={observerRef} className="h-10" />
     </div>
