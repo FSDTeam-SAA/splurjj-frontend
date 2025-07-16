@@ -69,7 +69,7 @@ const RecentArticles = () => {
                       />
                     </td>
                     <td
-                      className="text-black dark:text-black black-text"
+                      className="text-black dark:text-black black__text"
                       dangerouslySetInnerHTML={{ __html: content?.heading }}
                     />
                   </div>

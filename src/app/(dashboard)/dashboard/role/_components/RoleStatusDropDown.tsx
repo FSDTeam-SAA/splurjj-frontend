@@ -55,7 +55,7 @@ const RoleStatusDropDown = ({ roleId, initialRole }: StatusDropdownProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="px-2 py-1 text-base border font-normal rounded-[30px] leading-[120%] bg-white text-black flex items-center gap-1">
+        <button className="px-2 py-1 text-base border font-normal rounded-[30px] leading-[120%] bg-white text-black dark:text-black flex items-center gap-1">
           {role}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +73,7 @@ const RoleStatusDropDown = ({ roleId, initialRole }: StatusDropdownProps) => {
           </svg>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-white">
+      <DropdownMenuContent className="bg-white dark:text-black">
         <DropdownMenuItem onClick={() => handleStatusChange("user")}>
           User
         </DropdownMenuItem>

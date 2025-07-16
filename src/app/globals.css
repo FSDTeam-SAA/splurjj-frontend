@@ -250,6 +250,7 @@ Textarea{
 .white-text h4,
 .white-text h5,
 .white-text h6,
+.white-text h2 strong,
 .white-text span {
   color: #fff !important;
 }
@@ -271,4 +272,8 @@ Textarea{
     height: 100% !important;
   }
   
+}
+
+.black__text p, h1, h2, h3, h4, h5, h6, li {
+  color: #000 !important;
 }
