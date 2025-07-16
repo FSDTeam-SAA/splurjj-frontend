@@ -3,10 +3,16 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { RiShareForwardLine } from "react-icons/ri";
-import { FaFacebook, FaLinkedin, FaRegCommentDots, FaTwitter } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaLinkedin,
+  FaRegCommentDots,
+  FaTwitter,
+} from "react-icons/fa";
 import { TbTargetArrow } from "react-icons/tb";
+import SkeletonLoader from "./SkeletonLoader";
 
-// Define the Post interface to match the data structure from AllContentContainer
+// Define the Post interface
 interface Post {
   id: number;
   heading: string;
@@ -14,6 +20,8 @@ interface Post {
   author: string;
   date: string;
   body1: string;
+  category_id: number;
+  subcategory_id: number;
   category_name: string;
   sub_category_name: string;
   image1: string | null;
@@ -24,16 +32,17 @@ interface Post {
   tags: string[];
 }
 
-// Define the props for SecondContents to accept an array of Post objects
+// Define the props for SecondContents
 interface SecondContentsProps {
   posts: Post[];
+  loading?: boolean; // Add loading prop
 }
 
-const SecondContents: React.FC<SecondContentsProps> = ({ posts }) => {
+const SecondContents: React.FC<SecondContentsProps> = ({ posts, loading = false }) => {
   const [showShareMenu, setShowShareMenu] = useState<number | null>(null);
 
   const getImageUrl = (path: string | null): string => {
-    if (!path) return "/fallback-image.jpg"; // Fallback image
+    if (!path) return "/fallback-image.jpg";
     if (path.startsWith("http")) return path;
     return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${path.replace(/^\/+/, "")}`;
   };
@@ -44,9 +53,10 @@ const SecondContents: React.FC<SecondContentsProps> = ({ posts }) => {
     postId: number
   ): string => {
     const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
-    // Normalize category and subcategory names for URL
     const normalizedCategory = categoryName.toLowerCase().replace(/\s+/g, "-");
-    const normalizedSubCategory = subCategoryName.toLowerCase().replace(/\s+/g, "-");
+    const normalizedSubCategory = subCategoryName
+      .toLowerCase()
+      .replace(/\s+/g, "-");
     return `${baseUrl}/blogs/${normalizedCategory}/${normalizedSubCategory}/${postId}`;
   };
 
@@ -57,8 +67,10 @@ const SecondContents: React.FC<SecondContentsProps> = ({ posts }) => {
       post.id
     );
     const shareData = {
-      title: post.heading.replace(/<[^>]+>/g, ""), // Strip HTML for sharing
-      text: post.sub_heading?.replace(/<[^>]+>/g, "") || "Check out this blog post!",
+      title: post.heading.replace(/<[^>]+>/g, ""),
+      text:
+        post.sub_heading?.replace(/<[^>]+>/g, "") ||
+        "Check out this blog post!",
       url: shareUrl,
     };
 
@@ -102,7 +114,9 @@ const SecondContents: React.FC<SecondContentsProps> = ({ posts }) => {
 
   return (
     <div className="container mx-auto px-4">
-      {posts.length === 0 ? (
+      {loading ? (
+        <SkeletonLoader />
+      ) : posts.length === 0 ? (
         <p className="text-center text-muted-foreground">
           No content available.
         </p>
@@ -114,26 +128,36 @@ const SecondContents: React.FC<SecondContentsProps> = ({ posts }) => {
               className="space-y-2 overflow-hidden"
               aria-labelledby={`card-heading-${post.id}`}
             >
-              <Image
-                src={getImageUrl(post.image1)}
-                alt={post.heading.replace(/<[^>]+>/g, "")} // Strip HTML for alt text
-                width={400}
-                height={300}
-                className="w-full h-[300px] object-cover"
-                priority
-              />
+              <Link
+                href={`/${post.category_id}/${post.subcategory_id}/${post.id}#comment`}
+              >
+                <Image
+                  src={getImageUrl(post.image1)}
+                  alt={post.heading.replace(/<[^>]+>/g, "")}
+                  width={400}
+                  height={300}
+                  className="w-full h-[300px] object-cover"
+                  priority
+                />
+              </Link>
               <div className="p-4">
                 <div className="flex items-center gap-4 mb-2">
                   <div className="flex items-center gap-2">
                     <Link
-                      href={`/blogs/${post.category_name.toLowerCase().replace(/\s+/g, "-")}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                      href={`/blogs/${post.category_name
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
+                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                     >
                       {post.category_name || "Category"}
                     </Link>
                     <Link
-                      href={`/blogs/${post.category_name.toLowerCase().replace(/\s+/g, "-")}/${post.sub_category_name.toLowerCase().replace(/\s+/g, "-")}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                      href={`/blogs/${post.category_name
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}/${post.sub_category_name
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
+                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                     >
                       {post.sub_category_name || "Subcategory"}
                     </Link>
@@ -186,19 +210,28 @@ const SecondContents: React.FC<SecondContentsProps> = ({ posts }) => {
                       </div>
                     )}
                     <TbTargetArrow className="w-6 h-6" />
-                    <FaRegCommentDots className="w-6 h-6" />
+                    <Link
+                      href={`/${post.category_id}/${post.subcategory_id}/${post.id}#comment`}
+                      className="w-6 h-6"
+                    >
+                      <FaRegCommentDots className="w-6 h-6" />
+                    </Link>
                   </div>
                 </div>
                 <div>
                   <Link
-                    href={`/blogs/${post.category_name.toLowerCase().replace(/\s+/g, "-")}/${post.sub_category_name.toLowerCase().replace(/\s+/g, "-")}/${post.id}`}
+                    href={`/blogs/${post.category_name
+                      .toLowerCase()
+                      .replace(/\s+/g, "-")}/${post.sub_category_name
+                      .toLowerCase()
+                      .replace(/\s+/g, "-")}/${post.id}`}
                   >
                     <p
                       dangerouslySetInnerHTML={{ __html: post.heading }}
                       className="text-2xl font-medium line-clamp-2"
                     />
                   </Link>
-                  <p className="text-sm font-semibold  uppercase text-[#424242] mt-2">
+                  <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
                     {post.author} - {post.date}
                   </p>
                 </div>

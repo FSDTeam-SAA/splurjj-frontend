@@ -86,6 +86,8 @@ const AllContents: React.FC = () => {
     fetchData();
   }, []);
 
+  console.log("CCCCCCCCCCCCOOOOOOOOO",contents)
+
   const getImageUrl = (path: string | null): string => {
     if (!path) return "/fallback-image.jpg";
     if (path.startsWith("http")) return path;
@@ -298,12 +300,12 @@ const AllContents: React.FC = () => {
             </div>
             <div className="space-y-4">
               <Link
-              className="text-[#131313] dark:text-white"
+              className="content-heding-text"
                 href={`/${firstPost?.category_id}/${firstPost?.subcategory_id}/${firstPost?.id}`}
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-3xl md:text-[40px] lg:text-[60px] font-[800] text-[#131313] dark:text-white leading-[120%]"
+                  className="text-3xl md:text-[40px] lg:text-[60px] font-[800]  leading-[120%]"
                 />
               </Link>
               <p
