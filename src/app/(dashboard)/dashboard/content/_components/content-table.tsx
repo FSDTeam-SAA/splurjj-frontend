@@ -99,10 +99,10 @@ export default function ContentTable({
                     className="w-[130px] h-[68px] object-cover rounded-[8px]"
                   />
                 </div>
-                <div className="flex-1 min-w-0">
+                <div className="flex-1 min-w-0 dark:white-text">
                   <p
                     dangerouslySetInnerHTML={{ __html: content.heading }}
-                    className="text-base font-semibold text-[#131313] dark:white-text tracking-[0%] leading-[120%] "
+                    className="text-base font-semibold text-[#131313] dark:text-white tracking-[0%] leading-[120%] "
                   />
                 </div>
               </div>
