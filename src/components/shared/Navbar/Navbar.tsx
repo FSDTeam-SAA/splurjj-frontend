@@ -32,7 +32,7 @@ export type FooterData = {
   success: boolean;
   message: string;
   data: {
-    footer_links: string; 
+    footer_links: string;
     facebook_link: string;
     instagram_link: string;
     linkedin_link: string;
@@ -239,10 +239,7 @@ export default function Header() {
             <div className="flex items-center justify-start gap-6">
               {/* Logo */}
               <div className="h-[70px] md:h-[50px] w-[70px] md:w-[90px] flex items-start justify-start">
-                <Link
-                  href="/"
-                  className=""
-                >
+                <Link href="/" className="">
                   <Image
                     src={getImageUrl(header?.logo || "/logo.png")}
                     alt="Logo"
@@ -339,7 +336,7 @@ export default function Header() {
                       placeholder="Search..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-48 h-8"
+                      className="w-48 h-8 placeholder:dark:text-black  dark:text-black"
                       autoFocus
                     />
                     <Button
@@ -359,12 +356,8 @@ export default function Header() {
                 )}
               </div>
               {/* Cart (Hidden on sm) */}
-              {token && role !== "admin" && (
-                <ShoppingCart
-                  className="text-black hidden sm:block"
-                  size={30}
-                />
-              )}
+
+              <ShoppingCart className="text-black hidden sm:block" size={30} />
               {/* User Menu (Hidden on sm) */}
               <div className="hidden sm:block">
                 {token ? (
@@ -527,11 +520,9 @@ export default function Header() {
                   })}
                 </Accordion>
                 {/* Mobile Shopping Cart and User Menu */}
-                {token && role !== "admin" && (
-                  <div className="flex items-center space-x-4 mt-4 sm:hidden">
-                    <ShoppingCart className="text-black" size={30} />
-                  </div>
-                )}
+                <div className="flex items-center space-x-4 mt-4 sm:hidden">
+                  <ShoppingCart className="text-black" size={30} />
+                </div>
                 <div className="mt-2 sm:hidden">
                   {token ? (
                     <div className="flex flex-col space-y-2">
