@@ -47,7 +47,7 @@ export default function SubcategoryContentPage() {
       ).then((res) => res.json()),
   });
 
-  console.log("all contents", data?.data);
+  // console.log("all contents", data?.data);
   if (isError) {
     console.log(error);
   }

@@ -23,7 +23,7 @@ const RoleManagementContainer = () => {
       ).then((res) => res.json()),
   });
 
-  console.log({ data });
+  // console.log({ data });
 
   let content;
   if (isLoading) {

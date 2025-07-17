@@ -259,7 +259,7 @@ export default function ContentAddEditForm({
 
     formData.append("tags", JSON.stringify(data.tags));
 
-    console.log("Submitted data:", data);
+    // console.log("Submitted data:", data);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mutate(formData as any);
   };
