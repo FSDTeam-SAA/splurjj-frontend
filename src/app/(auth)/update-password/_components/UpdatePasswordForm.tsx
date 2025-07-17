@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import {  useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import PasswordChangeSuccessFullModal from "@/components/shared/modals/PasswordChangeSuccessFullModal";
 
 // Password validation schema
