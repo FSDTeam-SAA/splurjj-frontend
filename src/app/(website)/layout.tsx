@@ -1,16 +1,19 @@
-import Footer from '@/components/shared/Footer/Footer';
-import Navbar from '@/components/shared/Navbar/Navbar';
-import React from 'react';
-import "@/app/globals.css"
-import AppProvider from '@/components/provider/AppProvider';
+import Footer from "@/components/shared/Footer/Footer";
+import Navbar from "@/components/shared/Navbar/Navbar";
+import React, { Suspense } from "react";
+import "@/app/globals.css";
+import AppProvider from "@/components/provider/AppProvider";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       <AppProvider>
-      <Navbar />
-      {children}
-      <Footer />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Navbar />
+        </Suspense>
+        {/* Main content area */}
+        {children}
+        <Footer />
       </AppProvider>
     </div>
   );
