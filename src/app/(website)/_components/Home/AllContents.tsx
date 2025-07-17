@@ -86,7 +86,7 @@ const AllContents: React.FC = () => {
     fetchData();
   }, []);
 
-  console.log("CCCCCCCCCCCCOOOOOOOOO",contents)
+  // console.log("CCCCCCCCCCCCOOOOOOOOO",contents)
 
   const getImageUrl = (path: string | null): string => {
     if (!path) return "/fallback-image.jpg";

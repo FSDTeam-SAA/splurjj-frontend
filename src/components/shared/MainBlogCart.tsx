@@ -27,7 +27,7 @@ type BlogType = {
 
 const MainBlogCart = ({ blog }: { blog: BlogType }) => {
   const pathName = usePathname();
-  console.log("pathName", pathName)
+  // console.log("pathName", pathName)
 const newPathName =
   pathName === "/art-and-culture" ? "ART & CULTURE" : `${pathName}`;
 

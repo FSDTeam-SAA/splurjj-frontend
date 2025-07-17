@@ -91,7 +91,7 @@ export function SignUpForm() {
   });
 
   async function onSubmit(data: SignUpFormValues) {
-    console.log(data);
+    // console.log(data);
     mutate(data);
   }
 

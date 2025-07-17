@@ -63,7 +63,7 @@ export default function DashboardHeader() {
       }).then((res) => res.json()),
   });
 
-  console.log(headerData?.data);
+  // console.log(headerData?.data);
 
   return (
     <header className=" px-6 py-5 bg-white border-b border-[#B6B6B6]/50">

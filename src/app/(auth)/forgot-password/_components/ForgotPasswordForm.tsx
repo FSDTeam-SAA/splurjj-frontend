@@ -55,7 +55,7 @@ export function ForgotPasswordForm() {
 
   // ✅ Handle submit
   async function onSubmit(data: LoginFormValues) {
-    console.log(data);
+    // console.log(data);
     mutate(data.email);
   }
 
