@@ -398,12 +398,12 @@ export default function Header() {
                     role="search"
                   >
                     <Input
-                      type="search"
+                      type="text"
                       placeholder="Search products, categories..."
                       value={searchQuery}
                       onChange={handleSearchChange}
                       onKeyDown={handleKeyDown}
-                      className="w-full ml-2 bg-transparent text-sm focus:outline-none placeholder:text-gray-400 dark:text-black"
+                      className="w-full ml-2 bg-transparent text-sm focus:outline-none focus:border-0 border-0 outline-none ring-0 placeholder:text-gray-400 dark:text-black"
                       autoFocus
                       aria-label="Search content"
                     />
