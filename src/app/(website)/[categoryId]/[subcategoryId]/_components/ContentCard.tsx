@@ -1,5 +1,5 @@
-import type React from "react";
-import { useState } from "react";
+"use client";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { RiShareForwardLine } from "react-icons/ri";
@@ -12,7 +12,6 @@ import {
 import { TbTargetArrow } from "react-icons/tb";
 import SkeletonLoader from "./SkeletonLoader";
 
-// Define the Post interface
 interface Post {
   id: number;
   heading: string;
@@ -32,14 +31,90 @@ interface Post {
   tags: string[];
 }
 
-// Define the props for SecondContents
-interface SecondContentsProps {
-  posts: Post[];
-  loading?: boolean; // Add loading prop
+interface ContentAllDataTypeResponse {
+  success: boolean;
+  data: Post[];
+  meta: {
+    current_page: number;
+    per_page: number;
+    total: number;
+    last_page: number;
+  };
 }
 
-const SecondContents: React.FC<SecondContentsProps> = ({ posts, loading = false }) => {
+const SecondContents = ( { categoryId, subcategoryId }: { categoryId: string; subcategoryId: string }) => {
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [showShareMenu, setShowShareMenu] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const observerRef = useRef<HTMLDivElement>(null);
+
+  const fetchData = useCallback(async (page: number, isLoadMore = false) => {
+    if (isLoadMore) setLoadingMore(true);
+    setError(null);
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${categoryId}/${subcategoryId}?page=${page}`
+      );
+      if (!response.ok) {
+        throw new Error(`Failed to fetch content: ${response.statusText}`);
+      }
+
+      const result: ContentAllDataTypeResponse = await response.json();
+      if (!result.success) {
+        throw new Error("API returned unsuccessful response");
+      }
+
+      const newPosts = result.data || [];
+
+      console.log(newPosts);
+      const filteredPosts = newPosts.map((post) => ({
+        ...post,
+        tags: post.tags.filter((tag) => tag.trim() !== ""),
+      }));
+
+      setPosts((prev) => (isLoadMore ? [...prev, ...filteredPosts] : filteredPosts));
+      setHasMore(page < result.meta.last_page);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setHasMore(false);
+      setError("Failed to load more content. Please try again later.");
+    } finally {
+      if (isLoadMore) {
+        setLoadingMore(false);
+      } else {
+        setLoading(false);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchData(1);
+  }, [fetchData]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const target = entries[0];
+        if (target.isIntersecting && hasMore && !loadingMore) {
+          const nextPage = currentPage + 1;
+          setCurrentPage(nextPage);
+          fetchData(nextPage, true);
+        }
+      },
+      { root: null, rootMargin: "100px", threshold: 0.1 }
+    );
+
+    const currentObserverRef = observerRef.current;
+    if (currentObserverRef) observer.observe(currentObserverRef);
+    return () => {
+      if (currentObserverRef) observer.unobserve(currentObserverRef);
+    };
+  }, [currentPage, hasMore, loadingMore, fetchData]);
 
   const getImageUrl = (path: string | null): string => {
     if (!path) return "/fallback-image.jpg";
@@ -47,30 +122,18 @@ const SecondContents: React.FC<SecondContentsProps> = ({ posts, loading = false 
     return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${path.replace(/^\/+/, "")}`;
   };
 
-  const getShareUrl = (
-    categoryName: string,
-    subCategoryName: string,
-    postId: number
-  ): string => {
+  const getShareUrl = (post: Post): string => {
     const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
-    const normalizedCategory = categoryName.toLowerCase().replace(/\s+/g, "-");
-    const normalizedSubCategory = subCategoryName
-      .toLowerCase()
-      .replace(/\s+/g, "-");
-    return `${baseUrl}/blogs/${normalizedCategory}/${normalizedSubCategory}/${postId}`;
+    const normalizedCategory = post.category_name.toLowerCase().replace(/\s+/g, "-");
+    const normalizedSubCategory = post.sub_category_name.toLowerCase().replace(/\s+/g, "-");
+    return `${baseUrl}/blogs/${normalizedCategory}/${normalizedSubCategory}/${post.id}`;
   };
 
   const handleShare = async (post: Post) => {
-    const shareUrl = getShareUrl(
-      post.category_name,
-      post.sub_category_name,
-      post.id
-    );
+    const shareUrl = getShareUrl(post);
     const shareData = {
       title: post.heading.replace(/<[^>]+>/g, ""),
-      text:
-        post.sub_heading?.replace(/<[^>]+>/g, "") ||
-        "Check out this blog post!",
+      text: post.sub_heading?.replace(/<[^>]+>/g, "") || "Check out this blog post!",
       url: shareUrl,
     };
 
@@ -85,160 +148,245 @@ const SecondContents: React.FC<SecondContentsProps> = ({ posts, loading = false 
     }
   };
 
-  const shareToTwitter = (url: string, text: string) => {
-    window.open(
-      `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-        url
-      )}&text=${encodeURIComponent(text)}`,
-      "_blank"
-    );
+  const shareToSocial = (platform: string, post: Post) => {
+    const shareUrl = getShareUrl(post);
+    const title = post.heading.replace(/<[^>]+>/g, "");
+
+    switch (platform) {
+      case "twitter":
+        window.open(
+          `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(title)}`,
+          "_blank"
+        );
+        break;
+      case "facebook":
+        window.open(
+          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
+          "_blank"
+        );
+        break;
+      case "linkedin":
+        window.open(
+          `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(title)}`,
+          "_blank"
+        );
+        break;
+    }
   };
 
-  const shareToFacebook = (url: string) => {
-    window.open(
-      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
-      "_blank"
+  if (loading && !loadingMore) {
+    return (
+      <div className="container mx-auto px-4">
+        <SkeletonLoader />
+      </div>
     );
-  };
+  }
 
-  const shareToLinkedIn = (url: string, title: string) => {
-    window.open(
-      `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
-        url
-      )}&title=${encodeURIComponent(title)}`,
-      "_blank"
+  if (error) {
+    return (
+      <div className="container mx-auto px-4">
+        <p className="text-center text-red-500 py-8">{error}</p>
+      </div>
     );
-  };
+  }
 
-  console.log("Posts received in SecondContents:", posts);
 
   return (
-    <div className="container mx-auto px-4">
-      {loading ? (
-        <SkeletonLoader />
-      ) : posts.length === 0 ? (
-        <p className="text-center text-muted-foreground">
+    <div className="">
+      {posts.length <= 5 ? (
+        <p className="text-center text-muted-foreground py-8">
           No content available.
         </p>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {posts.map((post) => (
-            <article
-              key={post.id}
-              className="space-y-2 overflow-hidden"
-              aria-labelledby={`card-heading-${post.id}`}
-            >
-              <Link
-                href={`/${post.category_id}/${post.subcategory_id}/${post.id}#comment`}
-              >
-                <Image
-                  src={getImageUrl(post.image1)}
-                  alt={post.heading.replace(/<[^>]+>/g, "")}
-                  width={400}
-                  height={300}
-                  className="w-full h-[300px] object-cover"
-                  priority
-                />
-              </Link>
-              <div className="p-4">
-                <div className="flex items-center gap-4 mb-2">
-                  <div className="flex items-center gap-2">
-                    <Link
-                      href={`/blogs/${post.category_name
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
-                    >
-                      {post.category_name || "Category"}
-                    </Link>
-                    <Link
-                      href={`/blogs/${post.category_name
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")}/${post.sub_category_name
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
-                    >
-                      {post.sub_category_name || "Subcategory"}
-                    </Link>
-                  </div>
-                  <div className="flex items-center gap-3 relative">
-                    <RiShareForwardLine
-                      className="w-6 h-6 cursor-pointer"
-                      onClick={() => handleShare(post)}
-                    />
-                    {showShareMenu === post.id && (
-                      <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
-                        <FaTwitter
-                          className="w-6 h-6 cursor-pointer text-blue-500"
-                          onClick={() =>
-                            shareToTwitter(
-                              getShareUrl(
-                                post.category_name,
-                                post.sub_category_name,
-                                post.id
-                              ),
-                              post.heading.replace(/<[^>]+>/g, "")
-                            )
-                          }
-                        />
-                        <FaFacebook
-                          className="w-6 h-6 cursor-pointer text-blue-700"
-                          onClick={() =>
-                            shareToFacebook(
-                              getShareUrl(
-                                post.category_name,
-                                post.sub_category_name,
-                                post.id
-                              )
-                            )
-                          }
-                        />
-                        <FaLinkedin
-                          className="w-6 h-6 cursor-pointer text-blue-600"
-                          onClick={() =>
-                            shareToLinkedIn(
-                              getShareUrl(
-                                post.category_name,
-                                post.sub_category_name,
-                                post.id
-                              ),
-                              post.heading.replace(/<[^>]+>/g, "")
-                            )
-                          }
-                        />
-                      </div>
-                    )}
-                    <TbTargetArrow className="w-6 h-6" />
-                    <Link
-                      href={`/${post.category_id}/${post.subcategory_id}/${post.id}#comment`}
-                      className="w-6 h-6"
-                    >
-                      <FaRegCommentDots className="w-6 h-6" />
-                    </Link>
-                  </div>
-                </div>
-                <div>
+        <>
+          {/* Show all posts while loading */}
+          {(hasMore || loadingMore) && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {posts.slice(5).map((post) => (
+                <article
+                  key={post.id}
+                  className="space-y-2 overflow-hidden"
+                  aria-labelledby={`card-heading-${post.id}`}
+                >
                   <Link
-                    href={`/blogs/${post.category_name
-                      .toLowerCase()
-                      .replace(/\s+/g, "-")}/${post.sub_category_name
-                      .toLowerCase()
-                      .replace(/\s+/g, "-")}/${post.id}`}
+                    href={`/${post.category_id}/${post.subcategory_id}/${post.id}#comment`}
                   >
-                    <p
-                      dangerouslySetInnerHTML={{ __html: post.heading }}
-                      className="text-2xl font-medium line-clamp-2"
+                    <Image
+                      src={getImageUrl(post.image1)}
+                      alt={post.heading.replace(/<[^>]+>/g, "")}
+                      width={400}
+                      height={300}
+                      className="w-full h-[300px] object-cover"
+                      priority
                     />
                   </Link>
-                  <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
-                    {post.author} - {post.date}
-                  </p>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
+                  <div className="p-4">
+                    <div className="md:flex items-center gap-4 mb-2">
+                      <div className="flex items-center gap-2">
+                        <Link
+                          href={`/blogs/${post.category_name.toLowerCase().replace(/\s+/g, "-")}`}
+                          className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                        >
+                          {post.category_name || "Category"}
+                        </Link>
+                        <Link
+                          href={`/blogs/${post.category_name.toLowerCase().replace(/\s+/g, "-")}/${post.sub_category_name.toLowerCase().replace(/\s+/g, "-")}`}
+                          className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                        >
+                          {post.sub_category_name || "Subcategory"}
+                        </Link>
+                      </div>
+                      <div className="flex items-center gap-3 relative mt-4 md:mt-0 lg:mt-0">
+                        <RiShareForwardLine
+                          className="w-6 h-6 cursor-pointer"
+                          onClick={() => handleShare(post)}
+                        />
+                        {showShareMenu === post.id && (
+                          <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
+                            <FaTwitter
+                              className="w-6 h-6 cursor-pointer text-blue-500"
+                              onClick={() => shareToSocial("twitter", post)}
+                            />
+                            <FaFacebook
+                              className="w-6 h-6 cursor-pointer text-blue-700"
+                              onClick={() => shareToSocial("facebook", post)}
+                            />
+                            <FaLinkedin
+                              className="w-6 h-6 cursor-pointer text-blue-600"
+                              onClick={() => shareToSocial("linkedin", post)}
+                            />
+                          </div>
+                        )}
+                        <TbTargetArrow className="w-6 h-6" />
+                        <Link
+                          href={`/${post.category_id}/${post.subcategory_id}/${post.id}#comment`}
+                          className="w-6 h-6"
+                        >
+                          <FaRegCommentDots className="w-6 h-6" />
+                        </Link>
+                      </div>
+                    </div>
+                    <div>
+                      <Link
+                        href={`/blogs/${post.category_name.toLowerCase().replace(/\s+/g, "-")}/${post.sub_category_name.toLowerCase().replace(/\s+/g, "-")}/${post.id}`}
+                      >
+                        <p
+                          dangerouslySetInnerHTML={{ __html: post.heading }}
+                          className="text-2xl font-medium line-clamp-2"
+                        />
+                      </Link>
+                      <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
+                        {post.author} - {post.date}
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+
+          {/* After loading, show posts from index 4 */}
+          {!hasMore && !loadingMore && posts.length > 4 && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+              <h2 className="col-span-full text-2xl font-bold">More Content</h2>
+              {posts.slice(4).map((post) => (
+                <article
+                  key={post.id}
+                  className="space-y-2 overflow-hidden"
+                  aria-labelledby={`card-heading-${post.id}`}
+                >
+                  <Link
+                    href={`/${post.category_id}/${post.subcategory_id}/${post.id}#comment`}
+                  >
+                    <Image
+                      src={getImageUrl(post.image1)}
+                      alt={post.heading.replace(/<[^>]+>/g, "")}
+                      width={400}
+                      height={300}
+                      className="w-full h-[300px] object-cover"
+                      priority
+                    />
+                  </Link>
+                  <div className="p-4">
+                    <div className="flex items-center gap-4 mb-2">
+                      <div className="flex items-center gap-2">
+                        <Link
+                          href={`/blogs/${post.category_name.toLowerCase().replace(/\s+/g, "-")}`}
+                          className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                        >
+                          {post.category_name || "Category"}
+                        </Link>
+                        <Link
+                          href={`/blogs/${post.category_name.toLowerCase().replace(/\s+/g, "-")}/${post.sub_category_name.toLowerCase().replace(/\s+/g, "-")}`}
+                          className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                        >
+                          {post.sub_category_name || "Subcategory"}
+                        </Link>
+                      </div>
+                      <div className="flex items-center gap-3 relative">
+                        <RiShareForwardLine
+                          className="w-6 h-6 cursor-pointer"
+                          onClick={() => handleShare(post)}
+                        />
+                        {showShareMenu === post.id && (
+                          <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
+                            <FaTwitter
+                              className="w-6 h-6 cursor-pointer text-blue-500"
+                              onClick={() => shareToSocial("twitter", post)}
+                            />
+                            <FaFacebook
+                              className="w-6 h-6 cursor-pointer text-blue-700"
+                              onClick={() => shareToSocial("facebook", post)}
+                            />
+                            <FaLinkedin
+                              className="w-6 h-6 cursor-pointer text-blue-600"
+                              onClick={() => shareToSocial("linkedin", post)}
+                            />
+                          </div>
+                        )}
+                        <TbTargetArrow className="w-6 h-6" />
+                        <Link
+                          href={`/${post.category_id}/${post.subcategory_id}/${post.id}#comment`}
+                          className="w-6 h-6"
+                        >
+                          <FaRegCommentDots className="w-6 h-6" />
+                        </Link>
+                      </div>
+                    </div>
+                    <div>
+                      <Link
+                        href={`/blogs/${post.category_name.toLowerCase().replace(/\s+/g, "-")}/${post.sub_category_name.toLowerCase().replace(/\s+/g, "-")}/${post.id}`}
+                      >
+                        <p
+                          dangerouslySetInnerHTML={{ __html: post.heading }}
+                          className="text-2xl font-medium line-clamp-2"
+                        />
+                      </Link>
+                      <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
+                        {post.author} - {post.date}
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+
+          {/* Infinite scroll observer */}
+          {hasMore && <div ref={observerRef} />}
+
+          {loadingMore && (
+            <div className="col-span-full flex justify-center py-8">
+              <p>Loading more content...</p>
+            </div>
+          )}
+
+          {!hasMore && !loadingMore && (
+            <div className="col-span-full text-center py-8">
+              <p className="text-gray-700">You&apos;ve reached the end of the content.</p>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

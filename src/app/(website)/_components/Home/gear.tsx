@@ -220,7 +220,7 @@ const Gear: React.FC<ArtCultureProps> = ({ categoryName }) => {
     <div className="">
       {firstPost && (
         <div className="py-1">
-          <div className="flex items-center gap-2 mb-4">
+          <div className="md:flex items-center gap-2 mb-4">
             <div className="flex items-center gap-2">
               <Link
                 href={`/blogs/${firstPost.category_name}`}
@@ -235,7 +235,7 @@ const Gear: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 {firstPost.sub_category_name || "Subcategory"}
               </Link>
             </div>
-            <div className="flex items-center gap-3 relative">
+            <div className="flex items-center gap-3 relative mt-4 md:mt-0 lg:mt-0">
               <span
                 onClick={() => handleShare(firstPost)}
                 className="cursor-pointer"
