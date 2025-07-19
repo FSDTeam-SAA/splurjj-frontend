@@ -300,7 +300,7 @@ const ContentBlogDetails = ({
               </div>
               <p
                 dangerouslySetInnerHTML={{
-                  __html: sanitizeHTML(blogData.body1 ?? ""),
+                  __html: sanitizeHTML(blogData.sub_heading ?? ""),
                 }}
                 className="text-base font-normal leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8"
               />

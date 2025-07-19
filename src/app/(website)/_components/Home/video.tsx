@@ -324,7 +324,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
               {firstPost.author} - {firstPost.date}
             </p>
             <p
-              dangerouslySetInnerHTML={{ __html: firstPost.body1 }}
+              dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
               className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
             />
           </div>
@@ -434,7 +434,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 </Link>
               </div>
               <p
-                dangerouslySetInnerHTML={{ __html: thirdPost.body1 }}
+                dangerouslySetInnerHTML={{ __html: thirdPost.sub_heading }}
                 className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
               />
             </div>
@@ -540,7 +540,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 </Link>
               </div>
               <p
-                dangerouslySetInnerHTML={{ __html: fourthPost.body1 }}
+                dangerouslySetInnerHTML={{ __html: fourthPost.sub_heading }}
                 className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
               />
             </div>
@@ -644,7 +644,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 </Link>
               </div>
               <p
-                dangerouslySetInnerHTML={{ __html: fifthPost.body1 }}
+                dangerouslySetInnerHTML={{ __html: fifthPost.sub_heading }}
                 className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
               />
             </div>

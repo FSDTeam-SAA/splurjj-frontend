@@ -277,7 +277,7 @@ export default function Header() {
                     alt="Logo"
                     width={50}
                     height={30}
-                    className="h-[70px] md:h-[50px] w-[70px] md:w-[90px]"
+                    className="h-[60px] md:h-[50px] w-[70px] md:w-[90px]"
                   />
                 </Link>
               </div>

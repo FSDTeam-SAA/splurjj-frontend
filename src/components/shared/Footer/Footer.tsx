@@ -403,7 +403,7 @@ const Footer = () => {
               "Copyright © 2025 SPLURJJ. All Rights Reserved."}
           </span>
           <Minus className="text-black w-[5px] h-auto hidden md:block" />
-          <div className="flex items-center gap-4">
+          <div className="md:flex items-center gap-4 space-x-4">
             {footerBottomPages.map((page, index) => (
               <Link
                 key={`footer-bottom-${index}`}
