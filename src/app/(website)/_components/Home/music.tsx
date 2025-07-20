@@ -331,7 +331,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={secondPost.heading || "Blog Image"}
                   width={300}
                   height={200}
-                  className="w-full h-[213px] object-cover"
+                  className="w-full h-[213px] object-cover object-top"
                 /></Link>
                 </div>
                
@@ -439,7 +439,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={thirdPost.heading || "Blog Image"}
                   width={300}
                   height={200}
-                  className="w-full h-[213px] object-cover"
+                  className="w-full h-[213px] object-cover object-top"
                 /></Link>
                 
               </div>

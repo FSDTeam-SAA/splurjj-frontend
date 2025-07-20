@@ -273,7 +273,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
                   width={458}
                   height={346}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                  className="w-full h-[346px] object-cover"
+                  className="w-full h-[346px] object-cover object-top"
                 />
               </Link>
 

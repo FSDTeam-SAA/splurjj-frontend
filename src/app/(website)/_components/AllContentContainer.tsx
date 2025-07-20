@@ -117,7 +117,7 @@ const AllContentContainer = ({
   if (!allPosts.length && !loading && !loadingMore) {
     return (
       <div className="container mx-auto px-4">
-        <div className="text-center py-8" role="alert" aria-live="polite">
+        <div className="text-center py-8 h-screen" role="alert" aria-live="polite">
           <p className="text-lg text-gray-700">
             No content available for this category and subcategory.
           </p>
@@ -127,6 +127,7 @@ const AllContentContainer = ({
   }
 
   const featuredPosts = allPosts.length > 0 ? allPosts.slice(0, 5) : [];
+  const remainingPosts = allPosts.length > 5 ? allPosts.slice(5) : [];
 
   return (
     <div>
@@ -141,7 +142,8 @@ const AllContentContainer = ({
         </div>
       </div>
       <Horizontal />
-      <div className="container grid grid-cols-8 gap-4 pt-16 pb-2">
+      {remainingPosts.length > 0 && (
+        <div className="container grid grid-cols-8 gap-4 pt-16 pb-2">
         <div className="col-span-8 md:col-span-5 lg:col-span-6 pb-16">
           <SecondContents
             categoryId={categoryId}
@@ -154,6 +156,7 @@ const AllContentContainer = ({
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 };

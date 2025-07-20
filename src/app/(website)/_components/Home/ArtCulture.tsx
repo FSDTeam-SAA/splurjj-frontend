@@ -325,7 +325,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={firstPost.heading || "Blog Image"}
                   width={888}
                   height={552}
-                  className="w-full h-[455px] object-cover"
+                  className="w-full h-[455px] object-cover object-top"
                   priority
                 />
               </Link>
@@ -365,7 +365,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={thirdPost.heading || "Blog Image"}
                     width={400}
                     height={300}
-                    className="w-full h-[300px] object-cover"
+                    className="w-full h-[300px] object-cover object-top"
                     priority
                   />
                 </Link>
@@ -473,7 +473,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={fourthPost.heading || "Blog Image"}
                     width={400}
                     height={300}
-                    className="w-full h-[300px] object-cover"
+                    className="w-full h-[300px] object-cover object-top"
                     priority
                   />
                 </Link>
@@ -582,7 +582,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                       alt={fifthPost.heading || "Blog Image"}
                       width={400}
                       height={300}
-                      className="w-full h-[300px] object-cover"
+                      className="w-full h-[300px] object-cover object-top"
                       priority
                     />
                   </Link>
