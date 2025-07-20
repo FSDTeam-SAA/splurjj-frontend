@@ -156,9 +156,9 @@ export default function CategoryContainer() {
         {/* Header */}
         <div className="flex justify-between items-start mb-8">
           <div>
-            <p className="text-3xl font-bold text-gray-800 dark:text-white mb-2">
+            {/* <p className="text-3xl font-bold text-gray-800 dark:text-white mb-2">
               Categories
-            </p>
+            </p> */}
             <div className="text-sm dark:text-white text-black">
               <Link href="/dashboard" className="hover:underline">
                 Dashboard

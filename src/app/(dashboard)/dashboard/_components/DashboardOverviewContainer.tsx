@@ -64,10 +64,10 @@ const DashboardOverviewContainer = () => {
           </div>
           <div>
             <Image
-              src="/assets/images/business.png"
-              alt="overview icon"
-              width={54}
-              height={54}
+              src="/assets/dashboard/revenue.png"
+              alt="revenue icon"
+              width={48}
+              height={48}
             />
           </div>
         </div>
@@ -84,10 +84,10 @@ const DashboardOverviewContainer = () => {
           </div>
           <div>
             <Image
-              src="/assets/images/articles.png"
-              alt="overview icon"
-              width={54}
-              height={54}
+              src="/assets/dashboard/article.png"
+              alt="article icon"
+              width={48}
+              height={48}
             />
           </div>
         </div>
@@ -104,10 +104,10 @@ const DashboardOverviewContainer = () => {
           </div>
           <div>
             <Image
-              src="/assets/images/pendingApprovals.png"
-              alt="overview icon"
-              width={54}
-              height={54}
+              src="/assets/dashboard/pending-tasks.png"
+              alt="pending icon"
+              width={48}
+              height={48}
             />
           </div>
         </div>
@@ -125,10 +125,10 @@ const DashboardOverviewContainer = () => {
           </div>
           <div>
             <Image
-              src="/assets/images/total_author.png"
-              alt="overview icon"
-              width={54}
-              height={54}
+              src="/assets/dashboard/authors.png"
+              alt="total author icon"
+              width={48}
+              height={48}
             />
           </div>
         </div>
@@ -146,10 +146,10 @@ const DashboardOverviewContainer = () => {
           </div>
           <div>
             <Image
-              src="/assets/images/total_user.png"
-              alt="overview icon"
-              width={54}
-              height={54}
+              src="/assets/dashboard/total_User.png"
+              alt="total user icon"
+              width={48}
+              height={48}
             />
           </div>
         </div>
@@ -167,10 +167,10 @@ const DashboardOverviewContainer = () => {
           </div>
           <div>
             <Image
-              src="/assets/images/total_user.png"
-              alt="overview icon"
-              width={54}
-              height={54}
+              src="/assets/dashboard/10k-followers.png"
+              alt="subscriber icon"
+              width={48}
+              height={48}
             />
           </div>
         </div>

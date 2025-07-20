@@ -62,7 +62,7 @@ export default function CategoryTable({
         <TableRow>
           {/* <TableHead className="w-16">ID</TableHead> */}
           <TableHead className="text-black dark:text-black">Category Name</TableHead>
-          <TableHead className="w-32 text-black">Subcategories</TableHead>
+          <TableHead className="w-32 text-black">Sub Categories</TableHead>
           {!isAuthor && (
             <TableHead className="w-32 text-center text-black">Actions</TableHead>
           )}

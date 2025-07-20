@@ -65,7 +65,7 @@ const RecentArticles = () => {
                         alt={content?.heading}
                         width={60}
                         height={60}
-                        className="w-[60px] h-[60px] rounded-[8px]"
+                        className="w-[60px] h-[60px] rounded-[8px] object-cover"
                       />
                     </td>
                     <td
