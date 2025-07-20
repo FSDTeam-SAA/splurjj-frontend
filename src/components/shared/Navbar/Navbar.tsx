@@ -277,7 +277,7 @@ export default function Header() {
                     alt="Logo"
                     width={50}
                     height={30}
-                    className="h-[70px] md:h-[50px] w-[70px] md:w-[90px]"
+                    className="h-[60px] md:h-[50px] w-[70px] md:w-[90px]"
                   />
                 </Link>
               </div>
@@ -398,12 +398,12 @@ export default function Header() {
                     role="search"
                   >
                     <Input
-                      type="search"
+                      type="text"
                       placeholder="Search products, categories..."
                       value={searchQuery}
                       onChange={handleSearchChange}
                       onKeyDown={handleKeyDown}
-                      className="w-full ml-2 bg-transparent text-sm focus:outline-none placeholder:text-gray-400 dark:text-black"
+                      className="w-full ml-2 bg-transparent text-sm focus:outline-none focus:border-0 border-0 outline-none ring-0 placeholder:text-gray-400 dark:text-black"
                       autoFocus
                       aria-label="Search content"
                     />

@@ -233,7 +233,25 @@ const ContentBlogDetails = ({
     );
   }
   if (!blogData) {
-    return <div className="text-center py-10">Blog not found</div>;
+    return (
+      <div className="flex items-center justify-center  bg-black  h-screen">
+        <div
+          className="text-center p-10 rounded-lg w-[500px] h-[400px] flex flex-col items-center justify-end"
+          style={{
+            backgroundImage: `url(/assets/images/404.jpg)`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <Link
+            href="/"
+            className="mt-6 inline-block text-black underline bg-white p-2 rounded"
+          >
+            Return Home
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   const cleanedTags = cleanTags(blogData.tags || []);
@@ -295,12 +313,12 @@ const ContentBlogDetails = ({
                   alt={blogData.heading || "Blog image"}
                   width={888}
                   height={552}
-                  className="w-full h-[443px] object-cover "
+                  className="w-full lg:h-[850px] object-cover object-top"
                 />
               </div>
               <p
                 dangerouslySetInnerHTML={{
-                  __html: sanitizeHTML(blogData.body1 ?? ""),
+                  __html: sanitizeHTML(blogData.sub_heading ?? ""),
                 }}
                 className="text-base font-normal leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8"
               />
@@ -366,7 +384,7 @@ const ContentBlogDetails = ({
                     alt={blogData.user?.first_name || "Author"}
                     width={180}
                     height={180}
-                    className="w-[180px] h-[180px] object-cover rounded-full border"
+                    className="w-[180px] h-[180px] object-cover object-top rounded-full border"
                   />
                 </div>
                 <div className="md:col-span-7 h-full flex flex-col justify-center mt-2 md:mt-0">
@@ -433,7 +451,7 @@ const ContentBlogDetails = ({
                 <div id="comment" className="pt-[90px]">
                   <p className="font-base text-black font-normal leading-normal">
                     You must be{" "}
-                    <Link  href="/login" className="underline font-bold">
+                    <Link href="/login" className="underline font-bold">
                       logged in
                     </Link>{" "}
                     to post

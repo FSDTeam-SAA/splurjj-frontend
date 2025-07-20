@@ -240,7 +240,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={firstPost.heading || "Blog Image"}
                   width={600}
                   height={455}
-                  className="w-full h-[400px] md:h-[455px] object-cover"
+                  className="w-full h-[400px] md:h-[455px] object-cover object-top"
                   priority
                 />
               </Link>
@@ -324,7 +324,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
               {firstPost.author} - {firstPost.date}
             </p>
             <p
-              dangerouslySetInnerHTML={{ __html: firstPost.body1 }}
+              dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
               className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
             />
           </div>
@@ -359,7 +359,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={thirdPost.heading || "Blog Image"}
                     width={400}
                     height={455}
-                    className="w-full h-[400px] md:h-[455px] object-cover"
+                    className="w-full h-[400px] md:h-[455px] object-cover object-top"
                     priority
                   />
                 </Link>
@@ -434,7 +434,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 </Link>
               </div>
               <p
-                dangerouslySetInnerHTML={{ __html: thirdPost.body1 }}
+                dangerouslySetInnerHTML={{ __html: thirdPost.sub_heading }}
                 className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
               />
             </div>
@@ -465,7 +465,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={fourthPost.heading || "Blog Image"}
                     width={400}
                     height={455}
-                    className="w-full h-[400px] md:h-[455px] object-cover"
+                    className="w-full h-[400px] md:h-[455px] object-cover object-top"
                     priority
                   />
                 </Link>
@@ -540,7 +540,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 </Link>
               </div>
               <p
-                dangerouslySetInnerHTML={{ __html: fourthPost.body1 }}
+                dangerouslySetInnerHTML={{ __html: fourthPost.sub_heading }}
                 className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
               />
             </div>
@@ -570,7 +570,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={fifthPost.heading || "Blog Image"}
                   width={400}
                   height={455}
-                  className="w-full h-[400px] md:h-[455px] object-cover"
+                  className="w-full h-[400px] md:h-[455px] object-cover object-top"
                   priority
                 />
               </Link>
@@ -644,7 +644,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 </Link>
               </div>
               <p
-                dangerouslySetInnerHTML={{ __html: fifthPost.body1 }}
+                dangerouslySetInnerHTML={{ __html: fifthPost.sub_heading }}
                 className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
               />
             </div>

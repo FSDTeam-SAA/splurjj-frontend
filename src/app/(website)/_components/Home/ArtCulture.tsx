@@ -231,7 +231,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
     <div className="">
       {firstPost && (
         <div className="">
-          <div className="flex items-center gap-2 mb-4 ">
+          <div className="md:flex items-center gap-2 mb-4 ">
             <div className="flex items-center gap-2">
               <Link
                 href={`/blogs/${firstPost.category_name}`}
@@ -246,7 +246,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 {firstPost.sub_category_name || "Subcategory"}
               </Link>
             </div>
-            <div className="flex items-center gap-3 relative ">
+            <div className="flex items-center gap-3 relative mt-4 md:mt-0 lg:mt-0">
               <span
                 onClick={() => handleShare(firstPost)}
                 className="cursor-pointer"
@@ -325,7 +325,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={firstPost.heading || "Blog Image"}
                   width={888}
                   height={552}
-                  className="w-full h-[455px] object-cover"
+                  className="w-full h-[455px] object-cover object-top"
                   priority
                 />
               </Link>
@@ -365,7 +365,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={thirdPost.heading || "Blog Image"}
                     width={400}
                     height={300}
-                    className="w-full h-[300px] object-cover"
+                    className="w-full h-[300px] object-cover object-top"
                     priority
                   />
                 </Link>
@@ -441,7 +441,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   </Link>
                 </div>
                 <p
-                  dangerouslySetInnerHTML={{ __html: thirdPost.body1 }}
+                  dangerouslySetInnerHTML={{ __html: thirdPost.sub_heading }}
                   className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
                 />
               </div>
@@ -473,7 +473,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={fourthPost.heading || "Blog Image"}
                     width={400}
                     height={300}
-                    className="w-full h-[300px] object-cover"
+                    className="w-full h-[300px] object-cover object-top"
                     priority
                   />
                 </Link>
@@ -549,7 +549,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   </Link>
                 </div>
                 <p
-                  dangerouslySetInnerHTML={{ __html: fourthPost.body1 }}
+                  dangerouslySetInnerHTML={{ __html: fourthPost.sub_heading }}
                   className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
                 />
               </div>
@@ -582,7 +582,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                       alt={fifthPost.heading || "Blog Image"}
                       width={400}
                       height={300}
-                      className="w-full h-[300px] object-cover"
+                      className="w-full h-[300px] object-cover object-top"
                       priority
                     />
                   </Link>
@@ -658,7 +658,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     </Link>
                   </div>
                   <p
-                    dangerouslySetInnerHTML={{ __html: fifthPost.body1 }}
+                    dangerouslySetInnerHTML={{ __html: fifthPost.sub_heading }}
                     className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
                   />
                 </div>

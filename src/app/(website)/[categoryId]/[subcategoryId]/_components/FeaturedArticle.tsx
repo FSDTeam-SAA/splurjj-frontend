@@ -7,7 +7,6 @@ import { FaFacebook, FaLinkedin, FaRegCommentDots, FaTwitter } from "react-icons
 import { TbTargetArrow } from "react-icons/tb";
 import FirstContentsSkeleton from "./FirstContentsSkeleton";
 
-// Define the Post interface
 interface Post {
   id: number;
   heading: string;
@@ -27,7 +26,6 @@ interface Post {
   tags: string[];
 }
 
-// Define the props
 interface FirstContentsProps {
   posts: Post[];
   loading?: boolean;
@@ -104,20 +102,20 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
   const fifthPost = posts[4];
 
   return (
-    <div className="container mx-auto px-4">
+    <div className="">
       {firstPost ? (
         <div className="mb-16">
           <div className="lg:flex items-center gap-4 mb-4 space-y-4 md:space-y-0">
             <div className="flex items-center gap-2">
               <Link
                 href={`/blogs/${firstPost.category_name.toLowerCase().replace(/\s+/g, "-")}`}
-                className="bg-primary py-2 px-4 rounded text-base font-extrabold uppercase text-white"
+                className="bg-primary py-2 px-4 rounded text-sm md:text-base font-extrabold uppercase text-white"
               >
                 {firstPost.category_name || "Category"}
               </Link>
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}`}
-                className="bg-primary py-2 px-4 rounded text-base font-extrabold uppercase text-white"
+                className="bg-primary py-2 px-4 rounded text-sm md:text-base font-extrabold uppercase text-white"
               >
                 {firstPost.sub_category_name || "Subcategory"}
               </Link>
@@ -174,7 +172,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
               />
             </Link>
             <p
-              dangerouslySetInnerHTML={{ __html: firstPost.body1 }}
+              dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
               className="text-[16px] font-extralight font-helvetica text-[#424242] line-clamp-3"
             />
             <p className="text-base font-semibold uppercase text-[#424242]">
@@ -188,7 +186,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                 alt={firstPost.heading.replace(/<[^>]+>/g, "")}
                 width={1200}
                 height={600}
-                className="w-full object-cover lg:h-[680px]"
+                className="w-full object-cover object-top lg:h-[680px]"
                 priority
               />
             </Link>
@@ -268,7 +266,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
               </Link>
             </div>
             <p
-              dangerouslySetInnerHTML={{ __html: secondPost.body1 }}
+              dangerouslySetInnerHTML={{ __html: secondPost.sub_heading }}
               className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
             />
           </div>
@@ -279,7 +277,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                 alt={secondPost.heading.replace(/<[^>]+>/g, "")}
                 width={400}
                 height={315}
-                className="w-full h-[315px] object-cover"
+                className="w-full h-[315px] object-cover object-top"
                 priority
               />
             </Link>
@@ -295,7 +293,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
               alt={thirdPost.heading.replace(/<[^>]+>/g, "")}
               width={400}
               height={443}
-              className="w-full h-[443px] object-cover"
+              className="w-full h-[443px] object-cover object-top"
               priority
             />
           </Link>
@@ -369,7 +367,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
               </Link>
             </div>
             <p
-              dangerouslySetInnerHTML={{ __html: thirdPost.body1 }}
+              dangerouslySetInnerHTML={{ __html: thirdPost.sub_heading }}
               className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
             />
           </div>
@@ -379,7 +377,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {fourthPost && (
           <div className="space-y-2">
-            <div className="flex items-center gap-4">
+            <div className="md:flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <Link
                   href={`/blogs/${fourthPost.category_name.toLowerCase().replace(/\s+/g, "-")}`}
@@ -394,7 +392,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                   {fourthPost.sub_category_name || "Subcategory"}
                 </Link>
               </div>
-              <div className="flex items-center gap-3 relative">
+              <div className="flex items-center gap-3 relative mt-4 md:mt-0 lg:mt-4">
                 <RiShareForwardLine
                   className="w-6 h-6 cursor-pointer"
                   onClick={() => handleShare(fourthPost)}
@@ -453,7 +451,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                 alt={fourthPost.heading.replace(/<[^>]+>/g, "")}
                 width={400}
                 height={300}
-                className="w-full h-[300px] object-cover"
+                className="w-full h-[300px] object-cover object-top"
                 priority
               />
             </Link>
@@ -461,7 +459,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
         )}
         {fifthPost && (
           <div className="space-y-2">
-            <div className="flex items-center gap-4">
+            <div className="md:flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <Link
                   href={`/blogs/${fifthPost.category_name.toLowerCase().replace(/\s+/g, "-")}`}
@@ -476,7 +474,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                   {fifthPost.sub_category_name || "Subcategory"}
                 </Link>
               </div>
-              <div className="flex items-center gap-3 relative">
+              <div className="flex items-center gap-3 relative mt-4 md:mt-0 lg:mt-4">
                 <RiShareForwardLine
                   className="w-6 h-6 cursor-pointer"
                   onClick={() => handleShare(fifthPost)}
@@ -535,7 +533,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                 alt={fifthPost.heading.replace(/<[^>]+>/g, "")}
                 width={400}
                 height={300}
-                className="w-full h-[300px] object-cover"
+                className="w-full h-[300px] object-cover object-top"
                 priority
               />
             </Link>

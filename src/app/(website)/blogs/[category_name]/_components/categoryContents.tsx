@@ -174,7 +174,7 @@ function CategoryContents({
                 alt={post.heading}
                 width={400}
                 height={300}
-                className="w-full h-[300px] object-cover"
+                className="w-full h-[300px] object-cover object-top"
                 priority
               />
             </Link>
@@ -260,7 +260,7 @@ function CategoryContents({
                 </Link>
               </div>
               <p
-                dangerouslySetInnerHTML={{ __html: post.body1 }}
+                dangerouslySetInnerHTML={{ __html: post.sub_heading }}
                 className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
               />
             </div>

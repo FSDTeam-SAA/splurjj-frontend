@@ -273,7 +273,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
                   width={458}
                   height={346}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                  className="w-full h-[346px] object-cover"
+                  className="w-full h-[346px] object-cover object-top"
                 />
               </Link>
 
@@ -373,7 +373,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
               </div>
 
               <p
-                dangerouslySetInnerHTML={{ __html: post.body1 }}
+                dangerouslySetInnerHTML={{ __html: post.sub_heading }}
                 className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
               />
             </div>

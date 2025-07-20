@@ -218,7 +218,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
     <div className="">
       {firstPost && (
         <div className="">
-          <div className="flex items-center gap-2 mb-4">
+          <div className="md:flex items-center gap-2 mb-4">
             <div className="flex items-center gap-2">
               <Link
                 href={`/blogs/${firstPost.category_name}`}
@@ -233,7 +233,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 {firstPost.sub_category_name || "Subcategory"}
               </Link>
             </div>
-            <div className="flex items-center gap-3 relative">
+            <div className="flex items-center gap-3 relative mt-4 md:mt-0 lg:mt-0">
               <span
                 onClick={() => handleShare(firstPost)}
                 className="cursor-pointer"
@@ -303,14 +303,14 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
               }}
               className="flex items-center justify-center h-[400px] md:h-[433px]"
             >
-              <div className=" w-2/3">
+              <div className=" px-4">
                 <div
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="font-medium white-text hover:underline text-4xl lg:text-5xl text-center text-white line-clamp-3"
+                  className="font-medium white-text hover:underline text-3xl lg:text-5xl text-center text-white line-clamp-3"
                 />
                 <div
                   dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
-                  className="text-lg font-medium white-text hover:underline text-center line-clamp-4"
+                  className="md:text-lg font-medium white-text hover:underline text-center line-clamp-4"
                 />
               </div>
             </div>
@@ -331,7 +331,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={secondPost.heading || "Blog Image"}
                   width={300}
                   height={200}
-                  className="w-full h-[213px] object-cover"
+                  className="w-full h-[213px] object-cover object-top"
                 /></Link>
                 </div>
                
@@ -419,7 +419,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   </div>
                 </div>
                 <p
-                  dangerouslySetInnerHTML={{ __html: secondPost.body1 }}
+                  dangerouslySetInnerHTML={{ __html: secondPost.sub_heading }}
                   className="text-sm font-normal text-[#424242] line-clamp-3"
                 />
                 <p className="text-sm font-semibold uppercase text-[#424242]">
@@ -439,7 +439,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={thirdPost.heading || "Blog Image"}
                   width={300}
                   height={200}
-                  className="w-full h-[213px] object-cover"
+                  className="w-full h-[213px] object-cover object-top"
                 /></Link>
                 
               </div>
@@ -526,7 +526,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   </div>
                 </div>
                 <p
-                  dangerouslySetInnerHTML={{ __html: thirdPost.body1 }}
+                  dangerouslySetInnerHTML={{ __html: thirdPost.sub_heading }}
                   className="text-sm font-normal text-[#424242] line-clamp-3"
                 />
                 <p className="text-sm font-semibold uppercase text-[#424242]">

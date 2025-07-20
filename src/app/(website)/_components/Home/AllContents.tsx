@@ -86,7 +86,6 @@ const AllContents: React.FC = () => {
     fetchData();
   }, []);
 
-  // console.log("CCCCCCCCCCCCOOOOOOOOO",contents)
 
   const getImageUrl = (path: string | null): string => {
     if (!path) return "/fallback-image.jpg";
@@ -227,11 +226,11 @@ const AllContents: React.FC = () => {
       {firstPost && (
         <div className="mb-6 md:mb-12 lg:mb-16">
           <div>
-            <div className="flex items-center gap-4 mb-4">
+            <div className="md:flex items-center gap-4 mb-4">
               <div className="flex items-center gap-2">
                 <Link
                   href={`/blogs/${firstPost.category_name}`}
-                  className="bg-primary py-2 px-4 rounded text-base font-extrabold uppercase text-white"
+                  className="bg-primary py-2 px-4 roundedtext-base font-extrabold uppercase text-white"
                 >
                   {firstPost.category_name || "Category"}
                 </Link>
@@ -242,7 +241,7 @@ const AllContents: React.FC = () => {
                   {firstPost.sub_category_name || "Subcategory"}
                 </Link>
               </div>
-              <div className="flex items-center gap-3 relative">
+              <div className="flex items-center gap-3 relative mt-4 md:mt-0 lg:mt-0">
                 <RiShareForwardLine
                   className="w-6 h-6 cursor-pointer"
                   onClick={() => handleShare(firstPost)}
@@ -326,7 +325,7 @@ const AllContents: React.FC = () => {
                 alt={firstPost.heading}
                 width={1200}
                 height={600}
-                className="w-full h-[400px] md:h-[550px] lg:h-[680px] object-cover"
+                className="w-full h-[400px] md:h-[550px] lg:h-[680px] object-cover object-top"
               />
             </Link>
           </div>
@@ -359,7 +358,7 @@ const AllContents: React.FC = () => {
                   alt={secondPost.heading}
                   width={400}
                   height={300}
-                  className="w-full h-[300px] object-cover"
+                  className="w-full h-[300px] object-cover object-top"
                   priority
                 />
               </Link>
@@ -433,7 +432,7 @@ const AllContents: React.FC = () => {
                 </Link>
               </div>
               <p
-                dangerouslySetInnerHTML={{ __html: secondPost.body1 }}
+                dangerouslySetInnerHTML={{ __html: secondPost.sub_heading }}
                 className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
               />
             </div>
@@ -465,7 +464,7 @@ const AllContents: React.FC = () => {
                   alt={thirdPost.heading}
                   width={400}
                   height={300}
-                  className="w-full h-[300px] object-cover"
+                  className="w-full h-[300px] object-cover object-top"
                   priority
                 />
               </Link>
@@ -538,7 +537,7 @@ const AllContents: React.FC = () => {
                 </Link>
               </div>
               <p
-                dangerouslySetInnerHTML={{ __html: thirdPost.body1 }}
+                dangerouslySetInnerHTML={{ __html: thirdPost.sub_heading }}
                 className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
               />
             </div>
@@ -570,7 +569,7 @@ const AllContents: React.FC = () => {
                   alt={fourthPost.heading}
                   width={400}
                   height={300}
-                  className="w-full h-[300px] object-cover"
+                  className="w-full h-[300px] object-cover object-top"
                   priority
                 />
               </Link>
@@ -643,7 +642,7 @@ const AllContents: React.FC = () => {
                 </Link>
               </div>
               <p
-                dangerouslySetInnerHTML={{ __html: fourthPost.body1 }}
+                dangerouslySetInnerHTML={{ __html: fourthPost.sub_heading }}
                 className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
               />
             </div>
