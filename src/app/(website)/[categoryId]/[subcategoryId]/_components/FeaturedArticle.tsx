@@ -186,7 +186,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                 alt={firstPost.heading.replace(/<[^>]+>/g, "")}
                 width={1200}
                 height={600}
-                className="w-full object-cover lg:h-[680px]"
+                className="w-full object-cover object-top lg:h-[680px]"
                 priority
               />
             </Link>
@@ -277,7 +277,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                 alt={secondPost.heading.replace(/<[^>]+>/g, "")}
                 width={400}
                 height={315}
-                className="w-full h-[315px] object-cover"
+                className="w-full h-[315px] object-cover object-top"
                 priority
               />
             </Link>
@@ -293,7 +293,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
               alt={thirdPost.heading.replace(/<[^>]+>/g, "")}
               width={400}
               height={443}
-              className="w-full h-[443px] object-cover"
+              className="w-full h-[443px] object-cover object-top"
               priority
             />
           </Link>
@@ -451,7 +451,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                 alt={fourthPost.heading.replace(/<[^>]+>/g, "")}
                 width={400}
                 height={300}
-                className="w-full h-[300px] object-cover"
+                className="w-full h-[300px] object-cover object-top"
                 priority
               />
             </Link>
@@ -533,7 +533,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                 alt={fifthPost.heading.replace(/<[^>]+>/g, "")}
                 width={400}
                 height={300}
-                className="w-full h-[300px] object-cover"
+                className="w-full h-[300px] object-cover object-top"
                 priority
               />
             </Link>

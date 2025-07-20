@@ -174,7 +174,7 @@ function CategoryContents({
                 alt={post.heading}
                 width={400}
                 height={300}
-                className="w-full h-[300px] object-cover"
+                className="w-full h-[300px] object-cover object-top"
                 priority
               />
             </Link>
