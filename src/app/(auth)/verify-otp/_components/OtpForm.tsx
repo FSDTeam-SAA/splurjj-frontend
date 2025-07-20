@@ -149,7 +149,7 @@ export default function OtpForm() {
     <div className="">
       <div className="">
         {/* OTP Input Fields */}
-        <div className="flex gap-[20px] md:gap-[24px] lg:gap-[30px] w-full justify-center">
+        <div className="flex gap-[10px] md:gap-[24px] lg:gap-[30px] w-full justify-center">
           {otp.map((digit, index) => (
             <Input
               key={index}
@@ -163,7 +163,7 @@ export default function OtpForm() {
               ref={(el) => {
                 inputRefs.current[index] = el;
               }}
-              className={` w-[56px] md:w-[60px] lg:w-[70px] h-[56px] md:h-[60px] lg:h-[70px] bg-white text-[#212121] placeholder:text-[#999999] text-center tracking-[0%] !text-xl font-semibold leading-[120%] rounded-md focus:outline-none border ${
+              className={` w-[54px] md:w-[60px] lg:w-[70px] h-[56px] md:h-[60px] lg:h-[70px] bg-white text-[#212121] placeholder:text-[#999999] text-center tracking-[0%] !text-xl font-semibold leading-[120%] rounded-md focus:outline-none border ${
                 digit ? "border-[#212121]" : "border-black"
               }`}
               aria-label={`OTP digit ${index + 1}`}
