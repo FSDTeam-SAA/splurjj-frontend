@@ -50,12 +50,13 @@ export default function EditCategoryDialog({ category, isOpen, onClose, onEdit }
     <Dialog open={isOpen} onOpenChange={onClose} >
       <DialogContent className="bg-white shadow-lg">
         <DialogHeader>
-          <DialogTitle>Edit Category</DialogTitle>
+          <DialogTitle className="dark:text-[#131313]">Edit Category</DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="editCategoryName">Category Name</Label>
+            <Label className="dark:text-[#131313]" htmlFor="editCategoryName">Category Name</Label>
             <Input
+            className="dark:text-[#131313]"
               id="editCategoryName"
               value={categoryName}
               onChange={(e) => setCategoryName(e.target.value)}
@@ -68,7 +69,7 @@ export default function EditCategoryDialog({ category, isOpen, onClose, onEdit }
             />
           </div>
           <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={onClose} disabled={isLoading}>
+            <Button className="dark:text-[#131313]" variant="outline" onClick={onClose} disabled={isLoading}>
               Cancel
             </Button>
             <Button onClick={handleEdit} disabled={isLoading} className="text-white">

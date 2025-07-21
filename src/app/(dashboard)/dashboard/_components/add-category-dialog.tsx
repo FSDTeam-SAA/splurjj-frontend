@@ -41,12 +41,13 @@ export default function AddCategoryDialog({ onAdd }: AddCategoryDialogProps) {
       </DialogTrigger>
       <DialogContent className="bg-white shadow-lg">
         <DialogHeader>
-          <DialogTitle className="">Add New Category</DialogTitle>
+          <DialogTitle className="dark:text-[#131313]">Add New Category</DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="categoryName">Category Name</Label>
+            <Label className="dark:text-[#131313]" htmlFor="categoryName">Category Name</Label>
             <Input
+            className="dark:text-[#131313]"
               id="categoryName"
               value={categoryName}
               onChange={(e) => setCategoryName(e.target.value)}
@@ -59,7 +60,7 @@ export default function AddCategoryDialog({ onAdd }: AddCategoryDialogProps) {
             />
           </div>
           <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={() => setIsOpen(false)} disabled={isLoading}>
+            <Button className="dark:text-[#131313]" variant="outline" onClick={() => setIsOpen(false)} disabled={isLoading}>
               Cancel
             </Button>
             <Button onClick={handleAdd} disabled={isLoading} className="text-white">
