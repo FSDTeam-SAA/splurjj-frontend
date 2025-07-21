@@ -7,7 +7,6 @@ import {
   Trash2,
   Check,
   X,
-  LogOut,
   SquarePen,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,8 +14,8 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
-import LogoutModal from "@/components/shared/modals/LogoutModal";
+import { useSession } from "next-auth/react";
+// import LogoutModal from "@/components/shared/modals/LogoutModal";
 import { toast } from "sonner";
 import { motion, AnimatePresence, easeInOut } from "framer-motion";
 // import { TfiMenuAlt } from "react-icons/tfi";
@@ -64,7 +63,7 @@ export default function Sidebar() {
   const [newSubcategoryName, setNewSubcategoryName] = useState("");
   const [editSubcategoryName, setEditSubcategoryName] = useState("");
   const [loading, setLoading] = useState(true);
-  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+  // const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
   const pathname = usePathname();
 
@@ -303,15 +302,15 @@ export default function Sidebar() {
     }
   };
 
-  const handLogout = async () => {
-    try {
-      toast.success("Logout successful!");
-      await signOut({ callbackUrl: "/login" });
-    } catch (error) {
-      console.error("Logout failed:", error);
-      toast.error("Logout failed. Please try again.");
-    }
-  };
+  // const handLogout = async () => {
+  //   try {
+  //     toast.success("Logout successful!");
+  //     await signOut({ callbackUrl: "/login" });
+  //   } catch (error) {
+  //     console.error("Logout failed:", error);
+  //     toast.error("Logout failed. Please try again.");
+  //   }
+  // };
 
   const startEditing = (subcategory: Subcategory) => {
     setEditingSubcategory(subcategory.id);
@@ -427,7 +426,7 @@ export default function Sidebar() {
                             <span
                               className={`text-base leading-[120%] tracking-[0%] ${
                                 categoryActive
-                                  ? " text-[#0253F7] font-bold"
+                                  ? " text-white font-bold"
                                   : "text-[#131313] font-semibold"
                               }`}
                             >
@@ -810,7 +809,7 @@ export default function Sidebar() {
             </Accordion>
           </div>
 
-          <div className="p-4  mb-[120px]">
+          {/* <div className="p-4  mb-[120px]">
             <Button
               onClick={() => setLogoutModalOpen(true)}
               variant="ghost"
@@ -826,7 +825,8 @@ export default function Sidebar() {
               onClose={() => setLogoutModalOpen(false)}
               onConfirm={handLogout}
             />
-          )}
+          )} */}
+
         </div>
       </ScrollArea>
     </div>

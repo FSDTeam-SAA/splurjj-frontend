@@ -2,11 +2,20 @@
 
 import ThemeToggle from "@/app/theme-toggle";
 import { useQuery } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import LogoutModal from "@/components/shared/modals/LogoutModal";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 interface UserProfileData {
   first_name: string;
@@ -33,10 +42,21 @@ export type HeaderResponse = {
 };
 
 export default function DashboardHeader() {
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const session = useSession();
   const role = session?.data?.user?.role || "Admin";
 
   const token = (session?.data?.user as { token?: string })?.token;
+
+  const handLogout = async () => {
+    try {
+      toast.success("Logout successful!");
+      await signOut({ callbackUrl: "/login" });
+    } catch (error) {
+      console.error("Logout failed:", error);
+      toast.error("Logout failed. Please try again.");
+    }
+  };
 
   // user info data
   const { data } = useQuery<UserSettingsResponse>({
@@ -94,37 +114,56 @@ export default function DashboardHeader() {
           <ThemeToggle />
 
           {/* Right Section - Notifications and User Profile */}
-          <div className="flex items-center gap-3">
-            <div>
-              <Avatar>
-                <Link href="/dashboard/settings">
-                  <AvatarImage
-                    src={
-                      data?.data?.profile_pic || "https://github.com/shadcn.png"
-                    }
-                  />
-                </Link>
-                <AvatarFallback className="text-base font-bold leading-normal text-black">
-                  {data?.data?.first_name?.charAt(0) || ""}
-                  {data?.data?.last_name?.charAt(0) || ""}
-                </AvatarFallback>
-              </Avatar>
-            </div>
-            <div>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <div className="flex items-center gap-3">
+                <div>
+                  <Avatar>
+                    <AvatarImage
+                      src={
+                        data?.data?.profile_pic ||
+                        "https://github.com/shadcn.png"
+                      }
+                    />
+                    <AvatarFallback className="text-base font-bold leading-normal text-black">
+                      {data?.data?.first_name?.charAt(0) || ""}
+                      {data?.data?.last_name?.charAt(0) || ""}
+                    </AvatarFallback>
+                  </Avatar>
+                </div>
+                <div>
+                  <h4 className="text-base font-medium text-[#131313] dark:text-black leading-[120%] tracking-[0%] ">
+                    {data?.data?.first_name}
+                  </h4>
+                  <p className="text-xs font-normal text-[#424242] text-left dark:text-black leading-[120%] tracking-[0%]  pt-[2px]">
+                    {role}
+                  </p>
+                </div>
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="bg-white">
               <Link href="/dashboard/settings">
-                <h4 className="text-base font-medium text-[#131313] dark:text-black leading-[120%] tracking-[0%] ">
-                  {data?.data?.first_name}
-                </h4>
+                <DropdownMenuLabel className="text-[#131313] text-lg font-semibold leading-normal">
+                  Settings
+                </DropdownMenuLabel>
               </Link>
-              <Link href="/dashboard/settings">
-                <p className="text-xs font-normal text-[#424242] dark:text-black leading-[120%] tracking-[0%]  pt-[2px]">
-                  {role}
-                </p>
-              </Link>
-            </div>
-          </div>
+              <DropdownMenuLabel
+                onClick={() => setLogoutModalOpen(true)}
+                className="text-red-500 text-lg font-semibold leading-normal cursor-pointer"
+              >
+                Log Out
+              </DropdownMenuLabel>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
+      {logoutModalOpen && (
+        <LogoutModal
+          isOpen={logoutModalOpen}
+          onClose={() => setLogoutModalOpen(false)}
+          onConfirm={handLogout}
+        />
+      )}
     </header>
   );
 }
