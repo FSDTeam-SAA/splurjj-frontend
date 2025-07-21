@@ -57,6 +57,11 @@ const RecentArticles = () => {
                   <div className="flex items-center gap-4">
                     <td className="w-[60px] h-full">
                       <Image
+                        // src={
+                        //   content?.image1
+                        //     ?  "/assets/images/no-images.jpg"
+                        //     : `${content?.image1}`
+                        // }
                         src={
                           !content?.image1
                             ?  "/assets/images/no-images.jpg"
