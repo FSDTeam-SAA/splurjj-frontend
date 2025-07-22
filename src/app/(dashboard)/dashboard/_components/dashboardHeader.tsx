@@ -109,52 +109,54 @@ export default function DashboardHeader() {
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center justify-center gap-4">
           {/* theme toggle  */}
           <ThemeToggle />
 
           {/* Right Section - Notifications and User Profile */}
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <div className="flex items-center gap-3">
-                <div>
-                  <Avatar>
-                    <AvatarImage
-                      src={
-                        data?.data?.profile_pic ||
-                        "https://github.com/shadcn.png"
-                      }
-                    />
-                    <AvatarFallback className="text-base font-bold leading-normal text-black">
-                      {data?.data?.first_name?.charAt(0) || ""}
-                      {data?.data?.last_name?.charAt(0) || ""}
-                    </AvatarFallback>
-                  </Avatar>
+          <div>
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <div className="flex items-center gap-3">
+                  <div>
+                    <Avatar>
+                      <AvatarImage
+                        src={
+                          data?.data?.profile_pic ||
+                          "https://github.com/shadcn.png"
+                        }
+                      />
+                      <AvatarFallback className="text-base font-bold leading-normal text-black">
+                        {data?.data?.first_name?.charAt(0) || ""}
+                        {data?.data?.last_name?.charAt(0) || ""}
+                      </AvatarFallback>
+                    </Avatar>
+                  </div>
+                  <div>
+                    <h4 className="text-base font-medium text-[#131313] dark:text-black leading-[120%] tracking-[0%] ">
+                      {data?.data?.first_name}
+                    </h4>
+                    <p className="text-xs font-normal text-[#424242] text-left dark:text-black leading-[120%] tracking-[0%]  pt-[2px]">
+                      {role}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-base font-medium text-[#131313] dark:text-black leading-[120%] tracking-[0%] ">
-                    {data?.data?.first_name}
-                  </h4>
-                  <p className="text-xs font-normal text-[#424242] text-left dark:text-black leading-[120%] tracking-[0%]  pt-[2px]">
-                    {role}
-                  </p>
-                </div>
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white">
-              <Link href="/dashboard/settings">
-                <DropdownMenuLabel className="text-[#131313] text-lg font-semibold leading-normal">
-                  Settings
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-white w-[150px]">
+                <Link href="/dashboard/settings">
+                  <DropdownMenuLabel className="text-[#131313] text-sm font-semibold leading-normal hover:bg-blue-100/50">
+                    Settings
+                  </DropdownMenuLabel>
+                </Link>
+                <DropdownMenuLabel
+                  onClick={() => setLogoutModalOpen(true)}
+                  className="text-red-500 text-sm font-semibold leading-normal cursor-pointer"
+                >
+                  Log Out
                 </DropdownMenuLabel>
-              </Link>
-              <DropdownMenuLabel
-                onClick={() => setLogoutModalOpen(true)}
-                className="text-red-500 text-lg font-semibold leading-normal cursor-pointer"
-              >
-                Log Out
-              </DropdownMenuLabel>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </div>
       {logoutModalOpen && (
