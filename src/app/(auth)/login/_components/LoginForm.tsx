@@ -188,16 +188,16 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
         </div>
 
         {/* sign up link  */}
-        <div className="text-center mt-6 md:mt-8">
-          <span className="text-base text-[#272727]  font-normal leading-[150%] tracking-[0%]">
-            Don’t have an account? 
+        <div className="text-center mt-6 md:mt-8 ">
+          <p className="text-base text-[#272727] dark:text-white  font-normal leading-[150%] tracking-[0%]">
+            <span className="text-[#272727] dark:text-white">Don’t have an account?</span> 
             <Link
               href="/sign-up"
-              className="text-[#0253F7] hover:underline font-medium pl-2"
+              className="text-[#0253F7]  hover:underline font-medium pl-2"
             >
                Sign Up
             </Link>
-          </span>
+          </p>
         </div>
       </form>
     </Form>
