@@ -489,7 +489,7 @@ export default function Sidebar() {
                                                 startEditing(subcategory)
                                               }
                                             >
-                                              <SquarePen className="h-3 w-3 dark:text-white" />
+                                              <SquarePen className="h-3 w-3 dark:text-black" />
                                             </Button>
                                             <Button
                                               size="sm"
@@ -521,7 +521,7 @@ export default function Sidebar() {
                                         setNewSubcategoryName(e.target.value)
                                       }
                                       placeholder="Enter subcategory name"
-                                      className="h-7 text-xs"
+                                      className="h-7 text-xs dark:text-black"
                                       onKeyDown={(e) => {
                                         if (e.key === "Enter") {
                                           handleAddSubcategory(
@@ -543,7 +543,7 @@ export default function Sidebar() {
                                         )
                                       }
                                     >
-                                      <Check className="h-3 w-3 dark:text-white" />
+                                      <Check className="h-3 w-3 dark:text-black" />
                                     </Button>
                                     <Button
                                       size="sm"
@@ -551,14 +551,14 @@ export default function Sidebar() {
                                       className="h-7 w-7 p-0"
                                       onClick={cancelAdding}
                                     >
-                                      <X className="h-3 w-3 dark:text-white" />
+                                      <X className="h-3 w-3 dark:text-black" />
                                     </Button>
                                   </div>
                                 ) : (
                                   <Button
                                     variant="ghost"
                                     size="sm"
-                                    className="w-full justify-start text-left p-1 h-7 text-xs text-[#0253F7] hover:bg-blue-100/50 dark:hover:bg-blue-900/30 mx-6"
+                                    className="w-full justify-start text-left p-1 h-7 text-xs text-[#0253F7] dark:text-[#0253F7] hover:bg-blue-100/50 dark:hover:bg-blue-900/30 dark:border mx-6"
                                     onClick={() =>
                                       setAddingSubcategory(category.category_id)
                                     }

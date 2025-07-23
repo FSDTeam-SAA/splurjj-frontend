@@ -37,9 +37,9 @@ const SplurjjDropDownSelector = ({
         onValueChange(isNaN(numVal) ? val : numVal);
       }}
     >
-      <SelectTrigger className="h-[40px] w-[180px] bg-white border border-[#E6E6E6] rounded-[8px] text-[#0E2A5C] text-base focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0">
+      <SelectTrigger className="h-[40px] w-[180px] bg-white border border-[#E6E6E6] rounded-[8px] text-[#0E2A5C] dark:text-black text-base focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0">
         <SelectValue
-          className="placeholder:text-primary"
+          className="placeholder:text-primary dark:text-black"
           placeholder={placeholderText ?? "Select"}
         />
       </SelectTrigger>
