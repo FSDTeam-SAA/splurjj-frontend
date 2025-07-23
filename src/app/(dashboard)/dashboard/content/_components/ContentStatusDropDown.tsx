@@ -12,18 +12,18 @@ import { toast } from "react-toastify";
 
 type StatusDropdownProps = {
   contentId: number;
-  initialStatus: "pending" | "active";
+  initialStatus: "pending" | "active" | "in-review" | "published" | "archived" | "needs-revision" | "rejected";
 };
 
 const ContentStatusDropDown = ({
   contentId,
   initialStatus,
 }: StatusDropdownProps) => {
-  const [status, setStatus] = useState<"pending" | "active">(initialStatus);
+  const [status, setStatus] = useState<"pending" | "active" | "in-review" | "published" | "archived" | "needs-revision" | "rejected">(initialStatus);
   const token = useAuthToken();
   const roleToken = token.token;
 
-  const handleStatusChange = async (newStatus: "pending" | "active") => {
+  const handleStatusChange = async (newStatus: "pending" | "active" | "in-review" | "published" | "archived" | "needs-revision" | "rejected") => {
     setStatus(newStatus); // Optimistic update
 
     try {
@@ -75,7 +75,7 @@ const ContentStatusDropDown = ({
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-white dark:text-black">
-        <DropdownMenuItem
+        {/* <DropdownMenuItem
           className="cursor-pointer dark:text-black"
           onClick={() => handleStatusChange("pending")}
         >
@@ -86,6 +86,49 @@ const ContentStatusDropDown = ({
           onClick={() => handleStatusChange("active")}
         >
           Active
+        </DropdownMenuItem> */}
+
+        <DropdownMenuItem
+          className="cursor-pointer dark:text-black"
+          onClick={() => handleStatusChange("pending")}
+        >
+          Draft
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="cursor-pointer dark:text-black"
+          onClick={() => handleStatusChange("active")}
+        >
+          Approved
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="cursor-pointer dark:text-black"
+          onClick={() => handleStatusChange("in-review")}
+        >
+          In Review
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="cursor-pointer dark:text-black"
+          onClick={() => handleStatusChange("published")}
+        >
+          Published
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="cursor-pointer dark:text-black"
+          onClick={() => handleStatusChange("archived")}
+        >
+          Archived
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="cursor-pointer dark:text-black"
+          onClick={() => handleStatusChange("needs-revision")}
+        >
+          Needs Revision
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="cursor-pointer dark:text-black"
+          onClick={() => handleStatusChange("rejected")}
+        >
+          Rejected
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
