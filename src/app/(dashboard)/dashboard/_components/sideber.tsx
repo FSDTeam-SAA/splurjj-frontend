@@ -23,6 +23,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import Image from "next/image";
 
 interface Subcategory {
   id: number;
@@ -61,7 +62,7 @@ export default function Sidebar() {
   const [newSubcategoryName, setNewSubcategoryName] = useState("");
   const [editSubcategoryName, setEditSubcategoryName] = useState("");
   const [loading, setLoading] = useState(true);
-  console.log(loading)
+  console.log(loading);
 
   const pathname = usePathname();
   const { data: session, status } = useSession();
@@ -307,12 +308,18 @@ export default function Sidebar() {
           <div className="pb-1">
             <Link href="/dashboard">
               <button
-                className={`h-[50px] w-full justify-start text-[#131313] text-left pl-3 text-lg font-bold leading-[120%] tracking-[0%] uppercase ${
+                className={`h-[50px] w-full flex items-center justify-start gap-2 text-[#131313] text-left pl-3 text-lg font-bold leading-[120%] tracking-[0%] uppercase ${
                   isRouteActive("/dashboard")
                     ? "bg-[#0253F7] text-white font-bold"
                     : "text-[#131313] font-bold"
                 }`}
               >
+                <Image
+                  src="/assets/dashboard/dashboard.png"
+                  alt="dashboard"
+                  width={20}
+                  height={20}
+                />{" "}
                 Dashboard
               </button>
             </Link>
@@ -322,12 +329,18 @@ export default function Sidebar() {
               <div>
                 <Link href="/dashboard/add-category">
                   <button
-                    className={`w-full h-[50px] flex justify-start items-center gap-3 text-[#131313] text-left pl-3 text-lg font-bold leading-[120%] uppercase tracking-[0%] ${
+                    className={`w-full h-[50px] flex justify-start items-center gap-2 text-[#131313] text-left pl-3 text-lg font-bold leading-[120%] uppercase tracking-[0%] ${
                       isRouteActive("/dashboard/add-category")
                         ? "bg-[#0253F7] text-white font-bold"
                         : "text-[#424242] font-bold"
                     }`}
                   >
+                    <Image
+                      src="/assets/dashboard/categories.png"
+                      alt="category"
+                      width={20}
+                      height={20}
+                    />{" "}
                     Category Lists
                   </button>
                 </Link>
@@ -337,7 +350,13 @@ export default function Sidebar() {
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
               <AccordionTrigger className="px-3">
-                <p className="text-lg font-bold text-[#131313] dark:white-text leading-[120%] uppercase tracking-[0%]">
+                <p className="flex items-center gap-2 text-lg font-bold text-[#131313] dark:white-text leading-[120%] uppercase tracking-[0%]">
+                  <Image
+                    src="/assets/dashboard/content.jpg"
+                    alt="content"
+                    width={20}
+                    height={20}
+                  />{" "}
                   Content Management
                 </p>
               </AccordionTrigger>
@@ -363,13 +382,13 @@ export default function Sidebar() {
                       >
                         <div className="w-full flex items-center justify-between pl-6">
                           <span
-                            className={`text-base leading-[120%] tracking-[0%] ${
+                            className={`flex items-center gap-2 text-base leading-[120%] tracking-[0%] ${
                               categoryActive
                                 ? "text-white font-bold"
                                 : "text-[#131313] dark:text-white font-semibold"
                             }`}
                           >
-                            {category.category_name}
+                           <Image src="/assets/dashboard/art-and-culture.png" alt="category icon" width={20} height={20}/> {category.category_name}
                           </span>
                           {expandedCategories.has(category.category_id) ? (
                             <ChevronDown
@@ -505,7 +524,9 @@ export default function Sidebar() {
                                       className="h-7 text-xs"
                                       onKeyDown={(e) => {
                                         if (e.key === "Enter") {
-                                          handleAddSubcategory(category.category_id);
+                                          handleAddSubcategory(
+                                            category.category_id
+                                          );
                                         } else if (e.key === "Escape") {
                                           cancelAdding();
                                         }
@@ -517,7 +538,9 @@ export default function Sidebar() {
                                       variant="ghost"
                                       className="h-7 w-7 p-0"
                                       onClick={() =>
-                                        handleAddSubcategory(category.category_id)
+                                        handleAddSubcategory(
+                                          category.category_id
+                                        )
                                       }
                                     >
                                       <Check className="h-3 w-3 dark:text-white" />
@@ -556,13 +579,13 @@ export default function Sidebar() {
                   <div className="">
                     <Link href="/dashboard/all-pages">
                       <button
-                        className={`w-full h-[46px] justify-start text-base text-left pl-8 font-bold leading-[120%] tracking-[0%] ${
+                        className={`w-full h-[46px] flex items-center justify-start gap-2 text-base text-left pl-8 font-bold leading-[120%] tracking-[0%] ${
                           isRouteActive("/dashboard/all-pages")
                             ? "bg-[#0253F7] text-white font-bold"
                             : "text-[#131313] font-semibold"
                         }`}
                       >
-                        All Pages
+                       <Image src="/assets/dashboard/all-page.png" alt="all page" width={20} height={20}/> All Pages
                       </button>
                     </Link>
                   </div>
@@ -573,7 +596,13 @@ export default function Sidebar() {
             {!isAuthor && (
               <AccordionItem value="item-2">
                 <AccordionTrigger className="px-3">
-                  <p className="text-lg font-bold text-[#131313] dark:white-text leading-[120%] uppercase tracking-[0%] font-marnrope">
+                  <p className="flex items-center gap-2 text-lg font-bold text-[#131313] dark:white-text leading-[120%] uppercase tracking-[0%] font-marnrope">
+                    <Image
+                      src="/assets/dashboard/ads.png"
+                      alt="ads"
+                      width={20}
+                      height={20}
+                    />{" "}
                     Ad Management
                   </p>
                 </AccordionTrigger>
@@ -582,12 +611,18 @@ export default function Sidebar() {
                     <div className="">
                       <Link href="/dashboard/horizontal-advertising">
                         <button
-                          className={`w-full h-[36px] justify-start text-base text-left pl-8 leading-[120%] tracking-[0%] ${
+                          className={`w-full h-[36px] flex justify-start items-center gap-2 text-base text-left pl-8 leading-[120%] tracking-[0%] ${
                             isRouteActive("/dashboard/horizontal-advertising")
                               ? "bg-[#0253F7] text-white font-bold"
-                              : "text-[#131313] font-normal"
+                              : "text-[#131313] font-semibold"
                           }`}
                         >
+                          <Image
+                            src="/assets/dashboard/horizontal.png"
+                            alt="horizontal"
+                            width={20}
+                            height={20}
+                          />{" "}
                           Horizontal
                         </button>
                       </Link>
@@ -595,12 +630,18 @@ export default function Sidebar() {
                     <div className="">
                       <Link href="/dashboard/vertical-advertising">
                         <button
-                          className={`w-full h-[36px] justify-start text-base text-left pl-8 leading-[120%] tracking-[0%] ${
+                          className={`w-full h-[36px] flex items-center justify-start gap-2 text-base text-left pl-8 leading-[120%] tracking-[0%] ${
                             isRouteActive("/dashboard/vertical-advertising")
                               ? "bg-[#0253F7] text-white font-bold"
                               : "text-[#131313] font-semibold"
                           }`}
                         >
+                          <Image
+                            src="/assets/dashboard/vertical.png"
+                            alt="vertical"
+                            width={20}
+                            height={20}
+                          />{" "}
                           Vertical
                         </button>
                       </Link>
@@ -612,7 +653,13 @@ export default function Sidebar() {
 
             <AccordionItem value="item-3">
               <AccordionTrigger className="px-3">
-                <p className="text-lg font-bold text-[#131313] dark:white-text leading-[120%] uppercase tracking-[0%] font-marnrope">
+                <p className="flex items-center gap-2 text-lg font-bold text-[#131313] dark:white-text leading-[120%] uppercase tracking-[0%] font-marnrope">
+                  <Image
+                    src="/assets/dashboard/settings.png"
+                    alt="settings"
+                    width={20}
+                    height={20}
+                  />{" "}
                   Settings
                 </p>
               </AccordionTrigger>
@@ -621,12 +668,18 @@ export default function Sidebar() {
                   <div className="">
                     <Link href="/dashboard/role">
                       <button
-                        className={`h-[36px] w-full justify-start text-lg text-left pl-8 leading-[120%] tracking-[0%] ${
+                        className={`h-[36px] w-full flex items-center justify-start gap-2 text-base text-left pl-8 leading-[120%] tracking-[0%] ${
                           isRouteActive("/dashboard/role")
                             ? "bg-[#0253F7] text-white font-bold"
-                            : "text-[#131313] font-normal"
+                              : "text-[#131313] font-semibold"
                         }`}
                       >
+                        <Image
+                          src="/assets/dashboard/employee .png"
+                          alt="role management"
+                          width={20}
+                          height={20}
+                        />{" "}
                         Role Management
                       </button>
                     </Link>
@@ -636,12 +689,18 @@ export default function Sidebar() {
                   <div className="">
                     <Link href="/dashboard/subscriber">
                       <button
-                        className={`h-[36px] w-full justify-start text-lg pl-8 text-left leading-[120%] tracking-[0%] ${
+                        className={`h-[36px] w-full flex items-center justify-start gap-2 text-base pl-8 text-left leading-[120%] tracking-[0%] ${
                           isRouteActive("/dashboard/subscriber")
                             ? "bg-[#0253F7] text-white font-bold"
-                            : "text-[#131313] font-normal"
+                              : "text-[#131313] font-semibold"
                         }`}
                       >
+                        <Image
+                          src="/assets/dashboard/team.png"
+                          alt="subscriber"
+                          width={20}
+                          height={20}
+                        />{" "}
                         Subscriber
                       </button>
                     </Link>
@@ -650,12 +709,18 @@ export default function Sidebar() {
                 <div className="">
                   <Link href="/dashboard/settings">
                     <button
-                      className={`h-[36px] w-full justify-start items-center gap-3 text-lg pl-8 text-left leading-[120%] tracking-[0%] ${
+                      className={`h-[36px] w-full flex justify-start items-center gap-2 text-base pl-8 text-left leading-[120%] tracking-[0%] ${
                         isRouteActive("/dashboard/settings")
                           ? "bg-[#0253F7] text-white font-bold"
-                          : "text-[#131313] font-normal"
+                              : "text-[#131313] font-semibold"
                       }`}
                     >
+                      <Image
+                        src="/assets/dashboard/profile.png"
+                        alt="subscriber"
+                        width={20}
+                        height={20}
+                      />{" "}
                       Account
                     </button>
                   </Link>
@@ -665,7 +730,13 @@ export default function Sidebar() {
 
             <AccordionItem value="item-4">
               <AccordionTrigger className="px-3">
-                <p className="text-lg font-semibold text-[#131313] dark:white-text leading-[120%] uppercase tracking-[0%] font-marnrope">
+                <p className="flex items-center gap-2 text-lg font-semibold text-[#131313] dark:white-text leading-[120%] uppercase tracking-[0%] font-marnrope">
+                  <Image
+                    src="/assets/dashboard/theme-setting.jpg"
+                    alt="theme-settings"
+                    width={20}
+                    height={20}
+                  />{" "}
                   Theme Settings
                 </p>
               </AccordionTrigger>
@@ -674,12 +745,89 @@ export default function Sidebar() {
                   <div className="">
                     <Link href="/dashboard/header">
                       <button
-                        className={`h-[36px] w-full justify-start pl-6 text-lg text-left leading-[120%] tracking-[0%] ${
+                        className={`h-[36px] w-full flex items-center justify-start gap-2 pl-6 text-base text-left leading-[120%] tracking-[0%] ${
                           isRouteActive("/dashboard/header")
                             ? "bg-[#0253F7] text-white font-bold"
-                            : "text-[#131313] font-normal"
+                              : "text-[#131313] font-semibold"
                         }`}
                       >
+                        <svg
+                          height="20"
+                          viewBox="0 0 512 512"
+                          width="20"
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlnsXlink="http://www.w3.org/1999/xlink"
+                          id="fi_9073168"
+                        >
+                          <linearGradient
+                            id="linear-gradient"
+                            gradientTransform="matrix(0 -1 1 0 0 512)"
+                            gradientUnits="userSpaceOnUse"
+                            x1="38.65"
+                            x2="473.35"
+                            y1="38.65"
+                            y2="473.35"
+                          >
+                            <stop offset="0" stop-color="#549eff"></stop>
+                            <stop offset="1" stop-color="#006db0"></stop>
+                          </linearGradient>
+                          <linearGradient
+                            id="linear-gradient-2"
+                            gradientUnits="userSpaceOnUse"
+                            x1="146.15"
+                            x2="473.35"
+                            y1="146.15"
+                            y2="473.35"
+                          >
+                            <stop offset="0" stop-opacity=".35"></stop>
+                            <stop offset="1" stop-opacity="0"></stop>
+                          </linearGradient>
+                          <g id="Layer_2" data-name="Layer 2">
+                            <g id="InterfaceIcon">
+                              <g id="_06.Menu" data-name="06.Menu">
+                                <rect
+                                  id="Background"
+                                  fill="url(#linear-gradient)"
+                                  height="512"
+                                  rx="131.96"
+                                  transform="matrix(0 1 -1 0 512 0)"
+                                  width="512"
+                                ></rect>
+                                <path
+                                  d="m512 250.29v129.71a132 132 0 0 1 -132 132h-129.73l-136-136 54-45.65-53.95-54 55.33-44.27-54.68-54.68 281.74-42.5z"
+                                  fill="url(#linear-gradient-2)"
+                                ></path>
+                                <g
+                                  id="_06.Menu-2"
+                                  fill="#fff"
+                                  data-name="06.Menu"
+                                >
+                                  <rect
+                                    height="58.59"
+                                    rx="29.3"
+                                    width="300"
+                                    x="106"
+                                    y="226.7"
+                                  ></rect>
+                                  <rect
+                                    height="58.59"
+                                    rx="29.3"
+                                    width="300"
+                                    x="106"
+                                    y="127.09"
+                                  ></rect>
+                                  <rect
+                                    height="58.59"
+                                    rx="29.3"
+                                    width="300"
+                                    x="106"
+                                    y="326.31"
+                                  ></rect>
+                                </g>
+                              </g>
+                            </g>
+                          </g>
+                        </svg>{" "}
                         Header
                       </button>
                     </Link>
@@ -689,12 +837,136 @@ export default function Sidebar() {
                   <div className="">
                     <Link href="/dashboard/footer">
                       <button
-                        className={`h-[36px] w-full justify-start pl-6 text-lg text-left leading-[120%] tracking-[0%] ${
+                        className={`h-[36px] w-full flex items-center justify-start gap-2 pl-6 text-base text-left leading-[120%] tracking-[0%] ${
                           isRouteActive("/dashboard/footer")
-                            ? "bg-[#0253F7] text-white font-bold"
-                            : "text-[#131313] font-normal"
+                           ? "bg-[#0253F7] text-white font-bold"
+                              : "text-[#131313] font-semibold"
                         }`}
                       >
+                        <svg
+                          id="fi_6726859"
+                          enable-background="new 0 0 512 512"
+                          height="20"
+                          viewBox="0 0 512 512"
+                          width="20"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <g>
+                            <g>
+                              <path
+                                d="m512 451h-512v-150h512z"
+                                fill="#465d8c"
+                              ></path>
+                            </g>
+                            <path
+                              d="m256 301h256v150h-256z"
+                              fill="#333b66"
+                            ></path>
+                            <g id="_x32_0-captcha_2_">
+                              <g>
+                                <path d="m0 241h30v30h-30z" fill="#9ff"></path>
+                              </g>
+                              <g>
+                                <path d="m0 181h30v30h-30z" fill="#9ff"></path>
+                              </g>
+                              <g>
+                                <path d="m0 121h30v30h-30z" fill="#9ff"></path>
+                              </g>
+                              <g>
+                                <path d="m0 61h30v30h-30z" fill="#9ff"></path>
+                              </g>
+                              <g>
+                                <path d="m61 61h30v30h-30z" fill="#9ff"></path>
+                              </g>
+                              <g>
+                                <path d="m121 61h30v30h-30z" fill="#9ff"></path>
+                              </g>
+                              <g>
+                                <path d="m181 61h30v30h-30z" fill="#9ff"></path>
+                              </g>
+                              <g>
+                                <path d="m241 61h30v30h-30z" fill="#9ff"></path>
+                              </g>
+                              <g>
+                                <path
+                                  d="m301 61h30v30h-30z"
+                                  fill="#66e6ff"
+                                ></path>
+                              </g>
+                              <g>
+                                <g>
+                                  <path
+                                    d="m361 61h30v30h-30z"
+                                    fill="#66e6ff"
+                                  ></path>
+                                </g>
+                              </g>
+                              <g>
+                                <g>
+                                  <path
+                                    d="m421 61h30v30h-30z"
+                                    fill="#66e6ff"
+                                  ></path>
+                                </g>
+                              </g>
+                              <g>
+                                <g>
+                                  <path
+                                    d="m482 61h30v30h-30z"
+                                    fill="#66e6ff"
+                                  ></path>
+                                </g>
+                              </g>
+                              <g>
+                                <g>
+                                  <path
+                                    d="m482 121h30v30h-30z"
+                                    fill="#66e6ff"
+                                  ></path>
+                                </g>
+                              </g>
+                              <g>
+                                <g>
+                                  <path
+                                    d="m482 181h30v30h-30z"
+                                    fill="#66e6ff"
+                                  ></path>
+                                </g>
+                              </g>
+                              <g>
+                                <path
+                                  d="m482 241h30v30h-30z"
+                                  fill="#66e6ff"
+                                ></path>
+                              </g>
+                              <g>
+                                <path
+                                  d="m421 361h30v30h-30z"
+                                  fill="#d9e5ff"
+                                ></path>
+                              </g>
+                              <g>
+                                <path
+                                  d="m361 361h30v30h-30z"
+                                  fill="#d9e5ff"
+                                ></path>
+                              </g>
+                              <g>
+                                <path
+                                  d="m301 361h30v30h-30z"
+                                  fill="#d9e5ff"
+                                ></path>
+                              </g>
+                              <g>
+                                <path
+                                  d="m61 361h180v30h-180z"
+                                  fill="#ecf2ff"
+                                ></path>
+                              </g>
+                            </g>
+                            <path d="m256 61h15v30h-15z" fill="#66e6ff"></path>
+                          </g>
+                        </svg>{" "}
                         Footer
                       </button>
                     </Link>

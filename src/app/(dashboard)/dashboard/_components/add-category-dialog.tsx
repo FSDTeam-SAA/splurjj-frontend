@@ -1,35 +1,165 @@
-"use client"
+// "use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Plus } from "lucide-react"
+// import { useState } from "react";
+// import { Button } from "@/components/ui/button";
+// import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
+// import {
+//   Dialog,
+//   DialogContent,
+//   DialogHeader,
+//   DialogTitle,
+//   DialogTrigger,
+// } from "@/components/ui/dialog";
+// import { Plus } from "lucide-react";
+
+// interface AddCategoryDialogProps {
+//   onAdd: (categoryName: string) => Promise<void>;
+// }
+
+// export default function AddCategoryDialog({ onAdd }: AddCategoryDialogProps) {
+//   const [isOpen, setIsOpen] = useState(false);
+//   const [categoryName, setCategoryName] = useState("");
+//   const [isLoading, setIsLoading] = useState(false);
+
+//   const handleAdd = async () => {
+//     if (!categoryName.trim()) return;
+
+//     setIsLoading(true);
+//     try {
+//       await onAdd(categoryName.trim());
+//       setCategoryName("");
+//       setIsOpen(false);
+//     } catch (error) {
+//       console.error("Error adding category:", error);
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
+
+//   return (
+//     <Dialog open={isOpen} onOpenChange={setIsOpen}>
+//       <DialogTrigger asChild>
+//         <Button className="bg-blue-500 hover:bg-blue-600 text-white">
+//           <Plus className="h-4 w-4 mr-2" />
+//           Add Category
+//         </Button>
+//       </DialogTrigger>
+//       <DialogContent className="bg-white shadow-lg">
+//         <DialogHeader>
+//           <DialogTitle className="dark:text-[#131313]">
+//             Add New Category
+//           </DialogTitle>
+//         </DialogHeader>
+//         <div className="space-y-4">
+
+//           <div className="space-y-2">
+//             <Label className="dark:text-[#131313]" htmlFor="categoryName">
+//               Category Name
+//             </Label>
+//             <Input
+//               className="dark:text-[#131313]"
+//               id="categoryName"
+//               value={categoryName}
+//               onChange={(e) => setCategoryName(e.target.value)}
+//               placeholder="Enter category name"
+//               onKeyDown={(e) => {
+//                 if (e.key === "Enter") {
+//                   handleAdd();
+//                 }
+//               }}
+//             />
+//           </div>
+
+//           <div className="flex justify-end gap-2">
+//             <Button
+//               className="dark:text-[#131313]"
+//               variant="outline"
+//               onClick={() => setIsOpen(false)}
+//               disabled={isLoading}
+//             >
+//               Cancel
+//             </Button>
+//             <Button
+//               onClick={handleAdd}
+//               disabled={isLoading}
+//               className="text-white"
+//             >
+//               {isLoading ? "Adding..." : "Add Category"}
+//             </Button>
+//           </div>
+//         </div>
+//       </DialogContent>
+//     </Dialog>
+//   );
+// }
+
+"use client";
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Plus } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import FileUpload from "@/components/ui/FileUpload";
 
 interface AddCategoryDialogProps {
-  onAdd: (categoryName: string) => Promise<void>
+  onAdd: (categoryName: string) => Promise<void>;
 }
 
+// Define the form schema using Zod
+const formSchema = z.object({
+  categoryName: z
+    .string()
+    .min(1, { message: "Category name is required" })
+    .max(50, { message: "Category name must be less than 50 characters" })
+    .trim(),
+});
+
 export default function AddCategoryDialog({ onAdd }: AddCategoryDialogProps) {
-  const [isOpen, setIsOpen] = useState(false)
-  const [categoryName, setCategoryName] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [icon, setIcon] = useState<File | null>(null);
 
-  const handleAdd = async () => {
-    if (!categoryName.trim()) return
+  // Initialize the form with react-hook-form and zod resolver
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      categoryName: "",
+    },
+  });
 
-    setIsLoading(true)
+  const handleAdd = async (values: z.infer<typeof formSchema>) => {
+    setIsLoading(true);
+    console.log("category data",values, icon)
     try {
-      await onAdd(categoryName.trim())
-      setCategoryName("")
-      setIsOpen(false)
+      await onAdd(values.categoryName);
+      form.reset();
+      setIsOpen(false);
     } catch (error) {
-      console.error("Error adding category:", error)
+      console.error("Error adding category:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -41,34 +171,69 @@ export default function AddCategoryDialog({ onAdd }: AddCategoryDialogProps) {
       </DialogTrigger>
       <DialogContent className="bg-white shadow-lg">
         <DialogHeader>
-          <DialogTitle className="dark:text-[#131313]">Add New Category</DialogTitle>
+          <DialogTitle className="dark:text-[#131313]">
+            Add New Category
+          </DialogTitle>
         </DialogHeader>
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label className="dark:text-[#131313]" htmlFor="categoryName">Category Name</Label>
-            <Input
-            className="dark:text-[#131313]"
-              id="categoryName"
-              value={categoryName}
-              onChange={(e) => setCategoryName(e.target.value)}
-              placeholder="Enter category name"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleAdd()
-                }
-              }}
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleAdd)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="categoryName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="dark:text-[#131313]">
+                    Category Name
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      id="categoryName"
+                      placeholder="Enter category name"
+                      className="dark:text-[#131313]"
+                      {...field}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          form.handleSubmit(handleAdd)();
+                        }
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-          <div className="flex justify-end gap-2">
-            <Button className="dark:text-[#131313]" variant="outline" onClick={() => setIsOpen(false)} disabled={isLoading}>
-              Cancel
-            </Button>
-            <Button onClick={handleAdd} disabled={isLoading} className="text-white">
-              {isLoading ? "Adding..." : "Add Category"}
-            </Button>
-          </div>
-        </div>
+            {/* icon  */}
+            <div>
+              <FileUpload
+                type="image"
+                label="Add Icon"
+                file={icon}
+                setFile={setIcon}
+                // existingUrl={
+                //   data?.data?.icon
+                //     ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/${data.data.icon}`
+                //     : undefined
+                // }
+              />
+            </div>
+            <div className="flex justify-end gap-2">
+              <Button
+                type="button"
+                className="dark:text-[#131313]"
+                variant="outline"
+                onClick={() => setIsOpen(false)}
+                disabled={isLoading}
+              >
+                Cancel
+              </Button>
+              <Button type="submit" disabled={isLoading} className="text-white">
+                {isLoading ? "Adding..." : "Add Category"}
+              </Button>
+            </div>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
