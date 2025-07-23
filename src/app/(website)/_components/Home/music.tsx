@@ -61,23 +61,23 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (categoryName.categoryName){
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home/${categoryName.categoryName}`
-        );
-        if (!response.ok) {
-          throw new Error(`Failed to fetch data: ${response.statusText}`);
+      if (categoryName.categoryName) {
+        try {
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home/${categoryName.categoryName}`
+          );
+          if (!response.ok) {
+            throw new Error(`Failed to fetch data: ${response.statusText}`);
+          }
+          const data: ApiResponse = await response.json();
+          setPosts(data.data || []); // Set posts from data.data, default to empty array
+        } catch (err) {
+          setError(
+            err instanceof Error ? err.message : "An unknown error occurred"
+          );
+        } finally {
+          setLoading(false);
         }
-        const data: ApiResponse = await response.json();
-        setPosts(data.data || []); // Set posts from data.data, default to empty array
-      } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "An unknown error occurred"
-        );
-      } finally {
-        setLoading(false);
-      }
       }
     };
 
@@ -222,13 +222,13 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
             <div className="flex items-center gap-2">
               <Link
                 href={`/blogs/${firstPost.category_name}`}
-                className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
+                className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
               >
                 {firstPost.category_name || "Category"}
               </Link>
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}`}
-                className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
+                className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
               >
                 {firstPost.sub_category_name || "Subcategory"}
               </Link>
@@ -310,7 +310,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 />
                 <div
                   dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
-                  className="md:text-lg font-medium white-text hover:underline text-center line-clamp-4"
+                  className="md:text-lg font-medium white-text hover:underline text-center line-clamp-4 text-white"
                 />
               </div>
             </div>
@@ -325,16 +325,18 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
               <div className="col-span-5 lg:col-span-2">
                 <div>
                   <Link
-                  href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
-                > <Image
-                  src={getImageUrl(secondPost.image1)}
-                  alt={secondPost.heading || "Blog Image"}
-                  width={300}
-                  height={200}
-                  className="w-full h-[213px] object-cover object-top"
-                /></Link>
+                    href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
+                  >
+                    {" "}
+                    <Image
+                      src={getImageUrl(secondPost.image1)}
+                      alt={secondPost.heading || "Blog Image"}
+                      width={300}
+                      height={200}
+                      className="w-full h-[213px] object-cover object-top"
+                    />
+                  </Link>
                 </div>
-               
               </div>
               <div className="col-span-5 lg:col-span-3 space-y-4">
                 <Link
@@ -349,13 +351,13 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   <div className="flex items-center gap-2">
                     <Link
                       href={`/blogs/${secondPost.category_name}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                      className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                     >
                       {secondPost.category_name || "Category"}
                     </Link>
                     <Link
                       href={`/${secondPost.category_id}/${secondPost.subcategory_id}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                      className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                     >
                       {secondPost.sub_category_name || "Subcategory"}
                     </Link>
@@ -434,14 +436,15 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
               <div className="col-span-5 lg:col-span-2">
                 <Link
                   href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
-                ><Image
-                  src={getImageUrl(thirdPost.image1)}
-                  alt={thirdPost.heading || "Blog Image"}
-                  width={300}
-                  height={200}
-                  className="w-full h-[213px] object-cover object-top"
-                /></Link>
-                
+                >
+                  <Image
+                    src={getImageUrl(thirdPost.image1)}
+                    alt={thirdPost.heading || "Blog Image"}
+                    width={300}
+                    height={200}
+                    className="w-full h-[213px] object-cover object-top"
+                  />
+                </Link>
               </div>
               <div className="col-span-5 lg:col-span-3 space-y-4">
                 <Link
@@ -456,13 +459,13 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   <div className="flex items-center gap-2">
                     <Link
                       href={`/blogs/${thirdPost.category_name}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                      className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                     >
                       {thirdPost.category_name || "Category"}
                     </Link>
                     <Link
                       href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                      className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                     >
                       {thirdPost.sub_category_name || "Subcategory"}
                     </Link>
@@ -539,7 +542,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
         <div className="flex justify-end py-4">
           <Link
             href={`/blogs/${firstPost?.category_name}`}
-            className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white flex items-center gap-2"
+            className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-sm font-extrabold uppercase text-white flex items-center gap-2"
           >
             EXPLORE MORE <ArrowRight size={16} />
           </Link>

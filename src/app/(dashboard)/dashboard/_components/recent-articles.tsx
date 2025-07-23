@@ -90,8 +90,8 @@ const RecentArticles = () => {
                     key={content?.id}
                     className="w-full flex items-center justify-between pb-4 "
                   >
-                    <div className="flex items-center gap-4">
-                      <td className="w-[60px] h-full">
+                    <td className="flex items-center gap-4">
+                      <div className="w-[120px] h-full">
                         <Image
                           src={
                             content?.image1
@@ -103,25 +103,23 @@ const RecentArticles = () => {
                               : "/assets/images/no-images.jpg"
                           }
                           alt={content?.heading}
-                          width={60}
+                          width={120}
                           height={60}
-                          className="w-[60px] h-[60px] rounded-[8px] object-cover"
+                          className="w-[120px] h-[60px] rounded-[8px] object-cover"
                         />
-                      </td>
-                      <td
+                      </div>
+                      <p
                         className="text-black dark:text-black black__text"
                         dangerouslySetInnerHTML={{ __html: content?.heading }}
                       />
-                    </div>
+                    </td>
 
                     <td>
-                      {/* <Badge className="bg-[#E6EEFE] py-[2px] px-[8px] rounded-full text-base font-semibold text-[#131313]  leading-normal">
-                      {content?.status}
-                    </Badge> */}
                       <ContentStatusDropDown
                         contentId={content?.id}
                         initialStatus={
-                          content?.status === "active" || content?.status === "pending"
+                          content?.status === "active" ||
+                          content?.status === "pending"
                             ? content.status
                             : "pending"
                         }

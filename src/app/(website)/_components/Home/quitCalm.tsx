@@ -209,7 +209,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
       <div className="error text-center py-8 text-red-600">Error: {error}</div>
     );
   if (posts.length === 0)
-    return <div className="error text-center py-8">No posts found</div>;
+    return <div className="error text-center py-8 ">No posts found</div>;
 
   const firstPost = posts[0];
   const thirdPost = posts[1];
@@ -251,13 +251,13 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
               <div className="flex items-center gap-2">
                 <Link
                   href={`/blogs/${firstPost.category_name}`}
-                  className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {firstPost.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${firstPost.category_id}/${firstPost.subcategory_id}`}
-                  className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {firstPost.sub_category_name || "Subcategory"}
                 </Link>
@@ -338,13 +338,13 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
               <div className="flex items-center gap-2 pb-2">
                 <Link
                   href={`/blogs/${thirdPost.category_name}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {thirdPost.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {thirdPost.sub_category_name || "Subcategory"}
                 </Link>
@@ -445,13 +445,13 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
               <div className="flex items-center gap-2 pb-2">
                 <Link
                   href={`/blogs/${fourthPost.category_name}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {fourthPost.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {fourthPost.sub_category_name || "Subcategory"}
                 </Link>
@@ -551,13 +551,13 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
               <div className="flex items-center gap-2 pb-2">
                 <Link
                   href={`/blogs/${fifthPost.category_name}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {fifthPost.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {fifthPost.sub_category_name || "Subcategory"}
                 </Link>
@@ -656,7 +656,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
         <div className="flex justify-end md:py-4 mt-[60px] md:mt-[100px]">
           <Link
             href={`/blogs/${firstPost?.category_name}`}
-            className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white flex items-center gap-2"
+            className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-sm font-extrabold uppercase text-white flex items-center gap-2"
           >
             EXPLORE MORE <ArrowRight size={16} />
           </Link>

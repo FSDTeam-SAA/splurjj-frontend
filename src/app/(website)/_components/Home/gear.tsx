@@ -224,13 +224,13 @@ const Gear: React.FC<ArtCultureProps> = ({ categoryName }) => {
             <div className="flex items-center gap-2">
               <Link
                 href={`/blogs/${firstPost.category_name}`}
-                className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
+                className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
               >
                 {firstPost.category_name || "Category"}
               </Link>
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}`}
-                className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
+                className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
               >
                 {firstPost.sub_category_name || "Subcategory"}
               </Link>
@@ -349,13 +349,13 @@ const Gear: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   <div className="flex items-center gap-2">
                     <Link
                       href={`/blogs/${secondPost.category_name}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                      className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                     >
                       {secondPost.category_name || "Category"}
                     </Link>
                     <Link
                       href={`/${secondPost.category_id}/${secondPost.subcategory_id}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                      className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                     >
                       {secondPost.sub_category_name || "Subcategory"}
                     </Link>
@@ -456,13 +456,13 @@ const Gear: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   <div className="flex items-center gap-2">
                     <Link
                       href={`/blogs/${thirdPost.category_name}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                      className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                     >
                       {thirdPost.category_name || "Category"}
                     </Link>
                     <Link
                       href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}`}
-                      className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                      className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                     >
                       {thirdPost.sub_category_name || "Subcategory"}
                     </Link>
@@ -539,7 +539,7 @@ const Gear: React.FC<ArtCultureProps> = ({ categoryName }) => {
         <div className="flex justify-end py-4">
           <Link
             href={`/blogs/${firstPost?.category_name}`}
-            className="bg-primary py-2 px-4 rounded text-sm font-extrabold uppercase text-white flex items-center gap-2"
+            className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-sm font-extrabold uppercase text-white flex items-center gap-2"
           >
             EXPLORE MORE <ArrowRight size={16} />
           </Link>
