@@ -349,7 +349,7 @@ const AllContents: React.FC = () => {
                 {secondPost.sub_category_name || "Subcategory"}
               </Link>
             </div>
-            <div>
+            <div className="overflow-hidden">
               <Link
                 href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
               >
@@ -358,7 +358,7 @@ const AllContents: React.FC = () => {
                   alt={secondPost.heading}
                   width={400}
                   height={300}
-                  className="w-full h-[300px] object-cover object-top"
+                  className="w-full h-[300px] object-cover object-top hover:scale-110 transition-all duration-500 ease-in-out"
                   priority
                 />
               </Link>
