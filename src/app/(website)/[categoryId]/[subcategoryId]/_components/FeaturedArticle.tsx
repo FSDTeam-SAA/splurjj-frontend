@@ -6,6 +6,7 @@ import { RiShareForwardLine } from "react-icons/ri";
 import { FaFacebook, FaLinkedin, FaRegCommentDots, FaTwitter } from "react-icons/fa";
 import { TbTargetArrow } from "react-icons/tb";
 import FirstContentsSkeleton from "./FirstContentsSkeleton";
+import CategorySubCategoryCarousel from "./categorySubCategoryCarousel";
 
 interface Post {
   id: number;
@@ -180,7 +181,8 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
             </p>
           </div>
           <div className="mt-8">
-            <Link href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}>
+            <CategorySubCategoryCarousel posts={firstPost} getImageUrl={getImageUrl} />
+            {/* <Link href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}>
               <Image
                 src={getImageUrl(firstPost.image1)}
                 alt={firstPost.heading.replace(/<[^>]+>/g, "")}
@@ -189,7 +191,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                 className="w-full object-cover object-top lg:h-[680px]"
                 priority
               />
-            </Link>
+            </Link> */}
           </div>
         </div>
       ) : (
