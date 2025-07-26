@@ -92,6 +92,8 @@ export default function CategoryContainer() {
 
   if (response.ok) {
     await fetchCategories();
+     toast.success(`${categoryName} has been added successfully!`);
+    window.location.reload();
     return response.json();
   }
   throw new Error("Failed to add category");

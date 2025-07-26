@@ -8,20 +8,21 @@ import { useParams } from "next/navigation";
 import ContentTable from "../../_components/content-table";
 import { useSession } from "next-auth/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type {
-  AllContentResponse,
-  Content,
-} from "../../_components/ContentDataType";
+// import type {
+//   AllContentResponse,
+//   Content,
+// } from "../../_components/ContentDataType";
 import { toast } from "react-toastify";
 import SplurjjPagination from "@/components/ui/SplurjjPagination";
 import ContentAddEditForm from "../../_components/ContentModalForm";
 import { ConfirmationModal } from "@/components/shared/modals/ConfirmationModal";
+import { ContentDashboardResponse, ContentItem } from "../../_components/ContentDataType";
 
 export default function SubcategoryContentPage() {
   const params = useParams();
   const categoryId = params?.catId;
   const subcategoryId = params?.subCatId;
-  const [editingContent, setEditingContent] = useState<Content | null>(null);
+  const [editingContent, setEditingContent] = useState<ContentItem | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [showForm, setShowForm] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Add this state
@@ -32,7 +33,7 @@ export default function SubcategoryContentPage() {
   const queryClient = useQueryClient();
 
   // get all content
-  const { data, isLoading, error, isError } = useQuery<AllContentResponse>({
+  const { data, isLoading, error, isError } = useQuery<ContentDashboardResponse>({
     queryKey: ["all-contents", currentPage],
     queryFn: () =>
       fetch(
@@ -47,37 +48,14 @@ export default function SubcategoryContentPage() {
       ).then((res) => res.json()),
   });
 
+  console.log("get all contents", data?.data?.data)
+
   console.log(editingContent)
 
   // console.log("all contents", data?.data);
   if (isError) {
     console.log(error);
   }
-
-  // content delete api
-  // const { mutate: deleteContent } = useMutation({
-  //   mutationKey: ["delete-content"],
-  //   mutationFn: (contentId: number) =>
-  //     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${contentId}`, {
-  //       method: "DELETE",
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //         "content-type": "application/json",
-  //       },
-  //     }).then((res) => res.json()),
-  //   onSuccess: (data) => {
-  //     if (!data?.status) {
-  //       toast.error(data?.message || "Something went wrong")
-  //       return
-  //     }
-  //     toast.success(data?.message || "Content deleted successfully")
-  //     queryClient.invalidateQueries({ queryKey: ["all-contents"] })
-  //   },
-  // })
-
-  // const handleDeleteContent = (contentId: number) => {
-  //   deleteContent(contentId)
-  // }
 
   const { mutate: deleteContent } = useMutation({
     mutationKey: ["delete-content"],
@@ -124,7 +102,7 @@ export default function SubcategoryContentPage() {
     setShowForm(true);
   };
 
-  const handleEditContent = (content: Content) => {
+  const handleEditContent = (content: ContentItem) => {
     setEditingContent(content);
     setShowForm(true);
   };

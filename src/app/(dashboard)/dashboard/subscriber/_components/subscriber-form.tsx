@@ -33,7 +33,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 5MB
 const ACCEPTED_FILE_TYPES = ["application/pdf", "text/html", "text/plain"];
 
 const formSchema = z.object({

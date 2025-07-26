@@ -1,6 +1,6 @@
 "use client";
 import ErrorContainer from "@/components/shared/ErrorContainer/ErrorContainer";
-import { DashboardOverviewDataTypeResponse } from "@/components/types/DashboardOverviewDataType";
+import { DashboardOverviewResponse } from "@/components/types/DashboardOverviewDataType";
 import { DashboardCardSkeleton } from "@/components/ui/DashboardCardSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
@@ -13,7 +13,7 @@ const DashboardOverviewContainer = () => {
   const token = (session?.data?.user as { token: string })?.token;
 
   const { data, isLoading, isError, error } =
-    useQuery<DashboardOverviewDataTypeResponse>({
+    useQuery<DashboardOverviewResponse>({
       queryKey: ["dashboard-overview"],
       queryFn: () =>
         fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/dashboard-overview`, {

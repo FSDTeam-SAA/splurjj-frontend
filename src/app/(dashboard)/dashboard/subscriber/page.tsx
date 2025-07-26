@@ -1,5 +1,4 @@
 import React from "react";
-// import SubscriberContainer from "./_components/SubscriberContainer";
 import SubscriberPage from "./_components/subscriber-container";
 import SubscriberHeader from "./_components/subscriber-header";
 
@@ -8,7 +7,6 @@ const Page = () => {
     <div>
       <SubscriberHeader/>
       <SubscriberPage/>
-      {/* <SubscriberContainer /> */}
     </div>
   );
 };
