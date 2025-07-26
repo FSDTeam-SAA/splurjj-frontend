@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import AddCategoryDialog from "../../_components/add-category-dialog";
 import CategoryTable from "../../_components/category-table";
 import EditCategoryDialog from "../../_components/edit-category-dialog";
+  import { toast } from "react-toastify";
 
 // Extend the User type to include 'token'
 declare module "next-auth" {
@@ -70,49 +71,79 @@ export default function CategoryContainer() {
     }
   };
 
-  const handleAddCategory = async (categoryName: string) => {
+
+  // add category 
+
+  const handleAddCategory = async (categoryName: string, category_icon: File) => {
+  const formData = new FormData();
+  formData.append("category_name", categoryName);
+  formData.append("category_icon", category_icon);
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/categories`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    }
+  );
+
+  if (response.ok) {
+    await fetchCategories();
+    return response.json();
+  }
+  throw new Error("Failed to add category");
+};
+
+
+// edit category 
+
+
+const handleEditCategory = async (
+  categoryId: number,
+  categoryName: string,
+  icon?: File | null
+) => {
+  const formData = new FormData();
+  formData.append("category_name", categoryName);
+  
+  if (icon) {
+    formData.append("category_icon", icon);
+  }
+
+  try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/categories`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/categories/${categoryId}?_method=PUT`,
       {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          category_name: categoryName,
-        }),
+        body: formData,
       }
     );
 
-    if (response.ok) {
-      await fetchCategories();
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to update category");
     }
-  };
 
-  const handleEditCategory = async (
-    categoryId: number,
-    categoryName: string
-  ) => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/categories/${categoryId}`,
-      {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          category_name: categoryName,
-        }),
-      }
-    );
+    const data = await response.json();
+    await fetchCategories();
+    
+    toast.success(`${data.data.category_name} has been updated successfully!`);
+    window.location.reload();
+    return data;
+  } catch (error) {
+    toast.error(error instanceof Error ? error.message : "Failed to update category");
+    throw error;
+  }
+};
 
-    if (response.ok) {
-      await fetchCategories();
-    }
-  };
 
+  // delete category 
   const handleDeleteCategory = async (categoryId: number) => {
     if (
       !confirm(
@@ -194,6 +225,7 @@ export default function CategoryContainer() {
           onClose={closeEditDialog}
           onEdit={handleEditCategory}
         />
+        
       </div>
     </div>
   );

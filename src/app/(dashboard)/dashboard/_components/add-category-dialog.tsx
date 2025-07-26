@@ -94,12 +94,13 @@
 //   );
 // }
 
+
+
 "use client";
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-// import { Label } from "@/components/ui/label";
 import {
   Dialog,
   DialogContent,
@@ -120,12 +121,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import FileUpload from "@/components/ui/FileUpload";
+import { toast } from "react-toastify";
 
 interface AddCategoryDialogProps {
-  onAdd: (categoryName: string) => Promise<void>;
+  onAdd: (categoryName: string, category_icon: File) => Promise<void>;
 }
 
-// Define the form schema using Zod
 const formSchema = z.object({
   categoryName: z
     .string()
@@ -137,22 +138,27 @@ const formSchema = z.object({
 export default function AddCategoryDialog({ onAdd }: AddCategoryDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [icon, setIcon] = useState<File | null>(null);
+  const [category_icon, setIcon] = useState<File | null>(null);
 
-  // Initialize the form with react-hook-form and zod resolver
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      categoryName: "",
+      categoryName: ""
     },
   });
 
   const handleAdd = async (values: z.infer<typeof formSchema>) => {
+    if (!category_icon) {
+      alert("Please select an icon");
+      return;
+    }
+
     setIsLoading(true);
-    console.log("category data",values, icon)
     try {
-      await onAdd(values.categoryName);
+      await onAdd(values.categoryName, category_icon);
+      toast.success("Category added successfully");
       form.reset();
+      setIcon(null);
       setIsOpen(false);
     } catch (error) {
       console.error("Error adding category:", error);
@@ -203,18 +209,13 @@ export default function AddCategoryDialog({ onAdd }: AddCategoryDialogProps) {
                 </FormItem>
               )}
             />
-            {/* icon  */}
             <div>
               <FileUpload
                 type="image"
-                label="Add Icon"
-                file={icon}
+                label="Upload Icon"
+                file={category_icon}
                 setFile={setIcon}
-                // existingUrl={
-                //   data?.data?.icon
-                //     ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/${data.data.icon}`
-                //     : undefined
-                // }
+                // accept="image/*"
               />
             </div>
             <div className="flex justify-end gap-2">
@@ -237,3 +238,4 @@ export default function AddCategoryDialog({ onAdd }: AddCategoryDialogProps) {
     </Dialog>
   );
 }
+

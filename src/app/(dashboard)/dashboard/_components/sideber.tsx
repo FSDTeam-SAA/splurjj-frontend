@@ -34,6 +34,7 @@ interface Subcategory {
 interface Category {
   category_id: number;
   category_name: string;
+  category_icon?: string;
   subcategories: Subcategory[];
 }
 
@@ -388,7 +389,7 @@ export default function Sidebar() {
                                 : "text-[#131313] dark:text-white font-semibold"
                             }`}
                           >
-                           <Image src="/assets/dashboard/art-and-culture.png" alt="category icon" width={20} height={20}/> {category.category_name}
+                           <Image src= {category?.category_icon || "/assets/dashboard/art-and-culture.png"} alt="category icon" width={20} height={20}/> {category.category_name}
                           </span>
                           {expandedCategories.has(category.category_id) ? (
                             <ChevronDown
