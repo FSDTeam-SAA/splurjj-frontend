@@ -1,12 +1,16 @@
 import React from "react";
-import SubscriberContainer from "./_components/SubscriberContainer";
+// import SubscriberContainer from "./_components/SubscriberContainer";
+import SubscriberPage from "./_components/subscriber-container";
+import SubscriberHeader from "./_components/subscriber-header";
 
-const SubscriberPage = () => {
+const Page = () => {
   return (
     <div>
-      <SubscriberContainer />
+      <SubscriberHeader/>
+      <SubscriberPage/>
+      {/* <SubscriberContainer /> */}
     </div>
   );
 };
 
-export default SubscriberPage;
+export default Page;
