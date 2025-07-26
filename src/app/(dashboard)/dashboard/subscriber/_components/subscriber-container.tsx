@@ -7,6 +7,7 @@ import React, { useState } from "react";
 type User = {
   id: number;
   email: string;
+  created_at: string;
 };
 
 type Meta = {
@@ -47,7 +48,8 @@ const SubscriberPage = () => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  if (isError) return <div>{error instanceof Error ? error.message : String(error)}</div>;
+  if (isError)
+    return <div>{error instanceof Error ? error.message : String(error)}</div>;
   return (
     <div className="w-full">
       <table className="w-full mt-8 border border-[#E7E7E7] bg-[#FFFFFF]">
@@ -72,7 +74,7 @@ const SubscriberPage = () => {
                   {item.email}
                 </td>
                 <td className="text-base font-semibold text-[#424242] leading-[120%]">
-                  04/21/2025, 03:18pm
+                  {item.created_at}
                 </td>
               </tr>
             );

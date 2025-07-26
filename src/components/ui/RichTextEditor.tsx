@@ -13,7 +13,6 @@ import {
   AlignJustify,
   List,
   ListOrdered,
-  ImageIcon,
   LinkIcon,
   Unlink,
   Code,
@@ -28,13 +27,13 @@ interface RichTextEditorProps {
   height?: string;
 }
 
-export function RichTextEditor({
+export function RichTextEditorHeading({
   content,
   onChange,
   placeholder = "Start writing...",
+  height,
 }: RichTextEditorProps) {
   const editorRef = useRef<HTMLDivElement>(null);
-  const imageInputRef = useRef<HTMLInputElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [activeStyles, setActiveStyles] = useState<Record<string, boolean>>({});
 
@@ -86,33 +85,6 @@ export function RichTextEditor({
     // Keep focus on the editor
     if (editorRef.current) {
       editorRef.current.focus();
-    }
-  };
-
-  // Handle image upload
-  const handleImageUpload = () => {
-    if (imageInputRef.current) {
-      imageInputRef.current.click();
-    }
-  };
-
-  // Process selected image
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-
-      reader.onload = (readerEvent) => {
-        const imageUrl = readerEvent.target?.result as string;
-        execCommand("insertImage", imageUrl);
-
-        // Reset the input
-        if (imageInputRef.current) {
-          imageInputRef.current.value = "";
-        }
-      };
-
-      reader.readAsDataURL(file);
     }
   };
 
@@ -200,7 +172,11 @@ export function RichTextEditor({
   };
 
   return (
-    <div className={ ` border border-[#B6B6B6] focus:border-none focus:ring-0 focus-visible:border-none rounded-md overflow-scroll `}>
+    <div
+      className={`${
+        height ? height : "h-auto"
+      } border border-[#B6B6B6] focus:border-none focus:ring-0 focus-visible:border-none rounded-md overflow-scroll `}
+    >
       <div className="rich-text-toolbar sticky top-0 z-50 overflow-x-auto">
         <div className="rich-text-toolbar-group">
           <select
@@ -345,24 +321,6 @@ export function RichTextEditor({
           >
             <Code className="h-4 w-4" />
           </button>
-        </div>
-
-        <div className="rich-text-toolbar-group">
-          <button
-            onClick={handleImageUpload}
-            className="rich-text-toolbar-button dark:text-black"
-            title="Add image"
-            type="button"
-          >
-            <ImageIcon className="h-4 w-4" />
-          </button>
-          <input
-            type="file"
-            ref={imageInputRef}
-            className="hidden"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
         </div>
 
         <div className="rich-text-toolbar-group">

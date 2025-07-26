@@ -266,8 +266,6 @@ Textarea {
   color: #000 !important;
 } */
 
-
-
 /* Rich Text Editor Styles */
 
 .rich-text-content {
@@ -341,3 +339,4 @@ Textarea {
 .rich-text-toolbar-select {
   @apply border border-gray-200 rounded-md px-2 py-1 text-sm bg-white;
 }
+

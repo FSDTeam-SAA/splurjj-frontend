@@ -693,11 +693,12 @@ import { toast } from "react-toastify";
 import { FaArrowLeft } from "react-icons/fa6";
 import { RichTextEditor } from "@/components/ui/rich-text-editor";
 import { ErrorBoundary } from "react-error-boundary";
+import { RichTextEditorHeading } from "@/components/ui/RichTextEditor";
 
 // Define interfaces
 interface Content {
   id?: string;
-  image2?: string | File | { file?: File; link?: string }[];
+  image2?: string | File | { file?: File; link?: string }[] | string[];
   imageLink?: string;
   tags?: string[];
   author: string;
@@ -726,23 +727,32 @@ interface ContentFormModalProps {
 
 // Zod Schema
 const formSchema = z.object({
-  image2: z.array(
-    z.object({
-      file: z.instanceof(File).optional(),
-      link: z.string().url({ message: "Invalid URL format" }).optional().or(z.literal("")),
-    })
-  ).min(1, "At least one image is required").max(10, "Maximum 10 images allowed"),
+  image2: z
+    .array(
+      z.object({
+        file: z.instanceof(File).optional(),
+        link: z
+          .string()
+          .url({ message: "Invalid URL format" })
+          .optional()
+          .or(z.literal("")),
+      })
+    )
+    .min(1, "At least one image is required")
+    .max(10, "Maximum 10 images allowed"),
   tags: z.array(z.string().min(1)).max(10, "Max 10 tags"),
   author: z.string().min(2, "Author must be at least 2 characters"),
   heading: z.string().min(2, "Heading must be at least 2 characters"),
   sub_heading: z.string().min(2, "Sub Heading must be at least 2 characters"),
   body1: z.string().min(2, "Body must be at least 2 characters"),
-  date: z.date({
-    required_error: "Please select a date",
-    invalid_type_error: "Invalid date",
-  }).refine(date => date <= new Date(), {
-    message: "Date cannot be in the future",
-  }),
+  date: z
+    .date({
+      required_error: "Please select a date",
+      invalid_type_error: "Invalid date",
+    })
+    .refine((date) => date <= new Date(), {
+      message: "Date cannot be in the future",
+    }),
 });
 
 interface FormData {
@@ -797,12 +807,25 @@ export default function ContentAddEditForm({
   useEffect(() => {
     if (initialContent) {
       let initialImages: { file?: File; link?: string }[] = [];
-      
+
       if (initialContent.image2) {
         if (Array.isArray(initialContent.image2)) {
-          initialImages = [...initialContent.image2];
-        } else if (typeof initialContent.image2 === 'string') {
-          initialImages = [{ link: initialContent.image2 }];
+          initialImages = initialContent.image2.map((item) =>
+            typeof item === "string" ? { link: item } : item
+          );
+        } else if (typeof initialContent.image2 === "string") {
+          try {
+            // Parse JSON string if image2 is a JSON array
+            const parsedImages = JSON.parse(initialContent.image2);
+            if (Array.isArray(parsedImages)) {
+              initialImages = parsedImages.map((link: string) => ({ link }));
+            } else {
+              initialImages = [{ link: initialContent.image2 }];
+            }
+          } catch (e) {
+            console.error(e);
+            initialImages = [{ link: initialContent.image2 }];
+          }
         } else if (initialContent.image2 instanceof File) {
           initialImages = [{ file: initialContent.image2 }];
         }
@@ -819,7 +842,7 @@ export default function ContentAddEditForm({
       });
 
       // Set image previews
-      const previews = initialImages.map(img => {
+      const previews = initialImages.map((img) => {
         if (img.file) return URL.createObjectURL(img.file);
         if (img.link) return img.link;
         return null;
@@ -828,21 +851,22 @@ export default function ContentAddEditForm({
     }
 
     return () => {
-      imagePreviews.forEach(preview => {
+      imagePreviews.forEach((preview) => {
         if (preview) URL.revokeObjectURL(preview);
       });
     };
   }, [initialContent, form]);
 
   const { watch, setValue } = form;
-  // const image2 = watch("image2");
   const tags = watch("tags");
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files && files.length > 0) {
-      const validFiles = Array.from(files).filter(file => {
-        const validType = ["image/png", "image/jpeg", "image/gif"].includes(file.type);
+      const validFiles = Array.from(files).filter((file) => {
+        const validType = ["image/png", "image/jpeg", "image/gif"].includes(
+          file.type
+        );
         const validSize = file.size <= 10 * 1024 * 1024; // 10MB
         return validType && validSize;
       });
@@ -852,7 +876,7 @@ export default function ContentAddEditForm({
         return;
       }
 
-      const newImages = validFiles.map(file => ({
+      const newImages = validFiles.map((file) => ({
         file,
         link: "",
       }));
@@ -861,8 +885,8 @@ export default function ContentAddEditForm({
       const updatedImages = [...currentImages, ...newImages].slice(0, 10);
       form.setValue("image2", updatedImages);
 
-      const newPreviews = validFiles.map(file => URL.createObjectURL(file));
-      setImagePreviews(prev => [...prev, ...newPreviews].slice(0, 10));
+      const newPreviews = validFiles.map((file) => URL.createObjectURL(file));
+      setImagePreviews((prev) => [...prev, ...newPreviews].slice(0, 10));
     }
   };
 
@@ -874,7 +898,7 @@ export default function ContentAddEditForm({
     if (imagePreviews[index]) {
       URL.revokeObjectURL(imagePreviews[index]!);
     }
-    setImagePreviews(prev => prev.filter((_, i) => i !== index));
+    setImagePreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
   const addTag = () => {
@@ -905,7 +929,11 @@ export default function ContentAddEditForm({
 
   const method = initialContent ? "POST" : "POST";
 
-  const { mutate, isPending, error } = useMutation<MutationResponse, Error, FormData>({
+  const { mutate, isPending, error } = useMutation<
+    MutationResponse,
+    Error,
+    FormData
+  >({
     mutationKey: ["add-content-and-edit-content"],
     mutationFn: async (formData: FormData) => {
       const formDataToSend = new FormData();
@@ -958,7 +986,7 @@ export default function ContentAddEditForm({
   });
 
   const onSubmit = (data: FormData) => {
-    console.log("content data", data)
+    console.log("content data", data);
     mutate(data);
   };
 
@@ -974,29 +1002,34 @@ export default function ContentAddEditForm({
         {!isPending && (
           <>
             <div className="flex items-center justify-between pb-6">
-              <h2 className="text-2xl font-bold text-black">
+              <h2 className="text-2xl font-bold text-black dark:text-black">
                 {initialContent ? "Edit Content" : "Add New Content"}
               </h2>
               <Button
                 variant="outline"
                 onClick={handleCloseForm}
-                className="bg-white text-[#0253F7] text-lg font-bold leading-normal border-2 border-[#0253F7]"
+                className="bg-white text-[#0253F7] dark:text-[#0253F7] text-lg font-bold leading-normal border-2 border-[#0253F7]"
               >
-                <FaArrowLeft className="text-[#0253F7]" /> Back to List
+                <FaArrowLeft className="text-[#0253F7] " /> Back to List
               </Button>
             </div>
 
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6"
+              >
                 {/* Heading */}
                 <FormField
                   control={form.control}
                   name="heading"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-lg font-bold text-black">Heading</FormLabel>
+                      <FormLabel className="text-lg font-bold text-black">
+                        Heading
+                      </FormLabel>
                       <FormControl>
-                        <RichTextEditor
+                        <RichTextEditorHeading
                           content={field.value}
                           onChange={field.onChange}
                           placeholder="Heading ...."
@@ -1013,9 +1046,11 @@ export default function ContentAddEditForm({
                   name="sub_heading"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-lg font-bold text-black">Sub Heading</FormLabel>
+                      <FormLabel className="text-lg font-bold text-black">
+                        Sub Heading
+                      </FormLabel>
                       <FormControl>
-                        <RichTextEditor
+                        <RichTextEditorHeading
                           content={field.value}
                           onChange={field.onChange}
                           placeholder="Sub Heading ...."
@@ -1032,7 +1067,9 @@ export default function ContentAddEditForm({
                   name="author"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-lg font-bold text-black">Author</FormLabel>
+                      <FormLabel className="text-lg font-bold text-black">
+                        Author
+                      </FormLabel>
                       <FormControl>
                         <Input
                           className="text-black bg-white border border-gray-300 rounded-lg p-4"
@@ -1051,7 +1088,9 @@ export default function ContentAddEditForm({
                   name="date"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel className="text-lg font-bold text-black">Date</FormLabel>
+                      <FormLabel className="text-lg font-bold text-black">
+                        Date
+                      </FormLabel>
                       <div className="relative flex gap-2">
                         <FormControl>
                           <Input
@@ -1089,7 +1128,10 @@ export default function ContentAddEditForm({
                               <span className="sr-only">Select date</span>
                             </Button>
                           </PopoverTrigger>
-                          <PopoverContent className="w-auto overflow-hidden p-0 bg-white" align="end">
+                          <PopoverContent
+                            className="w-auto overflow-hidden p-0 bg-white"
+                            align="end"
+                          >
                             <Calendar
                               mode="single"
                               selected={field.value}
@@ -1114,7 +1156,9 @@ export default function ContentAddEditForm({
 
                 {/* Tags */}
                 <div>
-                  <FormLabel className="text-lg font-bold text-black">Tags</FormLabel>
+                  <FormLabel className="text-lg font-bold text-black">
+                    Tags
+                  </FormLabel>
                   <div className="flex items-center gap-2 mb-3 mt-2 relative">
                     <Input
                       className="text-black bg-white border border-gray-300 rounded-lg p-4"
@@ -1164,7 +1208,9 @@ export default function ContentAddEditForm({
                   name="body1"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-lg font-bold text-black">Body Text</FormLabel>
+                      <FormLabel className="text-lg font-bold text-black">
+                        Body Text
+                      </FormLabel>
                       <FormControl>
                         <RichTextEditor
                           content={field.value}
@@ -1183,7 +1229,9 @@ export default function ContentAddEditForm({
                   name="image2"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-lg font-bold text-black">Images</FormLabel>
+                      <FormLabel className="text-lg font-bold text-black">
+                        Images
+                      </FormLabel>
                       <FormControl>
                         <div className="space-y-4">
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -1192,7 +1240,9 @@ export default function ContentAddEditForm({
                                 {imagePreviews[index] || image.link ? (
                                   <div className="w-full h-48 relative">
                                     <Image
-                                      src={imagePreviews[index] || image.link || ""}
+                                      src={
+                                        imagePreviews[index] || image.link || ""
+                                      }
                                       alt={`Preview ${index + 1}`}
                                       fill
                                       className="object-cover rounded-lg border"
@@ -1200,7 +1250,9 @@ export default function ContentAddEditForm({
                                   </div>
                                 ) : (
                                   <div className="w-full h-48 bg-gray-100 rounded-lg flex items-center justify-center">
-                                    <span className="text-gray-500">Image {index + 1}</span>
+                                    <span className="text-gray-500">
+                                      Image {index + 1}
+                                    </span>
                                   </div>
                                 )}
                                 <button
@@ -1216,8 +1268,12 @@ export default function ContentAddEditForm({
                               <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
                                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                                   <Upload className="w-8 h-8 text-gray-500" />
-                                  <p className="mb-2 text-sm text-gray-500">Click to upload</p>
-                                  <p className="text-xs text-gray-500">PNG, JPG, GIF (MAX. 10MB)</p>
+                                  <p className="mb-2 text-sm text-gray-500 dark:text-black">
+                                    Click to upload
+                                  </p>
+                                  <p className="text-xs text-gray-500 dark:text-black">
+                                    PNG, JPG, GIF (MAX. 10MB)
+                                  </p>
                                 </div>
                                 <input
                                   type="file"
@@ -1237,21 +1293,31 @@ export default function ContentAddEditForm({
                           <div className="flex gap-2">
                             <Input
                               placeholder="Paste image URL"
-                              className="flex-1 bg-white border border-gray-300"
+                              className="flex-1 dark:text-black bg-white border border-gray-300"
                               value={newImageLink}
                               onChange={(e) => setNewImageLink(e.target.value)}
                             />
                             <Button
                               type="button"
+                              className="text-white bg-[#0253F7]"
                               onClick={() => {
                                 if (newImageLink) {
                                   const currentImages = field.value || [];
-                                  field.onChange([...currentImages, { link: newImageLink }]);
-                                  setImagePreviews(prev => [...prev, newImageLink]);
+                                  field.onChange([
+                                    ...currentImages,
+                                    { link: newImageLink },
+                                  ]);
+                                  setImagePreviews((prev) => [
+                                    ...prev,
+                                    newImageLink,
+                                  ]);
                                   setNewImageLink("");
                                 }
                               }}
-                              disabled={!newImageLink || (field.value && field.value.length >= 10)}
+                              disabled={
+                                !newImageLink ||
+                                (field.value && field.value.length >= 10)
+                              }
                             >
                               Add Link
                             </Button>
@@ -1269,7 +1335,7 @@ export default function ContentAddEditForm({
                     type="button"
                     variant="outline"
                     onClick={onCancel}
-                    className="bg-white text-gray-600 border-gray-300 px-8 py-3 rounded-lg text-lg font-medium"
+                    className="bg-white text-gray-600 dark:text-black border-gray-300 px-8 py-3 rounded-lg text-lg font-medium"
                   >
                     Cancel
                   </Button>
@@ -1278,7 +1344,9 @@ export default function ContentAddEditForm({
                     className="bg-primary text-white px-8 py-3 rounded-lg text-lg font-medium"
                     disabled={isPending}
                   >
-                    {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    {isPending && (
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    )}
                     Submit
                   </Button>
                 </div>
@@ -1290,9 +1358,6 @@ export default function ContentAddEditForm({
     </ErrorBoundary>
   );
 }
-
-
-
 
 // "use client";
 
@@ -1325,11 +1390,12 @@ export default function ContentAddEditForm({
 // import { FaArrowLeft } from "react-icons/fa6";
 // import { RichTextEditor } from "@/components/ui/rich-text-editor";
 // import { ErrorBoundary } from "react-error-boundary";
+// import { RichTextEditorHeading } from "@/components/ui/RichTextEditor";
 
 // // Define interfaces
 // interface Content {
 //   id?: string;
-//   image2?: string | File;
+//   image2?: string | File | { file?: File; link?: string }[];
 //   imageLink?: string;
 //   tags?: string[];
 //   author: string;
@@ -1358,26 +1424,34 @@ export default function ContentAddEditForm({
 
 // // Zod Schema
 // const formSchema = z.object({
-//   images2: z.array(
-//     z.object({
-//       file: z.instanceof(File).optional(),
-//       link: z.string().url({ message: "Invalid URL format" }).optional().or(z.literal("")),
-//     })
-//   ).min(1, "At least one image is required").max(10, "Maximum 10 images allowed"),
+//   image2: z
+//     .array(
+//       z.object({
+//         file: z.instanceof(File).optional(),
+//         link: z
+//           .string()
+//           .url({ message: "Invalid URL format" })
+//           .optional()
+//           .or(z.literal("")),
+//       })
+//     )
+//     .min(1, "At least one image is required")
+//     .max(10, "Maximum 10 images allowed"),
 //   tags: z.array(z.string().min(1)).max(10, "Max 10 tags"),
 //   author: z.string().min(2, "Author must be at least 2 characters"),
 //   heading: z.string().min(2, "Heading must be at least 2 characters"),
 //   sub_heading: z.string().min(2, "Sub Heading must be at least 2 characters"),
 //   body1: z.string().min(2, "Body must be at least 2 characters"),
-//   date: z.date({
-//     required_error: "Please select a date",
-//     invalid_type_error: "Invalid date",
-//   }).refine(date => date <= new Date(), {
-//     message: "Date cannot be in the future",
-//   }),
+//   date: z
+//     .date({
+//       required_error: "Please select a date",
+//       invalid_type_error: "Invalid date",
+//     })
+//     .refine((date) => date <= new Date(), {
+//       message: "Date cannot be in the future",
+//     }),
 // });
 
-// // type FormData = z.infer<typeof formSchema>;
 // interface FormData {
 //   date: Date;
 //   tags: string[];
@@ -1385,7 +1459,7 @@ export default function ContentAddEditForm({
 //   heading: string;
 //   sub_heading: string;
 //   body1: string;
-//   images2: { link?: string | undefined; file?: File | undefined; }[];
+//   image2: { link?: string; file?: File }[];
 // }
 
 // const ErrorFallback = ({ error }: { error: Error }) => (
@@ -1417,7 +1491,7 @@ export default function ContentAddEditForm({
 //   const form = useForm<FormData>({
 //     resolver: zodResolver(formSchema),
 //     defaultValues: {
-//       images2: [],
+//       image2: [],
 //       tags: [],
 //       author: "",
 //       date: new Date(),
@@ -1429,16 +1503,20 @@ export default function ContentAddEditForm({
 
 //   useEffect(() => {
 //     if (initialContent) {
-//       const initialImages = [];
+//       let initialImages: { file?: File; link?: string }[] = [];
+
 //       if (initialContent.image2) {
-//         initialImages.push({
-//           file: initialContent.image2,
-//           link: initialContent.imageLink || "",
-//         });
+//         if (Array.isArray(initialContent.image2)) {
+//           initialImages = [...initialContent.image2];
+//         } else if (typeof initialContent.image2 === "string") {
+//           initialImages = [{ link: initialContent.image2 }];
+//         } else if (initialContent.image2 instanceof File) {
+//           initialImages = [{ file: initialContent.image2 }];
+//         }
 //       }
 
 //       form.reset({
-//         images2: initialImages,
+//         image2: initialImages,
 //         tags: initialContent.tags || [],
 //         author: initialContent.author || "",
 //         heading: initialContent.heading || "",
@@ -1447,27 +1525,33 @@ export default function ContentAddEditForm({
 //         date: initialContent.date ? new Date(initialContent.date) : new Date(),
 //       });
 
-//       if (initialContent.image2) {
-//         setImagePreviews([typeof initialContent.image2 === "string" ? initialContent.image2 : ""]);
-//       }
+//       // Set image previews
+//       const previews = initialImages.map((img) => {
+//         if (img.file) return URL.createObjectURL(img.file);
+//         if (img.link) return img.link;
+//         return null;
+//       });
+//       setImagePreviews(previews.filter(Boolean) as string[]);
 //     }
 
 //     return () => {
-//       imagePreviews.forEach(preview => {
+//       imagePreviews.forEach((preview) => {
 //         if (preview) URL.revokeObjectURL(preview);
 //       });
 //     };
-//   }, [initialContent, form, imagePreviews]);
+//   }, [initialContent, form]);
 
 //   const { watch, setValue } = form;
-//   const images2 = watch("images2");
+//   // const image2 = watch("image2");
 //   const tags = watch("tags");
 
 //   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
 //     const files = event.target.files;
 //     if (files && files.length > 0) {
-//       const validFiles = Array.from(files).filter(file => {
-//         const validType = ["image/png", "image/jpeg", "image/gif"].includes(file.type);
+//       const validFiles = Array.from(files).filter((file) => {
+//         const validType = ["image/png", "image/jpeg", "image/gif"].includes(
+//           file.type
+//         );
 //         const validSize = file.size <= 10 * 1024 * 1024; // 10MB
 //         return validType && validSize;
 //       });
@@ -1477,29 +1561,29 @@ export default function ContentAddEditForm({
 //         return;
 //       }
 
-//       const newImages = validFiles.map(file => ({
+//       const newImages = validFiles.map((file) => ({
 //         file,
 //         link: "",
 //       }));
 
-//       const currentImages = form.getValues("images2") || [];
+//       const currentImages = form.getValues("image2") || [];
 //       const updatedImages = [...currentImages, ...newImages].slice(0, 10);
-//       form.setValue("images2", updatedImages);
+//       form.setValue("image2", updatedImages);
 
-//       const newPreviews = validFiles.map(file => URL.createObjectURL(file));
-//       setImagePreviews(prev => [...prev, ...newPreviews].slice(0, 10));
+//       const newPreviews = validFiles.map((file) => URL.createObjectURL(file));
+//       setImagePreviews((prev) => [...prev, ...newPreviews].slice(0, 10));
 //     }
 //   };
 
 //   const removeImage = (index: number) => {
-//     const currentImages = form.getValues("images2");
+//     const currentImages = form.getValues("image2");
 //     const updatedImages = currentImages.filter((_, i) => i !== index);
-//     form.setValue("images2", updatedImages);
+//     form.setValue("image2", updatedImages);
 
 //     if (imagePreviews[index]) {
 //       URL.revokeObjectURL(imagePreviews[index]!);
 //     }
-//     setImagePreviews(prev => prev.filter((_, i) => i !== index));
+//     setImagePreviews((prev) => prev.filter((_, i) => i !== index));
 //   };
 
 //   const addTag = () => {
@@ -1530,15 +1614,38 @@ export default function ContentAddEditForm({
 
 //   const method = initialContent ? "POST" : "POST";
 
-//   const { mutate, isPending, error } = useMutation<FormData, Error, FormData>({
+//   const { mutate, isPending, error } = useMutation<
+//     MutationResponse,
+//     Error,
+//     FormData
+//   >({
 //     mutationKey: ["add-content-and-edit-content"],
 //     mutationFn: async (formData: FormData) => {
+//       const formDataToSend = new FormData();
+//       formDataToSend.append("category_id", categoryId.toString());
+//       formDataToSend.append("subcategory_id", subcategoryId.toString());
+//       formDataToSend.append("heading", formData.heading);
+//       formDataToSend.append("author", formData.author);
+//       formDataToSend.append("date", formData.date.toISOString().split("T")[0]);
+//       formDataToSend.append("sub_heading", formData.sub_heading);
+//       formDataToSend.append("body1", formData.body1);
+
+//       formData.image2.forEach((image, index) => {
+//         if (image.file) {
+//           formDataToSend.append(`image2[${index}]`, image.file);
+//         } else if (image.link) {
+//           formDataToSend.append(`image2[${index}]`, image.link);
+//         }
+//       });
+
+//       formDataToSend.append("tags", JSON.stringify(formData.tags));
+
 //       const response = await fetch(url, {
 //         method,
 //         headers: {
 //           Authorization: `Bearer ${token}`,
 //         },
-//         body: prepareFormData(formData),
+//         body: formDataToSend,
 //       });
 
 //       const data = await response.json();
@@ -1563,30 +1670,8 @@ export default function ContentAddEditForm({
 //     },
 //   });
 
-//   const prepareFormData = (data: FormData): FormData => {
-//     const formData = new FormData();
-//     formData.append("category_id", categoryId.toString());
-//     formData.append("subcategory_id", subcategoryId.toString());
-//     formData.append("heading", data.heading);
-//     formData.append("author", data.author);
-//     formData.append("date", data.date.toISOString().split("T")[0]);
-//     formData.append("sub_heading", data.sub_heading);
-//     formData.append("body1", data.body1);
-
-//     data.images2.forEach((image2, index) => {
-//       if (image2.file) {
-//         formData.append(`images2[${index}]`, image2.file);
-//       } else if (image2.link) {
-//         formData.append(`imageLinks[${index}]`, image2.link);
-//       }
-//     });
-
-//     formData.append("tags", JSON.stringify(data.tags));
-//     return formData;
-//   };
-
 //   const onSubmit = (data: FormData) => {
-//     console.log(data)
+//     console.log("content data", data);
 //     mutate(data);
 //   };
 
@@ -1602,33 +1687,37 @@ export default function ContentAddEditForm({
 //         {!isPending && (
 //           <>
 //             <div className="flex items-center justify-between pb-6">
-//               <h2 className="text-2xl font-bold text-black">
+//               <h2 className="text-2xl font-bold text-black dark:text-black">
 //                 {initialContent ? "Edit Content" : "Add New Content"}
 //               </h2>
 //               <Button
 //                 variant="outline"
 //                 onClick={handleCloseForm}
-//                 className="bg-white text-[#0253F7] text-lg font-bold leading-normal border-2 border-[#0253F7]"
+//                 className="bg-white text-[#0253F7] dark:text-[#0253F7] text-lg font-bold leading-normal border-2 border-[#0253F7]"
 //               >
-//                 <FaArrowLeft className="text-[#0253F7]" /> Back to List
+//                 <FaArrowLeft className="text-[#0253F7] " /> Back to List
 //               </Button>
 //             </div>
 
 //             <Form {...form}>
-//               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+//               <form
+//                 onSubmit={form.handleSubmit(onSubmit)}
+//                 className="space-y-6"
+//               >
 //                 {/* Heading */}
 //                 <FormField
 //                   control={form.control}
 //                   name="heading"
 //                   render={({ field }) => (
 //                     <FormItem>
-//                       <FormLabel className="text-lg font-bold text-black">Heading</FormLabel>
+//                       <FormLabel className="text-lg font-bold text-black">
+//                         Heading
+//                       </FormLabel>
 //                       <FormControl>
-//                         <RichTextEditor
+//                         <RichTextEditorHeading
 //                           content={field.value}
 //                           onChange={field.onChange}
 //                           placeholder="Heading ...."
-//                         //   className="border border-gray-300 rounded-lg"
 //                         />
 //                       </FormControl>
 //                       <FormMessage />
@@ -1642,13 +1731,14 @@ export default function ContentAddEditForm({
 //                   name="sub_heading"
 //                   render={({ field }) => (
 //                     <FormItem>
-//                       <FormLabel className="text-lg font-bold text-black">Sub Heading</FormLabel>
+//                       <FormLabel className="text-lg font-bold text-black">
+//                         Sub Heading
+//                       </FormLabel>
 //                       <FormControl>
-//                         <RichTextEditor
+//                         <RichTextEditorHeading
 //                           content={field.value}
 //                           onChange={field.onChange}
 //                           placeholder="Sub Heading ...."
-//                         //   className="border border-gray-300 rounded-lg"
 //                         />
 //                       </FormControl>
 //                       <FormMessage />
@@ -1662,7 +1752,9 @@ export default function ContentAddEditForm({
 //                   name="author"
 //                   render={({ field }) => (
 //                     <FormItem>
-//                       <FormLabel className="text-lg font-bold text-black">Author</FormLabel>
+//                       <FormLabel className="text-lg font-bold text-black">
+//                         Author
+//                       </FormLabel>
 //                       <FormControl>
 //                         <Input
 //                           className="text-black bg-white border border-gray-300 rounded-lg p-4"
@@ -1681,7 +1773,9 @@ export default function ContentAddEditForm({
 //                   name="date"
 //                   render={({ field }) => (
 //                     <FormItem className="flex flex-col">
-//                       <FormLabel className="text-lg font-bold text-black">Date</FormLabel>
+//                       <FormLabel className="text-lg font-bold text-black">
+//                         Date
+//                       </FormLabel>
 //                       <div className="relative flex gap-2">
 //                         <FormControl>
 //                           <Input
@@ -1719,7 +1813,10 @@ export default function ContentAddEditForm({
 //                               <span className="sr-only">Select date</span>
 //                             </Button>
 //                           </PopoverTrigger>
-//                           <PopoverContent className="w-auto overflow-hidden p-0 bg-white" align="end">
+//                           <PopoverContent
+//                             className="w-auto overflow-hidden p-0 bg-white"
+//                             align="end"
+//                           >
 //                             <Calendar
 //                               mode="single"
 //                               selected={field.value}
@@ -1744,7 +1841,9 @@ export default function ContentAddEditForm({
 
 //                 {/* Tags */}
 //                 <div>
-//                   <FormLabel className="text-lg font-bold text-black">Tags</FormLabel>
+//                   <FormLabel className="text-lg font-bold text-black">
+//                     Tags
+//                   </FormLabel>
 //                   <div className="flex items-center gap-2 mb-3 mt-2 relative">
 //                     <Input
 //                       className="text-black bg-white border border-gray-300 rounded-lg p-4"
@@ -1794,13 +1893,14 @@ export default function ContentAddEditForm({
 //                   name="body1"
 //                   render={({ field }) => (
 //                     <FormItem>
-//                       <FormLabel className="text-lg font-bold text-black">Body Text</FormLabel>
+//                       <FormLabel className="text-lg font-bold text-black">
+//                         Body Text
+//                       </FormLabel>
 //                       <FormControl>
 //                         <RichTextEditor
 //                           content={field.value}
 //                           onChange={field.onChange}
 //                           placeholder="Description...."
-//                         //   className="border border-gray-300 rounded-lg"
 //                         />
 //                       </FormControl>
 //                       <FormMessage />
@@ -1811,19 +1911,23 @@ export default function ContentAddEditForm({
 //                 {/* Images */}
 //                 <FormField
 //                   control={form.control}
-//                   name="images2"
+//                   name="image2"
 //                   render={({ field }) => (
 //                     <FormItem>
-//                       <FormLabel className="text-lg font-bold text-black">Images</FormLabel>
+//                       <FormLabel className="text-lg font-bold text-black">
+//                         Images
+//                       </FormLabel>
 //                       <FormControl>
 //                         <div className="space-y-4">
 //                           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-//                             {field.value?.map((image2, index) => (
+//                             {field.value?.map((image, index) => (
 //                               <div key={index} className="relative group">
-//                                 {imagePreviews[index] || image2.link ? (
+//                                 {imagePreviews[index] || image.link ? (
 //                                   <div className="w-full h-48 relative">
 //                                     <Image
-//                                       src={imagePreviews[index] || image2.link || ""}
+//                                       src={
+//                                         imagePreviews[index] || image.link || ""
+//                                       }
 //                                       alt={`Preview ${index + 1}`}
 //                                       fill
 //                                       className="object-cover rounded-lg border"
@@ -1831,7 +1935,9 @@ export default function ContentAddEditForm({
 //                                   </div>
 //                                 ) : (
 //                                   <div className="w-full h-48 bg-gray-100 rounded-lg flex items-center justify-center">
-//                                     <span className="text-gray-500">Image {index + 1}</span>
+//                                     <span className="text-gray-500">
+//                                       Image {index + 1}
+//                                     </span>
 //                                   </div>
 //                                 )}
 //                                 <button
@@ -1847,8 +1953,12 @@ export default function ContentAddEditForm({
 //                               <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
 //                                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
 //                                   <Upload className="w-8 h-8 text-gray-500" />
-//                                   <p className="mb-2 text-sm text-gray-500">Click to upload</p>
-//                                   <p className="text-xs text-gray-500">PNG, JPG, GIF (MAX. 10MB)</p>
+//                                   <p className="mb-2 text-sm text-gray-500 dark:text-black">
+//                                     Click to upload
+//                                   </p>
+//                                   <p className="text-xs text-gray-500 dark:text-black">
+//                                     PNG, JPG, GIF (MAX. 10MB)
+//                                   </p>
 //                                 </div>
 //                                 <input
 //                                   type="file"
@@ -1868,20 +1978,31 @@ export default function ContentAddEditForm({
 //                           <div className="flex gap-2">
 //                             <Input
 //                               placeholder="Paste image URL"
-//                               className="flex-1 bg-white border border-gray-300"
+//                               className="flex-1 dark:text-black bg-white border border-gray-300"
 //                               value={newImageLink}
 //                               onChange={(e) => setNewImageLink(e.target.value)}
 //                             />
 //                             <Button
 //                               type="button"
+//                               className="text-white bg-[#0253F7]"
 //                               onClick={() => {
 //                                 if (newImageLink) {
 //                                   const currentImages = field.value || [];
-//                                   field.onChange([...currentImages, { link: newImageLink, file: undefined }]);
+//                                   field.onChange([
+//                                     ...currentImages,
+//                                     { link: newImageLink },
+//                                   ]);
+//                                   setImagePreviews((prev) => [
+//                                     ...prev,
+//                                     newImageLink,
+//                                   ]);
 //                                   setNewImageLink("");
 //                                 }
 //                               }}
-//                               disabled={!newImageLink || (field.value && field.value.length >= 10)}
+//                               disabled={
+//                                 !newImageLink ||
+//                                 (field.value && field.value.length >= 10)
+//                               }
 //                             >
 //                               Add Link
 //                             </Button>
@@ -1899,7 +2020,7 @@ export default function ContentAddEditForm({
 //                     type="button"
 //                     variant="outline"
 //                     onClick={onCancel}
-//                     className="bg-white text-gray-600 border-gray-300 px-8 py-3 rounded-lg text-lg font-medium"
+//                     className="bg-white text-gray-600 dark:text-black border-gray-300 px-8 py-3 rounded-lg text-lg font-medium"
 //                   >
 //                     Cancel
 //                   </Button>
@@ -1908,7 +2029,9 @@ export default function ContentAddEditForm({
 //                     className="bg-primary text-white px-8 py-3 rounded-lg text-lg font-medium"
 //                     disabled={isPending}
 //                   >
-//                     {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+//                     {isPending && (
+//                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+//                     )}
 //                     Submit
 //                   </Button>
 //                 </div>

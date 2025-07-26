@@ -54,31 +54,6 @@ export default function SubcategoryContentPage() {
     console.log(error);
   }
 
-  // content delete api
-  // const { mutate: deleteContent } = useMutation({
-  //   mutationKey: ["delete-content"],
-  //   mutationFn: (contentId: number) =>
-  //     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${contentId}`, {
-  //       method: "DELETE",
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //         "content-type": "application/json",
-  //       },
-  //     }).then((res) => res.json()),
-  //   onSuccess: (data) => {
-  //     if (!data?.status) {
-  //       toast.error(data?.message || "Something went wrong")
-  //       return
-  //     }
-  //     toast.success(data?.message || "Content deleted successfully")
-  //     queryClient.invalidateQueries({ queryKey: ["all-contents"] })
-  //   },
-  // })
-
-  // const handleDeleteContent = (contentId: number) => {
-  //   deleteContent(contentId)
-  // }
-
   const { mutate: deleteContent } = useMutation({
     mutationKey: ["delete-content"],
     mutationFn: (contentId: number) =>

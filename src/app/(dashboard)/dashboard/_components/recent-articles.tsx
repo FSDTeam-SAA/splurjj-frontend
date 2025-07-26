@@ -1,6 +1,5 @@
 "use client";
 import TableSkeletonWrapper from "@/components/shared/TableSkeletonWrapper/TableSkeletonWrapper";
-import { DashboardOverviewDataTypeResponse } from "@/components/types/DashboardOverviewDataType";
 // import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SplurjjDropDownSelector from "@/components/ui/SplurjjDropDownSelector";
@@ -9,38 +8,26 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useState } from "react";
 import ContentStatusDropDown from "../content/_components/ContentStatusDropDown";
+import { DashboardOverviewResponse } from "@/components/types/DashboardOverviewDataType";
 
 const numberList = [
   { id: 1, name: "5", value: 5 },
-  { id: 2, name: "6", value: 6 },
-  { id: 3, name: "7", value: 7 },
-  { id: 4, name: "8", value: 8 },
-  { id: 5, name: "9", value: 9 },
-  { id: 6, name: "10", value: 10 },
-  { id: 7, name: "11", value: 11 },
-  { id: 8, name: "12", value: 12 },
-  { id: 9, name: "13", value: 13 },
-  { id: 10, name: "14", value: 14 },
-  { id: 11, name: "15", value: 15 },
-  { id: 12, name: "16", value: 16 },
-  { id: 13, name: "17", value: 17 },
-  { id: 14, name: "18", value: 18 },
-  { id: 15, name: "19", value: 19 },
-  { id: 16, name: "20", value: 20 },
+  { id: 2, name: "10", value: 10 },
+  { id: 3, name: "20", value: 20 },
 ];
 
 const RecentArticles = () => {
   const [selectedNumber, setSelectedNumber] = useState<
     string | number | undefined
-  >(undefined);
+  >(10);
   const session = useSession();
   const token = (session?.data?.user as { token: string })?.token;
 
   const { data, isLoading, isError, error } =
-    useQuery<DashboardOverviewDataTypeResponse>({
-      queryKey: ["dashboard-recent-articles"],
+    useQuery<DashboardOverviewResponse>({
+      queryKey: ["dashboard-recent-articles", selectedNumber],
       queryFn: () =>
-        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/dashboard-overview`, {
+        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/dashboard-overview?per_page=${selectedNumber}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -48,7 +35,7 @@ const RecentArticles = () => {
         }).then((res) => res.json()),
     });
 
-  // console.log(data?.data?.recent_content);
+  console.log(data?.data?.recent_content);
   if (isLoading) {
     return (
       <div>
@@ -84,7 +71,7 @@ const RecentArticles = () => {
         <ScrollArea className="h-[420px] w-full">
           <table className="w-full">
             <tbody className="">
-              {data?.data?.recent_content?.map((content) => {
+              {data?.data?.recent_content?.data?.map((content) => {
                 return (
                   <tr
                     key={content?.id}
@@ -110,7 +97,7 @@ const RecentArticles = () => {
                       </div>
                       <p
                         className="text-black dark:text-black black__text"
-                        dangerouslySetInnerHTML={{ __html: content?.heading }}
+                        dangerouslySetInnerHTML={{ __html: content?.heading.slice(0, 50) }}
                       />
                     </td>
 
