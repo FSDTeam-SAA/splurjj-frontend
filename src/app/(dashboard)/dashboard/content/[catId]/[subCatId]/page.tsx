@@ -47,6 +47,8 @@ export default function SubcategoryContentPage() {
       ).then((res) => res.json()),
   });
 
+  console.log(editingContent)
+
   // console.log("all contents", data?.data);
   if (isError) {
     console.log(error);
@@ -182,12 +184,12 @@ export default function SubcategoryContentPage() {
         {showForm ? (
           <div className="space-y-4">
             <ContentAddEditForm
-              initialContent={editingContent}
+              // initialContent={editingContent}
               categoryId={categoryId!}
               subcategoryId={subcategoryId!}
               onSuccess={handleFormSuccess}
               onCancel={handleCloseForm}
-              setEditingContent={setEditingContent}
+              // setEditingContent={setEditingContent}
               setShowForm={setShowForm}
             />
           </div>
