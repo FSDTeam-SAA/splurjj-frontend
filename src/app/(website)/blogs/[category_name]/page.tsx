@@ -92,7 +92,7 @@ const capitalize = (str: string) =>
     <div className="container mx-auto px-4">
       <div className="text-center pt-16">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">
-          {capitalize(params.category_name)} Contents
+          {capitalize(params.category_name)} Content
         </h1>
       </div>
       <div className="grid grid-cols-8 gap-4 py-16">
