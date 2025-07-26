@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { ArrowRight } from "lucide-react";
@@ -14,6 +12,8 @@ import {
 } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
+import ImageCarousel from "./ImageCarousel";
+import { motion } from "framer-motion";
 
 // Interface for ContentItem
 interface ContentItem {
@@ -85,7 +85,6 @@ const AllContents: React.FC = () => {
 
     fetchData();
   }, []);
-
 
   const getImageUrl = (path: string | null): string => {
     if (!path) return "/fallback-image.jpg";
@@ -220,6 +219,9 @@ const AllContents: React.FC = () => {
   const secondPost = contents[1];
   const thirdPost = contents[2];
   const fourthPost = contents[3];
+  // const otherPosts = contents.slice(1); // All posts except the first
+
+  console.log("FFFFFFFFFFFFFFFFFFF", firstPost);
 
   return (
     <div className="">
@@ -299,35 +301,32 @@ const AllContents: React.FC = () => {
             </div>
             <div className="space-y-4">
               <Link
-              className="content-heding-text"
+                className="content-heding-text"
                 href={`/${firstPost?.category_id}/${firstPost?.subcategory_id}/${firstPost?.id}`}
               >
-                <p
+                <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-3xl md:text-[40px] lg:text-[60px] font-[800]  leading-[120%]"
+                  className="text-3xl md:text-[40px] lg:text-[60px] font-[800] leading-[120%]"
+                  whileHover={{
+                    scale: 1.05,
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
                 />
               </Link>
+
               <p
                 dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
-                className="text-base font-normal text-[#424242] dark:white-text  line-clamp-3"
+                className="text-base font-normal text-[#424242] dark:white-text line-clamp-3"
               />
+
               <p className="text-base font-semibold uppercase text-[#424242]">
                 {firstPost.author} - {firstPost.date}
               </p>
             </div>
           </div>
           <div className="mt-8">
-            <Link
-              href={`/${firstPost?.category_id}/${firstPost?.subcategory_id}/${firstPost?.id}`}
-            >
-              <Image
-                src={getImageUrl(firstPost.image1)}
-                alt={firstPost.heading}
-                width={1200}
-                height={600}
-                className="w-full h-[400px] md:h-[550px] lg:h-[680px] object-cover object-top"
-              />
-            </Link>
+            <ImageCarousel posts={[firstPost]} getImageUrl={getImageUrl} />
           </div>
         </div>
       )}

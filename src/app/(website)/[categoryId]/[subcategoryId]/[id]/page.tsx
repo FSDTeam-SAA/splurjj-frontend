@@ -14,6 +14,7 @@ import ContentComments from "./_components/upvoteDownvoteAllComments";
 import Vertical from "@/components/adds/vertical";
 import Horizontal from "@/components/adds/horizontal";
 import RelatedContent from "@/app/(website)/_components/RalatedBlog/RalatedBlog";
+import ContentsDetailsCarousel from "./_components/contentsDetailsCarousel";
 
 interface BlogData {
   status: boolean;
@@ -100,6 +101,12 @@ const ContentBlogDetails = ({
   });
 
   const blogData = data?.data || null;
+
+const getImageUrl = (path: string | null): string => {
+    if (!path) return "/fallback-image.jpg";
+    if (path.startsWith("http")) return path;
+    return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${path.replace(/^\/+/, "")}`;
+  };
 
   // Skeleton Loader Component
   const SkeletonLoader = () => (
@@ -256,6 +263,8 @@ const ContentBlogDetails = ({
 
   const cleanedTags = cleanTags(blogData.tags || []);
 
+  console.log(blogData)
+
   return (
     <div className="">
       <div className="container py-[30px] md:py-[50px] lg:py-[72px]">
@@ -304,16 +313,9 @@ const ContentBlogDetails = ({
                 className="text-base font-normal leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8"
               />
               <div className="pb-[25px] md:pb-[32px] lg:pb-[40px]">
-                <Image
-                  src={
-                    blogData.image1_url ||
-                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/${blogData.image1}` ||
-                    "/fallback-image.jpg"
-                  }
-                  alt={blogData.heading || "Blog image"}
-                  width={888}
-                  height={552}
-                  className="w-full lg:h-[850px] object-cover object-top"
+                <ContentsDetailsCarousel
+                  posts={blogData}
+                  getImageUrl={getImageUrl}
                 />
               </div>
               <p
