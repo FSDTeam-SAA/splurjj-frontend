@@ -69,74 +69,81 @@ function MainHome() {
           </div>
         </div>
       </div>
+      <div>
+        <Horizontal />
+        <div className="container">
+          <div className="grid grid-cols-8 gap-4 pt-8 md:pt-12 lg:pt-16">
+            {/* Main content */}
+            <div className="col-span-8 md:col-span-6 pb-8 md:pb-12 lg:pb-5">
+              <ArtCulture categoryName={{ categoryName: firstCategory }} />
+              <Gear categoryName={{ categoryName: secoundCategory }} />
+            </div>
 
-      <Horizontal />
-      <div className="container">
-        <div className="grid grid-cols-8 gap-4 pt-8 md:pt-12 lg:pt-16">
-          {/* Main content */}
-          <div className="col-span-8 md:col-span-6 pb-8 md:pb-12 lg:pb-5">
-            <ArtCulture categoryName={{ categoryName: firstCategory }} />
-            <Gear categoryName={{ categoryName: secoundCategory }} />
-          </div>
-
-          {/* Sticky sidebar */}
-          <div className="col-span-8 md:col-span-2">
-            <div className="sticky top-[120px] mb-2">
-              <Vertical />
+            {/* Sticky sidebar */}
+            <div className="col-span-8 md:col-span-2">
+              <div className="sticky top-[120px] mb-2">
+                <Vertical />
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <Horizontal />
-      <div className="container">
-        <div className="grid grid-cols-8 gap-4 pt-8 md:pt-12 lg:pt-16">
-          {/* Main content */}
-          <div className="col-span-8 md:col-span-6 pb-8 md:pb-12 lg:pb-10">
-            <Music categoryName={{ categoryName: thirdPost }} />
-            <Ride categoryName={{ categoryName: forthPost }} />
-          </div>
+      <div>
+        <Horizontal />
+        <div className="container">
+          <div className="grid grid-cols-8 gap-4 pt-8 md:pt-12 lg:pt-16">
+            {/* Main content */}
+            <div className="col-span-8 md:col-span-6 pb-8 md:pb-12 lg:pb-10">
+              <Music categoryName={{ categoryName: thirdPost }} />
+              <Ride categoryName={{ categoryName: forthPost }} />
+            </div>
 
-          {/* Sticky sidebar */}
-          <div className="col-span-8 md:col-span-2">
-            <div className="sticky top-[120px] mb-2">
-              <Vertical />
+            {/* Sticky sidebar */}
+            <div className="col-span-8 md:col-span-2">
+              <div className="sticky top-[120px] mb-2">
+                <Vertical />
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <Horizontal />
-      <div className="container">
-        <div className="grid grid-cols-8 gap-4 pt-8 md:pt-12 lg:pt-16">
-          {/* Main content */}
-          <div className="col-span-8 md:col-span-6 pb-8 md:pb-12 lg:pb-10">
-            <Video categoryName={{ categoryName: fifthPost }} />
-          </div>
+      <div>
+        <Horizontal />
+        <div className="container">
+          <div className="grid grid-cols-8 gap-4 pt-8 md:pt-12 lg:pt-16">
+            {/* Main content */}
+            <div className="col-span-8 md:col-span-6 pb-8 md:pb-12 lg:pb-10">
+              <Video categoryName={{ categoryName: fifthPost }} />
+            </div>
 
-          {/* Sticky sidebar */}
-          <div className="col-span-8 md:col-span-2">
-            <div className="sticky top-[120px] mb-2">
-              <Vertical />
+            {/* Sticky sidebar */}
+            <div className="col-span-8 md:col-span-2">
+              <div className="sticky top-[120px] mb-2">
+                <Vertical />
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <Horizontal />
-      <div className="container">
-        <div className="grid grid-cols-8 gap-4 pt-4">
-          {/* Main content */}
-          <div className="col-span-8 md:col-span-6 pb-2">
-            <QuitCalm categoryName={{ categoryName: sixthPost }} />
-          </div>
+      <div>
+        <Horizontal />
+        <div className="container">
+          <div className="grid grid-cols-8 gap-4 pt-4">
+            {/* Main content */}
+            <div className="col-span-8 md:col-span-6 pb-2">
+              <QuitCalm categoryName={{ categoryName: sixthPost }} />
+            </div>
 
-          {/* Sticky sidebar */}
-          <div className="col-span-8 md:col-span-2">
-            <div className="sticky top-[120px] mb-2">
-              <Vertical />
+            {/* Sticky sidebar */}
+            <div className="col-span-8 md:col-span-2">
+              <div className="sticky top-[120px] mb-2">
+                <Vertical />
+              </div>
             </div>
           </div>
         </div>
+        <Horizontal />
       </div>
-      <Horizontal />
     </div>
   );
 }
