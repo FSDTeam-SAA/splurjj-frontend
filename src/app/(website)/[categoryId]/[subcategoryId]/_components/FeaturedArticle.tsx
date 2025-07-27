@@ -3,10 +3,16 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { RiShareForwardLine } from "react-icons/ri";
-import { FaFacebook, FaLinkedin, FaRegCommentDots, FaTwitter } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaLinkedin,
+  FaRegCommentDots,
+  FaTwitter,
+} from "react-icons/fa";
 import { TbTargetArrow } from "react-icons/tb";
 import FirstContentsSkeleton from "./FirstContentsSkeleton";
 import CategorySubCategoryCarousel from "./categorySubCategoryCarousel";
+import { motion } from "framer-motion";
 
 interface Post {
   id: number;
@@ -32,7 +38,10 @@ interface FirstContentsProps {
   loading?: boolean;
 }
 
-const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false }) => {
+const FirstContents: React.FC<FirstContentsProps> = ({
+  posts,
+  loading = false,
+}) => {
   const [showShareMenu, setShowShareMenu] = useState<number | null>(null);
 
   const getImageUrl = (path: string | null): string => {
@@ -41,18 +50,30 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
     return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${path.replace(/^\/+/, "")}`;
   };
 
-  const getShareUrl = (categoryName: string, subCategoryName: string, postId: number): string => {
+  const getShareUrl = (
+    categoryName: string,
+    subCategoryName: string,
+    postId: number
+  ): string => {
     const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
     const normalizedCategory = categoryName.toLowerCase().replace(/\s+/g, "-");
-    const normalizedSubCategory = subCategoryName.toLowerCase().replace(/\s+/g, "-");
+    const normalizedSubCategory = subCategoryName
+      .toLowerCase()
+      .replace(/\s+/g, "-");
     return `${baseUrl}/blogs/${normalizedCategory}/${normalizedSubCategory}/${postId}`;
   };
 
   const handleShare = async (post: Post) => {
-    const shareUrl = getShareUrl(post.category_name, post.sub_category_name, post.id);
+    const shareUrl = getShareUrl(
+      post.category_name,
+      post.sub_category_name,
+      post.id
+    );
     const shareData = {
       title: post.heading.replace(/<[^>]+>/g, ""),
-      text: post.sub_heading?.replace(/<[^>]+>/g, "") || "Check out this blog post!",
+      text:
+        post.sub_heading?.replace(/<[^>]+>/g, "") ||
+        "Check out this blog post!",
       url: shareUrl,
     };
 
@@ -69,9 +90,9 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
 
   const shareToTwitter = (url: string, text: string) => {
     window.open(
-      `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(
-        text.replace(/<[^>]+>/g, "")
-      )}`,
+      `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+        url
+      )}&text=${encodeURIComponent(text.replace(/<[^>]+>/g, ""))}`,
       "_blank"
     );
   };
@@ -109,7 +130,9 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
           <div className="lg:flex items-center gap-4 mb-4 space-y-4 md:space-y-0">
             <div className="flex items-center gap-2">
               <Link
-                href={`/blogs/${firstPost.category_name.toLowerCase().replace(/\s+/g, "-")}`}
+                href={`/blogs/${firstPost.category_name
+                  .toLowerCase()
+                  .replace(/\s+/g, "-")}`}
                 className="bg-primary py-2 px-4 rounded text-sm md:text-base font-extrabold uppercase text-white"
               >
                 {firstPost.category_name || "Category"}
@@ -132,7 +155,11 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                     className="w-6 h-6 cursor-pointer text-blue-500"
                     onClick={() =>
                       shareToTwitter(
-                        getShareUrl(firstPost.category_name, firstPost.sub_category_name, firstPost.id),
+                        getShareUrl(
+                          firstPost.category_name,
+                          firstPost.sub_category_name,
+                          firstPost.id
+                        ),
                         firstPost.heading
                       )
                     }
@@ -141,7 +168,11 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                     className="w-6 h-6 cursor-pointer text-blue-700"
                     onClick={() =>
                       shareToFacebook(
-                        getShareUrl(firstPost.category_name, firstPost.sub_category_name, firstPost.id)
+                        getShareUrl(
+                          firstPost.category_name,
+                          firstPost.sub_category_name,
+                          firstPost.id
+                        )
                       )
                     }
                   />
@@ -149,7 +180,11 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                     className="w-6 h-6 cursor-pointer text-blue-600"
                     onClick={() =>
                       shareToLinkedIn(
-                        getShareUrl(firstPost.category_name, firstPost.sub_category_name, firstPost.id),
+                        getShareUrl(
+                          firstPost.category_name,
+                          firstPost.sub_category_name,
+                          firstPost.id
+                        ),
                         firstPost.heading
                       )
                     }
@@ -166,10 +201,18 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
             </div>
           </div>
           <div className="space-y-4">
-            <Link href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}>
-              <p
+            <Link
+              href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
+            >
+              <motion.p
                 dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                className="text-3xl lg:text-5xl font-bold text-[#131313]"
+                className="text-3xl lg:text-5xl font-bold text-[#131313] hover:underline"
+                whileHover={{
+                  scaleX: 1.05,
+                  transformOrigin: "left", // Ensures scaling happens from the left side
+                  fontWeight: 900,
+                  transition: { duration: 0.3 },
+                }}
               />
             </Link>
             <p
@@ -181,21 +224,16 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
             </p>
           </div>
           <div className="mt-8">
-            <CategorySubCategoryCarousel posts={firstPost} getImageUrl={getImageUrl} />
-            {/* <Link href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}>
-              <Image
-                src={getImageUrl(firstPost.image1)}
-                alt={firstPost.heading.replace(/<[^>]+>/g, "")}
-                width={1200}
-                height={600}
-                className="w-full object-cover object-top lg:h-[680px]"
-                priority
-              />
-            </Link> */}
+            <CategorySubCategoryCarousel
+              posts={firstPost}
+              getImageUrl={getImageUrl}
+            />
           </div>
         </div>
       ) : (
-        <p className="text-center text-muted-foreground">No featured article available.</p>
+        <p className="text-center text-muted-foreground">
+          No featured article available.
+        </p>
       )}
 
       {secondPost && (
@@ -203,7 +241,9 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
           <div className="col-span-5 lg:col-span-2">
             <div className="flex items-center gap-2 mb-2">
               <Link
-                href={`/blogs/${secondPost.category_name.toLowerCase().replace(/\s+/g, "-")}`}
+                href={`/blogs/${secondPost.category_name
+                  .toLowerCase()
+                  .replace(/\s+/g, "-")}`}
                 className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
               >
                 {secondPost.category_name || "Category"}
@@ -215,7 +255,9 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                 {secondPost.sub_category_name || "Subcategory"}
               </Link>
             </div>
-            <Link href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}>
+            <Link
+              href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
+            >
               <p
                 dangerouslySetInnerHTML={{ __html: secondPost.heading }}
                 className="text-2xl font-medium"
@@ -235,7 +277,11 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                     className="w-6 h-6 cursor-pointer text-blue-500"
                     onClick={() =>
                       shareToTwitter(
-                        getShareUrl(secondPost.category_name, secondPost.sub_category_name, secondPost.id),
+                        getShareUrl(
+                          secondPost.category_name,
+                          secondPost.sub_category_name,
+                          secondPost.id
+                        ),
                         secondPost.heading.replace(/<[^>]+>/g, "")
                       )
                     }
@@ -244,7 +290,11 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                     className="w-6 h-6 cursor-pointer text-blue-700"
                     onClick={() =>
                       shareToFacebook(
-                        getShareUrl(secondPost.category_name, secondPost.sub_category_name, secondPost.id)
+                        getShareUrl(
+                          secondPost.category_name,
+                          secondPost.sub_category_name,
+                          secondPost.id
+                        )
                       )
                     }
                   />
@@ -252,7 +302,11 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                     className="w-6 h-6 cursor-pointer text-blue-600"
                     onClick={() =>
                       shareToLinkedIn(
-                        getShareUrl(secondPost.category_name, secondPost.sub_category_name, secondPost.id),
+                        getShareUrl(
+                          secondPost.category_name,
+                          secondPost.sub_category_name,
+                          secondPost.id
+                        ),
                         secondPost.heading.replace(/<[^>]+>/g, "")
                       )
                     }
@@ -272,14 +326,16 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
               className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
             />
           </div>
-          <div className="col-span-5 lg:col-span-3">
-            <Link href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}>
+          <div className="col-span-5 lg:col-span-3 overflow-hidden">
+            <Link
+              href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
+            >
               <Image
                 src={getImageUrl(secondPost.image1)}
                 alt={secondPost.heading.replace(/<[^>]+>/g, "")}
                 width={400}
                 height={315}
-                className="w-full h-[315px] object-cover object-top"
+                className="w-full h-[315px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
                 priority
               />
             </Link>
@@ -288,14 +344,16 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
       )}
 
       {thirdPost && (
-        <div className="mb-8">
-          <Link href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}>
+        <div className="mb-8 overflow-hidden">
+          <Link
+            href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
+          >
             <Image
               src={getImageUrl(thirdPost.image1)}
               alt={thirdPost.heading.replace(/<[^>]+>/g, "")}
               width={400}
               height={443}
-              className="w-full h-[443px] object-cover object-top"
+              className="w-full h-[443px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
               priority
             />
           </Link>
@@ -303,7 +361,9 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
             <div className="md:flex items-center justify-between gap-4 mb-2">
               <div className="flex items-center gap-2">
                 <Link
-                  href={`/blogs/${thirdPost.category_name.toLowerCase().replace(/\s+/g, "-")}`}
+                  href={`/blogs/${thirdPost.category_name
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")}`}
                   className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {thirdPost.category_name || "Category"}
@@ -319,7 +379,9 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                 {thirdPost.author} - {thirdPost.date}
               </p>
             </div>
-            <Link href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}>
+            <Link
+              href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
+            >
               <p
                 dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
                 className="text-2xl font-medium"
@@ -336,7 +398,11 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                     className="w-6 h-6 cursor-pointer text-blue-500"
                     onClick={() =>
                       shareToTwitter(
-                        getShareUrl(thirdPost.category_name, thirdPost.sub_category_name, thirdPost.id),
+                        getShareUrl(
+                          thirdPost.category_name,
+                          thirdPost.sub_category_name,
+                          thirdPost.id
+                        ),
                         thirdPost.heading.replace(/<[^>]+>/g, "")
                       )
                     }
@@ -345,7 +411,11 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                     className="w-6 h-6 cursor-pointer text-blue-700"
                     onClick={() =>
                       shareToFacebook(
-                        getShareUrl(thirdPost.category_name, thirdPost.sub_category_name, thirdPost.id)
+                        getShareUrl(
+                          thirdPost.category_name,
+                          thirdPost.sub_category_name,
+                          thirdPost.id
+                        )
                       )
                     }
                   />
@@ -353,7 +423,11 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                     className="w-6 h-6 cursor-pointer text-blue-600"
                     onClick={() =>
                       shareToLinkedIn(
-                        getShareUrl(thirdPost.category_name, thirdPost.sub_category_name, thirdPost.id),
+                        getShareUrl(
+                          thirdPost.category_name,
+                          thirdPost.sub_category_name,
+                          thirdPost.id
+                        ),
                         thirdPost.heading.replace(/<[^>]+>/g, "")
                       )
                     }
@@ -382,7 +456,9 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
             <div className="md:flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <Link
-                  href={`/blogs/${fourthPost.category_name.toLowerCase().replace(/\s+/g, "-")}`}
+                  href={`/blogs/${fourthPost.category_name
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")}`}
                   className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {fourthPost.category_name || "Category"}
@@ -405,7 +481,11 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                       className="w-6 h-6 cursor-pointer text-blue-500"
                       onClick={() =>
                         shareToTwitter(
-                          getShareUrl(fourthPost.category_name, fourthPost.sub_category_name, fourthPost.id),
+                          getShareUrl(
+                            fourthPost.category_name,
+                            fourthPost.sub_category_name,
+                            fourthPost.id
+                          ),
                           fourthPost.heading.replace(/<[^>]+>/g, "")
                         )
                       }
@@ -414,7 +494,11 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                       className="w-6 h-6 cursor-pointer text-blue-700"
                       onClick={() =>
                         shareToFacebook(
-                          getShareUrl(fourthPost.category_name, fourthPost.sub_category_name, fourthPost.id)
+                          getShareUrl(
+                            fourthPost.category_name,
+                            fourthPost.sub_category_name,
+                            fourthPost.id
+                          )
                         )
                       }
                     />
@@ -422,7 +506,11 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                       className="w-6 h-6 cursor-pointer text-blue-600"
                       onClick={() =>
                         shareToLinkedIn(
-                          getShareUrl(fourthPost.category_name, fourthPost.sub_category_name, fourthPost.id),
+                          getShareUrl(
+                            fourthPost.category_name,
+                            fourthPost.sub_category_name,
+                            fourthPost.id
+                          ),
                           fourthPost.heading.replace(/<[^>]+>/g, "")
                         )
                       }
@@ -438,7 +526,9 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                 </Link>
               </div>
             </div>
-            <Link href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}>
+            <Link
+              href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
+            >
               <p
                 dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
                 className="text-2xl font-medium"
@@ -447,13 +537,16 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
             <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
               {fourthPost.author} - {fourthPost.date}
             </p>
-            <Link href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}>
+            <Link
+              href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
+              className="overflow-hidden"
+            >
               <Image
                 src={getImageUrl(fourthPost.image1)}
                 alt={fourthPost.heading.replace(/<[^>]+>/g, "")}
                 width={400}
                 height={300}
-                className="w-full h-[300px] object-cover object-top"
+                className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
                 priority
               />
             </Link>
@@ -464,7 +557,9 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
             <div className="md:flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <Link
-                  href={`/blogs/${fifthPost.category_name.toLowerCase().replace(/\s+/g, "-")}`}
+                  href={`/blogs/${fifthPost.category_name
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")}`}
                   className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                 >
                   {fifthPost.category_name || "Category"}
@@ -487,7 +582,11 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                       className="w-6 h-6 cursor-pointer text-blue-500"
                       onClick={() =>
                         shareToTwitter(
-                          getShareUrl(fifthPost.category_name, fifthPost.sub_category_name, fifthPost.id),
+                          getShareUrl(
+                            fifthPost.category_name,
+                            fifthPost.sub_category_name,
+                            fifthPost.id
+                          ),
                           fifthPost.heading.replace(/<[^>]+>/g, "")
                         )
                       }
@@ -496,7 +595,11 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                       className="w-6 h-6 cursor-pointer text-blue-700"
                       onClick={() =>
                         shareToFacebook(
-                          getShareUrl(fifthPost.category_name, fifthPost.sub_category_name, fifthPost.id)
+                          getShareUrl(
+                            fifthPost.category_name,
+                            fifthPost.sub_category_name,
+                            fifthPost.id
+                          )
                         )
                       }
                     />
@@ -504,7 +607,11 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                       className="w-6 h-6 cursor-pointer text-blue-600"
                       onClick={() =>
                         shareToLinkedIn(
-                          getShareUrl(fifthPost.category_name, fifthPost.sub_category_name, fifthPost.id),
+                          getShareUrl(
+                            fifthPost.category_name,
+                            fifthPost.sub_category_name,
+                            fifthPost.id
+                          ),
                           fifthPost.heading.replace(/<[^>]+>/g, "")
                         )
                       }
@@ -520,7 +627,9 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
                 </Link>
               </div>
             </div>
-            <Link href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}>
+            <Link
+              href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
+            >
               <p
                 dangerouslySetInnerHTML={{ __html: fifthPost.heading }}
                 className="text-2xl font-medium"
@@ -529,13 +638,16 @@ const FirstContents: React.FC<FirstContentsProps> = ({ posts, loading = false })
             <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
               {fifthPost.author} - {fifthPost.date}
             </p>
-            <Link href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}>
+            <Link
+              href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
+              className="overflow-hidden"
+            >
               <Image
                 src={getImageUrl(fifthPost.image1)}
                 alt={fifthPost.heading.replace(/<[^>]+>/g, "")}
                 width={400}
                 height={300}
-                className="w-full h-[300px] object-cover object-top"
+                className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
                 priority
               />
             </Link>

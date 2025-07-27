@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
+import { motion } from "framer-motion";
 
 // Interface for BlogPost
 interface BlogPost {
@@ -26,6 +27,7 @@ interface BlogPost {
   sub_heading: string;
   body1: string;
   image1: string | null;
+  image2?: string[] | null;
   advertising_image: string | null;
   tags: string[];
   created_at: string;
@@ -61,23 +63,23 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (categoryName.categoryName){
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home/${categoryName.categoryName}`
-        );
-        if (!response.ok) {
-          throw new Error(`Failed to fetch data: ${response.statusText}`);
+      if (categoryName.categoryName) {
+        try {
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home/${categoryName.categoryName}`
+          );
+          if (!response.ok) {
+            throw new Error(`Failed to fetch data: ${response.statusText}`);
+          }
+          const data: ApiResponse = await response.json();
+          setPosts(data.data || []); // Set posts from data.data, default to empty array
+        } catch (err) {
+          setError(
+            err instanceof Error ? err.message : "An unknown error occurred"
+          );
+        } finally {
+          setLoading(false);
         }
-        const data: ApiResponse = await response.json();
-        setPosts(data.data || []); // Set posts from data.data, default to empty array
-      } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "An unknown error occurred"
-        );
-      } finally {
-        setLoading(false);
-      }
       }
     };
 
@@ -225,22 +227,27 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
               >
-                <p
+                <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
                   className="text-3xl md:text-4xl font-bold text-[#131313] px-4 hover:underline"
+                  whileHover={{
+                    scale: 1.05,
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
                 />
               </Link>
             </div>
-            <div className="">
+            <div className="overflow-hidden">
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
               >
                 <Image
-                  src={getImageUrl(firstPost.image1)}
+                  src={getImageUrl(firstPost.image2?.[0] || "")}
                   alt={firstPost.heading || "Blog Image"}
                   width={600}
                   height={455}
-                  className="w-full h-[400px] md:h-[455px] object-cover object-top"
+                  className="w-full h-[400px] md:h-[455px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
                   priority
                 />
               </Link>
@@ -349,17 +356,16 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   {thirdPost.sub_category_name || "Subcategory"}
                 </Link>
               </div>
-              <div>
+              <div className="overflow-hidden">
                 <Link
                   href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
                 >
-                  {" "}
                   <Image
-                    src={getImageUrl(thirdPost.image1)}
+                    src={getImageUrl(thirdPost.image2?.[0] || "")}
                     alt={thirdPost.heading || "Blog Image"}
                     width={400}
                     height={455}
-                    className="w-full h-[400px] md:h-[455px] object-cover object-top"
+                    className="w-full h-[400px] md:h-[455px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
                     priority
                   />
                 </Link>
@@ -368,9 +374,14 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
               <Link
                 href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
               >
-                <p
+                <motion.p
                   dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
                   className="text-2xl font-medium text-[#131313] hover:underline mt-2"
+                  whileHover={{
+                    scale: 1.05,
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
                 />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
@@ -456,12 +467,12 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   {fourthPost.sub_category_name || "Subcategory"}
                 </Link>
               </div>
-              <div>
+              <div className="overflow-hidden">
                 <Link
                   href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
                 >
                   <Image
-                    src={getImageUrl(fourthPost.image1)}
+                    src={getImageUrl(fourthPost.image2?.[0] || "")}
                     alt={fourthPost.heading || "Blog Image"}
                     width={400}
                     height={455}
@@ -474,9 +485,14 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
               <Link
                 href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
               >
-                <p
+                <motion.p
                   dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
                   className="text-2xl font-medium text-[#131313] hover:underline mt-2"
+                  whileHover={{
+                    scale: 1.05,
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
                 />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
@@ -562,25 +578,31 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   {fifthPost.sub_category_name || "Subcategory"}
                 </Link>
               </div>
-              <Link
-                href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
-              >
-                <Image
-                  src={getImageUrl(fifthPost.image1)}
-                  alt={fifthPost.heading || "Blog Image"}
-                  width={400}
-                  height={455}
-                  className="w-full h-[400px] md:h-[455px] object-cover object-top"
-                  priority
-                />
-              </Link>
+              <div className="overflow-hidden">
+                <Link
+                  href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
+                >
+                  <Image
+                    src={getImageUrl(fifthPost.image2?.[0] || "")}
+                    alt={fifthPost.heading || "Blog Image"}
+                    width={400}
+                    height={455}
+                    className="w-full h-[400px] md:h-[455px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                    priority
+                  />
+                </Link>
+              </div>
 
               <Link
                 href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
-              >
-                <p
+              ><motion.p
                   dangerouslySetInnerHTML={{ __html: fifthPost.heading }}
                   className="text-2xl font-medium text-[#131313] hover:underline mt-2"
+                  whileHover={{
+                      scale: 1.05,
+                      fontWeight: 900,
+                      transition: { duration: 0.3 },
+                    }}
                 />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
