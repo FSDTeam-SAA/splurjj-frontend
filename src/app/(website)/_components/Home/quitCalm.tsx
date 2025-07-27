@@ -248,7 +248,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={firstPost.heading || "Blog Image"}
                   width={600}
                   height={455}
-                  className="w-full h-[400px] md:h-[455px] object-cover object-top"
+                  className="w-full h-[400px] md:h-[455px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
                   priority
                 />
               </Link>
@@ -377,7 +377,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
-                  className="text-2xl font-medium text-[#131313] hover:underline mt-2"
+                  className="text-2xl font-medium text-[#131313] mt-2"
                    whileHover={{
                     scaleX: 1.05,
                     transformOrigin: "left", // Ensures scaling happens from the left side
@@ -601,7 +601,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: fifthPost.heading }}
-                  className="text-2xl font-medium text-[#131313] hover:underline mt-2"
+                  className="text-2xl font-medium text-[#131313] mt-2"
                    whileHover={{
                     scaleX: 1.05,
                     transformOrigin: "left", // Ensures scaling happens from the left side
