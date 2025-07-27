@@ -27,12 +27,15 @@ const RecentArticles = () => {
     useQuery<DashboardOverviewResponse>({
       queryKey: ["dashboard-recent-articles", selectedNumber],
       queryFn: () =>
-        fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/dashboard-overview?per_page=${selectedNumber}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }).then((res) => res.json()),
+        fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/dashboard-overview?per_page=${selectedNumber}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        ).then((res) => res.json()),
     });
 
   console.log(data?.data?.recent_content);
@@ -97,18 +100,30 @@ const RecentArticles = () => {
                       </div>
                       <p
                         className="text-black dark:text-black black__text"
-                        dangerouslySetInnerHTML={{ __html: content?.heading.slice(0, 50) }}
+                        dangerouslySetInnerHTML={{
+                          __html: content?.heading.slice(0, 50),
+                        }}
                       />
                     </td>
 
                     <td>
                       <ContentStatusDropDown
                         contentId={content?.id}
+                        // initialStatus={
+                        //   content?.status === "active" ||
+                        //   content?.status === "pending"
+                        //     ? content.status
+                        //     : "pending"
+                        // }
                         initialStatus={
-                          content?.status === "active" ||
-                          content?.status === "pending"
-                            ? content.status
-                            : "pending"
+                          content?.status as
+                            | "Draft"
+                            | "Review"
+                            | "Approved"
+                            | "Published"
+                            | "Archived"
+                            | "Revision"
+                            | "Rejected"
                         }
                       />
                     </td>

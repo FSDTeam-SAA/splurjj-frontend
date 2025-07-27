@@ -30,7 +30,6 @@
 //   status: "active" | "pending" | "inactive" | string;
 // };
 
-
 export interface DashboardOverviewResponse {
   success: boolean;
   data: {
@@ -74,7 +73,15 @@ export interface RecentContentItem {
   imageLink: string | null;
   advertisingLink: string | null;
   user_id: number;
-  status: 'Approved' | 'Draft' | string;
+  status:
+    | "Draft"
+    | "Review"
+    | "Approved"
+    | "Published"
+    | "Archived"
+    | "Revision"
+    | "Rejected"
+    | string;
   image2: string | null; // stored as a stringified array or null
   image2_url: string | null;
 }
