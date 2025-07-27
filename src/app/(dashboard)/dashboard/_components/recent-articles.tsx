@@ -9,6 +9,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import ContentStatusDropDown from "../content/_components/ContentStatusDropDown";
 import { DashboardOverviewResponse } from "@/components/types/DashboardOverviewDataType";
+import Link from "next/link";
 
 const numberList = [
   { id: 1, name: "5", value: 5 },
@@ -94,23 +95,22 @@ const RecentArticles = () => {
                           className="w-[120px] h-[60px] rounded-[8px] object-cover"
                         />
                       </div>
-                      <p
-                        className="text-black dark:text-black black__text"
-                        dangerouslySetInnerHTML={{
-                          __html: content?.heading.slice(0, 50),
-                        }}
-                      />
+                      <Link
+                        className=""
+                        href={`/dashboard/${content?.id}`}
+                      >
+                        <p
+                          className="text-black dark:text-black black__text"
+                          dangerouslySetInnerHTML={{
+                            __html: content?.heading.slice(0, 50),
+                          }}
+                        />
+                      </Link>
                     </td>
 
                     <td>
                       <ContentStatusDropDown
                         contentId={content?.id}
-                        // initialStatus={
-                        //   content?.status === "active" ||
-                        //   content?.status === "pending"
-                        //     ? content.status
-                        //     : "pending"
-                        // }
                         initialStatus={
                           content?.status as
                             | "Draft"
