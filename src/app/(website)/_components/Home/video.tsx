@@ -378,6 +378,12 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
                   className="text-2xl font-medium text-[#131313]  mt-2"
+                   whileHover={{
+                    scaleX: 1.05,
+                    transformOrigin: "left", // Ensures scaling happens from the left side
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
                 />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">

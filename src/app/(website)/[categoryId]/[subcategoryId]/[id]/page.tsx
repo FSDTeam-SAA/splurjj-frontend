@@ -263,7 +263,6 @@ const getImageUrl = (path: string | null): string => {
 
   const cleanedTags = cleanTags(blogData.tags || []);
 
-  console.log(blogData)
 
   return (
     <div className="">

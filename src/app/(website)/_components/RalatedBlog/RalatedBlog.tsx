@@ -11,6 +11,7 @@ import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
 import SplurjjPagination from "@/components/ui/SplurjjPagination";
 import Vertical from "@/components/adds/vertical";
+import { motion } from "framer-motion";
 
 // Define the BlogPost type
 interface BlogPost {
@@ -21,8 +22,9 @@ interface BlogPost {
   sub_category_name?: string;
   heading: string;
   sub_heading?: string;
-  image1?: string;
-  imageLink?: string;
+  image1?: string | null;
+  image2?: string[] | null; // Assuming image2 is an array of strings
+  imageLink?: string | null;
   date?: string;
   author?: string;
 }
@@ -40,11 +42,10 @@ const RelatedContent = ({
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [showShareMenu, setShowShareMenu] = useState<number | null>(null);
-  const [currentPage, setCurrentPage] = useState<number>(1); // State for current page
-  const [totalPages, setTotalPages] = useState<number>(1); // State for total pages
-  const [totalPosts, setTotalPosts] = useState<number>(0); // State for total posts
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [totalPosts, setTotalPosts] = useState<number>(0);
 
-  // Number of posts per page (adjust as needed)
   const postsPerPage = 8;
 
   // Fetch related blog posts
@@ -59,10 +60,10 @@ const RelatedContent = ({
         const data = await response.json();
         console.log("API Response:", data);
 
-        // Adjust based on actual API response structure
-        setPosts(data.data.data || []);
-        setTotalPages(data.data.total_pages || 1); // Assume API returns total_pages
-        setTotalPosts(data.data.total || 0); // Assume API returns total
+        // Correctly access the data and meta fields
+        setPosts(data.data || []);
+        setTotalPages(data.meta?.last_page || 1);
+        setTotalPosts(data.meta?.total || 0);
       } catch (err) {
         setError(err instanceof Error ? err.message : "An error occurred");
       } finally {
@@ -142,24 +143,24 @@ const RelatedContent = ({
   if (posts.length === 0)
     return <div className="error text-center py-8">No posts found</div>;
 
+  console.log("Posts:", posts);
+
   return (
     <div className="container py-[30px] md:py-[50px] lg:py-[72px]">
-      <h2 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold tracking-[0%] text-[#131313] uppercase leading-[120%]  pb-2">
+      <h2 className="text-2xl md:text-[28px] lg:text-[32px] font-semibold tracking-[0%] text-[#131313] uppercase leading-[120%] pb-2">
         RELATED
       </h2>
       <div className="w-1/2 h-[2px] bg-secondary" />
-      <p className="text-lg md:text-xl font-semibold  leading-[120%] tracking-[0%] text-[#929292] pb-[25px] md:pb-[32px] lg:pb-[40px] pt-3 md:pt-4">
+      <p className="text-lg md:text-xl font-semibold leading-[120%] tracking-[0%] text-[#929292] pb-[25px] md:pb-[32px] lg:pb-[40px] pt-3 md:pt-4">
         More like this one
       </p>
 
       <div className="grid grid-cols-8 gap-4 pt-16">
-        {/* Sticky sidebar */}
         <div className="col-span-8 md:col-span-3 lg:col-span-2">
           <div className="sticky top-[120px] mb-2">
             <Vertical />
           </div>
         </div>
-        {/* Main content */}
         <div className="col-span-8 md:col-span-5 lg:col-span-6 pb-16">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-[24px] md:gap-[30px] lg:gap-[36px] capitalize">
             {posts.map((post) => (
@@ -168,13 +169,13 @@ const RelatedContent = ({
                   <div className="flex items-center gap-2">
                     <Link
                       href={`/blogs/${post.category_name}`}
-                      className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white"
+                      className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
                     >
                       {post.category_name || "Category"}
                     </Link>
                     <Link
                       href={`/${post.category_id}/${post.subcategory_id}`}
-                      className="bg-primary py-2 px-4 rounded text-sm font-extrabold  uppercase text-white"
+                      className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-sm font-extrabold uppercase text-white"
                     >
                       {post.sub_category_name || "Subcategory"}
                     </Link>
@@ -237,39 +238,44 @@ const RelatedContent = ({
                     </Link>
                   </div>
                 </div>
-                <div>
+                <div className="overflow-hidden mb-2">
                   <Link
                     href={`/${post.category_id}/${post.subcategory_id}/${post.id}`}
                   >
-                  <Image
-                    src={getImageUrl(post.image1 ?? null)}
-                    alt={post.heading || "Blog Image"}
-                    width={888}
-                    height={552}
-                    className="w-full h-[455px] object-cover "
-                    priority
-                  />
+                    <Image
+                      src={getImageUrl(post.image2?.[0] || "")}
+                      alt={post.heading || "Blog Image"}
+                      width={888}
+                      height={552}
+                      className="w-full h-[455px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                      priority
+                    />
                   </Link>
                 </div>
                 <Link
                   href={`/${post.category_id}/${post.subcategory_id}/${post.id}`}
                 >
-                  <p
+                  <motion.p
                     dangerouslySetInnerHTML={{ __html: post.heading }}
-                    className="text-2xl font-medium  text-[#131313] "
+                    className="text-2xl font-medium text-[#131313]"
+                    whileHover={{
+                      scaleX: 1.05,
+                      transformOrigin: "left", // Ensures scaling happens from the left side
+                      fontWeight: 900,
+                      transition: { duration: 0.3 },
+                    }}
                   />
                 </Link>
-                <p className="text-base font-semibold  leading-[120%] tracking-[0%] uppercase text-[#424242] mt-4 md:mt-5 lg:mt-6">
+                <p className="text-base font-semibold leading-[120%] tracking-[0%] uppercase text-[#424242] mt-4 md:mt-5 lg:mt-6">
                   {post.author} - {post.date}
                 </p>
                 <p
                   dangerouslySetInnerHTML={{ __html: post.sub_heading ?? "" }}
-                  className="text-sm font-normal  text-[#424242] line-clamp-3 mt-2"
+                  className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
                 />
               </div>
             ))}
           </div>
-          {/* Pagination Controls */}
           {totalPages > 1 && (
             <div className="flex flex-col sm:flex-row justify-between items-center mt-8 gap-4">
               <div className="text-sm text-muted-foreground" aria-live="polite">

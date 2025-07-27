@@ -499,6 +499,12 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   <motion.p
                     dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
                     className="text-2xl font-medium text-[#131313] "
+                    whileHover={{
+                      scaleX: 1.05,
+                      transformOrigin: "left", // Ensures scaling happens from the left side
+                      fontWeight: 900,
+                      transition: { duration: 0.3 },
+                    }}
                   />
                 </Link>
                 <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
@@ -586,7 +592,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 </Link>
               </div>
               <div className="relative">
-                <div>
+                <div className="overflow-hidden">
                   <Link
                     href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
                   >
@@ -608,6 +614,12 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     <motion.p
                       dangerouslySetInnerHTML={{ __html: fifthPost.heading }}
                       className="text-2xl font-medium text-[#131313] "
+                      whileHover={{
+                        scaleX: 1.05,
+                        transformOrigin: "left", // Ensures scaling happens from the left side
+                        fontWeight: 900,
+                        transition: { duration: 0.3 },
+                      }}
                     />
                   </Link>
                   <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
