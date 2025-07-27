@@ -1,8 +1,12 @@
-import { useEffect, useState } from 'react';
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
-import Image from 'next/image';
+import { useEffect, useState } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import Image from "next/image";
 import { CarouselApi } from "@/components/ui/carousel";
-import Link from 'next/link';
+import Link from "next/link";
 
 interface ContentItem {
   id: number;
@@ -16,7 +20,7 @@ interface ContentItem {
   sub_heading: string;
   body1: string;
   image1: string | null;
-  image2?: string | null;
+  image2?: string | string[] | null;
   advertising_image: string | null;
   tags: string[];
   created_at: string;
@@ -32,7 +36,10 @@ interface ImageCarouselProps {
   getImageUrl: (image: string | null) => string;
 }
 
-export default function ImageCarousel({ posts, getImageUrl }: ImageCarouselProps) {
+export default function ImageCarousel({
+  posts,
+  getImageUrl,
+}: ImageCarouselProps) {
   const [api, setApi] = useState<CarouselApi | null>(null);
 
   useEffect(() => {
@@ -51,14 +58,19 @@ export default function ImageCarousel({ posts, getImageUrl }: ImageCarouselProps
       urls.push(getImageUrl(post.image1));
     }
     if (post.image2) {
-      try {
-        const images = JSON.parse(post.image2) as string[];
-        urls.push(...images);
-      } catch (e) {
-        console.error('Failed to parse image2:', post.image2, e);
+      if (Array.isArray(post.image2)) {
+        urls.push(...post.image2);
+      } else {
+        try {
+          const images = JSON.parse(post.image2) as string[];
+          urls.push(...images);
+        } catch (e) {
+          console.error("Failed to parse image2:", post.image2, e);
+        }
       }
     }
-    return urls.length > 0 ? urls : ['/fallback-image.jpg'];
+    const uniqueUrls = Array.from(new Set(urls)); // Remove duplicates
+    return uniqueUrls.length > 0 ? uniqueUrls : ["/fallback-image.jpg"];
   };
 
   return (
@@ -87,7 +99,7 @@ export default function ImageCarousel({ posts, getImageUrl }: ImageCarouselProps
                         height={600}
                         className="w-full h-[400px] md:h-[550px] lg:h-[680px] object-cover object-top"
                         onError={(e) => {
-                          e.currentTarget.src = '/fallback-image.jpg';
+                          e.currentTarget.src = "/fallback-image.jpg";
                         }}
                       />
                     </Link>
@@ -107,4 +119,3 @@ export default function ImageCarousel({ posts, getImageUrl }: ImageCarouselProps
     </div>
   );
 }
-
