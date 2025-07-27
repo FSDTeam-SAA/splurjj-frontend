@@ -236,6 +236,13 @@ const Ride: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
                   className="text-lg font-medium text-[#131313]  text-end"
+                   whileHover={{
+                    scaleX: 1.02,
+                    transformOrigin: "left", // Ensures scaling happens from the left side
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
+                  
                 />
               </Link>
               <div className="flex items-center justify-end gap-2">

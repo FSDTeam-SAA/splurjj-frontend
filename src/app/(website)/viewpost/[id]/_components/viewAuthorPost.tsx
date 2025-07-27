@@ -68,8 +68,7 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
   const observerRef = useRef<HTMLDivElement>(null);
   const limit = 9;
 
-
-  console.log(totalItems)
+  console.log(totalItems);
 
   // Fetch posts by user ID
   const fetchPostsByUser = useCallback(
@@ -104,7 +103,9 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
           throw new Error("Failed to fetch posts");
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "An unknown error occurred");
+        setError(
+          err instanceof Error ? err.message : "An unknown error occurred"
+        );
       } finally {
         setLoading(false);
         setLoadingMore(false);
@@ -183,7 +184,11 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
   };
 
   const handleShare = async (post: BlogPost) => {
-    const shareUrl = getShareUrl(post.category_id, post.subcategory_id, post.id);
+    const shareUrl = getShareUrl(
+      post.category_id,
+      post.subcategory_id,
+      post.id
+    );
     const shareData = {
       title: sanitizeHTML(post.heading),
       text: sanitizeHTML(post.sub_heading || "Check out this blog post!"),
@@ -261,13 +266,8 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
   if (error) return <div className="text-center py-8">Error: {error}</div>;
   if (!posts.length && !loading)
     return (
-      <div className="text-center py-8">
-        No posts found for this author.
-      </div>
+      <div className="text-center py-8">No posts found for this author.</div>
     );
-
-
-    console.log("VVVVVVVVVVVVVVVVVVVVVVVV",posts)
 
   return (
     <div className="container">
@@ -277,17 +277,17 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
             <Link
               href={`/${post.category_id}/${post.subcategory_id}/${post.id}`}
             >
-            <Image
-              src={getImageUrl(post.image2?.[0] || "")}
-              alt={sanitizeHTML(post.heading)}
-              width={400}
-              height={300}
-              className="w-full h-[300px] object-cover object-top"
-              priority
-            />
+              <Image
+                src={getImageUrl(post.image2?.[0] || "")}
+                alt={sanitizeHTML(post.heading)}
+                width={400}
+                height={300}
+                className="w-full h-[300px] object-cover object-top"
+                priority
+              />
             </Link>
             <div className="p-4">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 mb-2">
                 <Link
                   href={`/blogs/${encodeURIComponent(post.category_name)}`}
                   className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
@@ -305,14 +305,16 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
                 href={`/${post.category_id}/${post.subcategory_id}/${post.id}`}
               >
                 <motion.p
-                  dangerouslySetInnerHTML={{ __html: sanitizeHTML(post.heading) }}
-                  className="text-2xl font-medium line-clamp-2 hover:underline"
-                   whileHover={{
-                        scaleX: 1.05,
-                        transformOrigin: "left", // Ensures scaling happens from the left side
-                        fontWeight: 900,
-                        transition: { duration: 0.3 },
-                      }}
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeHTML(post.heading),
+                  }}
+                  className="text-2xl font-medium line-clamp-2"
+                  whileHover={{
+                    scaleX: 1.05,
+                    transformOrigin: "left", // Ensures scaling happens from the left side
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
                 />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
@@ -376,7 +378,9 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
                 </Link>
               </div>
               <p
-                dangerouslySetInnerHTML={{ __html: sanitizeHTML(post.sub_heading) }}
+                dangerouslySetInnerHTML={{
+                  __html: sanitizeHTML(post.sub_heading),
+                }}
                 className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
               />
             </div>
@@ -388,7 +392,9 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
       {loadingMore && (
         <div className="flex justify-center items-center py-8">
           <Loader2 className="w-8 h-8 animate-spin" />
-          <span className="ml-2 text-muted-foreground">Loading more content...</span>
+          <span className="ml-2 text-muted-foreground">
+            Loading more content...
+          </span>
         </div>
       )}
 

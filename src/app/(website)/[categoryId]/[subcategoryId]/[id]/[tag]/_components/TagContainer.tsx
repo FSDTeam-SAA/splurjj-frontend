@@ -304,7 +304,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: post.heading }}
-                  className="text-2xl font-medium line-clamp-2 hover:underline"
+                  className="text-2xl font-medium line-clamp-2"
                   whileHover={{
                     scale: 1.05,
                     fontWeight: 900,

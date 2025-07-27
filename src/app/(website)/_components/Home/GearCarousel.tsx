@@ -48,7 +48,7 @@ export default function GearCarousel({
   const [api, setApi] = useState<CarouselApi | null>(null);
 
 
-  console.log("OOOOOOOOOOOOO", posts)
+ 
 
   // Debug: Log posts and API
   useEffect(() => {

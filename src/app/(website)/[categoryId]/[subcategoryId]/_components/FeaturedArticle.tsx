@@ -26,6 +26,7 @@ interface Post {
   category_id: number;
   subcategory_id: number;
   image1: string | null;
+  image2?: string[] | null;
   imageLink: string | null;
   advertising_image: string | null;
   advertisingLink: string | null;
@@ -206,7 +207,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({
             >
               <motion.p
                 dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                className="text-3xl lg:text-5xl font-bold text-[#131313] hover:underline"
+                className="text-3xl lg:text-5xl font-bold text-[#131313]"
                 whileHover={{
                   scaleX: 1.05,
                   transformOrigin: "left", // Ensures scaling happens from the left side
@@ -258,9 +259,15 @@ const FirstContents: React.FC<FirstContentsProps> = ({
             <Link
               href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
             >
-              <p
+              <motion.p
                 dangerouslySetInnerHTML={{ __html: secondPost.heading }}
                 className="text-2xl font-medium"
+                whileHover={{
+                  scaleX: 1.05,
+                  transformOrigin: "left", // Ensures scaling happens from the left side
+                  fontWeight: 900,
+                  transition: { duration: 0.3 },
+                }}
               />
             </Link>
             <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
@@ -331,7 +338,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({
               href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
             >
               <Image
-                src={getImageUrl(secondPost.image1)}
+                src={getImageUrl(secondPost.image2?.[0] || "")}
                 alt={secondPost.heading.replace(/<[^>]+>/g, "")}
                 width={400}
                 height={315}
@@ -349,7 +356,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({
             href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
           >
             <Image
-              src={getImageUrl(thirdPost.image1)}
+              src={getImageUrl(thirdPost.image2?.[0] || "")}
               alt={thirdPost.heading.replace(/<[^>]+>/g, "")}
               width={400}
               height={443}
@@ -382,9 +389,15 @@ const FirstContents: React.FC<FirstContentsProps> = ({
             <Link
               href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
             >
-              <p
+              <motion.p
                 dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
                 className="text-2xl font-medium"
+                whileHover={{
+                  scaleX: 1.05,
+                  transformOrigin: "left", // Ensures scaling happens from the left side
+                  fontWeight: 900,
+                  transition: { duration: 0.3 },
+                }}
               />
             </Link>
             <div className="flex items-center gap-3 mt-2 relative">
@@ -529,9 +542,15 @@ const FirstContents: React.FC<FirstContentsProps> = ({
             <Link
               href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
             >
-              <p
+              <motion.p
                 dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
                 className="text-2xl font-medium"
+                whileHover={{
+                  scaleX: 1.05,
+                  transformOrigin: "left", // Ensures scaling happens from the left side
+                  fontWeight: 900,
+                  transition: { duration: 0.3 },
+                }}
               />
             </Link>
             <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
@@ -542,7 +561,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({
               className="overflow-hidden"
             >
               <Image
-                src={getImageUrl(fourthPost.image1)}
+                src={getImageUrl(fourthPost.image2?.[0] || "")}
                 alt={fourthPost.heading.replace(/<[^>]+>/g, "")}
                 width={400}
                 height={300}
@@ -630,9 +649,15 @@ const FirstContents: React.FC<FirstContentsProps> = ({
             <Link
               href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
             >
-              <p
+              <motion.p
                 dangerouslySetInnerHTML={{ __html: fifthPost.heading }}
                 className="text-2xl font-medium"
+                whileHover={{
+                  scaleX: 1.05,
+                  transformOrigin: "left", // Ensures scaling happens from the left side
+                  fontWeight: 900,
+                  transition: { duration: 0.3 },
+                }}
               />
             </Link>
             <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
@@ -643,7 +668,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({
               className="overflow-hidden"
             >
               <Image
-                src={getImageUrl(fifthPost.image1)}
+                src={getImageUrl(fifthPost.image2?.[0] || "")}
                 alt={fifthPost.heading.replace(/<[^>]+>/g, "")}
                 width={400}
                 height={300}

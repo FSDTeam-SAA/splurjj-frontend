@@ -311,6 +311,12 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
                   className="font-medium white-text  text-3xl lg:text-5xl text-center text-white line-clamp-3"
+                   whileHover={{
+                    scaleX: 1.05,
+                    transformOrigin: "left", // Ensures scaling happens from the left side
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
                 />
                 <div
                   dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}

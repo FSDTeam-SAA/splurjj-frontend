@@ -203,7 +203,7 @@ function CategoryContents({
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: post.heading ?? "" }}
-                  className="text-2xl font-medium hover:underline"
+                  className="text-2xl font-medium"
                   whileHover={{
                     scaleX: 1.05,
                     transformOrigin: "left", // Ensures scaling happens from the left side
