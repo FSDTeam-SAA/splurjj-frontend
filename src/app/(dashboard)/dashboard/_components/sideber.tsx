@@ -981,3 +981,824 @@ export default function Sidebar() {
     </div>
   );
 }
+
+
+
+
+
+
+// "use client"
+
+// import { useState, useEffect } from "react"
+// import { ChevronDown, ChevronRight, Plus, Trash2, Check, X, SquarePen } from "lucide-react"
+// import { Button } from "@/components/ui/button"
+// import { Input } from "@/components/ui/input"
+// import Link from "next/link"
+// import { usePathname } from "next/navigation"
+// import { useSession } from "next-auth/react"
+// import { toast } from "sonner"
+// import { motion, AnimatePresence, easeInOut } from "framer-motion"
+// import {
+//   Sidebar,
+//   SidebarContent,
+//   SidebarGroup,
+//   SidebarGroupContent,
+//   SidebarGroupLabel,
+//   SidebarMenu,
+//   SidebarMenuButton,
+//   SidebarMenuItem,
+//   SidebarMenuSub,
+//   SidebarMenuSubButton,
+//   SidebarMenuSubItem,
+//   SidebarRail,
+// } from "@/components/ui/sidebar"
+// import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+// import Image from "next/image"
+
+// interface Subcategory {
+//   id: number
+//   name: string
+//   category_id?: number
+// }
+
+// interface Category {
+//   category_id: number
+//   category_name: string
+//   category_icon?: string
+//   subcategories: Subcategory[]
+// }
+
+// interface ApiResponse {
+//   success: boolean
+//   data: Category[]
+//   pagination: {
+//     current_page: number
+//     last_page: number
+//     per_page: number
+//     total: number
+//   }
+// }
+
+// export function DashboardSidebar() {
+//   const [categories, setCategories] = useState<Category[]>([])
+//   const [expandedCategories, setExpandedCategories] = useState<Set<number>>(new Set())
+//   const [addingSubcategory, setAddingSubcategory] = useState<number | null>(null)
+//   const [editingSubcategory, setEditingSubcategory] = useState<number | null>(null)
+//   const [newSubcategoryName, setNewSubcategoryName] = useState("")
+//   const [editSubcategoryName, setEditSubcategoryName] = useState("")
+//   const [loading, setLoading] = useState(true)
+
+//   const pathname = usePathname()
+//   const { data: session, status } = useSession()
+//   const userRole = session?.user?.role
+//   const token = session?.user?.token
+
+//   // Helper functions
+//   const isCategoryActive = (categoryId: number) => {
+//     return pathname.includes(`/dashboard/content/${categoryId}`)
+//   }
+
+//   const isSubcategoryActive = (categoryId: number, subcategoryId: number) => {
+//     return pathname === `/dashboard/content/${categoryId}/${subcategoryId}`
+//   }
+
+//   console.log(loading)
+
+//   const isRouteActive = (route: string) => {
+//     return pathname === route
+//   }
+
+//   // Animation variants
+//   const subcategoryVariants = {
+//     hidden: { opacity: 0, height: 0 },
+//     visible: {
+//       opacity: 1,
+//       height: "auto",
+//       transition: {
+//         duration: 0.3,
+//         ease: easeInOut,
+//       },
+//     },
+//     exit: {
+//       opacity: 0,
+//       height: 0,
+//       transition: {
+//         duration: 0.2,
+//         ease: easeInOut,
+//       },
+//     },
+//   }
+
+//   // Role-based permissions
+//   const isAdmin = userRole === "admin"
+//   const isEditor = userRole === "editor"
+//   const isAuthor = userRole === "author"
+
+//   // Fetch categories
+//   const fetchCategories = async () => {
+//     try {
+//       setLoading(true)
+//       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/categories`, {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       })
+//       const data: ApiResponse = await response.json()
+//       if (data.success) {
+//         setCategories(data.data)
+//       } else {
+//         toast.error("Failed to fetch categories")
+//       }
+//     } catch (error) {
+//       console.error("Error fetching categories:", error)
+//       toast.error("Error fetching categories")
+//     } finally {
+//       setLoading(false)
+//     }
+//   }
+
+//   // Effects
+//   useEffect(() => {
+//     if (status === "authenticated" && token) {
+//       fetchCategories()
+//     }
+//   }, [status, token])
+
+//   useEffect(() => {
+//     const pathParts = pathname.split("/")
+//     if (pathParts.length >= 4 && pathParts[2] === "content") {
+//       const categoryId = Number.parseInt(pathParts[3])
+//       if (categoryId) {
+//         setExpandedCategories((prev) => new Set(Array.from(prev).concat(categoryId)))
+//       }
+//     }
+//   }, [pathname])
+
+//   // Handlers
+//   const toggleCategory = (categoryId: number) => {
+//     setExpandedCategories((prev) => {
+//       const newExpanded = new Set(prev)
+//       if (newExpanded.has(categoryId)) {
+//         newExpanded.delete(categoryId)
+//       } else {
+//         newExpanded.add(categoryId)
+//       }
+//       return newExpanded
+//     })
+//   }
+
+//   const handleAddSubcategory = async (categoryId: number) => {
+//     if (!newSubcategoryName.trim()) {
+//       toast.error("Subcategory name is required")
+//       return
+//     }
+//     try {
+//       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/subcategories`, {
+//         method: "POST",
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           category_id: categoryId,
+//           name: newSubcategoryName.trim(),
+//         }),
+//       })
+//       if (response.ok) {
+//         toast.success("Subcategory added successfully")
+//         await fetchCategories()
+//         setNewSubcategoryName("")
+//         setAddingSubcategory(null)
+//       } else {
+//         const errorData = await response.json()
+//         toast.error(errorData.message || "Failed to add subcategory")
+//       }
+//     } catch (error) {
+//       console.error("Error adding subcategory:", error)
+//       toast.error("Error adding subcategory")
+//     }
+//   }
+
+//   const handleEditSubcategory = async (subcategoryId: number, categoryId: number) => {
+//     if (!editSubcategoryName.trim()) {
+//       toast.error("Subcategory name is required")
+//       return
+//     }
+//     try {
+//       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/subcategories/${subcategoryId}`, {
+//         method: "PUT",
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           name: editSubcategoryName,
+//           category_id: categoryId,
+//         }),
+//       })
+//       if (response.ok) {
+//         toast.success("Subcategory updated successfully")
+//         await fetchCategories()
+//         setEditSubcategoryName("")
+//         setEditingSubcategory(null)
+//       } else {
+//         const errorData = await response.json()
+//         toast.error(errorData.message || "Failed to update subcategory")
+//       }
+//     } catch (error) {
+//       console.error("Error editing subcategory:", error)
+//       toast.error("Error editing subcategory")
+//     }
+//   }
+
+//   const handleDeleteSubcategory = async (subcategoryId: number) => {
+//     if (!confirm("Are you sure you want to delete this subcategory?")) return
+//     try {
+//       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/subcategories/${subcategoryId}`, {
+//         method: "DELETE",
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       })
+//       if (response.ok) {
+//         toast.success("Subcategory deleted successfully")
+//         await fetchCategories()
+//       } else {
+//         const errorData = await response.json()
+//         toast.error(errorData.message || "Failed to delete subcategory")
+//       }
+//     } catch (error) {
+//       console.error("Error deleting subcategory:", error)
+//       toast.error("Error deleting subcategory")
+//     }
+//   }
+
+//   const startEditing = (subcategory: Subcategory) => {
+//     setEditingSubcategory(subcategory.id)
+//     setEditSubcategoryName(subcategory.name)
+//   }
+
+//   const cancelEditing = () => {
+//     setEditingSubcategory(null)
+//     setEditSubcategoryName("")
+//   }
+
+//   const cancelAdding = () => {
+//     setAddingSubcategory(null)
+//     setNewSubcategoryName("")
+//   }
+
+//   if (status === "loading") {
+//     return (
+//       <Sidebar>
+//         <SidebarContent>
+//           <div className="flex items-center justify-center h-32">
+//             <div className="text-center">Loading...</div>
+//           </div>
+//         </SidebarContent>
+//       </Sidebar>
+//     )
+//   }
+
+//   if (status === "unauthenticated") {
+//     return (
+//       <Sidebar>
+//         <SidebarContent>
+//           <div className="flex items-center justify-center h-32">
+//             <div className="text-center">Please log in</div>
+//           </div>
+//         </SidebarContent>
+//       </Sidebar>
+//     )
+//   }
+
+//   return (
+//     <Sidebar>
+//       <SidebarContent>
+//         {/* Dashboard */}
+//         <SidebarGroup>
+//           <SidebarMenu>
+//             <SidebarMenuItem>
+//               <SidebarMenuButton
+//                 asChild
+//                 isActive={isRouteActive("/dashboard")}
+//                 className="h-[50px] text-lg font-bold uppercase"
+//               >
+//                 <Link href="/dashboard">
+//                   <Image src="/assets/dashboard/dashboard.png" alt="dashboard" width={20} height={20} />
+//                   Dashboard
+//                 </Link>
+//               </SidebarMenuButton>
+//             </SidebarMenuItem>
+//           </SidebarMenu>
+//         </SidebarGroup>
+
+//         {/* Category Lists */}
+//         {(isAdmin || isEditor || isAuthor) && (
+//           <SidebarGroup>
+//             <SidebarMenu>
+//               <SidebarMenuItem>
+//                 <SidebarMenuButton
+//                   asChild
+//                   isActive={isRouteActive("/dashboard/add-category")}
+//                   className="h-[50px] text-lg font-bold uppercase"
+//                 >
+//                   <Link href="/dashboard/add-category">
+//                     <Image src="/assets/dashboard/categories.png" alt="category" width={20} height={20} />
+//                     Category Lists
+//                   </Link>
+//                 </SidebarMenuButton>
+//               </SidebarMenuItem>
+//             </SidebarMenu>
+//           </SidebarGroup>
+//         )}
+
+//         {/* Content Management */}
+//         <SidebarGroup>
+//           <Collapsible>
+//             <SidebarGroupLabel asChild>
+//               <CollapsibleTrigger className="group/collapsible">
+//                 <div className="flex items-center gap-2 text-lg font-bold uppercase">
+//                   <Image src="/assets/dashboard/content.jpg" alt="content" width={20} height={20} />
+//                   Content Management
+//                   <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+//                 </div>
+//               </CollapsibleTrigger>
+//             </SidebarGroupLabel>
+//             <CollapsibleContent>
+//               <SidebarGroupContent>
+//                 <SidebarMenu>
+//                   {categories.map((category) => {
+//                     const categoryActive = isCategoryActive(category.category_id)
+//                     return (
+//                       <SidebarMenuItem key={category.category_id}>
+//                         <Collapsible
+//                           open={expandedCategories.has(category.category_id)}
+//                           onOpenChange={() => toggleCategory(category.category_id)}
+//                         >
+//                           <CollapsibleTrigger asChild>
+//                             <SidebarMenuButton isActive={categoryActive} className="w-full justify-between">
+//                               <div className="flex items-center gap-2">
+//                                 <Image
+//                                   src={category?.category_icon || "/assets/dashboard/art-and-culture.png"}
+//                                   alt="category icon"
+//                                   width={20}
+//                                   height={20}
+//                                 />
+//                                 {category.category_name}
+//                               </div>
+//                               {expandedCategories.has(category.category_id) ? (
+//                                 <ChevronDown className="h-4 w-4" />
+//                               ) : (
+//                                 <ChevronRight className="h-4 w-4" />
+//                               )}
+//                             </SidebarMenuButton>
+//                           </CollapsibleTrigger>
+//                           <CollapsibleContent>
+//                             <SidebarMenuSub>
+//                               <AnimatePresence>
+//                                 {expandedCategories.has(category.category_id) && (
+//                                   <motion.div
+//                                     initial="hidden"
+//                                     animate="visible"
+//                                     exit="exit"
+//                                     variants={subcategoryVariants}
+//                                     className="space-y-1"
+//                                   >
+//                                     {category.subcategories.map((subcategory) => {
+//                                       const subcategoryActive = isSubcategoryActive(
+//                                         category.category_id,
+//                                         subcategory.id,
+//                                       )
+//                                       return (
+//                                         <SidebarMenuSubItem key={subcategory.id} className="group">
+//                                           {editingSubcategory === subcategory.id ? (
+//                                             <div className="flex items-center gap-1 p-1">
+//                                               <Input
+//                                                 value={editSubcategoryName}
+//                                                 onChange={(e) => setEditSubcategoryName(e.target.value)}
+//                                                 className="h-7 text-xs"
+//                                                 onKeyDown={(e) => {
+//                                                   if (e.key === "Enter") {
+//                                                     handleEditSubcategory(subcategory.id, category.category_id)
+//                                                   } else if (e.key === "Escape") {
+//                                                     cancelEditing()
+//                                                   }
+//                                                 }}
+//                                                 autoFocus
+//                                               />
+//                                               <Button
+//                                                 size="sm"
+//                                                 variant="ghost"
+//                                                 className="h-7 w-7 p-0"
+//                                                 onClick={() =>
+//                                                   handleEditSubcategory(subcategory.id, category.category_id)
+//                                                 }
+//                                               >
+//                                                 <Check className="h-3 w-3" />
+//                                               </Button>
+//                                               <Button
+//                                                 size="sm"
+//                                                 variant="ghost"
+//                                                 className="h-7 w-7 p-0"
+//                                                 onClick={cancelEditing}
+//                                               >
+//                                                 <X className="h-3 w-3" />
+//                                               </Button>
+//                                             </div>
+//                                           ) : (
+//                                             <div className="flex items-center justify-between">
+//                                               <SidebarMenuSubButton
+//                                                 asChild
+//                                                 isActive={subcategoryActive}
+//                                                 className="flex-1"
+//                                               >
+//                                                 <Link
+//                                                   href={`/dashboard/content/${category.category_id}/${subcategory.id}`}
+//                                                 >
+//                                                   {subcategory.name}
+//                                                 </Link>
+//                                               </SidebarMenuSubButton>
+//                                               {(isAdmin || isEditor) && (
+//                                                 <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+//                                                   <Button
+//                                                     size="sm"
+//                                                     variant="ghost"
+//                                                     className="h-6 w-6 p-0"
+//                                                     onClick={(e) => {
+//                                                       e.preventDefault()
+//                                                       startEditing(subcategory)
+//                                                     }}
+//                                                   >
+//                                                     <SquarePen className="h-3 w-3" />
+//                                                   </Button>
+//                                                   <Button
+//                                                     size="sm"
+//                                                     variant="ghost"
+//                                                     className="h-6 w-6 p-0 text-red-500 hover:text-red-700"
+//                                                     onClick={(e) => {
+//                                                       e.preventDefault()
+//                                                       handleDeleteSubcategory(subcategory.id)
+//                                                     }}
+//                                                   >
+//                                                     <Trash2 className="h-3 w-3" />
+//                                                   </Button>
+//                                                 </div>
+//                                               )}
+//                                             </div>
+//                                           )}
+//                                         </SidebarMenuSubItem>
+//                                       )
+//                                     })}
+//                                     {(isAdmin || isEditor) && (
+//                                       <SidebarMenuSubItem>
+//                                         {addingSubcategory === category.category_id ? (
+//                                           <div className="flex items-center gap-1 p-1">
+//                                             <Input
+//                                               value={newSubcategoryName}
+//                                               onChange={(e) => setNewSubcategoryName(e.target.value)}
+//                                               placeholder="Enter subcategory name"
+//                                               className="h-7 text-xs"
+//                                               onKeyDown={(e) => {
+//                                                 if (e.key === "Enter") {
+//                                                   handleAddSubcategory(category.category_id)
+//                                                 } else if (e.key === "Escape") {
+//                                                   cancelAdding()
+//                                                 }
+//                                               }}
+//                                               autoFocus
+//                                             />
+//                                             <Button
+//                                               size="sm"
+//                                               variant="ghost"
+//                                               className="h-7 w-7 p-0"
+//                                               onClick={() => handleAddSubcategory(category.category_id)}
+//                                             >
+//                                               <Check className="h-3 w-3" />
+//                                             </Button>
+//                                             <Button
+//                                               size="sm"
+//                                               variant="ghost"
+//                                               className="h-7 w-7 p-0"
+//                                               onClick={cancelAdding}
+//                                             >
+//                                               <X className="h-3 w-3" />
+//                                             </Button>
+//                                           </div>
+//                                         ) : (
+//                                           <Button
+//                                             variant="ghost"
+//                                             size="sm"
+//                                             className="w-full justify-start text-left h-7 text-xs text-blue-600 hover:bg-blue-50"
+//                                             onClick={() => setAddingSubcategory(category.category_id)}
+//                                           >
+//                                             <Plus className="h-3 w-3 mr-1" />
+//                                             Add Sub Category
+//                                           </Button>
+//                                         )}
+//                                       </SidebarMenuSubItem>
+//                                     )}
+//                                   </motion.div>
+//                                 )}
+//                               </AnimatePresence>
+//                             </SidebarMenuSub>
+//                           </CollapsibleContent>
+//                         </Collapsible>
+//                       </SidebarMenuItem>
+//                     )
+//                   })}
+//                   {!isAuthor && (
+//                     <SidebarMenuItem>
+//                       <SidebarMenuButton asChild isActive={isRouteActive("/dashboard/all-pages")} className="h-[46px]">
+//                         <Link href="/dashboard/all-pages">
+//                           <Image src="/assets/dashboard/all-page.png" alt="all page" width={20} height={20} />
+//                           All Pages
+//                         </Link>
+//                       </SidebarMenuButton>
+//                     </SidebarMenuItem>
+//                   )}
+//                 </SidebarMenu>
+//               </SidebarGroupContent>
+//             </CollapsibleContent>
+//           </Collapsible>
+//         </SidebarGroup>
+
+//         {/* Ad Management */}
+//         {!isAuthor && (
+//           <SidebarGroup>
+//             <Collapsible>
+//               <SidebarGroupLabel asChild>
+//                 <CollapsibleTrigger className="group/collapsible">
+//                   <div className="flex items-center gap-2 text-lg font-bold uppercase">
+//                     <Image src="/assets/dashboard/ads.png" alt="ads" width={20} height={20} />
+//                     Ad Management
+//                     <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+//                   </div>
+//                 </CollapsibleTrigger>
+//               </SidebarGroupLabel>
+//               <CollapsibleContent>
+//                 <SidebarGroupContent>
+//                   <SidebarMenu>
+//                     <SidebarMenuItem>
+//                       <SidebarMenuButton
+//                         asChild
+//                         isActive={isRouteActive("/dashboard/horizontal-advertising")}
+//                         className="h-[36px]"
+//                       >
+//                         <Link href="/dashboard/horizontal-advertising">
+//                           <Image src="/assets/dashboard/horizontal.png" alt="horizontal" width={20} height={20} />
+//                           Horizontal
+//                         </Link>
+//                       </SidebarMenuButton>
+//                     </SidebarMenuItem>
+//                     <SidebarMenuItem>
+//                       <SidebarMenuButton
+//                         asChild
+//                         isActive={isRouteActive("/dashboard/vertical-advertising")}
+//                         className="h-[36px]"
+//                       >
+//                         <Link href="/dashboard/vertical-advertising">
+//                           <Image src="/assets/dashboard/vertical.png" alt="vertical" width={20} height={20} />
+//                           Vertical
+//                         </Link>
+//                       </SidebarMenuButton>
+//                     </SidebarMenuItem>
+//                   </SidebarMenu>
+//                 </SidebarGroupContent>
+//               </CollapsibleContent>
+//             </Collapsible>
+//           </SidebarGroup>
+//         )}
+
+//         {/* Settings */}
+//         <SidebarGroup>
+//           <Collapsible>
+//             <SidebarGroupLabel asChild>
+//               <CollapsibleTrigger className="group/collapsible">
+//                 <div className="flex items-center gap-2 text-lg font-bold uppercase">
+//                   <Image src="/assets/dashboard/settings.png" alt="settings" width={20} height={20} />
+//                   Settings
+//                   <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+//                 </div>
+//               </CollapsibleTrigger>
+//             </SidebarGroupLabel>
+//             <CollapsibleContent>
+//               <SidebarGroupContent>
+//                 <SidebarMenu>
+//                   {isAdmin && (
+//                     <SidebarMenuItem>
+//                       <SidebarMenuButton asChild isActive={isRouteActive("/dashboard/role")} className="h-[36px]">
+//                         <Link href="/dashboard/role">
+//                           <Image src="/assets/dashboard/employee .png" alt="role management" width={20} height={20} />
+//                           Role Management
+//                         </Link>
+//                       </SidebarMenuButton>
+//                     </SidebarMenuItem>
+//                   )}
+//                   {!isAuthor && (
+//                     <SidebarMenuItem>
+//                       <SidebarMenuButton asChild isActive={isRouteActive("/dashboard/subscriber")} className="h-[36px]">
+//                         <Link href="/dashboard/subscriber">
+//                           <Image src="/assets/dashboard/team.png" alt="subscriber" width={20} height={20} />
+//                           Subscriber
+//                         </Link>
+//                       </SidebarMenuButton>
+//                     </SidebarMenuItem>
+//                   )}
+//                   <SidebarMenuItem>
+//                     <SidebarMenuButton asChild isActive={isRouteActive("/dashboard/settings")} className="h-[36px]">
+//                       <Link href="/dashboard/settings">
+//                         <Image src="/assets/dashboard/profile.png" alt="account" width={20} height={20} />
+//                         Account
+//                       </Link>
+//                     </SidebarMenuButton>
+//                   </SidebarMenuItem>
+//                 </SidebarMenu>
+//               </SidebarGroupContent>
+//             </CollapsibleContent>
+//           </Collapsible>
+//         </SidebarGroup>
+
+//         {/* Theme Settings */}
+//         <SidebarGroup>
+//           <Collapsible>
+//             <SidebarGroupLabel asChild>
+//               <CollapsibleTrigger className="group/collapsible">
+//                 <div className="flex items-center gap-2 text-lg font-semibold uppercase">
+//                   <Image src="/assets/dashboard/theme-setting.jpg" alt="theme-settings" width={20} height={20} />
+//                   Theme Settings
+//                   <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+//                 </div>
+//               </CollapsibleTrigger>
+//             </SidebarGroupLabel>
+//             <CollapsibleContent>
+//               <SidebarGroupContent>
+//                 <SidebarMenu>
+//                   {!isAuthor && (
+//                     <>
+//                       <SidebarMenuItem>
+//                         <SidebarMenuButton asChild isActive={isRouteActive("/dashboard/header")} className="h-[36px]">
+//                           <Link href="/dashboard/header">
+//                             <svg
+//                               height="20"
+//                               viewBox="0 0 512 512"
+//                               width="20"
+//                               xmlns="http://www.w3.org/2000/svg"
+//                               xmlnsXlink="http://www.w3.org/1999/xlink"
+//                               id="fi_9073168"
+//                             >
+//                               <linearGradient
+//                                 id="linear-gradient"
+//                                 gradientTransform="matrix(0 -1 1 0 0 512)"
+//                                 gradientUnits="userSpaceOnUse"
+//                                 x1="38.65"
+//                                 x2="473.35"
+//                                 y1="38.65"
+//                                 y2="473.35"
+//                               >
+//                                 <stop offset="0" stopColor="#549eff"></stop>
+//                                 <stop offset="1" stopColor="#006db0"></stop>
+//                               </linearGradient>
+//                               <linearGradient
+//                                 id="linear-gradient-2"
+//                                 gradientUnits="userSpaceOnUse"
+//                                 x1="146.15"
+//                                 x2="473.35"
+//                                 y1="146.15"
+//                                 y2="473.35"
+//                               >
+//                                 <stop offset="0" stopOpacity=".35"></stop>
+//                                 <stop offset="1" stopOpacity="0"></stop>
+//                               </linearGradient>
+//                               <g id="Layer_2" data-name="Layer 2">
+//                                 <g id="InterfaceIcon">
+//                                   <g id="_06.Menu" data-name="06.Menu">
+//                                     <rect
+//                                       id="Background"
+//                                       fill="url(#linear-gradient)"
+//                                       height="512"
+//                                       rx="131.96"
+//                                       transform="matrix(0 1 -1 0 512 0)"
+//                                       width="512"
+//                                     ></rect>
+//                                     <path
+//                                       d="m512 250.29v129.71a132 132 0 0 1 -132 132h-129.73l-136-136 54-45.65-53.95-54 55.33-44.27-54.68-54.68 281.74-42.5z"
+//                                       fill="url(#linear-gradient-2)"
+//                                     ></path>
+//                                     <g id="_06.Menu-2" fill="#fff" data-name="06.Menu">
+//                                       <rect height="58.59" rx="29.3" width="300" x="106" y="226.7"></rect>
+//                                       <rect height="58.59" rx="29.3" width="300" x="106" y="127.09"></rect>
+//                                       <rect height="58.59" rx="29.3" width="300" x="106" y="326.31"></rect>
+//                                     </g>
+//                                   </g>
+//                                 </g>
+//                               </g>
+//                             </svg>
+//                             Header
+//                           </Link>
+//                         </SidebarMenuButton>
+//                       </SidebarMenuItem>
+//                       <SidebarMenuItem>
+//                         <SidebarMenuButton asChild isActive={isRouteActive("/dashboard/footer")} className="h-[36px]">
+//                           <Link href="/dashboard/footer">
+//                             <svg
+//                               id="fi_6726859"
+//                               enableBackground="new 0 0 512 512"
+//                               height="20"
+//                               viewBox="0 0 512 512"
+//                               width="20"
+//                               xmlns="http://www.w3.org/2000/svg"
+//                             >
+//                               <g>
+//                                 <g>
+//                                   <path d="m512 451h-512v-150h512z" fill="#465d8c"></path>
+//                                 </g>
+//                                 <path d="m256 301h256v150h-256z" fill="#333b66"></path>
+//                                 <g id="_x32_0-captcha_2_">
+//                                   <g>
+//                                     <path d="m0 241h30v30h-30z" fill="#9ff"></path>
+//                                   </g>
+//                                   <g>
+//                                     <path d="m0 181h30v30h-30z" fill="#9ff"></path>
+//                                   </g>
+//                                   <g>
+//                                     <path d="m0 121h30v30h-30z" fill="#9ff"></path>
+//                                   </g>
+//                                   <g>
+//                                     <path d="m0 61h30v30h-30z" fill="#9ff"></path>
+//                                   </g>
+//                                   <g>
+//                                     <path d="m61 61h30v30h-30z" fill="#9ff"></path>
+//                                   </g>
+//                                   <g>
+//                                     <path d="m121 61h30v30h-30z" fill="#9ff"></path>
+//                                   </g>
+//                                   <g>
+//                                     <path d="m181 61h30v30h-30z" fill="#9ff"></path>
+//                                   </g>
+//                                   <g>
+//                                     <path d="m241 61h30v30h-30z" fill="#9ff"></path>
+//                                   </g>
+//                                   <g>
+//                                     <path d="m301 61h30v30h-30z" fill="#66e6ff"></path>
+//                                   </g>
+//                                   <g>
+//                                     <g>
+//                                       <path d="m361 61h30v30h-30z" fill="#66e6ff"></path>
+//                                     </g>
+//                                   </g>
+//                                   <g>
+//                                     <g>
+//                                       <path d="m421 61h30v30h-30z" fill="#66e6ff"></path>
+//                                     </g>
+//                                   </g>
+//                                   <g>
+//                                     <g>
+//                                       <path d="m482 61h30v30h-30z" fill="#66e6ff"></path>
+//                                     </g>
+//                                   </g>
+//                                   <g>
+//                                     <g>
+//                                       <path d="m482 121h30v30h-30z" fill="#66e6ff"></path>
+//                                     </g>
+//                                   </g>
+//                                   <g>
+//                                     <g>
+//                                       <path d="m482 181h30v30h-30z" fill="#66e6ff"></path>
+//                                     </g>
+//                                   </g>
+//                                   <g>
+//                                     <path d="m482 241h30v30h-30z" fill="#66e6ff"></path>
+//                                   </g>
+//                                   <g>
+//                                     <path d="m421 361h30v30h-30z" fill="#d9e5ff"></path>
+//                                   </g>
+//                                   <g>
+//                                     <path d="m361 361h30v30h-30z" fill="#d9e5ff"></path>
+//                                   </g>
+//                                   <g>
+//                                     <path d="m301 361h30v30h-30z" fill="#d9e5ff"></path>
+//                                   </g>
+//                                   <g>
+//                                     <path d="m61 361h180v30h-180z" fill="#ecf2ff"></path>
+//                                   </g>
+//                                 </g>
+//                                 <path d="m256 61h15v30h-15z" fill="#66e6ff"></path>
+//                               </g>
+//                             </svg>
+//                             Footer
+//                           </Link>
+//                         </SidebarMenuButton>
+//                       </SidebarMenuItem>
+//                     </>
+//                   )}
+//                 </SidebarMenu>
+//               </SidebarGroupContent>
+//             </CollapsibleContent>
+//           </Collapsible>
+//         </SidebarGroup>
+//       </SidebarContent>
+//       <SidebarRail />
+//     </Sidebar>
+//   )
+// }
