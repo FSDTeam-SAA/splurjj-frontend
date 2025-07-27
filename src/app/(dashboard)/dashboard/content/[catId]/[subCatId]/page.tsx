@@ -14,6 +14,7 @@ import ContentAddEditForm from "../../_components/ContentModalForm";
 import { ConfirmationModal } from "@/components/shared/modals/ConfirmationModal";
 import { ContentDashboardResponse, ContentItem } from "../../_components/ContentDataType";
 
+
 export default function SubcategoryContentPage() {
   const params = useParams();
   const categoryId = params?.catId;
@@ -27,6 +28,8 @@ export default function SubcategoryContentPage() {
   const session = useSession();
   const token = (session?.data?.user as { token: string })?.token;
   const queryClient = useQueryClient();
+
+  
 
   // get all content
   const { data, isLoading, error, isError } = useQuery<ContentDashboardResponse>({
@@ -158,12 +161,12 @@ export default function SubcategoryContentPage() {
         {showForm ? (
           <div className="space-y-4">
             <ContentAddEditForm
-              // initialContent={editingContent}
+              initialContent={editingContent}
               categoryId={categoryId!}
               subcategoryId={subcategoryId!}
               onSuccess={handleFormSuccess}
               onCancel={handleCloseForm}
-              // setEditingContent={setEditingContent}
+              setEditingContent={setEditingContent}
               setShowForm={setShowForm}
             />
           </div>

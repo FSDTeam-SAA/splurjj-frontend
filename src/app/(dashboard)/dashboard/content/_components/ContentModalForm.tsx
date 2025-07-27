@@ -1394,6 +1394,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { RichTextEditor } from "@/components/ui/rich-text-editor";
 import { ErrorBoundary } from "react-error-boundary";
 import { RichTextEditorHeading } from "@/components/ui/RichTextEditor";
+import { ContentItem } from "./ContentDataType";
 
 // Define interfaces
 interface Content {
@@ -1416,12 +1417,12 @@ interface MutationResponse {
 }
 
 interface ContentFormModalProps {
-  initialContent?: Content | null | undefined;
+  initialContent?: ContentItem | null | undefined;
   categoryId: string | string[];
   subcategoryId: string | string[];
   onSuccess?: () => void;
   onCancel?: () => void;
-  setEditingContent?: React.Dispatch<React.SetStateAction<Content | null>>;
+  setEditingContent?: React.Dispatch<React.SetStateAction<ContentItem | null>>;
   setShowForm?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
