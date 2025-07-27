@@ -413,7 +413,7 @@ export default function Sidebar() {
                             animate="visible"
                             exit="exit"
                             variants={subcategoryVariants}
-                            className="space-y-1 overflow-hidden bg-[#E6EEFE] dark:bg-white py-2 rounded-b-lg border-t border-gray-200 dark:border-gray-700"
+                            className="space-y-1 overflow-hidden bg-[#E6EEFE] dark:bg-white py-2 border-t border-gray-200 dark:border-gray-700"
                           >
                             {category.subcategories.map((subcategory) => {
                               const subcategoryActive = isSubcategoryActive(

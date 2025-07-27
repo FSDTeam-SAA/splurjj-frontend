@@ -171,8 +171,8 @@ import { SquarePen, Trash2 } from "lucide-react";
 import Image from "next/image";
 // import { Content } from "./ContentDataType";
 import moment from "moment";
-import { ContentItem } from "./ContentDataType";
 import ContentStatusDropDown from "./ContentStatusDropDown";
+import { ContentItem } from "./ContentDataType";
 
 interface ContentTableProps {
   contents?: ContentItem[];
@@ -249,7 +249,7 @@ export default function ContentTable({
           >
             <TableCell className="border-r border-[#616161]">
               <div className="flex items-center gap-[10px] pl-8">
-                <div className="rounded-[8px] overflow-hidden bg-gray-100 flex-shrink-0">
+                {/* <div className="rounded-[8px] overflow-hidden bg-gray-100 flex-shrink-0">
                   <Image
                     src={content.image1 || content.imageLink || ""}
                     alt={content.heading}
@@ -257,7 +257,35 @@ export default function ContentTable({
                     height={68}
                     className="w-[130px] h-[68px] object-cover rounded-[8px]"
                   />
+                </div> */}
+                <div className="rounded-[8px] overflow-hidden bg-gray-100 flex-shrink-0">
+                  {(() => {
+                    let fallbackImage = "";
+                    try {
+                      const parsed = JSON.parse(content.image2 ?? "[]");
+                      fallbackImage = Array.isArray(parsed)
+                        ? parsed[0] ?? ""
+                        : "";
+                    } catch {
+                      fallbackImage = "";
+                    }
+
+                    // const imageSrc =
+                    //   content.image1 || content.imageLink || fallbackImage;
+                    const imageSrc = fallbackImage;
+
+                    return (
+                      <Image
+                        src={imageSrc}
+                        alt={content.heading}
+                        width={130}
+                        height={68}
+                        className="w-[130px] h-[68px] object-cover rounded-[8px]"
+                      />
+                    );
+                  })()}
                 </div>
+
                 <div className="flex-1 min-w-0 dark:white-text">
                   <p
                     dangerouslySetInnerHTML={{ __html: content.heading }}

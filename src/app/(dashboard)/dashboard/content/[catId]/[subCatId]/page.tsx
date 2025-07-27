@@ -8,10 +8,6 @@ import { useParams } from "next/navigation";
 import ContentTable from "../../_components/content-table";
 import { useSession } from "next-auth/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-// import type {
-//   AllContentResponse,
-//   Content,
-// } from "../../_components/ContentDataType";
 import { toast } from "react-toastify";
 import SplurjjPagination from "@/components/ui/SplurjjPagination";
 import ContentAddEditForm from "../../_components/ContentModalForm";
@@ -223,3 +219,4 @@ export default function SubcategoryContentPage() {
     </div>
   );
 }
+
