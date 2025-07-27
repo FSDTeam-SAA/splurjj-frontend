@@ -474,7 +474,7 @@ export default function Header() {
                   </DropdownMenu>
                 ) : (
                   <Link
-                    href="/sign-up"
+                    href="/login"
                     className="p-1 rounded text-white px-4 py-2 bg-[#0253F7] hover:bg-[#0253F7] mr-2"
                   >
                     Sign In
