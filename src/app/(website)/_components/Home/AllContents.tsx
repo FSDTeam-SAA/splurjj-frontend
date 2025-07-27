@@ -28,6 +28,7 @@ interface ContentItem {
   sub_heading: string;
   body1: string;
   image1: string | null;
+  image2?: string | string[] | null;
   advertising_image: string | null;
   tags: string[];
   created_at: string;
@@ -221,7 +222,7 @@ const AllContents: React.FC = () => {
   const fourthPost = contents[3];
   // const otherPosts = contents.slice(1); // All posts except the first
 
-  console.log("FFFFFFFFFFFFFFFFFFF", firstPost);
+  console.log("FFFFFFFFFFFFFFFFFFF", secondPost);
 
   return (
     <div className="">
@@ -306,9 +307,9 @@ const AllContents: React.FC = () => {
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-3xl md:text-[40px] lg:text-[60px] font-[800] leading-[120%]"
+                  className="text-3xl md:text-[40px] lg:text-[60px] font-[800] leading-[120%] hover:underline"
                   whileHover={{
-                    scale: 1.05,
+                    scale: 1.02,
                     fontWeight: 900,
                     transition: { duration: 0.3 },
                   }}
@@ -353,11 +354,11 @@ const AllContents: React.FC = () => {
                 href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
               >
                 <Image
-                  src={getImageUrl(secondPost.image1)}
+                  src={getImageUrl(secondPost.image2?.[0] || "")}
                   alt={secondPost.heading}
                   width={400}
                   height={300}
-                  className="w-full h-[300px] object-cover object-top hover:scale-110 transition-all duration-500 ease-in-out"
+                  className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
                   priority
                 />
               </Link>
@@ -367,11 +368,17 @@ const AllContents: React.FC = () => {
               <Link
                 href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
               >
-                <p
+                <motion.p
                   dangerouslySetInnerHTML={{ __html: secondPost.heading }}
-                  className="text-2xl font-medium"
+                  className="text-2xl font-medium hover:underline"
+                  whileHover={{
+                    scale: 1.05,
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
                 />
               </Link>
+
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
                 {secondPost.author} - {secondPost.date}
               </p>
@@ -454,16 +461,16 @@ const AllContents: React.FC = () => {
                 {thirdPost.sub_category_name || "Subcategory"}
               </Link>
             </div>
-            <div>
+            <div className="overflow-hidden">
               <Link
                 href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
               >
                 <Image
-                  src={getImageUrl(thirdPost.image1)}
+                  src={getImageUrl(thirdPost.image2?.[0] || "")}
                   alt={thirdPost.heading}
                   width={400}
                   height={300}
-                  className="w-full h-[300px] object-cover object-top"
+                  className="w-full h-[300px] object-cover hover:scale-150 transition-all duration-500 ease-in-out"
                   priority
                 />
               </Link>
@@ -472,9 +479,14 @@ const AllContents: React.FC = () => {
               <Link
                 href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
               >
-                <p
+                <motion.p
                   dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
-                  className="text-2xl font-medium"
+                  className="text-2xl font-medium hover:underline"
+                  whileHover={{
+                    scale: 1.05,
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
                 />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
@@ -559,16 +571,16 @@ const AllContents: React.FC = () => {
                 {fourthPost.sub_category_name || "Subcategory"}
               </Link>
             </div>
-            <div>
+            <div className="overflow-hidden">
               <Link
                 href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
               >
                 <Image
-                  src={getImageUrl(fourthPost.image1)}
+                  src={getImageUrl(fourthPost.image2?.[0] || "")}
                   alt={fourthPost.heading}
                   width={400}
                   height={300}
-                  className="w-full h-[300px] object-cover object-top"
+                  className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
                   priority
                 />
               </Link>
@@ -577,10 +589,15 @@ const AllContents: React.FC = () => {
               <Link
                 href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
               >
-                <p
-                  dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
-                  className="text-2xl font-medium"
-                />
+              <motion.p
+                dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
+                className="text-2xl font-medium hover:underline"
+                whileHover={{
+                  scale: 1.05,
+                  fontWeight: 900,
+                  transition: { duration: 0.3 },
+                  }}
+              />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
                 {fourthPost.author} - {fourthPost.date}
