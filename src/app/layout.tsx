@@ -5,24 +5,32 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthProvider from "@/components/provider/AuthProvider";
 import AppProvider from "@/components/provider/AppProvider";
-import {Manrope} from "next/font/google"
+// import {Manrope} from "next/font/google"
 import { ThemeProvider } from "next-themes";
 // import localFont from "next/font/local";
+import { Roboto } from "next/font/google";
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"], // customize weights you need
+  variable: "--font-roboto", // optional: useful for Tailwind custom font
+  display: "swap",
+});
 
 // ✅ DO NOT export this font
 // const helvetica = localFont({
 //   src: "./fonts/HelveticaNeueBold.otf",
 //   variable: "--font-helvetica",
-//   weight: "100 200 300 400 500 600 700 800 900", 
+//   weight: "100 200 300 400",
 //   display: "swap",
 // });
 
-const manrope = Manrope({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-manrope",
-  display: "swap",
-})
+// const manrope = Manrope({
+//   subsets: ["latin"],
+//   weight: ["400", "500", "600", "700", "800"],
+//   variable: "--font-manrope",
+//   display: "swap",
+// })
 
 export const metadata: Metadata = {
   title: "Splurjj",
@@ -37,7 +45,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${manrope.className} antialiased`}
+      className={`${roboto.className} antialiased`}
       suppressHydrationWarning
     >
       <body>

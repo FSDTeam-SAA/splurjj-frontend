@@ -234,7 +234,7 @@ const Ride: React.FC<ArtCultureProps> = ({ categoryName }) => {
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-lg font-medium text-[#131313] hover:underline text-end"
+                  className="text-lg font-medium text-[#131313]  text-end"
                 />
               </Link>
               <div className="flex items-center justify-end gap-2">
@@ -361,7 +361,7 @@ const Ride: React.FC<ArtCultureProps> = ({ categoryName }) => {
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: secondPost.heading }}
-                  className="text-lg font-medium text-[#131313] hover:underline"
+                  className="text-lg font-medium text-[#131313] "
                 />
               </Link>
               <div className="flex items-center gap-2">

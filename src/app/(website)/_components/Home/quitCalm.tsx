@@ -227,7 +227,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-3xl md:text-4xl text-center md:text-left font-bold text-[#131313] px-4 hover:underline"
+                  className="text-3xl md:text-4xl text-center md:text-left font-bold text-[#131313] px-4 "
                 />
               </Link>
             </div>
@@ -370,7 +370,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
-                  className="text-2xl font-medium text-[#131313] hover:underline mt-2"
+                  className="text-2xl font-medium text-[#131313]  mt-2"
                 />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
@@ -476,7 +476,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
-                  className="text-2xl font-medium text-[#131313] hover:underline mt-2"
+                  className="text-2xl font-medium text-[#131313]  mt-2"
                 />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
@@ -582,7 +582,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: fifthPost.heading }}
-                  className="text-2xl font-medium text-[#131313] hover:underline mt-2"
+                  className="text-2xl font-medium text-[#131313]  mt-2"
                 />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">

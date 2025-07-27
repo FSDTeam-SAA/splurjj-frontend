@@ -307,7 +307,7 @@ const AllContents: React.FC = () => {
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-3xl md:text-[40px] lg:text-[60px] font-[800] leading-[120%] hover:underline"
+                  className="text-3xl md:text-[40px] lg:text-[60px] font-[800] leading-[120%] "
                   whileHover={{
                     scale: 1.02,
                     fontWeight: 900,
@@ -370,7 +370,7 @@ const AllContents: React.FC = () => {
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: secondPost.heading }}
-                  className="text-2xl font-medium hover:underline"
+                  className="text-2xl font-medium "
                   whileHover={{
                     scale: 1.05,
                     fontWeight: 900,
@@ -481,7 +481,7 @@ const AllContents: React.FC = () => {
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
-                  className="text-2xl font-medium hover:underline"
+                  className="text-2xl font-medium "
                   whileHover={{
                     scale: 1.05,
                     fontWeight: 900,
@@ -591,7 +591,7 @@ const AllContents: React.FC = () => {
               >
               <motion.p
                 dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
-                className="text-2xl font-medium hover:underline"
+                className="text-2xl font-medium "
                 whileHover={{
                   scale: 1.05,
                   fontWeight: 900,

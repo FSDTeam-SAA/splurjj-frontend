@@ -308,7 +308,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
             <div className="bg-[#DDD618] h-full md:max-h-[455px] flex items-center justify-center p-4 ">
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
-                className="text-2xl font-medium text-[#131313] hover:underline"
+                className="text-2xl font-medium text-[#131313] "
               >
                 <p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
@@ -377,7 +377,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
-                    className="text-2xl font-medium text-[#131313] hover:underline"
+                    className="text-2xl font-medium text-[#131313] "
                   />
                 </Link>
                 <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
@@ -485,7 +485,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
-                    className="text-2xl font-medium text-[#131313] hover:underline"
+                    className="text-2xl font-medium text-[#131313] "
                   />
                 </Link>
                 <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
@@ -594,7 +594,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   >
                     <p
                       dangerouslySetInnerHTML={{ __html: fifthPost.heading }}
-                      className="text-2xl font-medium text-[#131313] hover:underline"
+                      className="text-2xl font-medium text-[#131313] "
                     />
                   </Link>
                   <p className="text-sm font-semibold uppercase text-[#424242] mt-2">

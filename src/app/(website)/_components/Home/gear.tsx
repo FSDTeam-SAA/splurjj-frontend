@@ -342,7 +342,7 @@ const Gear: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: secondPost.heading }}
-                    className="text-lg font-medium text-[#131313] hover:underline "
+                    className="text-lg font-medium text-[#131313]  "
                   />
                 </Link>
                 <div className="flex items-center justify-between">
@@ -449,7 +449,7 @@ const Gear: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
-                    className="text-lg font-medium text-[#131313] hover:underline"
+                    className="text-lg font-medium text-[#131313] "
                   />
                 </Link>
                 <div className="flex items-center justify-between">

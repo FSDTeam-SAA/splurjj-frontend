@@ -74,7 +74,7 @@ const DashboardOverviewContainer = () => {
         {/* second div  */}
         <div className="flex items-center justify-between bg-white rounded-[6px] shadow-md p-8">
           <div>
-            <h3 className="text-xl font-bold text-[#131313] dark:text-black leading-[120%] tracking-[0%]">
+            <h3 className="text-xl font-thin text-[#131313] dark:text-black leading-[120%] tracking-[0%]">
               Total Articles
             </h3>
             <p className="flex items-center gap-1 text-lg font-medium text-[#424242] dark:text-black leading-[120%] tracking-[0%] pt-2">

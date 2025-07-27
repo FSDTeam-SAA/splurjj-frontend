@@ -306,11 +306,11 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
               <div className=" px-4">
                 <div
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="font-medium white-text hover:underline text-3xl lg:text-5xl text-center text-white line-clamp-3"
+                  className="font-medium white-text  text-3xl lg:text-5xl text-center text-white line-clamp-3"
                 />
                 <div
                   dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
-                  className="md:text-lg font-medium white-text hover:underline text-center line-clamp-4 text-white"
+                  className="md:text-lg font-medium white-text  text-center line-clamp-4 text-white"
                 />
               </div>
             </div>
@@ -344,7 +344,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: secondPost.heading }}
-                    className="text-lg font-medium text-[#131313] hover:underline"
+                    className="text-lg font-medium text-[#131313] "
                   />
                 </Link>
                 <div className="flex items-center gap-2">
@@ -452,7 +452,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
-                    className="text-lg font-medium text-[#131313] hover:underline"
+                    className="text-lg font-medium text-[#131313] "
                   />
                 </Link>
                 <div className="flex items-center gap-2">
