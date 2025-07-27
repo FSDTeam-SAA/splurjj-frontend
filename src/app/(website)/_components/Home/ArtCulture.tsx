@@ -476,7 +476,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   {fourthPost.sub_category_name || "Subcategory"}
                 </Link>
               </div>
-              <div>
+              <div className="overflow-hidden">
                 <Link
                   href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
                 >

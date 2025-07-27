@@ -222,9 +222,6 @@ const AllContents: React.FC = () => {
   const fourthPost = contents[3];
   // const otherPosts = contents.slice(1); // All posts except the first
 
-
-
-
   return (
     <div className="">
       {firstPost && (
@@ -301,7 +298,7 @@ const AllContents: React.FC = () => {
                 </Link>
               </div>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-4 ">
               <Link
                 className="content-heding-text"
                 href={`/${firstPost?.category_id}/${firstPost?.subcategory_id}/${firstPost?.id}`}
@@ -309,13 +306,9 @@ const AllContents: React.FC = () => {
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
                   className="text-3xl md:text-[40px] lg:text-[60px] font-[800] leading-[120%] hover:underline"
-                  whileHover={{
-                    scaleX: 1.05,
-                    transformOrigin: "left", // Ensures scaling happens from the left side
-                    fontWeight: 900,
-                    transition: { duration: 0.3 },
-                    
-                  }}
+                  initial={{ scale: 1 }}
+                  whileHover={{ scale: 1.05, transformOrigin: "left" }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
                 />
               </Link>
 
