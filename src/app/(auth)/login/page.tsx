@@ -11,8 +11,8 @@ const Login = () => {
         <Image
           src="/assets/images/sign-in.png"
           alt="sign in"
-          width={800}
-          height={800}
+          width={1900}
+          height={1200}
           className="w-full h-full object-cover"
         />
       </div>
