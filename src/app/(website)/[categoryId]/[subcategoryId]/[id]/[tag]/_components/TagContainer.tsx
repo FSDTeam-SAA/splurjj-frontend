@@ -13,6 +13,7 @@ import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
 import Link from "next/link";
 import TableSkeletonWrapper from "@/components/shared/TableSkeletonWrapper/TableSkeletonWrapper";
+import { motion } from "framer-motion";
 
 // Define the expected shape of a blog post from the API
 interface BlogPost {
@@ -28,6 +29,7 @@ interface BlogPost {
   sub_category_id: number;
   sub_category_name: string;
   image1: string | null;
+  image2: string[] | null;
   advertising_image: string | null;
   advertisingLink: string | null;
   imageLink: string | null;
@@ -266,16 +268,20 @@ const TagContainer: React.FC<TagContainerProps> = ({
             aria-labelledby={`post-heading-${post.id}`}
           >
             <div className="space-y-2">
-              <Link href={`/${post.category_id}/${post.sub_category_id}/${post.id}`}>
-                <Image
-                  src={getImageUrl(post.image1)}
-                  alt={post.heading.replace(/<[^>]+>/g, "")}
-                  width={458}
-                  height={346}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                  className="w-full h-[346px] object-cover object-top"
-                />
-              </Link>
+              <div className="overflow-hidden mb-4">
+                <Link
+                  href={`/${post.category_id}/${post.sub_category_id}/${post.id}`}
+                >
+                  <Image
+                    src={getImageUrl(post.image2?.[0] || "")}
+                    alt={post.heading.replace(/<[^>]+>/g, "")}
+                    width={458}
+                    height={346}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                    className="w-full h-[346px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                  />
+                </Link>
+              </div>
 
               <div className="flex items-center gap-2">
                 <Link
@@ -296,9 +302,14 @@ const TagContainer: React.FC<TagContainerProps> = ({
               <Link
                 href={`/${post.category_id}/${post.sub_category_id}/${post.id}`}
               >
-                <p
+                <motion.p
                   dangerouslySetInnerHTML={{ __html: post.heading }}
-                  className="text-2xl font-medium line-clamp-2"
+                  className="text-2xl font-medium line-clamp-2 hover:underline"
+                  whileHover={{
+                    scale: 1.05,
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
                 />
               </Link>
               <p className="text-base font-semibold leading-[120%] tracking-[0%] uppercase text-[#424242] mt-4 md:mt-5 lg:mt-6">
@@ -383,7 +394,10 @@ const TagContainer: React.FC<TagContainerProps> = ({
 
       {/* Sentinel element for Intersection Observer */}
       {hasMore && (
-        <div ref={observerRef} className="h-10 flex justify-center items-center">
+        <div
+          ref={observerRef}
+          className="h-10 flex justify-center items-center"
+        >
           {loadingMore && (
             <div className="text-center" aria-live="polite">
               Loading more posts...

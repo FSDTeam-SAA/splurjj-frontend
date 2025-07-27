@@ -13,6 +13,7 @@ import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
 import { Loader2 } from "lucide-react";
 import DOMPurify from "dompurify";
+import { motion } from "framer-motion";
 
 interface BlogPost {
   id: number;
@@ -26,6 +27,7 @@ interface BlogPost {
   sub_heading: string;
   body1: string;
   image1: string;
+  image2: string[];
   advertising_image: string | null;
   tags: string | string[];
   created_at: string;
@@ -276,7 +278,7 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
               href={`/${post.category_id}/${post.subcategory_id}/${post.id}`}
             >
             <Image
-              src={getImageUrl(post.image1)}
+              src={getImageUrl(post.image2?.[0] || "")}
               alt={sanitizeHTML(post.heading)}
               width={400}
               height={300}
@@ -302,9 +304,15 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
               <Link
                 href={`/${post.category_id}/${post.subcategory_id}/${post.id}`}
               >
-                <p
+                <motion.p
                   dangerouslySetInnerHTML={{ __html: sanitizeHTML(post.heading) }}
-                  className="text-2xl font-medium hover:text-primary line-clamp-2"
+                  className="text-2xl font-medium line-clamp-2 hover:underline"
+                   whileHover={{
+                        scaleX: 1.05,
+                        transformOrigin: "left", // Ensures scaling happens from the left side
+                        fontWeight: 900,
+                        transition: { duration: 0.3 },
+                      }}
                 />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">

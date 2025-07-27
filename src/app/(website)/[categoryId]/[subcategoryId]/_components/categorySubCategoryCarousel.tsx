@@ -12,15 +12,15 @@ interface ContentItem {
   subcategory_id: number;
   heading: string;
   image1: string | null;
-  image2?: string | null; // Expecting a JSON string
+  image2?: string[] | null; // Updated to reflect that image2 is an array
   altText?: string;
-  advertisingLink?: string | null; // New fields from provided data
+  advertisingLink?: string | null;
   advertising_image?: string | null;
   author?: string;
   body1?: string;
   category_name?: string;
   date?: string;
-  image2_url?: string[]; // Unused but included for type safety
+  image2_url?: string[]; // For backward compatibility or type safety
   imageLink?: string | null;
   status?: string;
   sub_category_name?: string;
@@ -36,9 +36,9 @@ interface ImageCarouselProps {
 export default function CategorySubCategoryCarousel({ posts, getImageUrl }: ImageCarouselProps) {
   const [api, setApi] = useState<CarouselApi | null>(null);
 
-  // Compute image URLs before useEffect
+  // Compute image URLs
   const imageUrls: string[] = (() => {
-    if (!posts || (!posts.image1 && !posts.image2)) {
+    if (!posts || (!posts.image1 && !posts.image2 && !posts.image2_url)) {
       console.log("No images provided, using fallback");
       return ["/fallback-image.jpg"];
     }
@@ -46,24 +46,16 @@ export default function CategorySubCategoryCarousel({ posts, getImageUrl }: Imag
     const urls: string[] = [];
     if (posts.image1) {
       const image1Url = getImageUrl(posts.image1);
-      console.log("Adding image1:", image1Url);
       urls.push(image1Url);
     }
-    if (posts.image2 && typeof posts.image2 === "string") {
-      try {
-        const parsed = JSON.parse(posts.image2);
-        if (Array.isArray(parsed) && parsed.every((url) => typeof url === "string")) {
-          const parsedUrls = parsed.map(getImageUrl);
-          console.log("Adding image2 URLs:", parsedUrls);
-          urls.push(...parsedUrls);
-        } else {
-          console.error("image2 is not an array of strings:", parsed);
-        }
-      } catch (e) {
-        console.error("Invalid JSON in image2:", e);
-      }
+    if (posts.image2 && Array.isArray(posts.image2)) {
+      const parsedUrls = posts.image2.map(getImageUrl);
+      urls.push(...parsedUrls);
+    } else if (posts.image2_url && Array.isArray(posts.image2_url)) {
+      const parsedUrls = posts.image2_url.map(getImageUrl);
+      urls.push(...parsedUrls);
     } else {
-      console.log("image2 is not a string or is missing:", posts?.image2);
+      console.log("No valid image2 or image2_url provided:", posts?.image2, posts?.image2_url);
     }
     return urls.length > 0 ? urls : ["/fallback-image.jpg"];
   })();
@@ -74,7 +66,6 @@ export default function CategorySubCategoryCarousel({ posts, getImageUrl }: Imag
       console.log("Auto-scroll disabled: api=", !!api, "imageUrls.length=", imageUrls.length);
       return;
     }
-    console.log("Starting auto-scroll with", imageUrls.length, "images");
     const interval = setInterval(() => api.scrollNext(), 5000);
     return () => clearInterval(interval);
   }, [api, imageUrls.length]);

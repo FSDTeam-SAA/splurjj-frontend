@@ -123,8 +123,6 @@ const FirstContents: React.FC<FirstContentsProps> = ({
   const fourthPost = posts[3];
   const fifthPost = posts[4];
 
-  console.log("FFFFFFFFFFFFFFFFF", firstPost);
-
   return (
     <div className="">
       {firstPost ? (
@@ -328,7 +326,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({
               className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
             />
           </div>
-          <div className="col-span-5 lg:col-span-3">
+          <div className="col-span-5 lg:col-span-3 overflow-hidden">
             <Link
               href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
             >
@@ -337,7 +335,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({
                 alt={secondPost.heading.replace(/<[^>]+>/g, "")}
                 width={400}
                 height={315}
-                className="w-full h-[315px] object-cover object-top"
+                className="w-full h-[315px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
                 priority
               />
             </Link>
@@ -346,7 +344,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({
       )}
 
       {thirdPost && (
-        <div className="mb-8">
+        <div className="mb-8 overflow-hidden">
           <Link
             href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
           >
@@ -355,7 +353,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({
               alt={thirdPost.heading.replace(/<[^>]+>/g, "")}
               width={400}
               height={443}
-              className="w-full h-[443px] object-cover object-top"
+              className="w-full h-[443px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
               priority
             />
           </Link>
@@ -541,13 +539,14 @@ const FirstContents: React.FC<FirstContentsProps> = ({
             </p>
             <Link
               href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
+              className="overflow-hidden"
             >
               <Image
                 src={getImageUrl(fourthPost.image1)}
                 alt={fourthPost.heading.replace(/<[^>]+>/g, "")}
                 width={400}
                 height={300}
-                className="w-full h-[300px] object-cover object-top"
+                className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
                 priority
               />
             </Link>
@@ -641,13 +640,14 @@ const FirstContents: React.FC<FirstContentsProps> = ({
             </p>
             <Link
               href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
+              className="overflow-hidden"
             >
               <Image
                 src={getImageUrl(fifthPost.image1)}
                 alt={fifthPost.heading.replace(/<[^>]+>/g, "")}
                 width={400}
                 height={300}
-                className="w-full h-[300px] object-cover object-top"
+                className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
                 priority
               />
             </Link>
