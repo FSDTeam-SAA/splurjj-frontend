@@ -229,7 +229,13 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-3xl md:text-4xl text-center md:text-left font-bold text-[#131313] px-4 hover:underline"
+                  className="text-3xl md:text-4xl text-center md:text-left font-bold text-[#131313] px-4"
+                   whileHover={{
+                    scaleX: 1.05,
+                    transformOrigin: "left", // Ensures scaling happens from the left side
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
                 />
               </Link>
             </div>
@@ -356,7 +362,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
                 >
                   <Image
-                    src={getImageUrl(thirdPost.image1)}
+                    src={getImageUrl(thirdPost.image2?.[0] || "")}
                     alt={thirdPost.heading || "Blog Image"}
                     width={400}
                     height={455}
@@ -372,6 +378,12 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
                   className="text-2xl font-medium text-[#131313] hover:underline mt-2"
+                   whileHover={{
+                    scaleX: 1.05,
+                    transformOrigin: "left", // Ensures scaling happens from the left side
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
                 />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
@@ -478,6 +490,12 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
                   className="text-2xl font-medium text-[#131313] hover:underline mt-2"
+                   whileHover={{
+                    scaleX: 1.05,
+                    transformOrigin: "left", // Ensures scaling happens from the left side
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
                 />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
@@ -584,6 +602,12 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: fifthPost.heading }}
                   className="text-2xl font-medium text-[#131313] hover:underline mt-2"
+                   whileHover={{
+                    scaleX: 1.05,
+                    transformOrigin: "left", // Ensures scaling happens from the left side
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
                 />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">

@@ -43,8 +43,6 @@ function MainHome() {
     queryFn: fetchCategories,
   });
 
-  console.log(categories);
-
   const firstCategory = categories[0]?.category_name;
   const secoundCategory = categories[1]?.category_name;
   const thirdPost = categories[2]?.category_name;

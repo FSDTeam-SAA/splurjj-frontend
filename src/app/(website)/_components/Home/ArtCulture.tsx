@@ -304,7 +304,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
               </Link>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 rounded">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 rounded overflow-hidden">
             <div className="bg-[#DDD618] h-full md:max-h-[455px] flex items-center justify-center p-4 ">
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
@@ -312,7 +312,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-3xl md:text-4xl font-bold text-[#131313] hover:underline"
+                  className="text-3xl md:text-4xl font-bold text-[#131313]"
                   whileHover={{
                     scaleX: 1.05,
                     transformOrigin: "left", // Ensures scaling happens from the left side
@@ -325,13 +325,14 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
             <div className="overflow-hidden">
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
+                className="overflow-hidden"
               >
                 <Image
                   src={getImageUrl(firstPost.image2?.[0] || "")}
                   alt={firstPost.heading || "Blog Image"}
                   width={888}
                   height={552}
-                  className="w-full h-[455px] object-cover object-top hover:scale-110 transition-all duration-500 ease-in-out"
+                  className="w-full h-[455px] object-cover object-top hover:scale-105 transition-all duration-500 ease-in-out"
                   priority
                 />
               </Link>
@@ -384,6 +385,12 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   <motion.p
                     dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
                     className="text-2xl font-medium text-[#131313] "
+                    whileHover={{
+                      scaleX: 1.05,
+                      transformOrigin: "left", // Ensures scaling happens from the left side
+                      fontWeight: 900,
+                      transition: { duration: 0.3 },
+                    }}
                   />
                 </Link>
                 <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
