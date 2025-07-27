@@ -102,8 +102,8 @@ const RecentArticleViewDetails = ({ params }: { params: { slug: string } }) => {
   if (error) return <div>Error fetching article details</div>;
 
   return (
-    <div>
-      <div>
+    <div className="pb-20">
+      <div >
         <Swiper
           modules={[Autoplay]}
           loop={true}
@@ -136,16 +136,35 @@ const RecentArticleViewDetails = ({ params }: { params: { slug: string } }) => {
         </Swiper>
       </div>
       <h1
+        className="text-4xl font-semibold text-black mt-2 mb-1 leading-normal line-clamp-1"
         dangerouslySetInnerHTML={{
           __html: data?.data?.heading ?? "",
         }}
       />
+      <div className="flex items-center gap-2">
+        <h3 className="text-2xl font-semibold text-black leading-normal">
+          Author :
+        </h3>
+        <p className="text-xl font-medium text-black leading-normal">
+          {data?.data?.author}
+        </p>
+      </div>
+      <div className="flex items-center gap-2">
+        <h3 className="text-2xl font-semibold text-black leading-normal">
+          Date :
+        </h3>
+        <p className="text-xl font-medium text-black leading-normal">
+          {data?.data?.date}
+        </p>
+      </div>
       <h5
+        className="text-[22px] font-medium text-black my-2 leading-normal line-clamp-2"
         dangerouslySetInnerHTML={{
           __html: data?.data?.sub_heading ?? "",
         }}
       />
       <p
+        className="text-base font-normal text-black my-2 leading-normal text-justify"
         dangerouslySetInnerHTML={{
           __html: data?.data?.body1 ?? "",
         }}
