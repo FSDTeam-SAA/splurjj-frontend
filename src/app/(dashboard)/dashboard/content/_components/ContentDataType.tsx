@@ -1,5 +1,3 @@
-
-
 // export type Content = {
 //   id: number;
 //   heading: string;
@@ -46,9 +44,6 @@
 //   total: number;
 // };
 
-
-
-
 export interface ContentDashboardResponse {
   success: boolean;
   data: ContentDashboardData;
@@ -92,7 +87,15 @@ export interface ContentItem {
   advertisingLink: string | null;
   image2_url: string[];
   imageLink: string | null;
-  status: 'Approved' | 'Draft' | string;
+  status:
+    | "Draft"
+    | "Review"
+    | "Approved"
+    | "Published"
+    | "Archived"
+    | "Revision"
+    | "Rejected"
+    | string;
 }
 
 export interface PaginationLink {
