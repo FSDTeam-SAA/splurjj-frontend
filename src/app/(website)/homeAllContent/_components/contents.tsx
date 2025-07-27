@@ -1,200 +1,223 @@
-"use client"
-import Image from "next/image"
-import Link from "next/link"
-import { useEffect, useState, useRef, useCallback } from "react"
-import { FaRegCommentDots, FaTwitter, FaFacebook, FaLinkedin } from "react-icons/fa"
-import { RiShareForwardLine } from "react-icons/ri"
-import { TbTargetArrow } from "react-icons/tb"
-import { Loader2 } from "lucide-react"
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState, useRef, useCallback } from "react";
+import {
+  FaRegCommentDots,
+  FaTwitter,
+  FaFacebook,
+  FaLinkedin,
+} from "react-icons/fa";
+import { RiShareForwardLine } from "react-icons/ri";
+import { TbTargetArrow } from "react-icons/tb";
+import { Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 // Interface for ContentItem (assuming SearchResult is compatible)
 interface ContentItem {
-  id: number
-  category_id: number
-  subcategory_id: number
-  category_name?: string
-  sub_category_name?: string
-  heading: string
-  author: string
-  date: string
-  sub_heading: string
-  body1: string
-  image1: string | null
-  advertising_image: string | null
-  tags: string[]
-  created_at: string
-  updated_at: string
-  imageLink: string | null
-  advertisingLink: string | null
-  user_id: number
-  status: string
+  id: number;
+  category_id: number;
+  subcategory_id: number;
+  category_name?: string;
+  sub_category_name?: string;
+  heading: string;
+  author: string;
+  date: string;
+  sub_heading: string;
+  body1: string;
+  image1: string | null;
+  image2?: string | string[] | null;
+  advertising_image: string | null;
+  tags: string[];
+  created_at: string;
+  updated_at: string;
+  imageLink: string | null;
+  advertisingLink: string | null;
+  user_id: number;
+  status: string;
 }
 
 // Interface for API Response (can be used for both home and search if data structure is similar)
 interface ApiResponse {
-  success: boolean
-  message: string
-  data: ContentItem[]
+  success: boolean;
+  message: string;
+  data: ContentItem[];
   meta: {
-    current_page: number
-    per_page: number
-    total: number
-    last_page: number
-  }
+    current_page: number;
+    per_page: number;
+    total: number;
+    last_page: number;
+  };
 }
 
 interface ContentsProps {
-  initialSearchQuery?: string
+  initialSearchQuery?: string;
 }
 
 function Contents({ initialSearchQuery }: ContentsProps) {
-  const [contents, setContents] = useState<ContentItem[]>([])
-  const [loading, setLoading] = useState<boolean>(true)
-  const [loadingMore, setLoadingMore] = useState<boolean>(false)
-  const [error, setError] = useState<string | null>(null)
-  const [showShareMenu, setShowShareMenu] = useState<number | null>(null)
-  const [currentPage, setCurrentPage] = useState<number>(1)
-  const [hasMore, setHasMore] = useState<boolean>(true)
-  const [totalItems, setTotalItems] = useState<number>(0)
-  const observerRef = useRef<HTMLDivElement>(null)
-  const limit = 9
+  const [contents, setContents] = useState<ContentItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [loadingMore, setLoadingMore] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [showShareMenu, setShowShareMenu] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [totalItems, setTotalItems] = useState<number>(0);
+  const observerRef = useRef<HTMLDivElement>(null);
+  const limit = 9;
 
-
-  console.log(totalItems)
+  console.log(totalItems);
 
   const fetchData = useCallback(
     async (page: number, isLoadMore = false) => {
       try {
         if (isLoadMore) {
-          setLoadingMore(true)
+          setLoadingMore(true);
         } else {
-          setLoading(true)
-          setContents([]) // Clear contents on initial fetch or new search
-          setCurrentPage(1) // Reset page for new search
+          setLoading(true);
+          setContents([]); // Clear contents on initial fetch or new search
+          setCurrentPage(1); // Reset page for new search
         }
 
-        let url = ""
+        let url = "";
         if (initialSearchQuery) {
-          url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/search?q=${encodeURIComponent(
-            initialSearchQuery,
-          )}&page=${page}&limit=${limit}`
+          url = `${
+            process.env.NEXT_PUBLIC_BACKEND_URL
+          }/api/search?q=${encodeURIComponent(
+            initialSearchQuery
+          )}&page=${page}&limit=${limit}`;
         } else {
-          url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home?page=${page}&limit=${limit}`
+          url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home?page=${page}&limit=${limit}`;
         }
 
-        const response = await fetch(url)
+        const response = await fetch(url);
         if (!response.ok) {
-          throw new Error(`Failed to fetch data: ${response.statusText}`)
+          throw new Error(`Failed to fetch data: ${response.statusText}`);
         }
-        const data: ApiResponse = await response.json()
+        const data: ApiResponse = await response.json();
 
         if (isLoadMore) {
-          setContents((prev) => [...prev, ...data.data])
+          setContents((prev) => [...prev, ...data.data]);
         } else {
-          setContents(data.data)
+          setContents(data.data);
         }
 
         if (data.meta) {
-          setTotalItems(data.meta.total)
-          setHasMore(page < data.meta.last_page)
+          setTotalItems(data.meta.total);
+          setHasMore(page < data.meta.last_page);
         } else {
-          console.warn("Meta object is missing in API response")
-          setTotalItems(data.data.length)
-          setHasMore(data.data.length === limit)
+          console.warn("Meta object is missing in API response");
+          setTotalItems(data.data.length);
+          setHasMore(data.data.length === limit);
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "An unknown error occurred")
+        setError(
+          err instanceof Error ? err.message : "An unknown error occurred"
+        );
       } finally {
-        setLoading(false)
-        setLoadingMore(false)
+        setLoading(false);
+        setLoadingMore(false);
       }
     },
-    [limit, initialSearchQuery], // Depend on initialSearchQuery
-  )
+    [limit, initialSearchQuery] // Depend on initialSearchQuery
+  );
 
   useEffect(() => {
     // Reset and fetch data when initialSearchQuery changes
-    setContents([])
-    setCurrentPage(1)
-    setHasMore(true)
-    fetchData(1)
-  }, [initialSearchQuery, fetchData]) // Re-fetch when search query changes
+    setContents([]);
+    setCurrentPage(1);
+    setHasMore(true);
+    fetchData(1);
+  }, [initialSearchQuery, fetchData]); // Re-fetch when search query changes
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        const target = entries[0]
+        const target = entries[0];
         if (target.isIntersecting && hasMore && !loadingMore && !loading) {
-          const nextPage = currentPage + 1
-          setCurrentPage(nextPage)
-          fetchData(nextPage, true)
+          const nextPage = currentPage + 1;
+          setCurrentPage(nextPage);
+          fetchData(nextPage, true);
         }
       },
       {
         root: null,
         rootMargin: "100px",
         threshold: 0.1,
-      },
-    )
-    const currentObserverRef = observerRef.current
+      }
+    );
+    const currentObserverRef = observerRef.current;
     if (currentObserverRef) {
-      observer.observe(currentObserverRef)
+      observer.observe(currentObserverRef);
     }
     return () => {
       if (currentObserverRef) {
-        observer.unobserve(currentObserverRef)
+        observer.unobserve(currentObserverRef);
       }
-    }
-  }, [currentPage, hasMore, loadingMore, loading, fetchData])
+    };
+  }, [currentPage, hasMore, loadingMore, loading, fetchData]);
 
   const getImageUrl = (path: string | null): string => {
-    if (!path) return "/placeholder.svg" // Fallback image
-    if (path.startsWith("http")) return path
-    return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${path.replace(/^\/+/, "")}`
-  }
+    if (!path) return "/placeholder.svg"; // Fallback image
+    if (path.startsWith("http")) return path;
+    return `${process.env.NEXT_PUBLIC_BACKEND_URL}/${path.replace(/^\/+/, "")}`;
+  };
 
-  const getShareUrl = (categoryId: number, subcategoryId: number, postId: number): string => {
-    const baseUrl = typeof window !== "undefined" ? window.location.origin : ""
-    return `${baseUrl}/blogs/${categoryId}/${subcategoryId}/${postId}`
-  }
+  const getShareUrl = (
+    categoryId: number,
+    subcategoryId: number,
+    postId: number
+  ): string => {
+    const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
+    return `${baseUrl}/blogs/${categoryId}/${subcategoryId}/${postId}`;
+  };
 
   const handleShare = async (post: ContentItem) => {
-    const shareUrl = getShareUrl(post.category_id, post.subcategory_id, post.id)
+    const shareUrl = getShareUrl(
+      post.category_id,
+      post.subcategory_id,
+      post.id
+    );
     const shareData = {
       title: post.heading,
       text: post.sub_heading || "Check out this blog post!",
       url: shareUrl,
-    }
+    };
     if (navigator.share) {
       try {
-        await navigator.share(shareData)
+        await navigator.share(shareData);
       } catch (err) {
-        console.error("Error sharing:", err)
+        console.error("Error sharing:", err);
       }
     } else {
-      setShowShareMenu(showShareMenu === post.id ? null : post.id)
+      setShowShareMenu(showShareMenu === post.id ? null : post.id);
     }
-  }
+  };
 
   const shareToTwitter = (url: string, text: string) => {
     window.open(
-      `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`,
-      "_blank",
-    )
-  }
+      `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+        url
+      )}&text=${encodeURIComponent(text)}`,
+      "_blank"
+    );
+  };
 
   const shareToFacebook = (url: string) => {
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, "_blank")
-  }
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+      "_blank"
+    );
+  };
 
   const shareToLinkedIn = (url: string, title: string) => {
     window.open(
       `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
-        url,
+        url
       )}&title=${encodeURIComponent(title)}`,
-      "_blank",
-    )
-  }
+      "_blank"
+    );
+  };
 
   // Skeleton Loader Component
   const SkeletonLoader = () => (
@@ -225,25 +248,27 @@ function Contents({ initialSearchQuery }: ContentsProps) {
         ))}
       </div>
     </div>
-  )
+  );
 
-  if (loading && contents.length === 0) return <SkeletonLoader />
-  if (error) return <div>Error: {error}</div>
-  if (!contents.length && !loading) return <div>No content found</div>
+  if (loading && contents.length === 0) return <SkeletonLoader />;
+  if (error) return <div>Error: {error}</div>;
+  if (!contents.length && !loading) return <div>No content found</div>;
 
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {contents.map((post) => (
-          <div key={post.id} className="relative">
-            <Image
-              src={getImageUrl(post.image1) || "/placeholder.svg"}
-              alt={post.heading}
-              width={400}
-              height={300}
-              className="w-full h-[300px] object-cover"
-              priority
-            />
+          <Link href={`/${post.category_id}/${post.subcategory_id}/${post.id}`} key={post.id} className="relative">
+            <div className="overflow-hidden">
+              <Image
+                src={getImageUrl(post.image2?.[0] || "") || "/placeholder.svg"}
+                alt={post.heading}
+                width={400}
+                height={300}
+                className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                priority
+              />
+            </div>
             <div className="p-4">
               <div className="flex items-center gap-2">
                 <Link
@@ -259,30 +284,65 @@ function Contents({ initialSearchQuery }: ContentsProps) {
                   {post.sub_category_name || "Subcategory"}
                 </Link>
               </div>
-              <Link href={`/${post.category_id}/${post.subcategory_id}/${post.id}`}>
-                <p dangerouslySetInnerHTML={{ __html: post.heading }} className="text-2xl font-medium" />
+              <Link
+                href={`/${post.category_id}/${post.subcategory_id}/${post.id}`}
+              >
+                <motion.p
+                  dangerouslySetInnerHTML={{ __html: post.heading }}
+                  className="text-2xl font-medium hover:underline"
+                  whileHover={{
+                    scale: 1.05,
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
+                />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
                 {post.author} - {post.date}
               </p>
               <div className="flex items-center gap-3 mt-2 relative">
-                <RiShareForwardLine className="w-6 h-6 cursor-pointer" onClick={() => handleShare(post)} />
+                <RiShareForwardLine
+                  className="w-6 h-6 cursor-pointer"
+                  onClick={() => handleShare(post)}
+                />
                 {showShareMenu === post.id && (
                   <div className="absolute top-8 right-0 bg-white shadow-md p-2 rounded flex gap-2 z-10">
                     <FaTwitter
                       className="w-6 h-6 cursor-pointer text-blue-500"
                       onClick={() =>
-                        shareToTwitter(getShareUrl(post.category_id, post.subcategory_id, post.id), post.heading)
+                        shareToTwitter(
+                          getShareUrl(
+                            post.category_id,
+                            post.subcategory_id,
+                            post.id
+                          ),
+                          post.heading
+                        )
                       }
                     />
                     <FaFacebook
                       className="w-6 h-6 cursor-pointer text-blue-700"
-                      onClick={() => shareToFacebook(getShareUrl(post.category_id, post.subcategory_id, post.id))}
+                      onClick={() =>
+                        shareToFacebook(
+                          getShareUrl(
+                            post.category_id,
+                            post.subcategory_id,
+                            post.id
+                          )
+                        )
+                      }
                     />
                     <FaLinkedin
                       className="w-6 h-6 cursor-pointer text-blue-600"
                       onClick={() =>
-                        shareToLinkedIn(getShareUrl(post.category_id, post.subcategory_id, post.id), post.heading)
+                        shareToLinkedIn(
+                          getShareUrl(
+                            post.category_id,
+                            post.subcategory_id,
+                            post.id
+                          ),
+                          post.heading
+                        )
                       }
                     />
                   </div>
@@ -296,18 +356,20 @@ function Contents({ initialSearchQuery }: ContentsProps) {
                 </Link>
               </div>
               <p
-                dangerouslySetInnerHTML={{ __html: post.body1 }}
+                dangerouslySetInnerHTML={{ __html: post.sub_heading }}
                 className="text-sm font-normal text-[#424242] line-clamp-3 mt-2"
               />
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       {/* Loading indicator for infinite scroll */}
       {loadingMore && (
         <div className="flex justify-center items-center py-8">
           <Loader2 className="w-8 h-8 animate-spin" />
-          <span className="ml-2 text-muted-foreground">Loading more content...</span>
+          <span className="ml-2 text-muted-foreground">
+            Loading more content...
+          </span>
         </div>
       )}
       {/* End of content indicator */}
@@ -319,7 +381,7 @@ function Contents({ initialSearchQuery }: ContentsProps) {
       {/* Intersection observer target */}
       <div ref={observerRef} className="h-10" />
     </div>
-  )
+  );
 }
 
-export default Contents
+export default Contents;

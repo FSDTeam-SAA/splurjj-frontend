@@ -13,10 +13,10 @@ export default function SearchPage({
   return (
     <div className="container">
       <div className="text-center pt-16">
-        <h1 className="text-[60px] font-bold ">Search Results</h1>
-        <p className="max-w-[800px] mx-auto">
+        <h1 className="text-[60px] font-bold ">All Content</h1>
+        {/* <p className="max-w-[800px] mx-auto">
           {searchQuery ? `Showing results for "${searchQuery}"` : "Enter a query to search for content."}
-        </p>
+        </p> */}
       </div>
       <div className="grid grid-cols-8 gap-4 pt-16">
         {/* Main content */}

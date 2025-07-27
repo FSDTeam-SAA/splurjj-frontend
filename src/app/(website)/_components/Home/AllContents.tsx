@@ -222,7 +222,7 @@ const AllContents: React.FC = () => {
   const fourthPost = contents[3];
   // const otherPosts = contents.slice(1); // All posts except the first
 
-  console.log("FFFFFFFFFFFFFFFFFFF", secondPost);
+
 
   return (
     <div className="">
@@ -309,9 +309,11 @@ const AllContents: React.FC = () => {
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
                   className="text-3xl md:text-[40px] lg:text-[60px] font-[800] leading-[120%] hover:underline"
                   whileHover={{
-                    scale: 1.02,
+                    scaleX: 1.05,
+                    transformOrigin: "left", // Ensures scaling happens from the left side
                     fontWeight: 900,
                     transition: { duration: 0.3 },
+                    
                   }}
                 />
               </Link>
@@ -589,15 +591,15 @@ const AllContents: React.FC = () => {
               <Link
                 href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
               >
-              <motion.p
-                dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
-                className="text-2xl font-medium hover:underline"
-                whileHover={{
-                  scale: 1.05,
-                  fontWeight: 900,
-                  transition: { duration: 0.3 },
+                <motion.p
+                  dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
+                  className="text-2xl font-medium hover:underline"
+                  whileHover={{
+                    scale: 1.05,
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
                   }}
-              />
+                />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
                 {fourthPost.author} - {fourthPost.date}
