@@ -38,7 +38,7 @@ const RecentArticles = () => {
         ).then((res) => res.json()),
     });
 
-  console.log(data?.data?.recent_content);
+  console.log(data?.data?.recent_content?.data);
   if (isLoading) {
     return (
       <div>
@@ -84,12 +84,8 @@ const RecentArticles = () => {
                       <div className="w-[120px] h-full">
                         <Image
                           src={
-                            content?.image1
-                              ? encodeURI(
-                                  `${process.env.NEXT_PUBLIC_BACKEND_URL}/${content.image1}`
-                                )
-                              : content?.imageLink
-                              ? encodeURI(content.imageLink)
+                            content?.image2
+                              ? content.image2[0]
                               : "/assets/images/no-images.jpg"
                           }
                           alt={content?.heading}

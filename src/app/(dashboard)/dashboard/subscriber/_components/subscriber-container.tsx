@@ -1,6 +1,7 @@
 "use client";
 import SplurjjPagination from "@/components/ui/SplurjjPagination";
 import { useQuery } from "@tanstack/react-query";
+import moment from "moment";
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 
@@ -74,7 +75,7 @@ const SubscriberPage = () => {
                   {item.email}
                 </td>
                 <td className="text-base font-semibold text-[#424242] leading-[120%]">
-                  {item.created_at}
+                  {moment(item.created_at).format("YYYY-MM-DD hh:mm A")}
                 </td>
               </tr>
             );
