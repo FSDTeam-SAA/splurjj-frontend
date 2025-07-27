@@ -193,7 +193,7 @@ const handleEditCategory = async (
               Categories
             </p> */}
             <div className="text-sm dark:text-white text-black">
-              <Link href="/dashboard" className="hover:underline">
+              <Link href="/dashboard" className="">
                 Dashboard
               </Link>
               <span className="mx-2">{">"}</span>

@@ -9,7 +9,7 @@
 }
 
 body {
-  @apply font-helvetica;
+  @apply font-roboto;
 }
 
 .container {

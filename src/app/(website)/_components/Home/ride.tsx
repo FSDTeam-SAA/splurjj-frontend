@@ -235,12 +235,7 @@ const Ride: React.FC<ArtCultureProps> = ({ categoryName }) => {
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-lg font-medium text-[#131313] hover:underline text-end"
-                  whileHover={{
-                    scale: 1.05,
-                    fontWeight: 900,
-                    transition: { duration: 0.3 },
-                  }}
+                  className="text-lg font-medium text-[#131313]  text-end"
                 />
               </Link>
               <div className="flex items-center justify-end gap-2">
@@ -374,12 +369,7 @@ const Ride: React.FC<ArtCultureProps> = ({ categoryName }) => {
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: secondPost.heading }}
-                  className="text-lg font-medium text-[#131313] hover:underline"
-                  whileHover={{
-                      scale: 1.05,
-                      fontWeight: 900,
-                      transition: { duration: 0.3 },
-                    }}
+                  className="text-lg font-medium text-[#131313] "
                 />
               </Link>
               <div className="flex items-center gap-2">

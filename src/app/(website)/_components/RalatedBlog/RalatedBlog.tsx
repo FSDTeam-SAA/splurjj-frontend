@@ -256,7 +256,7 @@ const RelatedContent = ({
                 >
                   <p
                     dangerouslySetInnerHTML={{ __html: post.heading }}
-                    className="text-2xl font-medium  text-[#131313] hover:underline"
+                    className="text-2xl font-medium  text-[#131313] "
                   />
                 </Link>
                 <p className="text-base font-semibold  leading-[120%] tracking-[0%] uppercase text-[#424242] mt-4 md:mt-5 lg:mt-6">

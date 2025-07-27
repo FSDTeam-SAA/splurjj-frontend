@@ -340,12 +340,7 @@ const Gear: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 >
                   <motion.p
                     dangerouslySetInnerHTML={{ __html: secondPost.heading }}
-                    className="text-lg font-medium text-[#131313] hover:underline"
-                    whileHover={{
-                      scale: 1.05,
-                      fontWeight: 900,
-                      transition: { duration: 0.3 },
-                    }}
+                    className="text-lg font-medium text-[#131313]  "
                   />
                 </Link>
                 <div className="flex items-center justify-between">
@@ -453,12 +448,7 @@ const Gear: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 >
                   <motion.p
                     dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
-                    className="text-lg font-medium text-[#131313] hover:underline"
-                    whileHover={{
-                    scale: 1.05,
-                    fontWeight: 900,
-                    transition: { duration: 0.3 },
-                  }}
+                    className="text-lg font-medium text-[#131313] "
                   />
                 </Link>
                 <div className="flex items-center justify-between">
