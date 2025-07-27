@@ -346,7 +346,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
       )}
 
       <div className="py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
           {thirdPost && (
             <div className="max-h-[600px] relative">
               <div className="flex items-center gap-2 mb-2">
@@ -363,7 +363,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   {thirdPost.sub_category_name || "Subcategory"}
                 </Link>
               </div>
-              <div className="overflow-hidden">
+              <div className="overflow-hidden ">
                 <Link
                   href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
                 >
@@ -601,6 +601,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                       alt={fifthPost.heading || "Blog Image"}
                       width={400}
                       height={300}
+                      // className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
                       className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
                       priority
                     />
