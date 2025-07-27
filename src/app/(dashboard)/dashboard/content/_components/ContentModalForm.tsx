@@ -1362,9 +1362,6 @@
 
 // update code 2 
 
-
-
-
 "use client";
 
 import type React from "react";
@@ -1415,6 +1412,7 @@ interface Content {
 interface MutationResponse {
   status: boolean;
   message?: string;
+  data?: Content;
 }
 
 interface ContentFormModalProps {
@@ -1590,7 +1588,7 @@ export default function ContentAddEditForm({
     ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents/${initialContent?.id}?_method=PUT`
     : `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contents`;
 
-  const method = initialContent ? "POST" : "POST";
+  // const method = initialContent ? "POST" : "POST";
 
   const { mutate, isPending, error } = useMutation<
     MutationResponse,
@@ -1609,7 +1607,7 @@ export default function ContentAddEditForm({
       formDataToSend.append("body1", formData.body1);
       formDataToSend.append("tags", JSON.stringify(formData.tags));
 
-      // Append image files with file names in image2
+      // Handle images: append existing URLs and new files
       formData.image2.forEach((image, index) => {
         const file = imageFiles.find((f) => f.name === image);
         if (file) {
@@ -1619,8 +1617,13 @@ export default function ContentAddEditForm({
         }
       });
 
+      // Explicitly append _method=PUT for updates
+      if (initialContent) {
+        formDataToSend.append("_method", "PUT");
+      }
+
       const response = await fetch(url, {
-        method,
+        method: "POST", // Always use POST, as _method=PUT handles updates
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -1641,7 +1644,7 @@ export default function ContentAddEditForm({
       form.reset();
       setImageFiles([]);
       setImagePreviews([]);
-      toast.success(data.message || "Content added successfully");
+      toast.success(data.message || "Content operation successful");
       queryClient.invalidateQueries({ queryKey: ["all-contents"] });
       onSuccess?.();
       handleCloseForm();
@@ -2014,3 +2017,4 @@ export default function ContentAddEditForm({
     </ErrorBoundary>
   );
 }
+

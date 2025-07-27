@@ -181,9 +181,6 @@ export default function SubcategoryContentPage() {
             <div className="pb-[108px]">
               {data && data?.total_pages > 1 && (
                 <div className="mt-[30px] w-full flex justify-between">
-                  {/* <p className="font-normal text-base leading-[120%] text-secondary-100">
-                    Showing {data?.data?.current_page} from {data?.total_pages}
-                  </p> */}
                   <p className="font-normal text-[16px] leading-[19.2px] text-[#444444]">
                     Showing {(currentPage - 1) * data?.per_page + 1} to{" "}
                     {Math.min(
