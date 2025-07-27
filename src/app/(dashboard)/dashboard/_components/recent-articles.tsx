@@ -58,7 +58,7 @@ const RecentArticles = () => {
   return (
     <div className="bg-white rounded-lg p-6 shadow-sm">
       <div className="w-full flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-black mb-6">
+        <h2 className="text-lg font-light text-gray-900 dark:text-black mb-6">
           Recent Articles
         </h2>
         <div>

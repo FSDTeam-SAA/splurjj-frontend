@@ -229,12 +229,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-3xl md:text-4xl font-bold text-[#131313] px-4 hover:underline"
-                  whileHover={{
-                    scale: 1.05,
-                    fontWeight: 900,
-                    transition: { duration: 0.3 },
-                  }}
+                  className="text-3xl md:text-4xl font-bold text-[#131313] px-4 "
                 />
               </Link>
             </div>
@@ -376,12 +371,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
-                  className="text-2xl font-medium text-[#131313] hover:underline mt-2"
-                  whileHover={{
-                    scale: 1.05,
-                    fontWeight: 900,
-                    transition: { duration: 0.3 },
-                  }}
+                  className="text-2xl font-medium text-[#131313]  mt-2"
                 />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
@@ -487,12 +477,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
-                  className="text-2xl font-medium text-[#131313] hover:underline mt-2"
-                  whileHover={{
-                    scale: 1.05,
-                    fontWeight: 900,
-                    transition: { duration: 0.3 },
-                  }}
+                  className="text-2xl font-medium text-[#131313]  mt-2"
                 />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
@@ -597,12 +582,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
               ><motion.p
                   dangerouslySetInnerHTML={{ __html: fifthPost.heading }}
-                  className="text-2xl font-medium text-[#131313] hover:underline mt-2"
-                  whileHover={{
-                      scale: 1.05,
-                      fontWeight: 900,
-                      transition: { duration: 0.3 },
-                    }}
+                  className="text-2xl font-medium text-[#131313]  mt-2"
                 />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">

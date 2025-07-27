@@ -305,10 +305,12 @@ const AllContents: React.FC = () => {
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-3xl md:text-[40px] lg:text-[60px] font-[800] leading-[120%] hover:underline"
-                  initial={{ scale: 1 }}
-                  whileHover={{ scale: 1.05, transformOrigin: "left" }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="text-3xl md:text-[40px] lg:text-[60px] font-[800] leading-[120%] "
+                  whileHover={{
+                    scale: 1.02,
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
                 />
               </Link>
 
@@ -366,7 +368,7 @@ const AllContents: React.FC = () => {
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: secondPost.heading }}
-                  className="text-2xl font-medium hover:underline"
+                  className="text-2xl font-medium "
                   whileHover={{
                     scale: 1.05,
                     fontWeight: 900,
@@ -477,7 +479,7 @@ const AllContents: React.FC = () => {
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
-                  className="text-2xl font-medium hover:underline"
+                  className="text-2xl font-medium "
                   whileHover={{
                     scale: 1.05,
                     fontWeight: 900,
@@ -585,13 +587,13 @@ const AllContents: React.FC = () => {
               <Link
                 href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
               >
-                <motion.p
-                  dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
-                  className="text-2xl font-medium hover:underline"
-                  whileHover={{
-                    scale: 1.05,
-                    fontWeight: 900,
-                    transition: { duration: 0.3 },
+              <motion.p
+                dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
+                className="text-2xl font-medium "
+                whileHover={{
+                  scale: 1.05,
+                  fontWeight: 900,
+                  transition: { duration: 0.3 },
                   }}
                 />
               </Link>
