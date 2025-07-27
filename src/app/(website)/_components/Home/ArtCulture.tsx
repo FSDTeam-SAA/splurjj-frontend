@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
+import { motion } from "framer-motion";
 
 // Interface for BlogPost
 interface BlogPost {
@@ -26,6 +27,7 @@ interface BlogPost {
   sub_heading: string;
   body1: string;
   image1: string | null;
+  image2?: string[]; // Assuming image2 can be an array of strings
   advertising_image: string | null;
   tags: string[];
   created_at: string;
@@ -48,7 +50,6 @@ interface ApiResponse {
     last_page: number;
   };
 }
-
 
 interface ArtCultureProps {
   categoryName: { categoryName: string };
@@ -86,7 +87,6 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
 
     fetchData();
   }, [categoryName.categoryName]);
-
 
   const getImageUrl = (path: string | null): string => {
     if (!path) return "/assets/videos/blog1.jpg";
@@ -310,22 +310,28 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
                 className="text-2xl font-medium text-[#131313] "
               >
-                <p
+                <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-3xl md:text-4xl font-bold text-[#131313]"
+                  className="text-3xl md:text-4xl font-bold text-[#131313] hover:underline"
+                  whileHover={{
+                    scaleX: 1.05,
+                    transformOrigin: "left", // Ensures scaling happens from the left side
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
                 />
               </Link>
             </div>
-            <div className="">
+            <div className="overflow-hidden">
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
               >
                 <Image
-                  src={getImageUrl(firstPost.image1)}
+                  src={getImageUrl(firstPost.image2?.[0] || "")}
                   alt={firstPost.heading || "Blog Image"}
                   width={888}
                   height={552}
-                  className="w-full h-[455px] object-cover object-top"
+                  className="w-full h-[455px] object-cover object-top hover:scale-110 transition-all duration-500 ease-in-out"
                   priority
                 />
               </Link>
@@ -356,16 +362,16 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   {thirdPost.sub_category_name || "Subcategory"}
                 </Link>
               </div>
-              <div>
+              <div className="overflow-hidden">
                 <Link
                   href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
                 >
                   <Image
-                    src={getImageUrl(thirdPost.image1)}
+                    src={getImageUrl(thirdPost.image2?.[0] || "")}
                     alt={thirdPost.heading || "Blog Image"}
                     width={400}
                     height={300}
-                    className="w-full h-[300px] object-cover object-top"
+                    className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
                     priority
                   />
                 </Link>
@@ -375,7 +381,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 <Link
                   href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
                 >
-                  <p
+                  <motion.p
                     dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
                     className="text-2xl font-medium text-[#131313] "
                   />
@@ -464,16 +470,16 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   {fourthPost.sub_category_name || "Subcategory"}
                 </Link>
               </div>
-              <div>
+              <div className="overflow-hidden">
                 <Link
                   href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
                 >
                   <Image
-                    src={getImageUrl(fourthPost.image1)}
+                    src={getImageUrl(fourthPost.image2?.[0] || "")}
                     alt={fourthPost.heading || "Blog Image"}
                     width={400}
                     height={300}
-                    className="w-full h-[300px] object-cover object-top"
+                    className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
                     priority
                   />
                 </Link>
@@ -483,7 +489,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 <Link
                   href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
                 >
-                  <p
+                  <motion.p
                     dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
                     className="text-2xl font-medium text-[#131313] "
                   />
@@ -578,11 +584,11 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
                   >
                     <Image
-                      src={getImageUrl(fifthPost.image1)}
+                      src={getImageUrl(fifthPost.image2?.[0] || "")}
                       alt={fifthPost.heading || "Blog Image"}
                       width={400}
                       height={300}
-                      className="w-full h-[300px] object-cover object-top"
+                      className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
                       priority
                     />
                   </Link>
@@ -592,7 +598,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   <Link
                     href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
                   >
-                    <p
+                    <motion.p
                       dangerouslySetInnerHTML={{ __html: fifthPost.heading }}
                       className="text-2xl font-medium text-[#131313] "
                     />

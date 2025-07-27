@@ -222,8 +222,6 @@ const AllContents: React.FC = () => {
   const fourthPost = contents[3];
   // const otherPosts = contents.slice(1); // All posts except the first
 
-  console.log("FFFFFFFFFFFFFFFFFFF", secondPost);
-
   return (
     <div className="">
       {firstPost && (
@@ -300,7 +298,7 @@ const AllContents: React.FC = () => {
                 </Link>
               </div>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-4 ">
               <Link
                 className="content-heding-text"
                 href={`/${firstPost?.category_id}/${firstPost?.subcategory_id}/${firstPost?.id}`}
@@ -597,7 +595,7 @@ const AllContents: React.FC = () => {
                   fontWeight: 900,
                   transition: { duration: 0.3 },
                   }}
-              />
+                />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
                 {fourthPost.author} - {fourthPost.date}

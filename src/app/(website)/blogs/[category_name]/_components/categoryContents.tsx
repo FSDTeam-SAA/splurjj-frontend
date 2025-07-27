@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
+import { motion } from "framer-motion";
 
 interface BlogPost {
   id: number;
@@ -25,6 +26,7 @@ interface BlogPost {
   sub_heading: string;
   body1: string;
   image1: string;
+  image2?: string | string[];
   advertising_image: string;
   tags: string[];
   created_at: string;
@@ -166,18 +168,20 @@ function CategoryContents({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {posts.map((post) => (
           <div key={post.id} className="relative">
-            <Link
-              href={`/${post.category_id}/${post.subcategory_id}/${post.id}#comment`}
-            >
-              <Image
-                src={getImageUrl(post.image1)}
-                alt={post.heading}
-                width={400}
-                height={300}
-                className="w-full h-[300px] object-cover object-top"
-                priority
-              />
-            </Link>
+            <div className="overflow-hidden">
+              <Link
+                href={`/${post.category_id}/${post.subcategory_id}/${post.id}#comment`}
+              >
+                <Image
+                  src={getImageUrl(post.image2?.[0] || "")}
+                  alt={post.heading}
+                  width={400}
+                  height={300}
+                  className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                  priority
+                />
+              </Link>
+            </div>
 
             <div className="p-4">
               <div className="flex items-center gap-2">
@@ -197,9 +201,15 @@ function CategoryContents({
               <Link
                 href={`/${post.category_id}/${post.subcategory_id}/${post.id}`}
               >
-                <p
+                <motion.p
                   dangerouslySetInnerHTML={{ __html: post.heading ?? "" }}
-                  className="text-2xl font-medium hover:text-primary"
+                  className="text-2xl font-medium hover:underline"
+                  whileHover={{
+                    scaleX: 1.05,
+                    transformOrigin: "left", // Ensures scaling happens from the left side
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
                 />
               </Link>
               <p className="text-sm font-semibold  uppercase text-[#424242] mt-2">

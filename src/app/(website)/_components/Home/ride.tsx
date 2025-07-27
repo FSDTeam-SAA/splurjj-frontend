@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
+import { motion } from "framer-motion";
 
 // Interface for BlogPost
 interface BlogPost {
@@ -26,6 +27,7 @@ interface BlogPost {
   sub_heading: string;
   body1: string;
   image1: string | null;
+  image2?: string[] | null;
   advertising_image: string | null;
   tags: string[];
   created_at: string;
@@ -49,7 +51,6 @@ interface ApiResponse {
   };
 }
 
-
 interface ArtCultureProps {
   categoryName: { categoryName: string };
 }
@@ -62,23 +63,23 @@ const Ride: React.FC<ArtCultureProps> = ({ categoryName }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (categoryName.categoryName){
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home/${categoryName.categoryName}`
-        );
-        if (!response.ok) {
-          throw new Error(`Failed to fetch data: ${response.statusText}`);
+      if (categoryName.categoryName) {
+        try {
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home/${categoryName.categoryName}`
+          );
+          if (!response.ok) {
+            throw new Error(`Failed to fetch data: ${response.statusText}`);
+          }
+          const data: ApiResponse = await response.json();
+          setPosts(data.data || []); // Set posts from data.data, default to empty array
+        } catch (err) {
+          setError(
+            err instanceof Error ? err.message : "An unknown error occurred"
+          );
+        } finally {
+          setLoading(false);
         }
-        const data: ApiResponse = await response.json();
-        setPosts(data.data || []); // Set posts from data.data, default to empty array
-      } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "An unknown error occurred"
-        );
-      } finally {
-        setLoading(false);
-      }
       }
     };
 
@@ -213,12 +214,12 @@ const Ride: React.FC<ArtCultureProps> = ({ categoryName }) => {
   );
 
   if (loading) return <SkeletonLoader />;
-  if (error) return (
-    <div className="error text-center py-8 text-red-500">Error: {error}</div>
-  );
-  if (posts.length === 0) return (
-    <div className="error text-center py-8">No posts found</div>
-  );
+  if (error)
+    return (
+      <div className="error text-center py-8 text-red-500">Error: {error}</div>
+    );
+  if (posts.length === 0)
+    return <div className="error text-center py-8">No posts found</div>;
 
   const firstPost = posts[0];
   const secondPost = posts[1];
@@ -232,7 +233,7 @@ const Ride: React.FC<ArtCultureProps> = ({ categoryName }) => {
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
               >
-                <p
+                <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
                   className="text-lg font-medium text-[#131313]  text-end"
                 />
@@ -310,11 +311,16 @@ const Ride: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   </Link>
                 </div>
               </div>
-              <p
+              <motion.p
                 dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
                 className="text-sm font-normal text-[#424242] line-clamp-3 text-end"
+                whileHover={{
+                      scale: 1.05,
+                      fontWeight: 900,
+                      transition: { duration: 0.3 },
+                    }}
               />
-              
+
               <p className="text-sm font-semibold uppercase text-[#424242] text-end">
                 {firstPost.author} - {firstPost.date}
               </p>
@@ -323,18 +329,19 @@ const Ride: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 className="text-sm font-normal text-[#424242] line-clamp-3 text-end"
               />
             </div>
-            <div className="col-span-3">
+            <div className="col-span-3 overflow-hidden">
               <Link
-                    href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
-                    className="cursor-pointer"
-                  > <Image
-                src={getImageUrl(firstPost.image1)}
-                alt={firstPost.heading || "Blog Image"}
-                width={300}
-                height={200}
-                className="w-full h-[400px] md:h-[467px] object-cover"
-              /></Link>
-             
+                href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
+                className="cursor-pointer"
+              >
+                <Image
+                  src={getImageUrl(firstPost.image2?.[0] || "")}
+                  alt={firstPost.heading || "Blog Image"}
+                  width={300}
+                  height={200}
+                  className="w-full h-[400px] md:h-[467px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                />
+              </Link>
             </div>
           </div>
         </div>
@@ -343,23 +350,24 @@ const Ride: React.FC<ArtCultureProps> = ({ categoryName }) => {
       {secondPost && (
         <div className="mb-8">
           <div className="grid grid-cols-5 gap-4">
-            <div className="col-span-5 lg:col-span-3">
+            <div className="col-span-5 lg:col-span-3 overflow-hidden">
               <Link
                 href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
-              ><Image
-                src={getImageUrl(secondPost.image1)}
-                alt={secondPost.heading || "Blog Image"}
-                width={300}
-                height={200}
-                className="w-full h-[400px] md:h-[467px] object-cover"
-              /></Link>
-              
+              >
+                <Image
+                  src={getImageUrl(secondPost.image2?.[0] || "")}
+                  alt={secondPost.heading || "Blog Image"}
+                  width={300}
+                  height={200}
+                  className="w-full h-[400px] md:h-[467px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                />
+              </Link>
             </div>
             <div className="col-span-5 lg:col-span-2 space-y-4">
               <Link
                 href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
               >
-                <p
+                <motion.p
                   dangerouslySetInnerHTML={{ __html: secondPost.heading }}
                   className="text-lg font-medium text-[#131313] "
                 />

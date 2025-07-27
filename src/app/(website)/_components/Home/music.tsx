@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 import { TbTargetArrow } from "react-icons/tb";
+import { motion } from "framer-motion";
 
 // Interface for BlogPost
 interface BlogPost {
@@ -26,6 +27,7 @@ interface BlogPost {
   sub_heading: string;
   body1: string;
   image1: string | null;
+  image2?: string | string[] | null;
   advertising_image: string | null;
   tags: string[];
   created_at: string;
@@ -296,7 +298,9 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
           >
             <div
               style={{
-                backgroundImage: `url(${getImageUrl(firstPost.image1)})`,
+                backgroundImage: `url(${getImageUrl(
+                  firstPost.image2?.[0] || ""
+                )})`,
                 height: "433px",
                 backgroundPosition: "center",
                 backgroundSize: "cover",
@@ -304,7 +308,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
               className="flex items-center justify-center h-[400px] md:h-[433px]"
             >
               <div className=" px-4">
-                <div
+                <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
                   className="font-medium white-text  text-3xl lg:text-5xl text-center text-white line-clamp-3"
                 />
@@ -322,18 +326,17 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {secondPost && (
             <div className="grid grid-cols-5 gap-4">
-              <div className="col-span-5 lg:col-span-2">
+              <div className="col-span-5 lg:col-span-2 overflow-hidden">
                 <div>
                   <Link
                     href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
                   >
-                    {" "}
                     <Image
                       src={getImageUrl(secondPost.image1)}
                       alt={secondPost.heading || "Blog Image"}
                       width={300}
                       height={200}
-                      className="w-full h-[213px] object-cover object-top"
+                      className="w-full h-[213px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
                     />
                   </Link>
                 </div>
@@ -342,7 +345,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 <Link
                   href={`/${secondPost.category_id}/${secondPost.subcategory_id}/${secondPost.id}`}
                 >
-                  <p
+                  <motion.p
                     dangerouslySetInnerHTML={{ __html: secondPost.heading }}
                     className="text-lg font-medium text-[#131313] "
                   />
@@ -433,7 +436,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
 
           {thirdPost && (
             <div className="grid grid-cols-5 gap-4">
-              <div className="col-span-5 lg:col-span-2">
+              <div className="col-span-5 lg:col-span-2 overflow-hidden">
                 <Link
                   href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
                 >
@@ -442,7 +445,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={thirdPost.heading || "Blog Image"}
                     width={300}
                     height={200}
-                    className="w-full h-[213px] object-cover object-top"
+                    className="w-full h-[213px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
                   />
                 </Link>
               </div>
@@ -450,7 +453,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 <Link
                   href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
                 >
-                  <p
+                  <motion.p
                     dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
                     className="text-lg font-medium text-[#131313] "
                   />
