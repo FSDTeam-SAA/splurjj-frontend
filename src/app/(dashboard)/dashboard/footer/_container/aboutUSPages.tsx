@@ -126,7 +126,7 @@ function AboutUSPages() {
     <div className="bg-white rounded-lg shadow-lg p-4">
       <div className="flex items-center justify-between border border-gray-200 p-2 rounded-lg">
         <div>
-          <h1 className="text-[20px] font-bold">About Us</h1>
+          <h1 className="text-[20px] font-bold dark:text-black">About Us</h1>
         </div>
         <div>
           <Button className="text-white" onClick={handleAddPages} disabled={mutation.isPending || !token}>
@@ -153,7 +153,7 @@ function AboutUSPages() {
                   checked={isPageChecked(page.name)}
                   onChange={(e) => handleCheckboxChange(page.name, e.target.checked)}
                 />
-                <label htmlFor={`page-${page.id}`} className="cursor-pointer">
+                <label htmlFor={`page-${page.id}`} className="cursor-pointer dark:text-black">
                   {page.name}
                 </label>
               </li>

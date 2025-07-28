@@ -262,7 +262,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="h-[16px] sticky top-0 z-50" style={{ backgroundColor: data?.data?.bg_color || "#000000" }} />
+      <div className="h-[16px] sticky top-0 z-50" style={{ backgroundColor: data?.data?.bg_color || "#C9C3C3" }} />
       <header
         className="sticky top-0 z-50 w-full border-b bg-white backdrop-blur supports-[backdrop-filter]:bg-background/60"
         style={{ backgroundColor: header?.bg_color || "#ffffff" }}

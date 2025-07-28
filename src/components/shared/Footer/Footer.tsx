@@ -191,7 +191,7 @@ const Footer = () => {
   return (
     <div
       className="h-full lg:h-[533px] w-full pt-24"
-      style={{ backgroundColor: footer?.data?.bg_color || "#f8f9fa" }}
+      style={{ backgroundColor: footer?.data?.bg_color || "#C9C3C3"}}
     >
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-10 gap-5 pb-3 md:pb-4">

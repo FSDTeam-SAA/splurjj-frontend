@@ -389,7 +389,16 @@ export default function Sidebar() {
                                 : "text-[#131313] dark:text-white font-semibold"
                             }`}
                           >
-                           <Image src= {category?.category_icon || "/assets/dashboard/art-and-culture.png"} alt="category icon" width={20} height={20}/> {category.category_name}
+                            <Image
+                              src={
+                                category?.category_icon ||
+                                "/assets/dashboard/art-and-culture.png"
+                              }
+                              alt="category icon"
+                              width={20}
+                              height={20}
+                            />{" "}
+                            {category.category_name}
                           </span>
                           {expandedCategories.has(category.category_id) ? (
                             <ChevronDown
@@ -586,7 +595,13 @@ export default function Sidebar() {
                             : "text-[#131313] font-semibold"
                         }`}
                       >
-                       <Image src="/assets/dashboard/all-page.png" alt="all page" width={20} height={20}/> Pages
+                        <Image
+                          src="/assets/dashboard/all-page.png"
+                          alt="all page"
+                          width={20}
+                          height={20}
+                        />{" "}
+                        Pages
                       </button>
                     </Link>
                   </div>
@@ -672,7 +687,7 @@ export default function Sidebar() {
                         className={`h-[36px] w-full flex items-center justify-start gap-2 text-base text-left pl-8 leading-[120%] tracking-[0%] ${
                           isRouteActive("/dashboard/role")
                             ? "bg-[#0253F7] text-white font-bold"
-                              : "text-[#131313] font-semibold"
+                            : "text-[#131313] font-semibold"
                         }`}
                       >
                         <Image
@@ -693,7 +708,7 @@ export default function Sidebar() {
                         className={`h-[36px] w-full flex items-center justify-start gap-2 text-base pl-8 text-left leading-[120%] tracking-[0%] ${
                           isRouteActive("/dashboard/subscriber")
                             ? "bg-[#0253F7] text-white font-bold"
-                              : "text-[#131313] font-semibold"
+                            : "text-[#131313] font-semibold"
                         }`}
                       >
                         <Image
@@ -713,7 +728,7 @@ export default function Sidebar() {
                       className={`h-[36px] w-full flex justify-start items-center gap-2 text-base pl-8 text-left leading-[120%] tracking-[0%] ${
                         isRouteActive("/dashboard/settings")
                           ? "bg-[#0253F7] text-white font-bold"
-                              : "text-[#131313] font-semibold"
+                          : "text-[#131313] font-semibold"
                       }`}
                     >
                       <Image
@@ -730,17 +745,20 @@ export default function Sidebar() {
             </AccordionItem>
 
             <AccordionItem value="item-4">
-              <AccordionTrigger className="px-3">
-                <p className="flex items-center gap-2 text-lg font-semibold text-[#131313] dark:white-text leading-[120%] uppercase tracking-[0%] font-marnrope">
-                  <Image
-                    src="/assets/dashboard/theme-setting.jpg"
-                    alt="theme-settings"
-                    width={20}
-                    height={20}
-                  />{" "}
-                  Theme Settings
-                </p>
-              </AccordionTrigger>
+              {!isAuthor && (
+                <AccordionTrigger className="px-3">
+                  <p className="flex items-center gap-2 text-lg font-semibold text-[#131313] dark:white-text leading-[120%] uppercase tracking-[0%] font-marnrope">
+                    <Image
+                      src="/assets/dashboard/theme-setting.jpg"
+                      alt="theme-settings"
+                      width={20}
+                      height={20}
+                    />{" "}
+                    Theme Settings
+                  </p>
+                </AccordionTrigger>
+              )}
+
               <AccordionContent>
                 {!isAuthor && (
                   <div className="">
@@ -749,7 +767,7 @@ export default function Sidebar() {
                         className={`h-[36px] w-full flex items-center justify-start gap-2 pl-6 text-base text-left leading-[120%] tracking-[0%] ${
                           isRouteActive("/dashboard/header")
                             ? "bg-[#0253F7] text-white font-bold"
-                              : "text-[#131313] font-semibold"
+                            : "text-[#131313] font-semibold"
                         }`}
                       >
                         <svg
@@ -840,8 +858,8 @@ export default function Sidebar() {
                       <button
                         className={`h-[36px] w-full flex items-center justify-start gap-2 pl-6 text-base text-left leading-[120%] tracking-[0%] ${
                           isRouteActive("/dashboard/footer")
-                           ? "bg-[#0253F7] text-white font-bold"
-                              : "text-[#131313] font-semibold"
+                            ? "bg-[#0253F7] text-white font-bold"
+                            : "text-[#131313] font-semibold"
                         }`}
                       >
                         <svg
@@ -981,11 +999,6 @@ export default function Sidebar() {
     </div>
   );
 }
-
-
-
-
-
 
 // "use client"
 

@@ -4,13 +4,13 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React from "react";
 
-export interface ContentResponse {
+type ContentResponse = {
   status: boolean;
   message: string;
-  data: ContentData;
-}
+  data: ContentItem;
+};
 
-export interface ContentData {
+type ContentItem = {
   id: number;
   category_id: number;
   subcategory_id: number;
@@ -21,36 +21,33 @@ export interface ContentData {
   body1: string;
   image1: string | null;
   advertising_image: string | null;
-  tags: string[]; // or string[] if the backend sends actual arrays instead of stringified ones
+  tags: string[];
   created_at: string;
   updated_at: string;
   imageLink: string | null;
   advertisingLink: string | null;
   user_id: number;
   status: string;
-  image2: string; // stringified array from backend
+  image2: string[];
   image2_url: string[];
   image1_url: string | null;
   advertising_image_url: string | null;
-  category: Category;
-  subcategory: Subcategory;
-}
+  category: {
+    id: number;
+    category_name: string;
+    created_at: string;
+    updated_at: string;
+    category_icon: string;
+  };
+  subcategory: {
+    id: number;
+    category_id: number;
+    name: string;
+    created_at: string;
+    updated_at: string;
+  };
+};
 
-export interface Category {
-  id: number;
-  category_name: string;
-  created_at: string;
-  updated_at: string;
-  category_icon: string;
-}
-
-export interface Subcategory {
-  id: number;
-  category_id: number;
-  name: string;
-  created_at: string;
-  updated_at: string;
-}
 
 import "swiper/css";
 import "swiper/css/autoplay";
@@ -118,7 +115,22 @@ const RecentArticleViewDetails = ({ params }: { params: { slug: string } }) => {
           breakpoints={breakpoints}
           spaceBetween={12}
         >
-          {JSON.parse(data?.data?.image2 || "[]")?.map(
+          {/* {JSON.parse(data?.data?.image2 || "[]")?.map(
+            (item: string, index: number) => (
+              <SwiperSlide key={index} className="!h-auto !md:h-full">
+                <div className="relative w-full !h-full">
+                  <Image
+                    src={item}
+                    alt={`image-${index}`}
+                    width={300}
+                    height={150}
+                    className="w-full h-[500px] object-cover"
+                  />
+                </div>
+              </SwiperSlide>
+            )
+          )} */}
+          {data?.data?.image2?.map(
             (item: string, index: number) => (
               <SwiperSlide key={index} className="!h-auto !md:h-full">
                 <div className="relative w-full !h-full">
@@ -155,6 +167,16 @@ const RecentArticleViewDetails = ({ params }: { params: { slug: string } }) => {
         </h3>
         <p className="text-xl font-medium text-black leading-normal">
           {data?.data?.date}
+        </p>
+      </div>
+      <div className="flex items-center gap-2">
+        <h3 className="text-2xl font-semibold text-black leading-normal">
+          Tags :
+        </h3>
+        <p className="text-xl font-medium text-black leading-normal">
+          {data?.data?.tags?.map((item, index)=> (
+            <button key={index} className="bg-black/80 text-white px-6 py-[2px] rounded-md mr-4">{item}</button>
+          ))}
         </p>
       </div>
       <h5
