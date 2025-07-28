@@ -1,7 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 import Image from "next/image";
 import type { CarouselApi } from "@/components/ui/carousel";
 
@@ -19,24 +23,37 @@ interface ImageCarouselProps {
   getImageUrl: (image: string | null) => string;
 }
 
-export default function ContentsDetailsCarousel({ posts, getImageUrl }: ImageCarouselProps) {
+export default function ContentsDetailsCarousel({
+  posts,
+  getImageUrl,
+}: ImageCarouselProps) {
   const [api, setApi] = useState<CarouselApi | null>(null);
 
   useEffect(() => {
     if (!api) return;
     const interval = setInterval(() => api.scrollNext(), 5000);
     return () => clearInterval(interval);
-  }, [api]);
+  }, []);
 
   const imageUrls = (() => {
     const urls: string[] = [];
     if (posts.image1) urls.push(getImageUrl(posts.image1));
     if (posts.image2) {
-      try {
-        const parsed = JSON.parse(posts.image2);
-        if (Array.isArray(parsed)) urls.push(...parsed.map(getImageUrl));
-      } catch (e) {
-        console.error("Invalid JSON in image2", e);
+      // First check if it's already an array
+      if (Array.isArray(posts.image2)) {
+        urls.push(...posts.image2.map(getImageUrl));
+      } else if (typeof posts.image2 === "string") {
+        try {
+          const parsed = JSON.parse(posts.image2);
+          if (Array.isArray(parsed)) {
+            urls.push(...parsed.map(getImageUrl));
+          } else if (typeof parsed === "string") {
+            urls.push(getImageUrl(parsed));
+          }
+        } catch {
+          // If JSON parsing fails, treat it as a regular string
+          urls.push(getImageUrl(posts.image2));
+        }
       }
     }
     return urls.length ? urls : ["/fallback-image.jpg"];
@@ -44,20 +61,25 @@ export default function ContentsDetailsCarousel({ posts, getImageUrl }: ImageCar
 
   return (
     <div className="w-full">
-      <Carousel setApi={setApi} opts={{ align: "start", loop: true }} className="w-full">
+      <Carousel
+        setApi={setApi}
+        opts={{ align: "start", loop: true }}
+        className="w-full"
+      >
         <CarouselContent>
           {imageUrls.map((imageUrl, index) => (
             <CarouselItem key={`${posts.id}-${index}`}>
-                <Image
-                  src={imageUrl}
-                  alt={`Slide ${index + 1}`}
-                  width={1200}
-                  height={600}
-                  className="w-full h-[400px] md:h-[550px] lg:h-[680px] object-cover object-top"
-                  onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src = "/fallback-image.jpg";
-                  }}
-                />
+              <Image
+                src={imageUrl}
+                alt={`Slide ${index + 1}`}
+                width={1200}
+                height={600}
+                className="w-full h-[400px] md:h-[550px] lg:h-[680px] object-cover object-top"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src =
+                    "/fallback-image.jpg";
+                }}
+              />
             </CarouselItem>
           ))}
         </CarouselContent>

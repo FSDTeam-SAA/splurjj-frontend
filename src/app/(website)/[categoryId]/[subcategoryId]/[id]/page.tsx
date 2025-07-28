@@ -337,13 +337,13 @@ const getImageUrl = (path: string | null): string => {
                 <div className="md:col-span-5 w-full flex items-center gap-2">
                   <Link
                     href={`/blogs/${blogData.category_name}`}
-                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                    className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
                   >
                     {blogData?.category_name || ""}
                   </Link>
                   <Link
                     href={`/${blogData.category_id}/${blogData.subcategory_id}`}
-                    className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                    className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
                   >
                     {blogData?.sub_category_name || ""}
                   </Link>
