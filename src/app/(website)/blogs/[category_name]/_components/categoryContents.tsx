@@ -187,13 +187,13 @@ function CategoryContents({
               <div className="flex items-center gap-2">
                 <Link
                   href={`/blogs/${post.category_name}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
                 >
                   {post.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${post.category_id}/${post.subcategory_id}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold  uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
                 >
                   {post.sub_category_name || "Subcategory"}
                 </Link>

@@ -274,29 +274,31 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {posts.map((post) => (
           <div key={post.id} className="relative">
-            <Link
-              href={`/${post.category_id}/${post.subcategory_id}/${post.id}`}
-            >
-              <Image
-                src={getImageUrl(post.image2?.[0] || "")}
-                alt={sanitizeHTML(post.heading)}
-                width={400}
-                height={300}
-                className="w-full h-[300px] object-cover object-top"
-                priority
-              />
-            </Link>
+            <div className="overflow-hidden">
+              <Link
+                href={`/${post.category_id}/${post.subcategory_id}/${post.id}`}
+              >
+                <Image
+                  src={getImageUrl(post.image2?.[0] || "")}
+                  alt={sanitizeHTML(post.heading)}
+                  width={400}
+                  height={300}
+                  className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                  priority
+                />
+              </Link>
+            </div>
             <div className="p-4">
               <div className="flex items-center gap-2 mb-2">
                 <Link
                   href={`/blogs/${encodeURIComponent(post.category_name)}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
                 >
                   {post.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${post.category_id}/${post.subcategory_id}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
                 >
                   {post.sub_category_name || "Subcategory"}
                 </Link>

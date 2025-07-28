@@ -134,13 +134,13 @@ const FirstContents: React.FC<FirstContentsProps> = ({
                 href={`/blogs/${firstPost.category_name
                   .toLowerCase()
                   .replace(/\s+/g, "-")}`}
-                className="bg-primary py-2 px-4 rounded text-sm md:text-base font-extrabold uppercase text-white"
+                className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
               >
                 {firstPost.category_name || "Category"}
               </Link>
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}`}
-                className="bg-primary py-2 px-4 rounded text-sm md:text-base font-extrabold uppercase text-white"
+                className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
               >
                 {firstPost.sub_category_name || "Subcategory"}
               </Link>
@@ -245,13 +245,13 @@ const FirstContents: React.FC<FirstContentsProps> = ({
                 href={`/blogs/${secondPost.category_name
                   .toLowerCase()
                   .replace(/\s+/g, "-")}`}
-                className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
               >
                 {secondPost.category_name || "Category"}
               </Link>
               <Link
                 href={`/${secondPost.category_id}/${secondPost.subcategory_id}`}
-                className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
               >
                 {secondPost.sub_category_name || "Subcategory"}
               </Link>
@@ -352,18 +352,20 @@ const FirstContents: React.FC<FirstContentsProps> = ({
 
       {thirdPost && (
         <div className="mb-8 overflow-hidden">
-          <Link
-            href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
-          >
-            <Image
-              src={getImageUrl(thirdPost.image2?.[0] || "")}
-              alt={thirdPost.heading.replace(/<[^>]+>/g, "")}
-              width={400}
-              height={443}
-              className="w-full h-[443px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
-              priority
-            />
-          </Link>
+          <div className="overflow-hidden">
+            <Link
+              href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}/${thirdPost.id}`}
+            >
+              <Image
+                src={getImageUrl(thirdPost.image2?.[0] || "")}
+                alt={thirdPost.heading.replace(/<[^>]+>/g, "")}
+                width={400}
+                height={443}
+                className="w-full h-[443px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                priority
+              />
+            </Link>
+          </div>
           <div className="py-4">
             <div className="md:flex items-center justify-between gap-4 mb-2">
               <div className="flex items-center gap-2">
@@ -371,13 +373,13 @@ const FirstContents: React.FC<FirstContentsProps> = ({
                   href={`/blogs/${thirdPost.category_name
                     .toLowerCase()
                     .replace(/\s+/g, "-")}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
                 >
                   {thirdPost.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${thirdPost.category_id}/${thirdPost.subcategory_id}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
                 >
                   {thirdPost.sub_category_name || "Subcategory"}
                 </Link>
@@ -472,13 +474,13 @@ const FirstContents: React.FC<FirstContentsProps> = ({
                   href={`/blogs/${fourthPost.category_name
                     .toLowerCase()
                     .replace(/\s+/g, "-")}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
                 >
                   {fourthPost.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
                 >
                   {fourthPost.sub_category_name || "Subcategory"}
                 </Link>
@@ -556,19 +558,21 @@ const FirstContents: React.FC<FirstContentsProps> = ({
             <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
               {fourthPost.author} - {fourthPost.date}
             </p>
-            <Link
-              href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
-              className="overflow-hidden"
-            >
-              <Image
-                src={getImageUrl(fourthPost.image2?.[0] || "")}
-                alt={fourthPost.heading.replace(/<[^>]+>/g, "")}
-                width={400}
-                height={300}
-                className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
-                priority
-              />
-            </Link>
+            <div className="overflow-hidden">
+              <Link
+                href={`/${fourthPost.category_id}/${fourthPost.subcategory_id}/${fourthPost.id}`}
+                className="overflow-hidden"
+              >
+                <Image
+                  src={getImageUrl(fourthPost.image2?.[0] || "")}
+                  alt={fourthPost.heading.replace(/<[^>]+>/g, "")}
+                  width={400}
+                  height={300}
+                  className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                  priority
+                />
+              </Link>
+            </div>
           </div>
         )}
         {fifthPost && (
@@ -579,13 +583,13 @@ const FirstContents: React.FC<FirstContentsProps> = ({
                   href={`/blogs/${fifthPost.category_name
                     .toLowerCase()
                     .replace(/\s+/g, "-")}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
                 >
                   {fifthPost.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}`}
-                  className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
                 >
                   {fifthPost.sub_category_name || "Subcategory"}
                 </Link>
@@ -663,19 +667,21 @@ const FirstContents: React.FC<FirstContentsProps> = ({
             <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
               {fifthPost.author} - {fifthPost.date}
             </p>
-            <Link
-              href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
-              className="overflow-hidden"
-            >
-              <Image
-                src={getImageUrl(fifthPost.image2?.[0] || "")}
-                alt={fifthPost.heading.replace(/<[^>]+>/g, "")}
-                width={400}
-                height={300}
-                className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
-                priority
-              />
-            </Link>
+            <div className="overflow-hidden">
+              <Link
+                href={`/${fifthPost.category_id}/${fifthPost.subcategory_id}/${fifthPost.id}`}
+                className="overflow-hidden"
+              >
+                <Image
+                  src={getImageUrl(fifthPost.image2?.[0] || "")}
+                  alt={fifthPost.heading.replace(/<[^>]+>/g, "")}
+                  width={400}
+                  height={300}
+                  className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                  priority
+                />
+              </Link>
+            </div>
           </div>
         )}
       </div>

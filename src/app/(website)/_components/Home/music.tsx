@@ -293,38 +293,41 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
               </Link>
             </div>
           </div>
-          <Link
-            href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
-          >
-            <div
-              style={{
-                backgroundImage: `url(${getImageUrl(
-                  firstPost.image2?.[0] || ""
-                )})`,
-                height: "433px",
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-              }}
-              className="flex items-center justify-center h-[400px] md:h-[433px]"
+          <div className="overflow-hidden">
+            <Link
+              href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
+              
             >
-              <div className=" px-4">
-                <motion.p
-                  dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="font-medium white-text  text-3xl lg:text-5xl text-center text-white line-clamp-3"
-                   whileHover={{
-                    scaleX: 1.05,
-                    transformOrigin: "left", // Ensures scaling happens from the left side
-                    fontWeight: 900,
-                    transition: { duration: 0.3 },
-                  }}
-                />
-                <div
-                  dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
-                  className="md:text-lg font-medium white-text  text-center line-clamp-4 text-white"
-                />
+              <div
+                style={{
+                  backgroundImage: `url(${getImageUrl(
+                    firstPost.image2?.[0] || ""
+                  )})`,
+                  height: "433px",
+                  backgroundPosition: "center",
+                  backgroundSize: "cover",
+                }}
+                className="flex items-center justify-center h-[400px] md:h-[433px] duration-500 ease-in-out hover:scale-110 "
+              >
+                <div className=" px-4">
+                  <motion.p
+                    dangerouslySetInnerHTML={{ __html: firstPost.heading }}
+                    className="font-medium white-text max-w-[800px]  text-3xl lg:text-5xl text-center text-white line-clamp-3"
+                    whileHover={{
+                      scaleX: 1.05,
+                      transformOrigin: "left", // Ensures scaling happens from the left side
+                      fontWeight: 900,
+                      transition: { duration: 0.3 },
+                    }}
+                  />
+                  <div
+                    dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
+                    className="md:text-lg font-medium white-text  text-center line-clamp-4 text-white"
+                  />
+                </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+          </div>
         </div>
       )}
 
@@ -463,10 +466,10 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     dangerouslySetInnerHTML={{ __html: thirdPost.heading }}
                     className="text-lg font-medium text-[#131313] "
                     whileHover={{
-                    scale: 1.02,
-                    fontWeight: 900,
-                    transition: { duration: 0.3 },
-                  }}
+                      scale: 1.02,
+                      fontWeight: 900,
+                      transition: { duration: 0.3 },
+                    }}
                   />
                 </Link>
                 <div className="flex items-center gap-2">
