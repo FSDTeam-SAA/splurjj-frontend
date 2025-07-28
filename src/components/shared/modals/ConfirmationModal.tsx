@@ -41,7 +41,7 @@ export function ConfirmationModal({
           <Button className="text-black border border-black dark:text-black" variant="outline" onClick={onClose}>
             {cancelText}
           </Button>
-          <Button className="text-black border border-black dark:text-black" variant="destructive" onClick={onConfirm}>
+          <Button className="text-white dark:text-white border border-red-500 bg-red-500 hover:bg-red-700" variant="destructive" onClick={onConfirm}>
             {confirmText}
           </Button>
         </DialogFooter>
