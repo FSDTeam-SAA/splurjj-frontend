@@ -319,7 +319,7 @@ const getImageUrl = (path: string | null): string => {
               </div>
               <p
                 dangerouslySetInnerHTML={{
-                  __html: sanitizeHTML(blogData.sub_heading ?? ""),
+                  __html: sanitizeHTML(blogData.body1 ?? ""),
                 }}
                 className="text-base font-normal leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8"
               />

@@ -58,10 +58,12 @@ function OtherPages() {
     enabled: !!token,
   })
 
+  console.log("footerData", footerData)
+
   // Find the "Other" section (adjust the title as needed)
   const otherSection = footerData?.find(
     (section: FooterSection) =>
-      section.title.toLowerCase().includes("others") || section.title.toLowerCase().includes("misc"),
+      section.title.toLowerCase().includes("other") || section.title.toLowerCase().includes("misc"),
   )
 
   // State for controlled checkboxes
@@ -89,7 +91,7 @@ function OtherPages() {
         throw new Error("Other section not found")
       }
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/footer-sections/15`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/footer-sections/2`,
         {
           method: "PUT",
           headers: {
