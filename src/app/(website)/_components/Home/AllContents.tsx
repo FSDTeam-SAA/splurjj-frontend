@@ -305,7 +305,7 @@ const AllContents: React.FC = () => {
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-3xl md:text-[40px] lg:text-[60px] font-[800] leading-[120%] "
+                  className="text-3xl md:text-[40px] lg:text-[60px] font-[400] leading-[120%] "
                   whileHover={{
                     scale: 1.02,
                     fontWeight: 900,
