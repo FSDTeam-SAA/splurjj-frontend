@@ -48,7 +48,6 @@ type ContentItem = {
   };
 };
 
-
 import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/effect-coverflow";
@@ -93,14 +92,14 @@ const RecentArticleViewDetails = ({ params }: { params: { slug: string } }) => {
   });
 
   console.log(data);
-  console.log(data?.data?.heading);
+  console.log(data?.data?.image2);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching article details</div>;
 
   return (
     <div className="pb-20">
-      <div >
+      <div>
         <Swiper
           modules={[Autoplay]}
           loop={true}
@@ -130,21 +129,37 @@ const RecentArticleViewDetails = ({ params }: { params: { slug: string } }) => {
               </SwiperSlide>
             )
           )} */}
-          {data?.data?.image2?.map(
-            (item: string, index: number) => (
-              <SwiperSlide key={index} className="!h-auto !md:h-full">
-                <div className="relative w-full !h-full">
-                  <Image
-                    src={item}
-                    alt={`image-${index}`}
-                    width={300}
-                    height={150}
-                    className="w-full h-[500px] object-cover"
-                  />
-                </div>
-              </SwiperSlide>
-            )
-          )}
+          {Array.isArray(data?.data?.image2)
+            ? data.data.image2.map((item: string, index: number) => (
+                <SwiperSlide key={index} className="!h-auto !md:h-full">
+                  <div className="relative w-full !h-full">
+                    <Image
+                      src={item}
+                      alt={`image-${index}`}
+                      width={300}
+                      height={150}
+                      className="w-full h-[500px] object-cover"
+                    />
+                  </div>
+                </SwiperSlide>
+              ))
+            : typeof data?.data?.image2 === "string"
+            ? JSON.parse(data.data.image2)?.map(
+                (item: string, index: number) => (
+                  <SwiperSlide key={index} className="!h-auto !md:h-full">
+                    <div className="relative w-full !h-full">
+                      <Image
+                        src={item}
+                        alt={`image-${index}`}
+                        width={300}
+                        height={150}
+                        className="w-full h-[500px] object-cover"
+                      />
+                    </div>
+                  </SwiperSlide>
+                )
+              )
+            : null}
         </Swiper>
       </div>
       <h1
@@ -174,8 +189,13 @@ const RecentArticleViewDetails = ({ params }: { params: { slug: string } }) => {
           Tags :
         </h3>
         <p className="text-xl font-medium text-black leading-normal">
-          {data?.data?.tags?.map((item, index)=> (
-            <button key={index} className="bg-black/80 text-white px-6 py-[2px] rounded-md mr-4">{item}</button>
+          {data?.data?.tags?.map((item, index) => (
+            <button
+              key={index}
+              className="bg-black/80 text-white px-6 py-[2px] rounded-md mr-4"
+            >
+              {item}
+            </button>
           ))}
         </p>
       </div>
