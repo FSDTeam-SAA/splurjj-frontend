@@ -89,7 +89,7 @@ function FooterBottomPage() {
         throw new Error("Footer bottom section not found")
       }
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/footer-sections/14`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/footer-sections/3`,
         {
           method: "PUT",
           headers: {

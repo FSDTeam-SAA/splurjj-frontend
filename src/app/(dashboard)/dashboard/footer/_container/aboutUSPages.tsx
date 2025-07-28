@@ -84,7 +84,7 @@ function AboutUSPages() {
       if (!token) {
         throw new Error("Authentication token is missing")
       }
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/footer-sections/13`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/footer-sections/1`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,

@@ -586,7 +586,7 @@ export default function Sidebar() {
                             : "text-[#131313] font-semibold"
                         }`}
                       >
-                       <Image src="/assets/dashboard/all-page.png" alt="all page" width={20} height={20}/> All Pages
+                       <Image src="/assets/dashboard/all-page.png" alt="all page" width={20} height={20}/> Pages
                       </button>
                     </Link>
                   </div>

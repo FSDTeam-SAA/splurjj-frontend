@@ -152,7 +152,7 @@ const Footer = () => {
   const otherData = React.useMemo(() => {
     return (
       footerSections
-        ?.find((section) => section.title.toLowerCase() === "others")
+        ?.find((section) => section.title.toLowerCase() === "other")
         ?.pages.map((page, index) => ({ id: index + 1, other: page })) || []
     );
   }, [footerSections]);
