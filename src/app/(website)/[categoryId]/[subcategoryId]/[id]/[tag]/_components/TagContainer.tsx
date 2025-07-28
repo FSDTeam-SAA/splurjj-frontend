@@ -286,14 +286,14 @@ const TagContainer: React.FC<TagContainerProps> = ({
               <div className="flex items-center gap-2">
                 <Link
                   href={`/blogs/${post.category_name}`}
-                  className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold leading-[120%] tracking-[0%] uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
                   aria-label={`View category: ${post.category_name}`}
                 >
                   {post.category_name || "Category"}
                 </Link>
                 <Link
                   href={`/${categoryId}/${subcategoryId}`}
-                  className="bg-primary py-[6px] px-[12px] rounded-[4px] text-base font-extrabold leading-[120%] tracking-[0%] uppercase text-white"
+                  className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
                   aria-label={`View subcategory: ${post.sub_category_name}`}
                 >
                   {post.sub_category_name || "Subcategory"}
