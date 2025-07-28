@@ -489,7 +489,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
-                  className="text-2xl font-medium text-[#131313] hover:underline mt-2"
+                  className="text-2xl font-medium text-[#131313] mt-2"
                    whileHover={{
                     scaleX: 1.05,
                     transformOrigin: "left", // Ensures scaling happens from the left side

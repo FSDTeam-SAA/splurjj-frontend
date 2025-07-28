@@ -478,7 +478,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={fourthPost.heading || "Blog Image"}
                     width={400}
                     height={455}
-                    className="w-full h-[400px] md:h-[455px] object-cover object-top"
+                    className="w-full h-[400px] md:h-[455px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
                     priority
                   />
                 </Link>
@@ -490,6 +490,11 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: fourthPost.heading }}
                   className="text-2xl font-medium text-[#131313]  mt-2"
+                  whileHover={{
+                    scale: 1.02,
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
                 />
               </Link>
               <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
