@@ -95,9 +95,9 @@ export default function ImageCarousel({
                       <Image
                         src={imageUrl}
                         alt={`${post.heading} - Image ${index + 1}`}
-                        width={1200}
+                        width={1800}
                         height={600}
-                        className="w-full h-[400px] md:h-[550px] lg:h-[680px] object-cover object-top"
+                        className="w-[1400] h-[400px] md:h-[550px] lg:h-[680px] object-cover object-top"
                         onError={(e) => {
                           e.currentTarget.src = "/fallback-image.jpg";
                         }}
