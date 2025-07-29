@@ -236,13 +236,12 @@ const Ride: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
                   className="text-lg font-medium text-[#131313]  text-end"
-                   whileHover={{
+                  whileHover={{
                     scaleX: 1.02,
                     transformOrigin: "left", // Ensures scaling happens from the left side
                     fontWeight: 900,
                     transition: { duration: 0.3 },
                   }}
-                  
                 />
               </Link>
               <div className="flex items-center justify-end gap-2">
@@ -322,10 +321,10 @@ const Ride: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 dangerouslySetInnerHTML={{ __html: firstPost.sub_heading }}
                 className="text-sm font-normal text-[#424242] line-clamp-3 text-end"
                 whileHover={{
-                      scale: 1.05,
-                      fontWeight: 900,
-                      transition: { duration: 0.3 },
-                    }}
+                  scale: 1.05,
+                  fontWeight: 900,
+                  transition: { duration: 0.3 },
+                }}
               />
 
               <p className="text-sm font-semibold uppercase text-[#424242] text-end">
@@ -377,6 +376,11 @@ const Ride: React.FC<ArtCultureProps> = ({ categoryName }) => {
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: secondPost.heading }}
                   className="text-lg font-medium text-[#131313] "
+                  whileHover={{
+                    scale: 1.05,
+                    fontWeight: 900,
+                    transition: { duration: 0.3 },
+                  }}
                 />
               </Link>
               <div className="flex items-center gap-2">
