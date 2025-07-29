@@ -304,7 +304,7 @@ export default function Header() {
                       <Link
                         key={category.category_id}
                         href={`/blogs/${category.category_name}`}
-                        className="text-sm font-medium transition-colors hover:text-primary"
+                        className="text-xs lg:text-sm font-medium transition-colors hover:text-primary"
                         style={{
                           color: isActive
                             ? header?.menu_item_active_color || "#0253F7"

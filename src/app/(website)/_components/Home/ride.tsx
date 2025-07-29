@@ -346,7 +346,7 @@ const Ride: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={firstPost.heading || "Blog Image"}
                   width={300}
                   height={200}
-                  className="w-full h-[400px] md:h-[467px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                  className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
                 />
               </Link>
             </div>
@@ -366,7 +366,7 @@ const Ride: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={secondPost.heading || "Blog Image"}
                   width={300}
                   height={200}
-                  className="w-full h-[400px] md:h-[467px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                  className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
                 />
               </Link>
             </div>

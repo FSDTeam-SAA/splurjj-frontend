@@ -307,7 +307,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   backgroundPosition: "center",
                   backgroundSize: "cover",
                 }}
-                className="flex items-center justify-center h-[400px] md:h-[433px] duration-500 ease-in-out hover:scale-110 "
+                className="flex items-center justify-center aspect-[1.5/1] w-full duration-500 ease-in-out hover:scale-110 "
               >
                 <div className=" px-4">
                   <motion.p
@@ -345,7 +345,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                       alt={secondPost.heading || "Blog Image"}
                       width={300}
                       height={200}
-                      className="w-full h-[213px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                      className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
                     />
                   </Link>
                 </div>
@@ -454,7 +454,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={thirdPost.heading || "Blog Image"}
                     width={300}
                     height={200}
-                    className="w-full h-[213px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                    className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
                   />
                 </Link>
               </div>

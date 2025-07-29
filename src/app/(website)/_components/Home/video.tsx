@@ -223,13 +223,13 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
       {firstPost && (
         <div className="">
           <div className="grid grid-cols-1 md:grid-cols-2">
-            <div className="bg-[#DDD618] h-[455px] flex items-center justify-center">
+            <div className="bg-[#DDD618] aspect-[1.5/1] w-full flex items-center justify-center">
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-3xl md:text-4xl font-bold text-[#131313] px-4 "
+                  className="text-xl md:text-xl lg:text-4xl font-bold text-[#131313] px-4 "
                    whileHover={{
                     scaleX: 1.05,
                     transformOrigin: "left", // Ensures scaling happens from the left side
@@ -248,7 +248,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={firstPost.heading || "Blog Image"}
                   width={600}
                   height={455}
-                  className="w-full h-[400px] md:h-[455px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                  className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
                   priority
                 />
               </Link>
@@ -366,7 +366,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={thirdPost.heading || "Blog Image"}
                     width={400}
                     height={455}
-                    className="w-full h-[400px] md:h-[455px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                    className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
                     priority
                   />
                 </Link>
@@ -478,7 +478,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={fourthPost.heading || "Blog Image"}
                     width={400}
                     height={455}
-                    className="w-full h-[400px] md:h-[455px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                    className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
                     priority
                   />
                 </Link>
@@ -589,7 +589,7 @@ const Video: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={fifthPost.heading || "Blog Image"}
                     width={400}
                     height={455}
-                    className="w-full h-[400px] md:h-[455px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                    className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
                     priority
                   />
                 </Link>
