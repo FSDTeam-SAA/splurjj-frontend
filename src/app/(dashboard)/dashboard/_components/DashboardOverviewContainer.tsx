@@ -12,6 +12,10 @@ const DashboardOverviewContainer = () => {
   const session = useSession();
   const token = (session?.data?.user as { token: string })?.token;
 
+  const userRole = session?.data?.user?.role;
+
+  const isAuthor = userRole === "author";
+
   const { data, isLoading, isError, error } =
     useQuery<DashboardOverviewResponse>({
       queryKey: ["dashboard-overview"],
@@ -53,28 +57,31 @@ const DashboardOverviewContainer = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-8">
         {/* first div  */}
-        <div className="flex items-center justify-between bg-white rounded-[6px] shadow-md p-8">
-          <div>
-            <h3 className="text-xl font-bold text-[#131313] dark:text-black leading-[120%] tracking-[0%]">
-              Total Revenue
-            </h3>
-            <p className="flex items-center gap-1 text-lg font-medium text-[#424242] dark:text-black leading-[120%] tracking-[0%] pt-2">
-              <GoDotFill className="text-[#DDE067] w-5 h-5" /> 00000 
-            </p>
-          </div>
-          <div>
-            <Image
-              src="/assets/dashboard/revenue.png"
-              alt="revenue icon"
-              width={48}
-              height={48}
-            />
-          </div>
-        </div>
+          {!isAuthor && (
+            <div className="flex items-center justify-between bg-white rounded-[6px] shadow-md p-8">
+              <div>
+                <h3 className="text-xl font-bold text-[#131313] dark:text-black leading-[120%] tracking-[0%]">
+                  Total Revenue
+                </h3>
+                <p className="flex items-center gap-1 text-lg font-medium text-[#424242] dark:text-black leading-[120%] tracking-[0%] pt-2">
+                  <GoDotFill className="text-[#DDE067] w-5 h-5" /> 00000
+                </p>
+              </div>
+              <div>
+                <Image
+                  src="/assets/dashboard/revenue.png"
+                  alt="revenue icon"
+                  width={48}
+                  height={48}
+                />
+              </div>
+            </div>
+          )}
+
         {/* second div  */}
         <div className="flex items-center justify-between bg-white rounded-[6px] shadow-md p-8">
           <div>
-            <h3 className="text-xl font-thin text-[#131313] dark:text-black leading-[120%] tracking-[0%]">
+            <h3 className="text-xl font-bold text-[#131313] dark:text-black leading-[120%] tracking-[0%]">
               Total Articles
             </h3>
             <p className="flex items-center gap-1 text-lg font-medium text-[#424242] dark:text-black leading-[120%] tracking-[0%] pt-2">
@@ -113,67 +120,69 @@ const DashboardOverviewContainer = () => {
         </div>
 
         {/* fourth div  */}
-        <div className="flex items-center justify-between bg-white rounded-[6px] shadow-md p-8">
-          <div>
-            <h3 className="text-xl font-bold text-[#131313] dark:text-black leading-[120%] tracking-[0%]">
-              Total Author
-            </h3>
-            <p className="flex items-center gap-1 text-lg font-medium text-[#424242] dark:text-black leading-[120%] tracking-[0%] pt-2">
-              <GoDotFill className="text-[#DDE067] w-5 h-5" />
-              {data?.data?.total_author}
-            </p>
+        {!isAuthor && (
+          <div className="flex items-center justify-between bg-white rounded-[6px] shadow-md p-8">
+            <div>
+              <h3 className="text-xl font-bold text-[#131313] dark:text-black leading-[120%] tracking-[0%]">
+                Total Author
+              </h3>
+              <p className="flex items-center gap-1 text-lg font-medium text-[#424242] dark:text-black leading-[120%] tracking-[0%] pt-2">
+                <GoDotFill className="text-[#DDE067] w-5 h-5" />
+                {data?.data?.total_author}
+              </p>
+            </div>
+            <div>
+              <Image
+                src="/assets/dashboard/authors.png"
+                alt="total author icon"
+                width={48}
+                height={48}
+              />
+            </div>
           </div>
-          <div>
-            <Image
-              src="/assets/dashboard/authors.png"
-              alt="total author icon"
-              width={48}
-              height={48}
-            />
+        )}
+        {!isAuthor && (
+          <div className="flex items-center justify-between bg-white rounded-[6px] shadow-md p-8">
+            <div>
+              <h3 className="text-xl font-bold text-[#131313] dark:text-black leading-[120%] tracking-[0%]">
+                Total User
+              </h3>
+              <p className="flex items-center gap-1 text-lg font-medium text-[#424242] dark:text-black leading-[120%] tracking-[0%] pt-2">
+                <GoDotFill className="text-[#424242] w-5 h-5" />{" "}
+                {data?.data?.total_user}
+              </p>
+            </div>
+            <div>
+              <Image
+                src="/assets/dashboard/total_User.png"
+                alt="total user icon"
+                width={48}
+                height={48}
+              />
+            </div>
           </div>
-        </div>
-
-        {/* five div  */}
-        <div className="flex items-center justify-between bg-white rounded-[6px] shadow-md p-8">
-          <div>
-            <h3 className="text-xl font-bold text-[#131313] dark:text-black leading-[120%] tracking-[0%]">
-              Total User
-            </h3>
-            <p className="flex items-center gap-1 text-lg font-medium text-[#424242] dark:text-black leading-[120%] tracking-[0%] pt-2">
-              <GoDotFill className="text-[#424242] w-5 h-5" />{" "}
-              {data?.data?.total_user}
-            </p>
+        )}
+        {!isAuthor && (
+          <div className="flex items-center justify-between bg-white rounded-[6px] shadow-md p-8">
+            <div>
+              <h3 className="text-xl font-bold text-[#131313] dark:text-black leading-[120%] tracking-[0%]">
+                Subscribers
+              </h3>
+              <p className="flex items-center  text-lg font-medium text-[#424242] dark:text-black leading-[120%] tracking-[0%] pt-2">
+                <GoDotFill className="text-[#424242] w-5 h-5" />
+                {data?.data?.total_subscriber}
+              </p>
+            </div>
+            <div>
+              <Image
+                src="/assets/dashboard/10k-followers.png"
+                alt="subscriber icon"
+                width={48}
+                height={48}
+              />
+            </div>
           </div>
-          <div>
-            <Image
-              src="/assets/dashboard/total_User.png"
-              alt="total user icon"
-              width={48}
-              height={48}
-            />
-          </div>
-        </div>
-
-        {/* six div  */}
-        <div className="flex items-center justify-between bg-white rounded-[6px] shadow-md p-8">
-          <div>
-            <h3 className="text-xl font-bold text-[#131313] dark:text-black leading-[120%] tracking-[0%]">
-              Subscribers
-            </h3>
-            <p className="flex items-center  text-lg font-medium text-[#424242] dark:text-black leading-[120%] tracking-[0%] pt-2">
-              <GoDotFill className="text-[#424242] w-5 h-5" />
-              {data?.data?.total_subscriber}
-            </p>
-          </div>
-          <div>
-            <Image
-              src="/assets/dashboard/10k-followers.png"
-              alt="subscriber icon"
-              width={48}
-              height={48}
-            />
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
