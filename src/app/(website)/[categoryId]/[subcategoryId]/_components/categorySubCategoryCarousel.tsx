@@ -94,8 +94,7 @@ export default function CategorySubCategoryCarousel({ posts, getImageUrl }: Imag
                     alt={getAltText(index)}
                     width={1200}
                     height={600}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="w-full h-[400px] md:h-[550px] lg:h-[680px] object-cover object-top"
+                    className="aspect-[2/1] w-full object-top"
                     loading={index === 0 ? "eager" : "lazy"}
                     onError={(e) => {
                       const target = e.currentTarget as HTMLImageElement;
@@ -116,8 +115,7 @@ export default function CategorySubCategoryCarousel({ posts, getImageUrl }: Imag
                   alt={`Fallback Slide ${index + 1}`}
                   width={1200}
                   height={600}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="w-full h-[400px] md:h-[550px] lg:h-[680px] object-cover object-top"
+                  className="aspect-[2/1] w-full object-top"
                   loading={index === 0 ? "eager" : "lazy"}
                   onError={(e) => {
                     const target = e.currentTarget as HTMLImageElement;
