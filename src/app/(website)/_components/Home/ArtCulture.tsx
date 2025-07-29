@@ -305,14 +305,14 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 rounded overflow-hidden">
-            <div className="bg-[#DDD618] h-full md:max-h-[455px] flex items-center justify-center p-4 ">
+            <div className="bg-[#DDD618] aspect-[1.5/1] w-full flex items-center justify-center p-4 ">
               <Link
                 href={`/${firstPost.category_id}/${firstPost.subcategory_id}/${firstPost.id}`}
                 className="text-2xl font-medium text-[#131313] "
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-3xl md:text-4xl font-bold text-[#131313]"
+                  className="text-xl md:text-xl lg:text-4xl font-bold text-[#131313]"
                   whileHover={{
                     scaleX: 1.05,
                     transformOrigin: "left", // Ensures scaling happens from the left side
@@ -332,7 +332,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={firstPost.heading || "Blog Image"}
                   width={888}
                   height={552}
-                  className="w-full h-[455px] object-cover object-top hover:scale-105 transition-all duration-500 ease-in-out"
+                  className="aspect-[1.5/1] w-full object-top hover:scale-105 transition-all duration-500 ease-in-out"
                   priority
                 />
               </Link>
@@ -372,7 +372,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={thirdPost.heading || "Blog Image"}
                     width={400}
                     height={300}
-                    className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                    className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
                     priority
                   />
                 </Link>
@@ -486,7 +486,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={fourthPost.heading || "Blog Image"}
                     width={400}
                     height={300}
-                    className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                    className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
                     priority
                   />
                 </Link>
@@ -602,7 +602,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                       width={400}
                       height={300}
                       // className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
-                      className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                      className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
                       priority
                     />
                   </Link>
