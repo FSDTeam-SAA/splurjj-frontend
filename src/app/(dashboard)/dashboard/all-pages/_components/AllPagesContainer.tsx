@@ -136,12 +136,12 @@ const AllPagesContainer = () => {
           </thead>
           <tbody className="text-sm text-gray-700">
             {allPagesData?.map((item) => (
-              <tr key={item.id} className="hover:bg-gray-50">
+              <tr key={item.id} className="hover:bg-gray-50 dark:bg-black">
                 {/* <td className="py-2 px-4 border-b">{item.id}</td> */}
-                <td className="py-2 px-4 border-b font-medium">{item.name}</td>
-                <td className="py-2 px-4 border-b max-w-xs">
-                  <div
-                    className="truncate black-text"
+                <td className="py-2 px-4 border-b font-medium dark:text-white">{item.name}</td>
+                <td className="py-2 px-4 border-b max-w-xs ">
+                  <p
+                    className="text-black dark:text-black"
                     dangerouslySetInnerHTML={{
                       __html:
                         item.body.substring(0, 100) +
