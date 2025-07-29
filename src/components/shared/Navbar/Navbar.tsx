@@ -270,14 +270,14 @@ export default function Header() {
         <div className="container">
           <div className="flex h-[65px] md:h-[80px] items-center justify-between">
             <div className="flex items-center justify-start gap-6">
-              <div className="h-[70px] md:h-[50px] w-[70px] md:w-[90px] flex items-start justify-start">
+              <div className="h-[35px] md:h-[40px] w-[70px] md:w-[90px] flex items-start justify-start">
                 <Link href="/" className="">
                   <Image
                     src={getImageUrl(header?.logo || "/logo.png")}
                     alt="Logo"
                     width={50}
                     height={30}
-                    className="h-[60px] md:h-[50px] w-[70px] md:w-[90px]"
+                    className="h-[35px] md:h-[40px] w-[70px] md:w-[90px]"
                   />
                 </Link>
               </div>
