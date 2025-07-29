@@ -1794,8 +1794,8 @@ export default function ContentAddEditForm({
                               variant="ghost"
                               className="absolute top-1/2 right-2 size-6 -translate-y-1/2"
                             >
-                              <CalendarIcon className="size-3.5" />
-                              <span className="sr-only">Select date</span>
+                              <CalendarIcon className="size-3.5 dark:text-black" />
+                              <span className="sr-only dark:text-black">Select date</span>
                             </Button>
                           </PopoverTrigger>
                           <PopoverContent

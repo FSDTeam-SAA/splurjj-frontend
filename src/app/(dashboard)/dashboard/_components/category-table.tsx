@@ -59,15 +59,15 @@ export default function CategoryTable({
       <TableHeader>
         <TableRow>
           {/* <TableHead className="w-16">ID</TableHead> */}
-          <TableHead className="text-black dark:text-black">
+          <TableHead className="text-base text-black dark:text-black">
             Category Icon
           </TableHead>
-          <TableHead className="text-black dark:text-black">
+          <TableHead className="text-base text-black dark:text-black">
             Category Name
           </TableHead>
-          <TableHead className="w-32 text-black">Sub Categories</TableHead>
+          <TableHead className="text-base w-32 text-black">Sub Categories</TableHead>
           {!isAuthor && (
-            <TableHead className="w-32 text-center text-black">
+            <TableHead className="text-base w-32 text-center text-black">
               Actions
             </TableHead>
           )}

@@ -192,7 +192,7 @@ const handleEditCategory = async (
             {/* <p className="text-3xl font-bold text-gray-800 dark:text-white mb-2">
               Categories
             </p> */}
-            <div className="text-sm dark:text-white text-black">
+            <div className="text-lg font-semibold dark:text-white text-black">
               <Link href="/dashboard" className="">
                 Dashboard
               </Link>
