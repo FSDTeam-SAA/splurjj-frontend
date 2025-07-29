@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa";
 import { TbTargetArrow } from "react-icons/tb";
 import SkeletonLoader from "./SkeletonLoader";
+import { motion } from "framer-motion";
 
 interface Post {
   id: number;
@@ -24,6 +25,7 @@ interface Post {
   category_name: string;
   sub_category_name: string;
   image1: string | null;
+  image2: string[] | null;
   imageLink: string | null;
   advertising_image: string | null;
   advertisingLink: string | null;
@@ -42,7 +44,13 @@ interface ContentAllDataTypeResponse {
   };
 }
 
-const SecondContents = ( { categoryId, subcategoryId }: { categoryId: string; subcategoryId: string }) => {
+const SecondContents = ({
+  categoryId,
+  subcategoryId,
+}: {
+  categoryId: string;
+  subcategoryId: string;
+}) => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -77,7 +85,9 @@ const SecondContents = ( { categoryId, subcategoryId }: { categoryId: string; su
         tags: post.tags.filter((tag) => tag.trim() !== ""),
       }));
 
-      setPosts((prev) => (isLoadMore ? [...prev, ...filteredPosts] : filteredPosts));
+      setPosts((prev) =>
+        isLoadMore ? [...prev, ...filteredPosts] : filteredPosts
+      );
       setHasMore(page < result.meta.last_page);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -124,8 +134,12 @@ const SecondContents = ( { categoryId, subcategoryId }: { categoryId: string; su
 
   const getShareUrl = (post: Post): string => {
     const baseUrl = typeof window !== "undefined" ? window.location.origin : "";
-    const normalizedCategory = post.category_name.toLowerCase().replace(/\s+/g, "-");
-    const normalizedSubCategory = post.sub_category_name.toLowerCase().replace(/\s+/g, "-");
+    const normalizedCategory = post.category_name
+      .toLowerCase()
+      .replace(/\s+/g, "-");
+    const normalizedSubCategory = post.sub_category_name
+      .toLowerCase()
+      .replace(/\s+/g, "-");
     return `${baseUrl}/blogs/${normalizedCategory}/${normalizedSubCategory}/${post.id}`;
   };
 
@@ -133,7 +147,9 @@ const SecondContents = ( { categoryId, subcategoryId }: { categoryId: string; su
     const shareUrl = getShareUrl(post);
     const shareData = {
       title: post.heading.replace(/<[^>]+>/g, ""),
-      text: post.sub_heading?.replace(/<[^>]+>/g, "") || "Check out this blog post!",
+      text:
+        post.sub_heading?.replace(/<[^>]+>/g, "") ||
+        "Check out this blog post!",
       url: shareUrl,
     };
 
@@ -155,19 +171,25 @@ const SecondContents = ( { categoryId, subcategoryId }: { categoryId: string; su
     switch (platform) {
       case "twitter":
         window.open(
-          `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(title)}`,
+          `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+            shareUrl
+          )}&text=${encodeURIComponent(title)}`,
           "_blank"
         );
         break;
       case "facebook":
         window.open(
-          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
+          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+            shareUrl
+          )}`,
           "_blank"
         );
         break;
       case "linkedin":
         window.open(
-          `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(title)}`,
+          `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
+            shareUrl
+          )}&title=${encodeURIComponent(title)}`,
           "_blank"
         );
         break;
@@ -190,7 +212,6 @@ const SecondContents = ( { categoryId, subcategoryId }: { categoryId: string; su
     );
   }
 
-
   return (
     <div className="">
       {posts.length <= 5 ? (
@@ -208,29 +229,37 @@ const SecondContents = ( { categoryId, subcategoryId }: { categoryId: string; su
                   className="space-y-2 overflow-hidden"
                   aria-labelledby={`card-heading-${post.id}`}
                 >
-                  <Link
-                    href={`/${post.category_id}/${post.subcategory_id}/${post.id}#comment`}
-                  >
-                    <Image
-                      src={getImageUrl(post.image1)}
-                      alt={post.heading.replace(/<[^>]+>/g, "")}
-                      width={400}
-                      height={300}
-                      className="w-full h-[300px] object-cover object-top"
-                      priority
-                    />
-                  </Link>
+                  <div className="overflow-hidden">
+                    <Link
+                      href={`/${post.category_id}/${post.subcategory_id}/${post.id}#comment`}
+                    >
+                      <Image
+                        src={getImageUrl(post.image2?.[0] || "")}
+                        alt={post.heading.replace(/<[^>]+>/g, "")}
+                        width={400}
+                        height={300}
+                        className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                        priority
+                      />
+                    </Link>
+                  </div>
                   <div className="p-4">
                     <div className="md:flex items-center gap-4 mb-2">
                       <div className="flex items-center gap-2">
                         <Link
-                          href={`/blogs/${post.category_name.toLowerCase().replace(/\s+/g, "-")}`}
+                          href={`/blogs/${post.category_name
+                            .toLowerCase()
+                            .replace(/\s+/g, "-")}`}
                           className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                         >
                           {post.category_name || "Category"}
                         </Link>
                         <Link
-                          href={`/blogs/${post.category_name.toLowerCase().replace(/\s+/g, "-")}/${post.sub_category_name.toLowerCase().replace(/\s+/g, "-")}`}
+                          href={`/blogs/${post.category_name
+                            .toLowerCase()
+                            .replace(/\s+/g, "-")}/${post.sub_category_name
+                            .toLowerCase()
+                            .replace(/\s+/g, "-")}`}
                           className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
                         >
                           {post.sub_category_name || "Subcategory"}
@@ -268,11 +297,21 @@ const SecondContents = ( { categoryId, subcategoryId }: { categoryId: string; su
                     </div>
                     <div>
                       <Link
-                        href={`/blogs/${post.category_name.toLowerCase().replace(/\s+/g, "-")}/${post.sub_category_name.toLowerCase().replace(/\s+/g, "-")}/${post.id}`}
+                        href={`/blogs/${post.category_name
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")}/${post.sub_category_name
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")}/${post.id}`}
                       >
-                        <p
+                        <motion.p
                           dangerouslySetInnerHTML={{ __html: post.heading }}
                           className="text-2xl font-medium line-clamp-2"
+                          whileHover={{
+                            scaleX: 1.05,
+                            transformOrigin: "left", // Ensures scaling happens from the left side
+                            fontWeight: 900,
+                            transition: { duration: 0.3 },
+                          }}
                         />
                       </Link>
                       <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
@@ -295,30 +334,38 @@ const SecondContents = ( { categoryId, subcategoryId }: { categoryId: string; su
                   className="space-y-2 overflow-hidden"
                   aria-labelledby={`card-heading-${post.id}`}
                 >
-                  <Link
-                    href={`/${post.category_id}/${post.subcategory_id}/${post.id}#comment`}
-                  >
-                    <Image
-                      src={getImageUrl(post.image1)}
-                      alt={post.heading.replace(/<[^>]+>/g, "")}
-                      width={400}
-                      height={300}
-                      className="w-full h-[300px] object-cover object-top"
-                      priority
-                    />
-                  </Link>
+                  <div className="overflow-hidden">
+                    <Link
+                      href={`/${post.category_id}/${post.subcategory_id}/${post.id}#comment`}
+                    >
+                      <Image
+                        src={getImageUrl(post.image2?.[0] || "")}
+                        alt={post.heading.replace(/<[^>]+>/g, "")}
+                        width={400}
+                        height={300}
+                        className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out "
+                        priority
+                      />
+                    </Link>
+                  </div>
                   <div className="p-4">
                     <div className="flex items-center gap-4 mb-2">
                       <div className="flex items-center gap-2">
                         <Link
-                          href={`/blogs/${post.category_name.toLowerCase().replace(/\s+/g, "-")}`}
-                          className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                          href={`/blogs/${post.category_name
+                            .toLowerCase()
+                            .replace(/\s+/g, "-")}`}
+                          className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
                         >
                           {post.category_name || "Category"}
                         </Link>
                         <Link
-                          href={`/blogs/${post.category_name.toLowerCase().replace(/\s+/g, "-")}/${post.sub_category_name.toLowerCase().replace(/\s+/g, "-")}`}
-                          className="bg-primary py-1 px-3 rounded text-sm font-extrabold uppercase text-white"
+                          href={`/blogs/${post.category_name
+                            .toLowerCase()
+                            .replace(/\s+/g, "-")}/${post.sub_category_name
+                            .toLowerCase()
+                            .replace(/\s+/g, "-")}`}
+                          className="bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
                         >
                           {post.sub_category_name || "Subcategory"}
                         </Link>
@@ -355,11 +402,21 @@ const SecondContents = ( { categoryId, subcategoryId }: { categoryId: string; su
                     </div>
                     <div>
                       <Link
-                        href={`/blogs/${post.category_name.toLowerCase().replace(/\s+/g, "-")}/${post.sub_category_name.toLowerCase().replace(/\s+/g, "-")}/${post.id}`}
+                        href={`/blogs/${post.category_name
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")}/${post.sub_category_name
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")}/${post.id}`}
                       >
-                        <p
+                        <motion.p
                           dangerouslySetInnerHTML={{ __html: post.heading }}
                           className="text-2xl font-medium line-clamp-2"
+                          whileHover={{
+                            scaleX: 1.05,
+                            transformOrigin: "left", // Ensures scaling happens from the left side
+                            fontWeight: 900,
+                            transition: { duration: 0.3 },
+                          }}
                         />
                       </Link>
                       <p className="text-sm font-semibold uppercase text-[#424242] mt-2">
@@ -383,7 +440,9 @@ const SecondContents = ( { categoryId, subcategoryId }: { categoryId: string; su
 
           {!hasMore && !loadingMore && (
             <div className="col-span-full text-center py-8">
-              <p className="text-gray-700">You&apos;ve reached the end of the content.</p>
+              <p className="text-gray-700">
+                You&apos;ve reached the end of the content.
+              </p>
             </div>
           )}
         </>
