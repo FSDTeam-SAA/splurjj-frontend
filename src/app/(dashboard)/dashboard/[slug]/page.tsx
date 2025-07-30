@@ -192,7 +192,7 @@ const RecentArticleViewDetails = ({ params }: { params: { slug: string } }) => {
           {data?.data?.tags?.map((item, index) => (
             <button
               key={index}
-              className="bg-black/80 text-white px-6 py-[2px] rounded-md mr-4"
+              className="bg-[#0253F7] hover:bg-black/80 dark:bg-[#0253F7] dark:border dark:border-[#0253F7] hover:dark:bg-black/80 text-white px-6 py-[2px] rounded-md mr-4"
             >
               {item}
             </button>

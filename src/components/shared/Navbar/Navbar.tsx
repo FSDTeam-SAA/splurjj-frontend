@@ -642,10 +642,10 @@ export default function Header() {
       {logoutModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg max-w-sm w-full mx-4">
-            <h3 className="text-lg font-semibold mb-4">Confirm Logout</h3>
-            <p className="text-gray-600 mb-6">Are you sure you want to log out?</p>
+            <h3 className="text-lg font-semibold mb-4 dark:text-black">Confirm Logout</h3>
+            <p className="text-gray-600 mb-6 dark:text-black">Are you sure you want to log out?</p>
             <div className="flex space-x-4">
-              <Button variant="outline" onClick={() => setLogoutModalOpen(false)} className="flex-1">
+              <Button variant="outline" onClick={() => setLogoutModalOpen(false)} className="flex-1 dark:text-black">
                 Cancel
               </Button>
               <Button
@@ -654,7 +654,7 @@ export default function Header() {
                   setLogoutModalOpen(false)
                   handLogout()
                 }}
-                className="flex-1 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white font-semibold"
+                className="flex-1 border border-red-500 text-red-500 dark:text-red-500 hover:bg-red-500 hover:text-white dark:hover:text-white font-semibold"
               >
                 Log Out
               </Button>
