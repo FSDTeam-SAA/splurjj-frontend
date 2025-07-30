@@ -749,7 +749,7 @@ export default function Sidebar() {
                 <AccordionTrigger className="px-3">
                   <p className="flex items-center gap-2 text-lg font-semibold text-[#131313] dark:white-text leading-[120%] uppercase tracking-[0%] font-marnrope">
                     <Image
-                      src="/assets/dashboard/theme-setting.jpg"
+                      src="/assets/images/setting.png"
                       alt="theme-settings"
                       width={20}
                       height={20}
