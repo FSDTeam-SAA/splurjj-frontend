@@ -9,7 +9,7 @@ const Login = () => {
     >
       <div className="md:col-span-1 hidden md:block">
         <Image
-          src="/assets/images/sign-in.png"
+          src="/assets/images/auth_image.png"
           alt="sign in"
           width={1900}
           height={1200}

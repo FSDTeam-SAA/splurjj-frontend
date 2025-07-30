@@ -7,7 +7,7 @@ const UpdatePassword = () => {
     <div className={`h-screen w-full grid grid-cols-1 md:grid-cols-2 gap-20 p-5 md:p-0`}>
       <div className="md:col-span-1 hidden md:block">
         <Image
-          src="/assets/images/sign-in.png"
+          src="/assets/images/auth_image.png"
           alt="sign in"
           width={800}
           height={800}
