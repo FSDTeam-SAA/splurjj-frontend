@@ -298,14 +298,14 @@ const AllContents: React.FC = () => {
                 </Link>
               </div>
             </div>
-            <div className="space-y-4 ">
+            <div className=" ">
               <Link
                 className="content-heding-text"
                 href={`/${firstPost?.category_id}/${firstPost?.subcategory_id}/${firstPost?.id}`}
               >
                 <motion.p
                   dangerouslySetInnerHTML={{ __html: firstPost.heading }}
-                  className="text-3xl md:text-[40px] lg:text-[60px] font-[400] leading-[120%] line-clamp-2"
+                  className="text-3xl md:text-[40px] lg:text-[60px] font-[400] leading-[120%] line-clamp-1"
                   whileHover={{
                     scale: 1.02,
                     fontWeight: 900,

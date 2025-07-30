@@ -288,7 +288,7 @@ const getImageUrl = (path: string | null): string => {
   const cleanedTags = cleanTags(blogData.tags || []);
 
 
-  console.log("BBBBBBBBBBBBBBBBBBBBBBBBB", blogData)
+  // console.log("BBBBBBBBBBBBBBBBBBBBBBBBB", blogData)
 
 
   return (
@@ -348,7 +348,7 @@ const getImageUrl = (path: string | null): string => {
                 dangerouslySetInnerHTML={{
                   __html: sanitizeHTML(blogData.body1 ?? ""),
                 }}
-                className="text-base list-item font-normal leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8"
+                className="text-base font-normal leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8"
               />
               <div className="w-full flex items-center justify-center">
                 <span className="w-2/3 h-[2px] bg-secondary" />
@@ -412,7 +412,7 @@ const getImageUrl = (path: string | null): string => {
                     alt={blogData.user?.first_name || "Author"}
                     width={180}
                     height={180}
-                    className="w-[180px] h-[180px] object-cover object-contain rounded-full border"
+                    className="w-[180px] h-[180px] object-contain rounded-full border"
                   />
                 </div>
                 <div className="md:col-span-7 h-full flex flex-col justify-center mt-2 md:mt-0">

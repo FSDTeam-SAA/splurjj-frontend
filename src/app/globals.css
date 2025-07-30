@@ -209,7 +209,7 @@ body {
   @apply text-sm;
 }
 
-.list-item iframe {
+iframe {
   width: 100%;
   max-width: 560px; /* Match the iframe width */
   height: auto;
