@@ -97,7 +97,7 @@ export default function ImageCarousel({
                         alt={`${post.heading} - Image ${index + 1}`}
                         width={1800}
                         height={600}
-                        className="aspect-[2/1] w-full object-top bg-red-800"
+                        className="aspect-[2/1] w-full object-contain"
                         onError={(e) => {
                           e.currentTarget.src = "/fallback-image.jpg";
                         }}

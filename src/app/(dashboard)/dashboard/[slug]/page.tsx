@@ -138,7 +138,7 @@ const RecentArticleViewDetails = ({ params }: { params: { slug: string } }) => {
                       alt={`image-${index}`}
                       width={300}
                       height={150}
-                      className="w-full h-[500px] object-cover"
+                      className="w-full h-[500px] object-contain"
                     />
                   </div>
                 </SwiperSlide>
@@ -153,7 +153,7 @@ const RecentArticleViewDetails = ({ params }: { params: { slug: string } }) => {
                         alt={`image-${index}`}
                         width={300}
                         height={150}
-                        className="w-full h-[500px] object-cover"
+                        className="w-full h-[500px] object-contain"
                       />
                     </div>
                   </SwiperSlide>
