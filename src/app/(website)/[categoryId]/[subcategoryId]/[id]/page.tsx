@@ -15,6 +15,7 @@ import Vertical from "@/components/adds/vertical";
 import Horizontal from "@/components/adds/horizontal";
 import RelatedContent from "@/app/(website)/_components/RalatedBlog/RalatedBlog";
 import ContentsDetailsCarousel from "./_components/contentsDetailsCarousel";
+ import DOMPurify from "dompurify";
 
 interface BlogData {
   status: boolean;
@@ -88,9 +89,32 @@ const ContentBlogDetails = ({
       .filter((tag) => tag.length > 0);
   };
 
-  const sanitizeHTML = (html: string): string => {
-    return html; // Replace with actual sanitization in production
-  };
+
+
+const sanitizeHTML = (html: string): string => {
+  // Step 1: Remove <pre> tags and decode HTML entities if necessary
+  const cleanedHtml = html
+    .replace(/<pre>/gi, "") // Remove opening <pre> tag
+    .replace(/<\/pre>/gi, "") // Remove closing </pre> tag
+    .replace(/&lt;/g, "<") // Decode HTML entities
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, "&");
+
+  // Step 2: Sanitize the cleaned HTML with DOMPurify
+  return DOMPurify.sanitize(cleanedHtml, {
+    ADD_TAGS: ["iframe"], // Allow iframe tags
+    ADD_ATTR: [
+      "allow",
+      "allowfullscreen",
+      "frameborder",
+      "src",
+      "title",
+      "referrerpolicy",
+    ], // Allow specific iframe attributes
+    ALLOWED_URI_REGEXP: /^(?:(?:https?:)?\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/.+$/, // Restrict to YouTube domains
+  });
+};
 
   const { data, isLoading, error, isError } = useQuery<BlogData>({
     queryKey: ["all-content", categoryId, subcategoryId, id],
@@ -264,6 +288,9 @@ const getImageUrl = (path: string | null): string => {
   const cleanedTags = cleanTags(blogData.tags || []);
 
 
+  console.log("BBBBBBBBBBBBBBBBBBBBBBBBB", blogData)
+
+
   return (
     <div className="">
       <div className="container py-[30px] md:py-[50px] lg:py-[72px]">
@@ -321,7 +348,7 @@ const getImageUrl = (path: string | null): string => {
                 dangerouslySetInnerHTML={{
                   __html: sanitizeHTML(blogData.body1 ?? ""),
                 }}
-                className="text-base font-normal leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8"
+                className="text-base list-item font-normal leading-[150%] tracking-[0%] text-[#424242] pb-5 md:pb-7 lg:pb-8"
               />
               <div className="w-full flex items-center justify-center">
                 <span className="w-2/3 h-[2px] bg-secondary" />
