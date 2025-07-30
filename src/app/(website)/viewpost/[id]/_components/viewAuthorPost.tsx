@@ -283,7 +283,7 @@ function ViewAuthorPost({ userId }: ViewAuthorPostProps) {
                   alt={sanitizeHTML(post.heading)}
                   width={400}
                   height={300}
-                  className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                  className="aspect-[1.5/1] w-full object-contain hover:scale-150 transition-all duration-500 ease-in-out"
                   priority
                 />
               </Link>

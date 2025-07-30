@@ -74,7 +74,7 @@ export default function ContentsDetailsCarousel({
                 alt={`Slide ${index + 1}`}
                 width={1200}
                 height={600}
-                className="aspect-[2/1] w-full object-top"
+                className="aspect-[2/1] w-full object-contain"
                 onError={(e) => {
                   (e.currentTarget as HTMLImageElement).src =
                     "/fallback-image.jpg";

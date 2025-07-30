@@ -278,7 +278,7 @@ const TagContainer: React.FC<TagContainerProps> = ({
                     width={458}
                     height={346}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                    className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                    className="aspect-[1.5/1] w-full object-contain hover:scale-150 transition-all duration-500 ease-in-out"
                   />
                 </Link>
               </div>

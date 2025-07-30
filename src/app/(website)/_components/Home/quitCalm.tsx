@@ -248,7 +248,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={firstPost.heading || "Blog Image"}
                   width={600}
                   height={455}
-                  className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                  className="aspect-[1.5/1] w-full object-contain hover:scale-150 transition-all duration-500 ease-in-out"
                   priority
                 />
               </Link>
@@ -366,7 +366,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={thirdPost.heading || "Blog Image"}
                     width={400}
                     height={455}
-                    className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                    className="aspect-[1.5/1] w-full object-contain hover:scale-150 transition-all duration-500 ease-in-out"
                     priority
                   />
                 </Link>
@@ -478,7 +478,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={fourthPost.heading || "Blog Image"}
                     width={400}
                     height={455}
-                    className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                    className="aspect-[1.5/1] w-full object-contain hover:scale-150 transition-all duration-500 ease-in-out"
                     priority
                   />
                 </Link>
@@ -590,7 +590,7 @@ const QuitCalm: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={fifthPost.heading || "Blog Image"}
                   width={400}
                   height={455}
-                  className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                  className="aspect-[1.5/1] w-full object-contain hover:scale-150 transition-all duration-500 ease-in-out"
                   priority
                 />
               </Link>

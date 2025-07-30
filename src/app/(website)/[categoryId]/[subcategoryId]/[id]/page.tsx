@@ -385,7 +385,7 @@ const getImageUrl = (path: string | null): string => {
                     alt={blogData.user?.first_name || "Author"}
                     width={180}
                     height={180}
-                    className="w-[180px] h-[180px] object-cover object-top rounded-full border"
+                    className="w-[180px] h-[180px] object-cover object-contain rounded-full border"
                   />
                 </div>
                 <div className="md:col-span-7 h-full flex flex-col justify-center mt-2 md:mt-0">

@@ -345,7 +345,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                       alt={secondPost.heading || "Blog Image"}
                       width={300}
                       height={200}
-                      className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                      className="aspect-[1.5/1] w-full object-contain hover:scale-150 transition-all duration-500 ease-in-out"
                     />
                   </Link>
                 </div>
@@ -459,7 +459,7 @@ const Music: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={thirdPost.heading || "Blog Image"}
                     width={300}
                     height={200}
-                    className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                    className="aspect-[1.5/1] w-full object-contain hover:scale-150 transition-all duration-500 ease-in-out"
                   />
                 </Link>
               </div>

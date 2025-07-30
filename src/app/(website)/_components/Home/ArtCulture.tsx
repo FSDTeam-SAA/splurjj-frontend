@@ -332,7 +332,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                   alt={firstPost.heading || "Blog Image"}
                   width={888}
                   height={552}
-                  className="aspect-[1.5/1] w-full object-top hover:scale-105 transition-all duration-500 ease-in-out"
+                  className="aspect-[1.5/1] w-full object-contain hover:scale-105 transition-all duration-500 ease-in-out"
                   priority
                 />
               </Link>
@@ -372,7 +372,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={thirdPost.heading || "Blog Image"}
                     width={400}
                     height={300}
-                    className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                    className="aspect-[1.5/1] w-full object-contain hover:scale-150 transition-all duration-500 ease-in-out"
                     priority
                   />
                 </Link>
@@ -486,7 +486,7 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                     alt={fourthPost.heading || "Blog Image"}
                     width={400}
                     height={300}
-                    className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                    className="aspect-[1.5/1] w-full object-contain hover:scale-150 transition-all duration-500 ease-in-out"
                     priority
                   />
                 </Link>
@@ -601,8 +601,8 @@ const ArtCulture: React.FC<ArtCultureProps> = ({ categoryName }) => {
                       alt={fifthPost.heading || "Blog Image"}
                       width={400}
                       height={300}
-                      // className="w-full h-[300px] object-cover object-top hover:scale-150 transition-all duration-500 ease-in-out"
-                      className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                      // className="w-full h-[300px] object-cover object-contain hover:scale-150 transition-all duration-500 ease-in-out"
+                      className="aspect-[1.5/1] w-full object-contain hover:scale-150 transition-all duration-500 ease-in-out"
                       priority
                     />
                   </Link>

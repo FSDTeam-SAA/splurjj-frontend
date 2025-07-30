@@ -342,7 +342,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({
                 alt={secondPost.heading.replace(/<[^>]+>/g, "")}
                 width={400}
                 height={315}
-                className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                className="aspect-[1.5/1] w-full object-contain hover:scale-150 transition-all duration-500 ease-in-out"
                 priority
               />
             </Link>
@@ -361,7 +361,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({
                 alt={thirdPost.heading.replace(/<[^>]+>/g, "")}
                 width={400}
                 height={443}
-                className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                className="aspect-[1.5/1] w-full object-contain hover:scale-150 transition-all duration-500 ease-in-out"
                 priority
               />
             </Link>
@@ -568,7 +568,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({
                   alt={fourthPost.heading.replace(/<[^>]+>/g, "")}
                   width={400}
                   height={300}
-                  className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                  className="aspect-[1.5/1] w-full object-contain hover:scale-150 transition-all duration-500 ease-in-out"
                   priority
                 />
               </Link>
@@ -677,7 +677,7 @@ const FirstContents: React.FC<FirstContentsProps> = ({
                   alt={fifthPost.heading.replace(/<[^>]+>/g, "")}
                   width={400}
                   height={300}
-                  className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                  className="aspect-[1.5/1] w-full object-contain hover:scale-150 transition-all duration-500 ease-in-out"
                   priority
                 />
               </Link>

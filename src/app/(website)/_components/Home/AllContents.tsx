@@ -356,7 +356,7 @@ const AllContents: React.FC = () => {
                   alt={secondPost.heading}
                   width={400}
                   height={300}
-                  className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                  className="aspect-[1.5/1] w-full object-contain hover:scale-150 transition-all duration-500 ease-in-out"
                   priority
                 />
               </Link>
@@ -468,7 +468,7 @@ const AllContents: React.FC = () => {
                   alt={thirdPost.heading}
                   width={400}
                   height={300}
-                  className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                  className="aspect-[1.5/1] w-full object-contain hover:scale-150 transition-all duration-500 ease-in-out"
                   priority
                 />
               </Link>
@@ -578,7 +578,7 @@ const AllContents: React.FC = () => {
                   alt={fourthPost.heading}
                   width={400}
                   height={300}
-                  className="aspect-[1.5/1] w-full object-top hover:scale-150 transition-all duration-500 ease-in-out"
+                  className="aspect-[1.5/1] w-full object-contain hover:scale-150 transition-all duration-500 ease-in-out"
                   priority
                 />
               </Link>
