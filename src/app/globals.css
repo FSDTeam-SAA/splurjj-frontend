@@ -209,6 +209,17 @@ body {
   @apply text-sm;
 }
 
+.list-item iframe {
+  width: 100%;
+  max-width: 560px; /* Match the iframe width */
+  height: auto;
+  aspect-ratio: 16 / 9; /* Maintain YouTube video aspect ratio */
+  border-radius: 8px;
+  border: none;
+  margin: 0 auto; /* Center the iframe */
+  display: block;
+}
+
 h1 {
   @apply text-[#131313] dark:text-white;
 }
