@@ -128,7 +128,7 @@ useEffect(() => {
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-xl md:text-[22px] lg:text-[24px]  font-semibold leading-[120%] tracking-[0%] text-[#131313]">Personal Information</h2>
         <Button
-          className="w-[124px] h-[39px] rounded-[8px] bg-[#0253F7] hover:bg-blue-700 text-white text-base font-bold leading-[120%] tracking-[0%] px-[21px] py-[10px]"
+          className="w-[124px] h-[39px] rounded-[8px] bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 text-base font-extrabold uppercase text-white"
           onClick={form.handleSubmit(onSubmit)}
           disabled={isPending}
         >
@@ -144,9 +144,9 @@ useEffect(() => {
               name="first_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313]">First Name</FormLabel>
+                  <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313] dark:text-white">First Name</FormLabel>
                   <FormControl>
-                    <Input {...field} className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161]" />
+                    <Input {...field} className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161] dark:text-white" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -157,9 +157,9 @@ useEffect(() => {
               name="last_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313]">Last Name</FormLabel>
+                  <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313] dark:text-white">Last Name</FormLabel>
                   <FormControl>
-                    <Input {...field} className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161]" />
+                    <Input {...field} className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161] dark:text-white" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -173,9 +173,9 @@ useEffect(() => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313]">Email Address</FormLabel>
+                  <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313] dark:text-white">Email Address</FormLabel>
                   <FormControl>
-                    <Input type="email" {...field} className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161]" />
+                    <Input type="email" {...field} className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161] dark:text-white" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -186,9 +186,9 @@ useEffect(() => {
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313]">Phone</FormLabel>
+                  <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313] dark:text-white">Phone</FormLabel>
                   <FormControl>
-                    <Input {...field} className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161]" />
+                    <Input {...field} className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161] dark:text-white" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -202,9 +202,9 @@ useEffect(() => {
               name="country"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313]">Country</FormLabel>
+                  <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313] dark:text-white">Country</FormLabel>
                   <FormControl>
-                    <Input {...field} className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161]" />
+                    <Input {...field} className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161] dark:text-white" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -215,9 +215,9 @@ useEffect(() => {
               name="city"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313]">City/State</FormLabel>
+                  <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313] dark:text-white">City/State</FormLabel>
                   <FormControl>
-                    <Input {...field} className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161]" />
+                    <Input {...field} className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161] dark:text-white" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -230,9 +230,9 @@ useEffect(() => {
             name="road"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313]">Road/Area</FormLabel>
+                <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313] dark:text-white">Road/Area</FormLabel>
                 <FormControl>
-                   <Input {...field} className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161]" />
+                   <Input {...field} className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161] dark:text-white" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -244,9 +244,9 @@ useEffect(() => {
             name="postal_code"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313]">Postal Code</FormLabel>
+                <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313] dark:text-white">Postal Code</FormLabel>
                 <FormControl>
-                  <Input {...field} className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161]" />
+                  <Input {...field} className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161] dark:text-white" />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -288,7 +288,6 @@ const getImageUrl = (path: string | null): string => {
   const cleanedTags = cleanTags(blogData.tags || []);
 
 
-  // console.log("BBBBBBBBBBBBBBBBBBBBBBBBB", blogData)
 
 
   return (
@@ -320,7 +319,7 @@ const getImageUrl = (path: string | null): string => {
                       ?.getElementById("comment")
                       ?.scrollIntoView({ behavior: "smooth" })
                   }
-                  className="w-full bg-primary py-[12px] px-[24px] rounded-[4px] text-xl font-bold leading-[120%] tracking-[0%] uppercase text-white"
+                  className="w-full bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 rounded text-base font-extrabold uppercase text-white"
                 >
                   Leave A Comment
                 </button>
