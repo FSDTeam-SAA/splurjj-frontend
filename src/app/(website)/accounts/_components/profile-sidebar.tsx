@@ -46,7 +46,7 @@ export default function ProfileSidebar({
     }
   };
   return (
-    <div className="w-80 bg-white rounded-lg h-fit">
+    <div className="w-80 rounded-lg h-fit">
       <div className="text-center mb-8">
         <ProfileAvatar
           profileImage={profileImage}
@@ -91,7 +91,7 @@ export default function ProfileSidebar({
 
         <button
           onClick={() => setLogoutModalOpen(true)}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left hover:bg-red-50 transition-colors text-lg md:text-xl font-medium leading-[120%]  text-[#FF0000]"
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left hover:bg-red-50 hover:dark:bg-red-800 transition-colors text-lg md:text-xl font-medium leading-[120%]  text-[#FF0000]"
         >
           <LogOut className="w-[30px] h-[30px]" />
           Log out

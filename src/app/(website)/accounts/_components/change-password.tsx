@@ -85,7 +85,7 @@ export default function ChangePassword() {
     <div>
       <div className="flex items-center justify-end mb-6 md:mb-8 lg:mb-10">
         <Button
-          className="w-[160px] h-[51px] rounded-[8px] bg-[#0253F7] hover:bg-blue-700 text-white  font-bold leading-[120%] tracking-[0%] px-[61px] py-[16px]"
+          className="w-[160px] h-[51px] bg-primary dark:bg-black  hover:bg-black dark:border dark:border-primary dark:border-rounded hover:dark:bg-primary hover:text-white  dark:text-white transition-all duration-200 ease-in-out py-2 px-4 text-base font-extrabold uppercase text-white"
           onClick={form.handleSubmit(onSubmit)}
           disabled={isPending}
         >
@@ -105,7 +105,7 @@ export default function ChangePassword() {
             name="current_password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313]">
+                <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313] dark:text-white">
                   Current Password
                 </FormLabel>
                 <FormControl>
@@ -114,7 +114,7 @@ export default function ChangePassword() {
                       type={showCurrentPassword ? "text" : "password"}
                       placeholder="##############"
                       {...field}
-                      className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161]"
+                      className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] dark:text-white placeholder:text-[#616161]"
                     />
                     <button
                       type="button"
@@ -138,7 +138,7 @@ export default function ChangePassword() {
               name="new_password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313]">
+                  <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313] dark:text-white">
                     New Password
                   </FormLabel>
                   <FormControl>
@@ -147,7 +147,7 @@ export default function ChangePassword() {
                         type={showNewPassword ? "text" : "password"}
                         placeholder="##############"
                         {...field}
-                        className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161]"
+                        className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] dark:text-white placeholder:text-[#616161]"
                       />
                       <button
                         type="button"
@@ -167,7 +167,7 @@ export default function ChangePassword() {
               name="confirm_new_password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313]">
+                  <FormLabel className="text-base md:text-[17px] lg:text-lg  font-medium leading-[120%] tracking-[0%] text-[#131313] dark:text-white">
                     Confirm New Password
                   </FormLabel>
                   <FormControl>
@@ -176,7 +176,7 @@ export default function ChangePassword() {
                         type={showConfirmNewPassword ? "text" : "password"}
                         placeholder="##############"
                         {...field}
-                        className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] placeholder:text-[#616161]"
+                        className="w-full h-[56px] border border-[#645949] rounded-[8px] text-base font-normal  leading-[150%] tracking-[0%] text-[#131313] dark:text-white placeholder:text-[#616161]"
                       />
                       <button
                         type="button"
