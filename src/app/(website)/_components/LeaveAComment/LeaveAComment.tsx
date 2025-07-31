@@ -76,7 +76,7 @@ export function LeaveAComment({ UserEmail, blogId }: LeaveACommentProps) {
         queryKey: ["comments"],
       });
       form.reset();
-      window.location.reload();
+      // window.location.reload();
     },
   });
 

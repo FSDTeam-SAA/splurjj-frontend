@@ -81,7 +81,7 @@ export function LogingForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
+              <FormLabel className="text-[#131313] dark:text-white font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                 Email Address
               </FormLabel>
               <FormControl>
@@ -109,7 +109,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
+                <FormLabel className="text-[#131313] dark:text-white font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                   Password
                 </FormLabel>
                 <FormControl>
@@ -131,9 +131,9 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                       tabIndex={-1}
                     >
                       {showPassword ? (
-                        <EyeOff className="w-5 h-5 text-black" />
+                        <EyeOff className="w-5 h-5 text-black dark:text-white" />
                       ) : (
-                        <Eye className="w-5 h-5 text-black" />
+                        <Eye className="w-5 h-5 text-black dark:text-white" />
                       )}
                     </button>
                   </div>
@@ -158,7 +158,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                 />
                 <label
                   htmlFor="rememberMe"
-                  className="text-sm  font-normal leading-[120%] tracking-[0%] text-[#131313]"
+                  className="text-sm  font-normal leading-[120%] tracking-[0%] text-[#131313] dark:text-white"
                 >
                   Remember me
                 </label>
@@ -169,7 +169,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
           <div>
             <Link
               href="/forgot-password"
-              className="text-sm font-normal  leading-[120%] text-[#131313] tracking-[0%]"
+              className="text-sm font-normal  leading-[120%] text-[#131313] dark:text-white tracking-[0%]"
             >
               Forgot password?
             </Link>

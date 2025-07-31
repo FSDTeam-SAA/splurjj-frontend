@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -11,7 +11,7 @@ const SubscriberHeader = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-[#131313] leading-[120%]">
-            All Subscribes
+            All Subscribers
           </h2>
           <div className="flex items-center gap-2 pt-[14px]">
             <Link
