@@ -222,6 +222,8 @@ const AllContents: React.FC = () => {
   const fourthPost = contents[3];
   // const otherPosts = contents.slice(1); // All posts except the first
 
+
+
   return (
     <div className="">
       {firstPost && (
