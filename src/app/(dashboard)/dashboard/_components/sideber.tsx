@@ -1759,7 +1759,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         >
                           <Link href="/dashboard/role">
                             <Image
-                              src="/assets/dashboard/employee.png"
+                              src="/assets/dashboard/employee .png"
                               alt="role management"
                               width={20}
                               height={20}
