@@ -106,7 +106,7 @@ export function SignUpForm() {
               name="first_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
+                  <FormLabel className="text-[#131313] dark:text-white font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                     First Name
                   </FormLabel>
                   <FormControl>
@@ -127,7 +127,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
               name="last_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
+                  <FormLabel className="text-[#131313] dark:text-white font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                     Last Name
                   </FormLabel>
                   <FormControl>
@@ -151,7 +151,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
             name="company_name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
+                <FormLabel className="text-[#131313] dark:text-white font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                   Company Name
                 </FormLabel>
                 <FormControl>
@@ -174,7 +174,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
+                <FormLabel className="text-[#131313] dark:text-white font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                   Email
                 </FormLabel>
                 <FormControl>
@@ -198,7 +198,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
+                <FormLabel className="text-[#131313] dark:text-white font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                   Phone Number
                 </FormLabel>
                 <FormControl>
@@ -222,7 +222,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
+                <FormLabel className="text-[#131313] dark:text-white font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                   Password
                 </FormLabel>
                 <FormControl>
@@ -261,7 +261,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
             name="confirm_password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
+                <FormLabel className="text-[#131313] dark:text-white font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                   Confirm Password
                 </FormLabel>
                 <FormControl>
@@ -309,7 +309,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
                   />
                 </FormControl>
                 <div className="space-y-1 leading-none">
-                  <FormLabel className="text-sm font-medium leading-[120%] tracking-[0%] text-[#131313] ">
+                  <FormLabel className="text-sm font-medium leading-[120%] tracking-[0%] text-[#131313] dark:text-white">
                     I agree to the Terms and Conditions
                   </FormLabel>
                   <FormMessage className="text-[#DB0000]" />

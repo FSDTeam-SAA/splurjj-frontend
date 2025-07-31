@@ -108,7 +108,7 @@ export default function UpdatePasswordForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
+                <FormLabel className="text-[#131313] dark:text-white font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                   New Password
                 </FormLabel>
                 <FormControl>
@@ -146,7 +146,7 @@ leading-[120%] p-4 outline-none ring-0 focus:outline-none focus:ring-0"
               name="password_confirmation"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#131313] font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
+                  <FormLabel className="text-[#131313] dark:text-white font-medium text-base md:text-[17px] lg:text-lg  leading-[120%] tracking-[0%]">
                     Confirm Password
                   </FormLabel>
                   <FormControl>
