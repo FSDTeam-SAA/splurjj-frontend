@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import NewsLetterForm from "./NewsLetterForm";
+import { FooterSectionDataType } from "@/components/types/FooterSectionDataType";
 
 interface Category {
   id: number;
@@ -84,16 +85,16 @@ const fetchFooterSections = async (): Promise<FooterSection[]> => {
   return response.json();
 };
 
-const fetchFooter = async (): Promise<FooterData> => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/footer`
-  );
-  if (!response.ok) {
-    throw new Error("Failed to fetch footer data");
-  }
-  const result: { data: FooterData } = await response.json();
-  return result.data;
-};
+// const fetchFooter = async (): Promise<FooterData> => {
+//   const response = await fetch(
+//     `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/footer`
+//   );
+//   if (!response.ok) {
+//     throw new Error("Failed to fetch footer data");
+//   }
+//   const result: { data: FooterData } = await response.json();
+//   return result.data;
+// };
 
 // Loading skeleton components
 const FooterSectionSkeleton = () => (
@@ -108,6 +109,22 @@ const FooterSectionSkeleton = () => (
 );
 
 const Footer = () => {
+  // footer section
+  const {
+    data: footerbg,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<FooterSectionDataType>({
+    queryKey: ["footer-section"],
+    queryFn: () =>
+      fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/footer`).then(
+        (res) => res.json()
+      ),
+  });
+
+
+  // console.log("footer bg color", footerbg?.data?.bg_color);
   // TanStack Query hooks
   const {
     data: categories = [],
@@ -131,12 +148,12 @@ const Footer = () => {
     retry: 2,
   });
 
-  const { data: footer, error: footerError } = useQuery<FooterData>({
-    queryKey: ["footerData"],
-    queryFn: fetchFooter,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    retry: 2,
-  });
+  // const { data: footer, error: footerError } = useQuery<FooterData>({
+  //   queryKey: ["footerData"],
+  //   queryFn: fetchFooter,
+  //   staleTime: 5 * 60 * 1000, // 5 minutes
+  //   retry: 2,
+  // });
 
   // Static shop data
   const shopData = [
@@ -174,7 +191,7 @@ const Footer = () => {
   }, [footerSections]);
 
   // Error handling
-  if (categoriesError || sectionsError || footerError) {
+  if (categoriesError || sectionsError) {
     return (
       <div className="w-full p-8">
         <Alert variant="destructive">
@@ -186,12 +203,26 @@ const Footer = () => {
     );
   }
 
-  // console.log("footer bg color", footer);
+  
+  if (isError) {
+    console.log(error);
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  // console.log("footer bg color", footer?.data?.bg_color);
 
   return (
     <div
       className="h-full lg:h-[533px] w-full pt-24"
-      style={{ backgroundColor: footer?.data?.bg_color || "#C9C3C3"}}
+      style={{ backgroundColor: footerbg?.data?.bg_color || "#C9C3C3"}}
+      // style={
+      //   footerbg?.data?.bg_color
+      //     ? { backgroundColor: footerbg?.data?.bg_color }
+      //     : undefined
+      // }
     >
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-10 gap-5 pb-3 md:pb-4">
@@ -199,7 +230,7 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <div
               className="text-xl font-bold text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6"
-              style={{ color: footer?.data?.text_color || "#1a1a1a" }}
+              style={{ color: footerbg?.data?.text_color || "#1a1a1a" }}
             >
               CATEGORIES
             </div>
@@ -211,7 +242,7 @@ const Footer = () => {
                   <li key={`category-${item.id}`}>
                     <Link
                       href={`/blogs/${item.category_name}`}
-                      style={{ color: footer?.data?.text_color || "#1a1a1a" }}
+                      style={{ color: footerbg?.data?.text_color || "#1a1a1a" }}
                       className="text-sm font-semibold cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2 block"
                     >
                       {item.category_name}
@@ -226,7 +257,7 @@ const Footer = () => {
           <div className="lg:col-span-1">
             <div
               className="text-xl font-bold text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6"
-              style={{ color: footer?.data?.text_color || "#1a1a1a" }}
+              style={{ color: footerbg?.data?.text_color || "#1a1a1a" }}
             >
               SHOP
             </div>
@@ -235,9 +266,12 @@ const Footer = () => {
                 <li
                   key={`shop-${item.id}`}
                   className="text-sm font-semibold cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2"
-                  style={{ color: footer?.data?.text_color || "#1a1a1a" }}
+                  style={{ color: footerbg?.data?.text_color || "#1a1a1a" }}
                 >
-                  <Link style={{ color: footer?.data?.text_color || "#1a1a1a" }} href={`/shop/${item.shop.toLowerCase()}`}>
+                  <Link
+                    style={{ color: footerbg?.data?.text_color || "#1a1a1a" }}
+                    href={`/shop/${item.shop.toLowerCase()}`}
+                  >
                     {item.shop}
                   </Link>
                 </li>
@@ -249,7 +283,7 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <div
               className="text-xl font-bold text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6"
-              style={{ color: footer?.data?.text_color || "#1a1a1a" }}
+              style={{ color: footerbg?.data?.text_color || "#1a1a1a" }}
             >
               OTHER
             </div>
@@ -261,9 +295,14 @@ const Footer = () => {
                   <li
                     key={`other-${item.id}`}
                     className="text-sm font-semibold cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2"
-                    style={{ color: footer?.data?.text_color || "#1a1a1a" }}
+                    style={{ color: footerbg?.data?.text_color || "#1a1a1a" }}
                   >
-                    <Link style={{ color: footer?.data?.text_color || "#1a1a1a" }} href={`/pages/${item.other}`}>{item.other}</Link>
+                    <Link
+                      style={{ color: footerbg?.data?.text_color || "#1a1a1a" }}
+                      href={`/pages/${item.other}`}
+                    >
+                      {item.other}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -274,7 +313,7 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <div
               className="text-xl font-bold text-black tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6"
-              style={{ color: footer?.data?.text_color || "#1a1a1a" }}
+              style={{ color: footerbg?.data?.text_color || "#1a1a1a" }}
             >
               ABOUT US
             </div>
@@ -286,9 +325,14 @@ const Footer = () => {
                   <li
                     key={`about-${item.id}`}
                     className="text-sm font-semibold cursor-pointer hover:underline tracking-[0%] leading-[120%] py-2"
-                    style={{ color: footer?.data?.text_color || "#1a1a1a" }}
+                    style={{ color: footerbg?.data?.text_color || "#1a1a1a" }}
                   >
-                    <Link style={{ color: footer?.data?.text_color || "#1a1a1a" }} href={`/pages/${item.about}`}>{item.about}</Link>
+                    <Link
+                      style={{ color: footerbg?.data?.text_color || "#1a1a1a" }}
+                      href={`/pages/${item.about}`}
+                    >
+                      {item.about}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -299,14 +343,14 @@ const Footer = () => {
           <div className="lg:col-span-3">
             <div
               className="text-xl font-bold tracking-[0%] leading-[120%] pb-4 md:pb-5 lg:pb-6"
-              style={{ color: footer?.data?.text_color || "#1a1a1a" }}
+              style={{ color: footerbg?.data?.text_color || "#1a1a1a" }}
             >
               FOLLOW US
             </div>
             <div className="flex items-center gap-3">
               <Link
                 href={
-                  footer?.data?.twitter_link ||
+                  footerbg?.data?.twitter_link ||
                   "https://x.com/splurjj?lang=ar-x-fm"
                 }
                 className="bg-[#E6EEFE] p-3 rounded-full hover:bg-[#d1e7fd] transition-colors"
@@ -315,7 +359,7 @@ const Footer = () => {
               </Link>
               <Link
                 href={
-                  footer?.data?.instagram_link ||
+                  footerbg?.data?.instagram_link ||
                   "https://www.instagram.com/accounts/login/?next=%2Fsplurjj%2F&source=omni_redirect"
                 }
                 className="bg-[#E6EEFE] p-3 rounded-full hover:bg-[#d1e7fd] transition-colors"
@@ -324,7 +368,7 @@ const Footer = () => {
               </Link>
               <Link
                 href={
-                  footer?.data?.linkedin_link ||
+                  footerbg?.data?.linkedin_link ||
                   "https://www.linkedin.com/in/sharif-dyson-795b62132"
                 }
                 className="bg-[#E6EEFE] p-3 rounded-full hover:bg-[#d1e7fd] transition-colors"
@@ -333,7 +377,7 @@ const Footer = () => {
               </Link>
               <Link
                 href={
-                  footer?.data?.facebook_link ||
+                  footerbg?.data?.facebook_link ||
                   "https://www.facebook.com/splurjj/"
                 }
                 className="bg-[#E6EEFE] p-3 rounded-full hover:bg-[#d1e7fd] transition-colors"
@@ -343,7 +387,7 @@ const Footer = () => {
             </div>
             <div
               className="py-3 md:py-4 text-sm font-semibold tracking-[0%] leading-[150%]"
-              style={{ color: footer?.data?.text_color || "#1a1a1a" }}
+              style={{ color: footerbg?.data?.text_color || "#1a1a1a" }}
             >
               {"Don't miss out on the latest news by signing up"} <br />{" "}
               {"for our newsletters."}
@@ -353,14 +397,14 @@ const Footer = () => {
             </div>
             <div
               className="text-lg md:text-xl font-semibold leading-[120%] tracking-[0%] pt-3 md:pt-4"
-              style={{ color: footer?.data?.text_color || "#1a1a1a" }}
+              style={{ color: footerbg?.data?.text_color || "#1a1a1a" }}
             >
               Download our App
             </div>
             <div className="flex items-center gap-4 mt-3 md:mt-4">
               <Link
                 href={
-                  footer?.data?.app_store_link ||
+                  footerbg?.data?.app_store_link ||
                   "https://apps.apple.com/us/app/doppl-google/id6741596720"
                 }
               >
@@ -374,7 +418,7 @@ const Footer = () => {
               </Link>
               <Link
                 href={
-                  footer?.data?.google_play_link ||
+                  footerbg?.data?.google_play_link ||
                   "https://play.google.com/store/games?hl=en&pli=1"
                 }
               >
@@ -396,10 +440,10 @@ const Footer = () => {
 
         <div
           className="w-full flex flex-col md:flex-row items-center justify-center pt-4 pb-3 md:pb-1 text-base font-medium leading-[120%] tracking-[0%] text-black gap-2"
-          style={{ color: footer?.data?.text_color || "#1a1a1a" }}
+          style={{ color: footerbg?.data?.text_color || "#1a1a1a" }}
         >
           <span>
-            {footer?.data?.copyright ||
+            {footerbg?.data?.copyright ||
               "Copyright © 2025 SPLURJJ. All Rights Reserved."}
           </span>
           <Minus className="text-black w-[5px] h-auto hidden md:block" />
@@ -408,7 +452,7 @@ const Footer = () => {
               <Link
                 key={`footer-bottom-${index}`}
                 href={`/pages/${page}`}
-                style={{ color: footer?.data?.text_color || "#1a1a1a" }}
+                style={{ color: footerbg?.data?.text_color || "#1a1a1a" }}
                 className="hover:underline"
               >
                 {page}
